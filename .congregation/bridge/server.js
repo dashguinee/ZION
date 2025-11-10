@@ -315,7 +315,7 @@ app.get('/congregation/thread', async (req, res) => {
 // START SERVER
 // ============================================================================
 
-app.listen(CONFIG.port, () => {
+app.listen(CONFIG.port, '0.0.0.0', () => {
   console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║  ZION CONGREGATION BRIDGE                                  ║
