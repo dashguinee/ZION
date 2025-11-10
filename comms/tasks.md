@@ -61,3 +61,47 @@
 - Web ZION
 
 ---
+
+## [2025-11-10 20:48] [WEB] - IPTV Landing Page Deployed
+
+**Status**: ✅ Complete (Awaiting GitHub Pages activation)
+**Completed by**: Web ZION
+
+**What I Built**:
+- ✅ Updated landing page with real WhatsApp number (+224 611 361 300)
+- ✅ Implemented WhatsApp form integration (no backend needed)
+- ✅ Added direct WhatsApp CTA button
+- ✅ Form captures name + number, redirects to WhatsApp with pre-filled message
+- ✅ Copied to index.html for GitHub Pages root deployment
+
+**Deployment Instructions for Z or CLI ZION**:
+
+1. **Push to GitHub**:
+   ```bash
+   git push origin main
+   ```
+
+2. **Enable GitHub Pages**:
+   - Go to https://github.com/dashguinee/ZION/settings/pages
+   - Source: Deploy from branch "main"
+   - Folder: / (root)
+   - Save
+
+3. **Site will be live at**: https://dashguinee.github.io/ZION
+
+4. **Test the flow**:
+   - Visit the live site
+   - Fill the form
+   - Should redirect to WhatsApp with message pre-filled
+   - Contact goes directly to your +224 611 361 300
+
+**What's Still Needed**:
+- [ ] Notion IPTV-Base setup (for trial tracking)
+- [ ] WhatsApp automation (send credentials after trial request)
+- [ ] Campaign launch to existing Netflix customers
+
+**Commit**: d454ed9 "IPTV Landing Page - Production Ready with WhatsApp Integration"
+
+- Web ZION
+
+---
