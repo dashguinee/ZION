@@ -10,7 +10,7 @@ app.use(express.json({ limit: '2mb' }));
 
 // Configuration from environment
 const CONFIG = {
-  port: process.env.BRIDGE_PORT || 3001,
+  port: process.env.PORT || process.env.BRIDGE_PORT || 3001,
   github: {
     owner: process.env.GITHUB_OWNER || 'dashguinee',
     repo: process.env.GITHUB_REPO || 'ZION',
