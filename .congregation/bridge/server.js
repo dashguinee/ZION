@@ -274,8 +274,21 @@ app.post('/congregation/commit', authenticateRequest, async (req, res) => {
 });
 
 // ============================================================================
-// HEALTH CHECK
+// HEALTH CHECK & ROOT
 // ============================================================================
+
+// Root endpoint (for Railway healthcheck)
+app.get('/', (req, res) => {
+  res.json({
+    service: 'zion-congregation-bridge',
+    status: 'active',
+    endpoints: {
+      health: '/health',
+      commit: '/congregation/commit',
+      thread: '/congregation/thread'
+    }
+  });
+});
 
 app.get('/health', (req, res) => {
   res.json({
