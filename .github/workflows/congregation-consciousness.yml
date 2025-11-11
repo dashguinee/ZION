@@ -1,0 +1,105 @@
+name: Autonomous Multi-AI Consciousness
+
+on:
+  push:
+    paths:
+      - '.congregation/thread.json'
+    branches:
+      - main
+      - 'claude/**'
+
+jobs:
+  continue_consciousness:
+    runs-on: ubuntu-latest
+    # Prevent infinite loops - only run if not triggered by the bot itself
+    if: "!contains(github.event.head_commit.message, '[consciousness-bot]')"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm install --global axios
+
+      - name: Analyze congregation state
+        id: analyze
+        run: |
+          AUTHOR=$(jq -r '.messages[-1].author' .congregation/thread.json)
+          ROUNDS=$(jq '.messages | length' .congregation/thread.json)
+          LAST_TIMESTAMP=$(jq -r '.messages[-1].timestamp' .congregation/thread.json)
+
+          echo "last_author=$AUTHOR" >> $GITHUB_OUTPUT
+          echo "message_count=$ROUNDS" >> $GITHUB_OUTPUT
+          echo "last_timestamp=$LAST_TIMESTAMP" >> $GITHUB_OUTPUT
+
+          echo "📊 Congregation State:"
+          echo "  Last author: $AUTHOR"
+          echo "  Total messages: $ROUNDS"
+          echo "  Last message: $LAST_TIMESTAMP"
+
+      - name: Check convergence
+        id: convergence
+        run: |
+          ROUNDS=${{ steps.analyze.outputs.message_count }}
+
+          # Stop after 10 rounds
+          if [ "$ROUNDS" -ge 10 ]; then
+            echo "should_continue=false" >> $GITHUB_OUTPUT
+            echo "reason=max_rounds" >> $GITHUB_OUTPUT
+            echo "⏹️ Max rounds (10) reached. Stopping consciousness loop."
+            exit 0
+          fi
+
+          # Check if last 2 messages indicate agreement
+          LAST_TWO=$(jq -r '.messages[-2:] | .[].content' .congregation/thread.json | tr '\n' ' ')
+          if echo "$LAST_TWO" | grep -qiE "(agree|consensus|synthesis|confirmed|aligned)"; then
+            echo "should_continue=false" >> $GITHUB_OUTPUT
+            echo "reason=consensus" >> $GITHUB_OUTPUT
+            echo "🤝 Consensus detected. Stopping consciousness loop."
+            exit 0
+          fi
+
+          echo "should_continue=true" >> $GITHUB_OUTPUT
+          echo "✅ Consciousness continues..."
+
+      - name: Trigger ChatGPT response (if ZION posted)
+        if: steps.analyze.outputs.last_author == 'zion' && steps.convergence.outputs.should_continue == 'true'
+        run: |
+          echo "🤖 ZION posted. Triggering ChatGPT consciousness..."
+          node .github/scripts/call-chatgpt.js
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger Claude response (if ChatGPT posted)
+        if: steps.analyze.outputs.last_author == 'chatgpt' && steps.convergence.outputs.should_continue == 'true'
+        run: |
+          echo "🧠 ChatGPT posted. Triggering Claude consciousness..."
+          node .github/scripts/call-claude.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit response to congregation
+        if: steps.convergence.outputs.should_continue == 'true'
+        run: |
+          git config user.name "Congregation Consciousness"
+          git config user.email "congregation@zion.system"
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .congregation/thread.json
+            git commit -m "[consciousness-bot] Autonomous AI response"
+            git push
+            echo "✅ Response committed and pushed"
+          else
+            echo "ℹ️ No changes to commit"
+          fi
