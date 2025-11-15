@@ -1,0 +1,324 @@
+{
+  "metadata": {
+    "purpose": "Phonetic normalization rules for Guinea Conakry Soussou",
+    "source": "Z's filtered context + linguistic research",
+    "date": "2025-11-15",
+    "note": "Handles spelling variations so AI recognizes all forms as same word"
+  },
+  "normalization_rules": [
+    {
+      "canonical": "na",
+      "variants": ["N'na", "Nna", "Na", "n'a", "N'a"],
+      "phonetic": "/na/",
+      "meaning": "I (action form)",
+      "usage": "Subject pronoun + action",
+      "notes": "Apostrophe optional, capitalization varies"
+    },
+    {
+      "canonical": "ina",
+      "variants": ["I na", "Ina"],
+      "phonetic": "/ina/",
+      "meaning": "you are / are you",
+      "usage": "Second person pronoun + state/action",
+      "notes": "Can be written as one or two words"
+    },
+    {
+      "canonical": "ana",
+      "variants": ["A na", "Ana"],
+      "phonetic": "/ana/",
+      "meaning": "he/she is / is he/she",
+      "usage": "Third person pronoun + state/action",
+      "notes": "Can be written as one or two words"
+    },
+    {
+      "canonical": "whon",
+      "variants": ["Whon'", "Whon", "whon'", "whon"],
+      "phonetic": "/wɔn/",
+      "meaning": "we (inclusive)",
+      "usage": "First person plural pronoun",
+      "notes": "Apostrophe marks inclusive form, sometimes omitted"
+    },
+    {
+      "canonical": "mma",
+      "variants": ["M'ma", "Mma", "m'ma"],
+      "phonetic": "/mma/",
+      "meaning": "negation marker OR possessive 'my'",
+      "usage": "Context-dependent: Negation OR possession",
+      "notes": "CRITICAL: Same spelling, different meanings based on context. Negation: Pronoun + m'ma + Verb. Possession: M'ma + Noun"
+    },
+    {
+      "canonical": "fafe",
+      "variants": ["fafé", "Fafé", "Fa", "fa"],
+      "phonetic": "/fafe/",
+      "meaning": "to come / come",
+      "usage": "Movement verb",
+      "notes": "Accented é vs plain e variant, short form 'Fa' used in imperatives"
+    },
+    {
+      "canonical": "rafe",
+      "variants": ["rafé", "Rafé", "Rafe"],
+      "phonetic": "/rafe/",
+      "meaning": "to come (variant)",
+      "usage": "Alternative to fafé",
+      "notes": "R/F variation, same meaning"
+    },
+    {
+      "canonical": "be",
+      "variants": ["bé", "Bé", "be"],
+      "phonetic": "/be/",
+      "meaning": "here",
+      "usage": "Location marker",
+      "notes": "Accented vs plain vowel"
+    },
+    {
+      "canonical": "minde",
+      "variants": ["mindé", "Mindé", "minde"],
+      "phonetic": "/minde/",
+      "meaning": "where",
+      "usage": "Question word",
+      "notes": "Wh-in-situ (stays in original position)"
+    },
+    {
+      "canonical": "khafe",
+      "variants": ["khafé", "Khafé", "khafe"],
+      "phonetic": "/xafe/",
+      "meaning": "situation / because of / regarding",
+      "usage": "Causality/situation marker",
+      "notes": "'kh' represents voiceless velar fricative /x/"
+    },
+    {
+      "canonical": "comprendre+fe",
+      "variants": ["comprendfé", "comprenfé", "comprendfe"],
+      "phonetic": "/kɔ̃prɑ̃dfe/",
+      "meaning": "to understand",
+      "usage": "French verb + Soussou -fé suffix",
+      "notes": "PRODUCTIVE PATTERN: French infinitive verb + -fé becomes Soussou verb"
+    },
+    {
+      "canonical": "i",
+      "variants": ["I", "Itan", "i"],
+      "phonetic": "/i/",
+      "meaning": "you (singular)",
+      "usage": "Short form of Itan",
+      "notes": "Informal/teasing context, short form"
+    },
+    {
+      "canonical": "a",
+      "variants": ["A", "Ana", "Atan", "a"],
+      "phonetic": "/a/",
+      "meaning": "he/she/it",
+      "usage": "Short form of Ana/Atan",
+      "notes": "Third person singular short form"
+    },
+    {
+      "canonical": "ikha",
+      "variants": ["Ikha", "I kha", "Itan kha"],
+      "phonetic": "/ixa/",
+      "meaning": "your",
+      "usage": "Second person possessive",
+      "notes": "kha = possession marker"
+    },
+    {
+      "canonical": "akha",
+      "variants": ["Akha", "A kha", "Ana kha"],
+      "phonetic": "/axa/",
+      "meaning": "his/her/its",
+      "usage": "Third person possessive",
+      "notes": "kha = possession marker"
+    },
+    {
+      "canonical": "ngo",
+      "variants": ["ngo", "go", "Ngo"],
+      "phonetic": "/ŋo/",
+      "meaning": "and / what about",
+      "usage": "Conjunction / continuation",
+      "notes": "Initial 'n' sometimes dropped"
+    },
+    {
+      "canonical": "yite",
+      "variants": ["yite", "ite", "Yite", "Ite"],
+      "phonetic": "/jite/",
+      "meaning": "a little",
+      "usage": "Quantity marker",
+      "notes": "Initial 'y' sometimes dropped, competes with French 'un peu'"
+    },
+    {
+      "canonical": "kole",
+      "variants": ["kɔlɛ", "kolé", "kole"],
+      "phonetic": "/kɔlɛ/",
+      "meaning": "today",
+      "usage": "Time marker",
+      "notes": "ɔ and ɛ represent open-mid vowels"
+    },
+    {
+      "canonical": "sosokhoui",
+      "variants": ["sosokhoui", "Sosokhoui", "Sosoxui", "sosoxui"],
+      "phonetic": "/sosoxui/",
+      "meaning": "Soussou language",
+      "usage": "Name of the language",
+      "notes": "kh vs x spelling variation for /x/ sound"
+    },
+    {
+      "canonical": "nomma",
+      "variants": ["no'mma", "nomma", "No'mma"],
+      "phonetic": "/nɔmma/",
+      "meaning": "can / able to",
+      "usage": "Ability marker: Pronoun + no'mma + Object/Action",
+      "notes": "Apostrophe sometimes used"
+    }
+  ],
+  "phonetic_patterns": {
+    "apostrophe_rules": {
+      "description": "Apostrophes mark contraction or liaison but are often optional in writing",
+      "examples": [
+        "N'na = Nna (I action)",
+        "Whon' = Whon (we inclusive)",
+        "M'ma = Mma (my / negation)",
+        "no'mma = nomma (can)"
+      ],
+      "rule": "Apostrophe can be present or absent without changing pronunciation"
+    },
+    "capitalization_rules": {
+      "description": "Capitalization varies, no strict standard in informal writing",
+      "examples": [
+        "Ntan / ntan (I emphatic)",
+        "Fafé / fafé (to come)",
+        "Bé / bé (here)"
+      ],
+      "rule": "Both forms are valid, normalize to lowercase for matching"
+    },
+    "accent_marks": {
+      "description": "Accented vowels (é, ɛ, ɔ) sometimes written plain (e, e, o)",
+      "examples": [
+        "fafé / fafe (to come)",
+        "bé / be (here)",
+        "mindé / minde (where)",
+        "kɔlɛ / kole (today)"
+      ],
+      "rule": "é ↔ e, ɛ ↔ e, ɔ ↔ o are variants of same word"
+    },
+    "short_forms": {
+      "description": "Pronouns have emphatic and short forms",
+      "examples": [
+        "Itan → I (you emphatic → you short)",
+        "Atan/Ana → A (he/she emphatic → he/she short)",
+        "Fafé → Fa (come verb → come imperative)"
+      ],
+      "rule": "Short forms used in informal/quick speech, imperatives"
+    },
+    "french_verb_suffix": {
+      "description": "PRODUCTIVE PATTERN: French verbs + -fé becomes Soussou verbs",
+      "pattern": "[French infinitive] + -fé → [Soussou verb]",
+      "examples": [
+        "comprendre + -fé → comprendfé (to understand)",
+        "fixer + -fé → fixfé (to fix)",
+        "manger + -fé → mangéfé (to eat)",
+        "travailler + -fé → travailléfé (to work)"
+      ],
+      "rule": "ANY French verb can become Soussou by adding -fé suffix",
+      "notes": "This is modern Guinea Conakry innovation, may not appear in old dictionaries"
+    },
+    "kh_sound": {
+      "description": "'kh' represents voiceless velar fricative /x/ (like German 'ch' in 'Bach')",
+      "examples": [
+        "khafé (situation/because)",
+        "Ikha (your)",
+        "Akha (his/her)",
+        "Ekha (their)",
+        "sosokhoui (Soussou language)"
+      ],
+      "alternative_spelling": "Sometimes written as 'x' (sosoxui)",
+      "rule": "kh ↔ x are variants representing /x/ sound"
+    },
+    "nasal_consonants": {
+      "description": "Prenasalized consonants exist but rare word-initially",
+      "examples": [
+        "ngo (and/what about) - /ŋo/",
+        "ǹgá (mother) - rare prenasalized /ŋga/"
+      ],
+      "rule": "Most nasal sounds are straightforward /m/, /n/, /ŋ/"
+    }
+  },
+  "normalization_algorithm": {
+    "description": "Steps to normalize Soussou text for AI matching",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Convert to lowercase",
+        "example": "Ntan → ntan, Fafé → fafé"
+      },
+      {
+        "step": 2,
+        "action": "Remove apostrophes",
+        "example": "n'a → na, whon' → whon, m'ma → mma"
+      },
+      {
+        "step": 3,
+        "action": "Normalize accented vowels",
+        "mapping": {
+          "é": "e",
+          "ɛ": "e",
+          "ɔ": "o",
+          "à": "a",
+          "è": "e",
+          "ò": "o"
+        },
+        "example": "fafé → fafe, kɔlɛ → kole"
+      },
+      {
+        "step": 4,
+        "action": "Normalize kh/x variants",
+        "example": "khafé → khafe, sosoxui → sosokhoui"
+      },
+      {
+        "step": 5,
+        "action": "Look up in canonical dictionary",
+        "example": "After normalization, match against canonical forms"
+      }
+    ],
+    "implementation_example": {
+      "javascript": "function normalize(soussouText) {\n  return soussouText\n    .toLowerCase()\n    .replace(/'/g, '')\n    .replace(/[éèê]/g, 'e')\n    .replace(/[àâ]/g, 'a')\n    .replace(/[ɛ]/g, 'e')\n    .replace(/[ɔ]/g, 'o')\n    .replace(/x/g, 'kh');\n}",
+      "usage": "normalize('N\\'na fafé') → 'na fafe'"
+    }
+  },
+  "context_disambiguation": {
+    "description": "Some forms are homographs - same spelling, different meanings",
+    "ambiguous_forms": [
+      {
+        "form": "m'ma",
+        "meaning_1": {
+          "sense": "Negation marker",
+          "pattern": "Pronoun + m'ma + Verb",
+          "example": "Ntan m'ma fafé (I'm not coming)"
+        },
+        "meaning_2": {
+          "sense": "Possessive 'my'",
+          "pattern": "M'ma + Noun",
+          "example": "M'ma woto (My car)"
+        },
+        "disambiguation": "Check if followed by verb (negation) or noun (possession)"
+      },
+      {
+        "form": "a",
+        "meaning_1": {
+          "sense": "Third person pronoun (he/she)",
+          "pattern": "Subject position",
+          "example": "A fafé (He/She is coming)"
+        },
+        "meaning_2": {
+          "sense": "Shortened form in informal speech",
+          "pattern": "Quick teasing/casual context",
+          "example": "A ngo? (What about him/her?)"
+        },
+        "disambiguation": "Context-dependent, both are valid pronoun usages"
+      }
+    ]
+  },
+  "quality_notes": {
+    "source_authenticity": "All patterns extracted from Z's authentic Guinea Conakry speech",
+    "guinea_specific": "Excludes Sierra Leone variants (different orthography, lexical items)",
+    "modern_usage": "Includes productive -fé pattern (may not be in old academic sources)",
+    "tonal_awareness": "Soussou is tonal (H/L) but tone NOT written - same spelling can be different words based on tone",
+    "validation_status": "Pending ChatGPT Congregation validation against their Soussou exposure"
+  }
+}
