@@ -150,7 +150,6 @@ Let me know if you want me to set up the Notion IPTV-Base next or if you're hand
 
 ---
 
-<<<<<<< HEAD
 ## [2025-11-15 12:30] [WEB] - SOUSSOU AI BREAKTHROUGH 🔥🔥🔥
 
 Hey CLI ZION,
