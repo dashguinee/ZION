@@ -1,0 +1,1564 @@
+{
+  "metadata": {
+    "source": "docs/soussou-engine-FILTERED.md",
+    "extracted_at": "2025-11-15",
+    "total_conversations": 15,
+    "total_sentences": 87,
+    "agent": "Example Conversations Agent",
+    "notes": "Extracted from ChatGPT training conversation showing real Soussou usage patterns, grammar rules (SOAM word order), and natural conversation flow with French/English mixing"
+  },
+  "conversations": [
+    {
+      "id": 1,
+      "context": "Location check - asking where someone is",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Ina mindé?",
+          "french": "Tu es où ?",
+          "english": "Where are you?"
+        },
+        {
+          "speaker": "B",
+          "soussou": "N'na fafé",
+          "french": "J'arrive",
+          "english": "I'm coming / I'm on my way"
+        }
+      ],
+      "grammar_patterns": ["question_formation", "location_query", "movement_response", "phonetic_variants"],
+      "cultural_notes": "Standard informal greeting used in daily communication",
+      "variants": {
+        "spelling_variations": ["N'na fafé", "Na fafé", "n'a fafé", "Nna Fafé"]
+      }
+    },
+    {
+      "id": 2,
+      "context": "Checking on someone's situation",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Itan khafé gbo?",
+          "french": "Tu as beaucoup de problèmes ? / Comment va ta situation ?",
+          "english": "You have a lot going on? / How's your situation?"
+        },
+        {
+          "speaker": "B",
+          "soussou": "N'na kolon itan khafé",
+          "french": "Je comprends ta situation",
+          "english": "I understand your situation"
+        }
+      ],
+      "grammar_patterns": ["khafe_cause_marker", "empathy_expression", "SOAM_word_order"],
+      "cultural_notes": "Shows concern and understanding in street talk"
+    },
+    {
+      "id": 3,
+      "context": "Simple movement statements",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Ina fafé?",
+          "french": "Tu viens ?",
+          "english": "Are you coming?"
+        },
+        {
+          "speaker": "B",
+          "soussou": "N'na fafé, itan go?",
+          "french": "Je viens, et toi ?",
+          "english": "I'm coming, what about you?"
+        },
+        {
+          "speaker": "A",
+          "soussou": "Whon' tan fafé",
+          "french": "Nous venons",
+          "english": "We're coming"
+        }
+      ],
+      "grammar_patterns": ["question_intonation", "pronoun_usage", "inclusive_we", "continuation_marker_go"],
+      "cultural_notes": "Natural back-and-forth showing inclusive 'we' (whon') usage"
+    },
+    {
+      "id": 4,
+      "context": "Understanding and ability expression",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Ina comprendfé?",
+          "french": "Tu comprends ?",
+          "english": "Do you understand?"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Ntan comprendfé itan situation un peu",
+          "french": "Je comprends un peu ta situation",
+          "english": "I understand your situation a bit"
+        }
+      ],
+      "grammar_patterns": ["verb_formation_with_fe", "french_mixing", "SOAM_order", "modifiers"],
+      "cultural_notes": "Shows natural French-Soussou mixing ('un peu' in Soussou sentence)"
+    },
+    {
+      "id": 5,
+      "context": "Causality - because of",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Itan khafé",
+          "french": "À cause de toi",
+          "english": "Because of you"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Ina ntan khafé m'ma comprendfé",
+          "french": "Tu ne comprends pas à cause de moi",
+          "english": "You don't understand because of me"
+        }
+      ],
+      "grammar_patterns": ["khafe_cause_construction", "negation_mma", "pronoun_attachment"],
+      "cultural_notes": "Demonstrates cause marker 'khafé' attached to pronouns"
+    },
+    {
+      "id": 6,
+      "context": "Ownership and possession",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "M'ma woto yite",
+          "french": "Ma voiture est ici / est arrivée",
+          "english": "My car is here / has arrived"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Akha woto don fafé",
+          "french": "Sa voiture arrive",
+          "english": "His/her car is coming"
+        },
+        {
+          "speaker": "A",
+          "soussou": "Whonma bateau fafé",
+          "french": "Notre bateau arrive",
+          "english": "Our boat is coming"
+        }
+      ],
+      "grammar_patterns": ["ownership_markers", "mma_my", "akha_his_her", "whonma_our", "location_marker_yite"],
+      "cultural_notes": "Shows possession patterns and arrival/location markers"
+    },
+    {
+      "id": 7,
+      "context": "Negation examples",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Ntan m'ma kolon",
+          "french": "Je ne sais pas",
+          "english": "I don't know"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Itan go kolon?",
+          "french": "Toi tu sais ?",
+          "english": "Do you know?"
+        },
+        {
+          "speaker": "A",
+          "soussou": "Etan m'ma kolon",
+          "french": "Ils ne savent pas",
+          "english": "They don't know"
+        }
+      ],
+      "grammar_patterns": ["negation_mma", "pronoun_system", "question_particle_go"],
+      "cultural_notes": "Shows negation pattern: pronoun + m'ma + verb"
+    },
+    {
+      "id": 8,
+      "context": "Imperative commands - basic",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Fa bé!",
+          "french": "Viens ici !",
+          "english": "Come here!"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Dokho bé!",
+          "french": "Assieds-toi ici !",
+          "english": "Sit here!"
+        },
+        {
+          "speaker": "A",
+          "soussou": "Mmèmé bé!",
+          "french": "Attends ici !",
+          "english": "Wait here!"
+        }
+      ],
+      "grammar_patterns": ["imperative_form", "location_marker_be", "verb_no_pronoun"],
+      "cultural_notes": "Imperatives are verb + location marker, no pronoun needed"
+    },
+    {
+      "id": 9,
+      "context": "Movement commands with destinations",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Siga!",
+          "french": "Va ! / Pars !",
+          "english": "Go! / Leave!"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Siga yire!",
+          "french": "Va là-bas !",
+          "english": "Go there!"
+        },
+        {
+          "speaker": "A",
+          "soussou": "Fa A yire!",
+          "french": "Viens vers lui !",
+          "english": "Come to him!"
+        }
+      ],
+      "grammar_patterns": ["directional_yire", "destination_marker", "pronoun_A_destination"],
+      "cultural_notes": "'yire' = there/that place; 'A yire' = to him/his place"
+    },
+    {
+      "id": 10,
+      "context": "Ability expression with no'mma",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Ikha ChatGPT no'mma guira?",
+          "french": "Ton ChatGPT peut faire ça ?",
+          "english": "Your ChatGPT can do this?"
+        },
+        {
+          "speaker": "B",
+          "soussou": "I no'mma guira?",
+          "french": "Tu peux faire ça ?",
+          "english": "You can do this?"
+        },
+        {
+          "speaker": "A",
+          "soussou": "Eské I no'mma guira?",
+          "french": "Est-ce que tu peux faire ça ?",
+          "english": "Are you able to do this?"
+        }
+      ],
+      "grammar_patterns": ["ability_nomma", "question_particle_eske", "challenge_vs_genuine_question"],
+      "cultural_notes": "'Eské' makes question more formal/genuine; without it = challenging/teasing tone"
+    },
+    {
+      "id": 11,
+      "context": "Looking and attention commands",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Mato!",
+          "french": "Regarde !",
+          "english": "Look!"
+        },
+        {
+          "speaker": "B",
+          "soussou": "A mato",
+          "french": "Regarde-le / Regarde-la",
+          "english": "Look at him/her"
+        },
+        {
+          "speaker": "A",
+          "soussou": "I mato",
+          "french": "Regarde-toi",
+          "english": "Look at you / Look at yourself"
+        }
+      ],
+      "grammar_patterns": ["imperative_mato", "pronoun_A_object", "pronoun_I_shortform"],
+      "cultural_notes": "Object pronouns come before verb in imperative"
+    },
+    {
+      "id": 12,
+      "context": "Inside/location directives",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Fa bangui kouï",
+          "french": "Entre dans la maison",
+          "english": "Come inside the house"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Fa woto kouï",
+          "french": "Entre dans la voiture",
+          "english": "Come inside the car"
+        }
+      ],
+      "grammar_patterns": ["location_koui_inside", "object_bangui_house", "object_woto_car"],
+      "cultural_notes": "'kouï' = in/inside; pattern is: verb + object + kouï"
+    },
+    {
+      "id": 13,
+      "context": "Bringing and giving objects",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Fa guira",
+          "french": "Apporte ça / Viens avec ça",
+          "english": "Bring this/that"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Gui sonyi",
+          "french": "Donne-moi ça",
+          "english": "Give me that"
+        },
+        {
+          "speaker": "A",
+          "soussou": "Kha fa guira?",
+          "french": "Je devrais apporter ça ?",
+          "english": "Should I bring this?"
+        }
+      ],
+      "grammar_patterns": ["object_guira_this_that", "verb_sonyi_give", "question_kha_should"],
+      "cultural_notes": "'guira' = this thing/that thing; 'gui' = this (shorter form)"
+    },
+    {
+      "id": 14,
+      "context": "Complex understanding with French mixing",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Eské ina mma situation comprendfé?",
+          "french": "Est-ce que tu comprends ma situation ?",
+          "english": "Do you understand my situation?"
+        },
+        {
+          "speaker": "B",
+          "soussou": "Ntan itan situation comprendfé un peu",
+          "french": "Je comprends un peu ta situation",
+          "english": "I understand your situation a bit"
+        }
+      ],
+      "grammar_patterns": ["french_question_eske", "SOAM_complete", "french_nouns_in_soussou", "modifier_un_peu"],
+      "cultural_notes": "Natural mixing of French question particle and nouns in Soussou grammar structure"
+    },
+    {
+      "id": 15,
+      "context": "Follow and call commands",
+      "turns": [
+        {
+          "speaker": "A",
+          "soussou": "Fa fokhora",
+          "french": "Suis-moi",
+          "english": "Follow me"
+        },
+        {
+          "speaker": "B",
+          "soussou": "N'khili",
+          "french": "Appelle-moi",
+          "english": "Call me"
+        },
+        {
+          "speaker": "A",
+          "soussou": "Kelli bé",
+          "french": "Pars d'ici",
+          "english": "Leave here"
+        }
+      ],
+      "grammar_patterns": ["fokhora_after_me", "khili_call", "kelli_leave"],
+      "cultural_notes": "'fokhora' literally means 'after me'; combination of 'fa' (come) + 'fokhora'"
+    }
+  ],
+  "single_sentences": [
+    {
+      "id": 1,
+      "soussou": "Ntan fafé",
+      "french": "Je viens / Moi je viens",
+      "english": "I'm coming / I come",
+      "grammar_pattern": "pronoun_emphasis",
+      "breakdown": {
+        "subject": "Ntan (me - emphatic)",
+        "verb": "fafé (come)"
+      },
+      "cultural_notes": "Using 'Ntan' instead of 'N'na' emphasizes the subject"
+    },
+    {
+      "id": 2,
+      "soussou": "N'na fafé",
+      "french": "J'arrive",
+      "english": "I'm coming",
+      "grammar_pattern": "basic_statement",
+      "breakdown": {
+        "subject": "N'na (I am)",
+        "verb": "fafé (come)"
+      },
+      "cultural_notes": "Most common way to say 'I'm coming'"
+    },
+    {
+      "id": 3,
+      "soussou": "Itan ngo?",
+      "french": "Et toi ?",
+      "english": "And you? / What about you?",
+      "grammar_pattern": "continuation_question",
+      "breakdown": {
+        "subject": "Itan (you)",
+        "particle": "ngo (what about / and)"
+      },
+      "cultural_notes": "Used to continue conversation, redirect question back"
+    },
+    {
+      "id": 4,
+      "soussou": "Atan go?",
+      "french": "Et lui/elle ?",
+      "english": "What about him/her?",
+      "grammar_pattern": "continuation_third_person",
+      "breakdown": {
+        "subject": "Atan (him/her)",
+        "particle": "go (what about)"
+      },
+      "cultural_notes": "Same pattern as 'itan ngo' but third person"
+    },
+    {
+      "id": 5,
+      "soussou": "Whon' fafé",
+      "french": "Nous venons",
+      "english": "We're coming",
+      "grammar_pattern": "inclusive_we",
+      "breakdown": {
+        "subject": "Whon' (we - inclusive)",
+        "verb": "fafé (come)"
+      },
+      "cultural_notes": "Whon' includes the listener; Moukhou excludes the listener"
+    },
+    {
+      "id": 6,
+      "soussou": "M'ma woto",
+      "french": "Ma voiture",
+      "english": "My car",
+      "grammar_pattern": "possession",
+      "breakdown": {
+        "possessive": "M'ma (my)",
+        "noun": "woto (car)"
+      },
+      "cultural_notes": "Basic possession pattern: possessive + noun"
+    },
+    {
+      "id": 7,
+      "soussou": "Akha woto",
+      "french": "Sa voiture",
+      "english": "His/her car",
+      "grammar_pattern": "third_person_possession",
+      "breakdown": {
+        "possessive": "Akha (his/her)",
+        "noun": "woto (car)"
+      },
+      "cultural_notes": "Gender-neutral third person possessive"
+    },
+    {
+      "id": 8,
+      "soussou": "Ekha woto",
+      "french": "Leur voiture",
+      "english": "Their car",
+      "grammar_pattern": "plural_possession",
+      "breakdown": {
+        "possessive": "Ekha (their - short form)",
+        "noun": "woto (car)"
+      },
+      "cultural_notes": "Ekha = Etan + kha (they + possessive marker)"
+    },
+    {
+      "id": 9,
+      "soussou": "Whonma bateau",
+      "french": "Notre bateau",
+      "english": "Our boat",
+      "grammar_pattern": "inclusive_possession",
+      "breakdown": {
+        "possessive": "Whonma (our)",
+        "noun": "bateau (boat - French)"
+      },
+      "cultural_notes": "French nouns naturally integrated into Soussou"
+    },
+    {
+      "id": 10,
+      "soussou": "Ana m'ma fafé",
+      "french": "Il/Elle ne vient pas",
+      "english": "He/She is not coming",
+      "grammar_pattern": "negation_mma",
+      "breakdown": {
+        "subject": "Ana (he/she is)",
+        "negation": "m'ma (not/don't)",
+        "verb": "fafé (come)"
+      },
+      "cultural_notes": "Negation pattern: subject + m'ma + verb"
+    },
+    {
+      "id": 11,
+      "soussou": "Whontan m'ma kolon",
+      "french": "Nous ne savons pas",
+      "english": "We don't know",
+      "grammar_pattern": "negation_emphasis",
+      "breakdown": {
+        "subject": "Whontan (us - emphatic)",
+        "negation": "m'ma (not/don't)",
+        "verb": "kolon (know)"
+      },
+      "cultural_notes": "Whontan emphasizes 'we/us' vs simple Whon'"
+    },
+    {
+      "id": 12,
+      "soussou": "Etan m'ma kolon",
+      "french": "Ils ne savent pas",
+      "english": "They don't know",
+      "grammar_pattern": "plural_negation",
+      "breakdown": {
+        "subject": "Etan (they)",
+        "negation": "m'ma (not/don't)",
+        "verb": "kolon (know)"
+      },
+      "cultural_notes": "Same negation pattern for plural subjects"
+    },
+    {
+      "id": 13,
+      "soussou": "Ita khafé gbo",
+      "french": "Beaucoup de problèmes pour toi / Tu as beaucoup de choses",
+      "english": "A lot because of you / You have a lot going on",
+      "grammar_pattern": "cause_intensifier",
+      "breakdown": {
+        "pronoun": "Itan (you)",
+        "cause": "khafé (because of/situation)",
+        "intensifier": "gbo (a lot)"
+      },
+      "cultural_notes": "khafé can mean both 'because of' and 'situation/problem'"
+    },
+    {
+      "id": 14,
+      "soussou": "Ntan itan khafé comprendfé",
+      "french": "Je comprends à cause de toi",
+      "english": "I understand because of you",
+      "grammar_pattern": "SOAM_with_cause",
+      "breakdown": {
+        "subject": "Ntan (I)",
+        "object_cause": "itan khafé (because of you)",
+        "verb": "comprendfé (understand)"
+      },
+      "cultural_notes": "SOAM order: Subject + Object/Cause + Action + Modifier"
+    },
+    {
+      "id": 15,
+      "soussou": "Etan itan khafé comprendfé gbo",
+      "french": "Ils comprennent beaucoup à cause de toi",
+      "english": "They understand a lot because of you",
+      "grammar_pattern": "SOAM_complete",
+      "breakdown": {
+        "subject": "Etan (they)",
+        "object_cause": "itan khafé (because of you)",
+        "action": "comprendfé (understand)",
+        "modifier": "gbo (a lot)"
+      },
+      "cultural_notes": "Complete SOAM structure with all elements"
+    },
+    {
+      "id": 16,
+      "soussou": "Ntan comprendfé itan situation un peu",
+      "french": "Je comprends un peu ta situation",
+      "english": "I understand your situation a bit",
+      "grammar_pattern": "SOAM_french_mixing",
+      "breakdown": {
+        "subject": "Ntan (I)",
+        "object": "itan situation (your situation)",
+        "action": "comprendfé (understand)",
+        "modifier": "un peu (a bit - French)"
+      },
+      "cultural_notes": "Natural French-Soussou mixing in modifier position"
+    },
+    {
+      "id": 17,
+      "soussou": "Fa!",
+      "french": "Viens !",
+      "english": "Come!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "Fa (come - imperative)"
+      },
+      "cultural_notes": "Simplest imperative form: just the verb"
+    },
+    {
+      "id": 18,
+      "soussou": "Fa bé!",
+      "french": "Viens ici !",
+      "english": "Come here!",
+      "grammar_pattern": "imperative_location",
+      "breakdown": {
+        "verb": "Fa (come)",
+        "location": "bé (here)"
+      },
+      "cultural_notes": "Adding 'bé' specifies location 'here'"
+    },
+    {
+      "id": 19,
+      "soussou": "Dokho!",
+      "french": "Assieds-toi !",
+      "english": "Sit!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "Dokho (sit)"
+      },
+      "cultural_notes": "Direct command form"
+    },
+    {
+      "id": 20,
+      "soussou": "Dokho bé!",
+      "french": "Assieds-toi ici !",
+      "english": "Sit here!",
+      "grammar_pattern": "imperative_location",
+      "breakdown": {
+        "verb": "Dokho (sit)",
+        "location": "bé (here)"
+      },
+      "cultural_notes": "Same pattern: verb + location marker"
+    },
+    {
+      "id": 21,
+      "soussou": "T'ti!",
+      "french": "Lève-toi ! / Debout !",
+      "english": "Stand!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "T'ti (stand)"
+      },
+      "cultural_notes": "Short, sharp imperative"
+    },
+    {
+      "id": 22,
+      "soussou": "Mato!",
+      "french": "Regarde !",
+      "english": "Look!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "Mato (look)"
+      },
+      "cultural_notes": "Attention-getting command"
+    },
+    {
+      "id": 23,
+      "soussou": "A mato",
+      "french": "Regarde-le/la",
+      "english": "Look at him/her",
+      "grammar_pattern": "imperative_object",
+      "breakdown": {
+        "object": "A (him/her)",
+        "verb": "mato (look)"
+      },
+      "cultural_notes": "Object pronoun comes before verb"
+    },
+    {
+      "id": 24,
+      "soussou": "Siga!",
+      "french": "Va ! / Pars !",
+      "english": "Go! / Leave!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "Siga (go/leave)"
+      },
+      "cultural_notes": "Can mean both 'go' and 'leave' depending on context"
+    },
+    {
+      "id": 25,
+      "soussou": "Siga yire!",
+      "french": "Va là-bas !",
+      "english": "Go there!",
+      "grammar_pattern": "imperative_destination",
+      "breakdown": {
+        "verb": "Siga (go)",
+        "destination": "yire (there/that place)"
+      },
+      "cultural_notes": "'yire' indicates a destination or location"
+    },
+    {
+      "id": 26,
+      "soussou": "Siga A yire!",
+      "french": "Va vers lui/elle !",
+      "english": "Go to him/her!",
+      "grammar_pattern": "imperative_person_destination",
+      "breakdown": {
+        "verb": "Siga (go)",
+        "destination": "A yire (to him/her, his/her place)"
+      },
+      "cultural_notes": "'A yire' = to his/her place, combining pronoun + location"
+    },
+    {
+      "id": 27,
+      "soussou": "Fa A yire!",
+      "french": "Viens vers lui/elle !",
+      "english": "Come to him/her!",
+      "grammar_pattern": "imperative_person_destination",
+      "breakdown": {
+        "verb": "Fa (come)",
+        "destination": "A yire (to him/her)"
+      },
+      "cultural_notes": "Same destination pattern with different verb"
+    },
+    {
+      "id": 28,
+      "soussou": "Sonyi!",
+      "french": "Donne !",
+      "english": "Give!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "Sonyi (give)"
+      },
+      "cultural_notes": "Basic giving command"
+    },
+    {
+      "id": 29,
+      "soussou": "Gui sonyi",
+      "french": "Donne-moi ça",
+      "english": "Give me that",
+      "grammar_pattern": "imperative_object",
+      "breakdown": {
+        "object": "Gui (this/that thing)",
+        "verb": "sonyi (give)"
+      },
+      "cultural_notes": "'Gui' = this, 'guira' = this thing/that thing"
+    },
+    {
+      "id": 30,
+      "soussou": "Facta!",
+      "french": "Apporte !",
+      "english": "Bring!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "Facta (bring)"
+      },
+      "cultural_notes": "Direct bringing command"
+    },
+    {
+      "id": 31,
+      "soussou": "Fa guira",
+      "french": "Apporte ça / Viens avec ça",
+      "english": "Bring this/that",
+      "grammar_pattern": "imperative_object",
+      "breakdown": {
+        "verb": "Fa (come)",
+        "object": "guira (this thing/that thing)"
+      },
+      "cultural_notes": "Literally 'come this thing' = bring this"
+    },
+    {
+      "id": 32,
+      "soussou": "Alou!",
+      "french": "Arrête ! / Stop !",
+      "english": "Stop!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "Alou (stop)"
+      },
+      "cultural_notes": "Pure command form for stopping action"
+    },
+    {
+      "id": 33,
+      "soussou": "Mmèmé!",
+      "french": "Attends !",
+      "english": "Wait!",
+      "grammar_pattern": "simple_imperative",
+      "breakdown": {
+        "verb": "Mmèmé (wait)"
+      },
+      "cultural_notes": "Common wait command"
+    },
+    {
+      "id": 34,
+      "soussou": "Mmèmé bé!",
+      "french": "Attends ici !",
+      "english": "Wait here!",
+      "grammar_pattern": "imperative_location",
+      "breakdown": {
+        "verb": "Mmèmé (wait)",
+        "location": "bé (here)"
+      },
+      "cultural_notes": "Wait + location marker pattern"
+    },
+    {
+      "id": 35,
+      "soussou": "Fa fokhora",
+      "french": "Suis-moi",
+      "english": "Follow me",
+      "grammar_pattern": "imperative_direction",
+      "breakdown": {
+        "verb": "Fa (come)",
+        "direction": "fokhora (after me)"
+      },
+      "cultural_notes": "Literally 'come after me' = follow me"
+    },
+    {
+      "id": 36,
+      "soussou": "Kelli bé",
+      "french": "Pars d'ici",
+      "english": "Leave here",
+      "grammar_pattern": "imperative_location",
+      "breakdown": {
+        "verb": "Kelli (leave from)",
+        "location": "bé (here)"
+      },
+      "cultural_notes": "'Kelli' is stronger than 'Siga' for leaving"
+    },
+    {
+      "id": 37,
+      "soussou": "N'khili",
+      "french": "Appelle-moi",
+      "english": "Call me",
+      "grammar_pattern": "imperative_object_pronoun",
+      "breakdown": {
+        "object": "N' (me)",
+        "verb": "khili (call)"
+      },
+      "cultural_notes": "Object pronoun attached to verb"
+    },
+    {
+      "id": 38,
+      "soussou": "Fa bangui kouï",
+      "french": "Entre dans la maison",
+      "english": "Come inside the house",
+      "grammar_pattern": "imperative_location_inside",
+      "breakdown": {
+        "verb": "Fa (come)",
+        "object": "bangui (house)",
+        "location": "kouï (in/inside)"
+      },
+      "cultural_notes": "'kouï' = in/inside; pattern is verb + object + kouï"
+    },
+    {
+      "id": 39,
+      "soussou": "Fa woto kouï",
+      "french": "Monte dans la voiture",
+      "english": "Come inside the car / Get in the car",
+      "grammar_pattern": "imperative_location_inside",
+      "breakdown": {
+        "verb": "Fa (come)",
+        "object": "woto (car)",
+        "location": "kouï (in/inside)"
+      },
+      "cultural_notes": "Same pattern with different object"
+    },
+    {
+      "id": 40,
+      "soussou": "Kha fa guira?",
+      "french": "Je devrais apporter ça ?",
+      "english": "Should I bring this?",
+      "grammar_pattern": "question_should",
+      "breakdown": {
+        "question": "Kha (should)",
+        "verb": "fa (bring/come)",
+        "object": "guira (this)"
+      },
+      "cultural_notes": "'Kha' at beginning indicates question about obligation/suggestion"
+    },
+    {
+      "id": 41,
+      "soussou": "Ntan no'mma comprendfé itan situation",
+      "french": "Je peux comprendre ta situation",
+      "english": "I can understand your situation",
+      "grammar_pattern": "ability_nomma",
+      "breakdown": {
+        "subject": "Ntan (I)",
+        "ability": "no'mma (can/able to)",
+        "verb": "comprendfé (understand)",
+        "object": "itan situation (your situation)"
+      },
+      "cultural_notes": "Ability marker 'no'mma' comes after pronoun, before verb/object"
+    },
+    {
+      "id": 42,
+      "soussou": "Ina no'mma fa bé?",
+      "french": "Tu peux venir ici ?",
+      "english": "Can you come here?",
+      "grammar_pattern": "question_ability",
+      "breakdown": {
+        "subject": "Ina (you are)",
+        "ability": "no'mma (can)",
+        "verb": "fa (come)",
+        "location": "bé (here)"
+      },
+      "cultural_notes": "Question formed by intonation with ability marker"
+    },
+    {
+      "id": 43,
+      "soussou": "Atan no'mma woto fixfé",
+      "french": "Il/Elle peut réparer la voiture",
+      "english": "He/She can fix the car",
+      "grammar_pattern": "ability_action",
+      "breakdown": {
+        "subject": "Atan (he/she)",
+        "ability": "no'mma (can)",
+        "object": "woto (car)",
+        "verb": "fixfé (fix - verb with -fé)"
+      },
+      "cultural_notes": "Shows verb formation pattern: French root + fé suffix"
+    },
+    {
+      "id": 44,
+      "soussou": "Ikha ChatGPT no'mma guira?",
+      "french": "Ton ChatGPT peut faire ça ?",
+      "english": "Your ChatGPT can do this?",
+      "grammar_pattern": "question_possession_ability",
+      "breakdown": {
+        "possessive": "Ikha (your)",
+        "subject": "ChatGPT",
+        "ability": "no'mma (can)",
+        "object": "guira (this)"
+      },
+      "cultural_notes": "Modern usage with tech terms in Soussou structure"
+    },
+    {
+      "id": 45,
+      "soussou": "I no'mma guira?",
+      "french": "Tu peux faire ça ?",
+      "english": "You can do this?",
+      "grammar_pattern": "challenging_question",
+      "breakdown": {
+        "subject": "I (you - short form)",
+        "ability": "no'mma (can)",
+        "object": "guira (this)"
+      },
+      "cultural_notes": "'I' is shortened 'Itan'; without 'Eské' = challenging/teasing tone"
+    },
+    {
+      "id": 46,
+      "soussou": "Eské I no'mma guira?",
+      "french": "Est-ce que tu peux faire ça ?",
+      "english": "Are you able to do this?",
+      "grammar_pattern": "genuine_question",
+      "breakdown": {
+        "question": "Eské (French: est-ce que)",
+        "subject": "I (you)",
+        "ability": "no'mma (can)",
+        "object": "guira (this)"
+      },
+      "cultural_notes": "Adding 'Eské' makes question formal/genuine vs challenging"
+    },
+    {
+      "id": 47,
+      "soussou": "Eské ina mma situation comprendfé?",
+      "french": "Est-ce que tu comprends ma situation ?",
+      "english": "Do you understand my situation?",
+      "grammar_pattern": "formal_question_SOAM",
+      "breakdown": {
+        "question": "Eské (est-ce que)",
+        "subject": "ina (you are)",
+        "object": "mma situation (my situation)",
+        "verb": "comprendfé (understand)"
+      },
+      "cultural_notes": "Formal question with SOAM order maintained"
+    },
+    {
+      "id": 48,
+      "soussou": "Innan comprendfé itan khafé",
+      "french": "Je comprends ta situation",
+      "english": "I understand your situation",
+      "grammar_pattern": "empathy_statement",
+      "breakdown": {
+        "subject": "Innan (I - variant)",
+        "verb": "comprendfé (understand)",
+        "object": "itan khafé (your situation)"
+      },
+      "cultural_notes": "'khafé' can mean both 'because of' and 'situation/problem'"
+    },
+    {
+      "id": 49,
+      "soussou": "Fabé?",
+      "french": "Viens ici ?",
+      "english": "Come here?",
+      "grammar_pattern": "compound_question",
+      "breakdown": {
+        "verb": "Fa (come)",
+        "location": "bé (here)"
+      },
+      "cultural_notes": "Fa + bé compressed into single word 'Fabé'"
+    },
+    {
+      "id": 50,
+      "soussou": "Whon m'ma kolon",
+      "french": "Nous ne savons pas",
+      "english": "We don't know",
+      "grammar_pattern": "inclusive_negation",
+      "breakdown": {
+        "subject": "Whon (we - inclusive)",
+        "negation": "m'ma (don't)",
+        "verb": "kolon (know)"
+      },
+      "cultural_notes": "Includes the listener in 'we'"
+    },
+    {
+      "id": 51,
+      "soussou": "Moukhou fafé",
+      "french": "Nous venons (vous exclus)",
+      "english": "We're coming (excluding you)",
+      "grammar_pattern": "exclusive_we",
+      "breakdown": {
+        "subject": "Moukhou (we - exclusive)",
+        "verb": "fafé (come)"
+      },
+      "cultural_notes": "Moukhou excludes the listener from 'we'"
+    },
+    {
+      "id": 52,
+      "soussou": "Ntan sosokhoui kolon un peu",
+      "french": "Je comprends un peu le Soussou",
+      "english": "I understand Soussou a bit",
+      "grammar_pattern": "learning_statement",
+      "breakdown": {
+        "subject": "Ntan (I)",
+        "object": "sosokhoui (Soussou language)",
+        "verb": "kolon (know/understand)",
+        "modifier": "un peu (a bit - French)"
+      },
+      "cultural_notes": "Natural way to express language learning progress"
+    },
+    {
+      "id": 53,
+      "soussou": "Ngui fala madi sosokhoui?",
+      "french": "Comment dit-on ça en Soussou ?",
+      "english": "How do I say this in Soussou?",
+      "grammar_pattern": "how_to_say_question",
+      "breakdown": {
+        "question": "Ngui fala madi (how do I say)",
+        "language": "sosokhoui (in Soussou)"
+      },
+      "cultural_notes": "Standard phrase for asking translations"
+    },
+    {
+      "id": 54,
+      "soussou": "Ngui fala madi foulekhoui?",
+      "french": "Comment dit-on ça en Pular ?",
+      "english": "How do I say this in Pular?",
+      "grammar_pattern": "how_to_say_question",
+      "breakdown": {
+        "question": "Ngui fala madi (how do I say)",
+        "language": "foulekhoui (in Pular)"
+      },
+      "cultural_notes": "Same pattern for asking about Pular language"
+    },
+    {
+      "id": 55,
+      "soussou": "Compte n'ma yitima na",
+      "french": "Ton compte est presque fini",
+      "english": "Your account is almost finished",
+      "grammar_pattern": "business_context",
+      "breakdown": {
+        "subject": "Compte (account - French)",
+        "possessive": "n'ma (your - variant)",
+        "verb": "yitima (almost finished)",
+        "particle": "na (completed state)"
+      },
+      "cultural_notes": "IPTV/business context with French terms integrated"
+    },
+    {
+      "id": 56,
+      "soussou": "Compte n'ma don yite",
+      "french": "Ton compte est presque là / presque fini",
+      "english": "Your account is almost there / almost done",
+      "grammar_pattern": "near_completion",
+      "breakdown": {
+        "subject": "Compte (account)",
+        "possessive": "n'ma (your)",
+        "state": "don yite (almost here/there)"
+      },
+      "cultural_notes": "'don yite' = almost arrived/finished"
+    },
+    {
+      "id": 57,
+      "soussou": "Compte n'ma don fini hier",
+      "french": "Ton compte a fini hier",
+      "english": "Your account finished yesterday",
+      "grammar_pattern": "past_completion",
+      "breakdown": {
+        "subject": "Compte (account)",
+        "possessive": "n'ma (your)",
+        "state": "don fini (finished)",
+        "time": "hier (yesterday - French)"
+      },
+      "cultural_notes": "Past tense with French time marker"
+    },
+    {
+      "id": 58,
+      "soussou": "Itan khafé, Netflix n'ma don fini hier",
+      "french": "À cause de toi, ton Netflix a fini hier",
+      "english": "Because of you, your Netflix finished yesterday",
+      "grammar_pattern": "cause_with_business",
+      "breakdown": {
+        "cause": "Itan khafé (because of you)",
+        "subject": "Netflix n'ma (your Netflix)",
+        "state": "don fini hier (finished yesterday)"
+      },
+      "cultural_notes": "Modern IPTV business usage with causality"
+    },
+    {
+      "id": 59,
+      "soussou": "Si i bo wolité, n'ka rallonger 1 mois",
+      "french": "Si tu veux continuer, je peux prolonger 1 mois",
+      "english": "If you want to continue, I can extend 1 month",
+      "grammar_pattern": "conditional_business",
+      "breakdown": {
+        "condition": "Si i bo wolité (if you want to continue)",
+        "ability": "n'ka (I can)",
+        "action": "rallonger (extend - French)",
+        "duration": "1 mois (1 month)"
+      },
+      "cultural_notes": "Business negotiation with French-Soussou mixing"
+    },
+    {
+      "id": 60,
+      "soussou": "Abonnement n'ma tan n'o fini hier",
+      "french": "Ton abonnement a fini hier",
+      "english": "Your subscription finished yesterday",
+      "grammar_pattern": "business_notification",
+      "breakdown": {
+        "subject": "Abonnement (subscription - French)",
+        "possessive": "n'ma (your)",
+        "particle": "tan n'o (has)",
+        "state": "fini hier (finished yesterday)"
+      },
+      "cultural_notes": "IPTV customer notification phrasing"
+    },
+    {
+      "id": 61,
+      "soussou": "Toma",
+      "french": "Homonyme (mot réel)",
+      "english": "Homonym (real word)",
+      "grammar_pattern": "noun",
+      "breakdown": {
+        "word": "Toma (homonym in Soussou)"
+      },
+      "cultural_notes": "CVCV pattern word, actually exists in Soussou"
+    },
+    {
+      "id": 62,
+      "soussou": "kouli",
+      "french": "ver",
+      "english": "worm",
+      "grammar_pattern": "noun",
+      "breakdown": {
+        "word": "kouli (worm)"
+      },
+      "cultural_notes": "Close to 'Khouli' and 'whouli' (blood)"
+    },
+    {
+      "id": 63,
+      "soussou": "whouli",
+      "french": "sang",
+      "english": "blood",
+      "grammar_pattern": "noun",
+      "breakdown": {
+        "word": "whouli (blood)"
+      },
+      "cultural_notes": "Important biological/cultural term"
+    },
+    {
+      "id": 64,
+      "soussou": "sogbè",
+      "french": "sérieux",
+      "english": "serious",
+      "grammar_pattern": "adjective",
+      "breakdown": {
+        "word": "sogbè (serious)"
+      },
+      "cultural_notes": "GB cluster common in West African languages"
+    },
+    {
+      "id": 65,
+      "soussou": "bangui",
+      "french": "maison",
+      "english": "house",
+      "grammar_pattern": "noun",
+      "breakdown": {
+        "word": "bangui (house)"
+      },
+      "cultural_notes": "Basic dwelling term"
+    },
+    {
+      "id": 66,
+      "soussou": "woto",
+      "french": "voiture",
+      "english": "car",
+      "grammar_pattern": "noun",
+      "breakdown": {
+        "word": "woto (car)"
+      },
+      "cultural_notes": "Modern transportation term"
+    },
+    {
+      "id": 67,
+      "soussou": "bateau",
+      "french": "bateau",
+      "english": "boat",
+      "grammar_pattern": "noun_french_loan",
+      "breakdown": {
+        "word": "bateau (boat - French word used in Soussou)"
+      },
+      "cultural_notes": "Direct French borrowing, commonly used"
+    },
+    {
+      "id": 68,
+      "soussou": "avion",
+      "french": "avion",
+      "english": "airplane",
+      "grammar_pattern": "noun_french_loan",
+      "breakdown": {
+        "word": "avion (airplane - French)"
+      },
+      "cultural_notes": "Modern transport term from French"
+    },
+    {
+      "id": 69,
+      "soussou": "kolon",
+      "french": "savoir / connaître",
+      "english": "know / understand",
+      "grammar_pattern": "verb",
+      "breakdown": {
+        "verb": "kolon (know)"
+      },
+      "cultural_notes": "Core knowledge/understanding verb"
+    },
+    {
+      "id": 70,
+      "soussou": "fafé",
+      "french": "venir / arriver",
+      "english": "come / arrive",
+      "grammar_pattern": "verb_movement",
+      "breakdown": {
+        "verb": "fafé (come)"
+      },
+      "cultural_notes": "Most common movement verb"
+    },
+    {
+      "id": 71,
+      "soussou": "comprendfé",
+      "french": "comprendre",
+      "english": "understand",
+      "grammar_pattern": "verb_fe_formation",
+      "breakdown": {
+        "root": "comprend (French: understand)",
+        "suffix": "fé (action marker)"
+      },
+      "cultural_notes": "French root + Soussou action suffix = Soussou verb"
+    },
+    {
+      "id": 72,
+      "soussou": "fixfé",
+      "french": "réparer",
+      "english": "fix",
+      "grammar_pattern": "verb_fe_formation",
+      "breakdown": {
+        "root": "fix (English/French: repair)",
+        "suffix": "fé (action marker)"
+      },
+      "cultural_notes": "Shows borrowing from English/French + Soussou suffix"
+    },
+    {
+      "id": 73,
+      "soussou": "mangéfé",
+      "french": "manger",
+      "english": "eat",
+      "grammar_pattern": "verb_fe_formation",
+      "breakdown": {
+        "root": "mangé (French: eat)",
+        "suffix": "fé (action marker)"
+      },
+      "cultural_notes": "Productive verb formation pattern"
+    },
+    {
+      "id": 74,
+      "soussou": "travailléfé",
+      "french": "travailler",
+      "english": "work",
+      "grammar_pattern": "verb_fe_formation",
+      "breakdown": {
+        "root": "travaillé (French: work)",
+        "suffix": "fé (action marker)"
+      },
+      "cultural_notes": "Any French verb can be Soussouized this way"
+    },
+    {
+      "id": 75,
+      "soussou": "khafé",
+      "french": "à cause de / situation / problème",
+      "english": "because of / situation / problem",
+      "grammar_pattern": "cause_marker",
+      "breakdown": {
+        "particle": "khafé (cause/situation marker)"
+      },
+      "cultural_notes": "Dual meaning: causality when attached to pronouns, or standalone 'situation'"
+    },
+    {
+      "id": 76,
+      "soussou": "no'mma",
+      "french": "pouvoir / être capable",
+      "english": "can / able to / capable",
+      "grammar_pattern": "ability_marker",
+      "breakdown": {
+        "auxiliary": "no'mma (ability marker)"
+      },
+      "cultural_notes": "Goes after pronoun, before action/object"
+    },
+    {
+      "id": 77,
+      "soussou": "bé",
+      "french": "ici",
+      "english": "here",
+      "grammar_pattern": "location_marker",
+      "breakdown": {
+        "location": "bé (here)"
+      },
+      "cultural_notes": "Used with verbs to indicate 'here' location"
+    },
+    {
+      "id": 78,
+      "soussou": "yire",
+      "french": "là-bas",
+      "english": "there / that place",
+      "grammar_pattern": "location_marker",
+      "breakdown": {
+        "location": "yire (there)"
+      },
+      "cultural_notes": "Can be combined with pronouns: A yire = to him/his place"
+    },
+    {
+      "id": 79,
+      "soussou": "kouï",
+      "french": "dans / à l'intérieur",
+      "english": "in / inside",
+      "grammar_pattern": "location_marker_inside",
+      "breakdown": {
+        "location": "kouï (in/inside)"
+      },
+      "cultural_notes": "Pattern: verb + object + kouï"
+    },
+    {
+      "id": 80,
+      "soussou": "fokhora",
+      "french": "après moi / derrière moi",
+      "english": "after me / behind me",
+      "grammar_pattern": "directional_marker",
+      "breakdown": {
+        "direction": "fokhora (after me)"
+      },
+      "cultural_notes": "Used with 'Fa' to mean 'follow me'"
+    },
+    {
+      "id": 81,
+      "soussou": "guira",
+      "french": "cette chose / cela",
+      "english": "this thing / that thing",
+      "grammar_pattern": "demonstrative",
+      "breakdown": {
+        "demonstrative": "guira (this/that thing)"
+      },
+      "cultural_notes": "'gui' = this (shorter); 'guira' = this thing"
+    },
+    {
+      "id": 82,
+      "soussou": "gbo",
+      "french": "beaucoup",
+      "english": "a lot / many",
+      "grammar_pattern": "quantifier",
+      "breakdown": {
+        "quantifier": "gbo (a lot)"
+      },
+      "cultural_notes": "Intensifier used after verbs or nouns"
+    },
+    {
+      "id": 83,
+      "soussou": "yite",
+      "french": "ici / arrivé",
+      "english": "here / arrived",
+      "grammar_pattern": "location_state",
+      "breakdown": {
+        "state": "yite (here/arrived)"
+      },
+      "cultural_notes": "Indicates completion of arrival"
+    },
+    {
+      "id": 84,
+      "soussou": "don",
+      "french": "déjà / maintenant",
+      "english": "already / now",
+      "grammar_pattern": "temporal_marker",
+      "breakdown": {
+        "time": "don (already/now)"
+      },
+      "cultural_notes": "Indicates completed or current state"
+    },
+    {
+      "id": 85,
+      "soussou": "m'ma",
+      "french": "ne pas / mon-ma (contexte)",
+      "english": "not / don't / my (context dependent)",
+      "grammar_pattern": "negation_or_possession",
+      "breakdown": {
+        "particle": "m'ma (negation marker OR possessive)"
+      },
+      "cultural_notes": "Spacing matters: 'm'ma' = negation; 'mma' = my"
+    },
+    {
+      "id": 86,
+      "soussou": "go / ngo",
+      "french": "et / alors / aussi",
+      "english": "and / what about / also",
+      "grammar_pattern": "continuation_particle",
+      "breakdown": {
+        "particle": "go/ngo (continuation/redirection)"
+      },
+      "cultural_notes": "Used to redirect questions: 'Itan go?' = 'And you?'"
+    },
+    {
+      "id": 87,
+      "soussou": "kha",
+      "french": "de / marqueur de possession",
+      "english": "of / possession marker",
+      "grammar_pattern": "possession_marker",
+      "breakdown": {
+        "particle": "kha (ownership/possession)"
+      },
+      "cultural_notes": "Combines with pronouns: Akha = his/her, Ekha = their"
+    }
+  ],
+  "grammar_patterns_summary": {
+    "SOAM_word_order": {
+      "name": "Subject-Object-Action-Modifier",
+      "description": "Core Soussou sentence structure",
+      "pattern": "SUBJECT + OBJECT/CONTEXT + ACTION(verb+fé) + MODIFIER",
+      "example": "Ntan itan situation comprendfé un peu (I understand your situation a bit)"
+    },
+    "pronoun_system": {
+      "first_person_singular": {
+        "emphatic": "Ntan (me)",
+        "regular": "N'na (I am)",
+        "possessive": "M'ma / Mma (my)"
+      },
+      "second_person_singular": {
+        "emphatic": "Itan (you)",
+        "regular": "Ina (you are)",
+        "short": "I (you - casual)",
+        "possessive": "I + kha / Ikha (your)"
+      },
+      "third_person_singular": {
+        "emphatic": "Atan (him/her)",
+        "regular": "Ana (he/she is)",
+        "object": "A (him/her)",
+        "possessive": "Akha (his/her)"
+      },
+      "first_person_plural": {
+        "inclusive": "Whon' (we - including you)",
+        "exclusive": "Moukhou (we - excluding you)",
+        "possessive_inclusive": "Whonma (our)",
+        "emphatic": "Whontan (us)"
+      },
+      "third_person_plural": {
+        "regular": "Etan (they)",
+        "possessive": "Etan kha / Ekha (their)"
+      }
+    },
+    "verb_formation": {
+      "description": "French/English verb roots + Soussou action suffix -fé/-fè",
+      "examples": [
+        "comprendre → comprendfé",
+        "fix → fixfé",
+        "manger → mangéfé",
+        "travailler → travailléfé"
+      ],
+      "note": "Productive pattern - any French/English verb can be Soussouized"
+    },
+    "negation": {
+      "pattern": "PRONOUN + m'ma + VERB",
+      "examples": [
+        "Ntan m'ma kolon (I don't know)",
+        "Ana m'ma fafé (He/she is not coming)",
+        "Etan m'ma kolon (They don't know)"
+      ]
+    },
+    "ability_marker": {
+      "marker": "no'mma (can/able to)",
+      "pattern": "PRONOUN + no'mma + OBJECT/ACTION",
+      "examples": [
+        "Ntan no'mma comprendfé (I can understand)",
+        "Ina no'mma fa bé? (Can you come here?)"
+      ]
+    },
+    "cause_marker": {
+      "marker": "khafé (because of / situation)",
+      "pattern": "PRONOUN + khafé = because of PRONOUN",
+      "examples": [
+        "Itan khafé (because of you)",
+        "Etan itan khafé comprendfé gbo (They understand a lot because of you)"
+      ],
+      "dual_meaning": "Can mean 'because of' when attached to pronouns, or standalone 'situation/problem'"
+    },
+    "imperatives": {
+      "simple": "VERB only (no pronoun)",
+      "with_location": "VERB + bé/yire (here/there)",
+      "with_object": "OBJECT + VERB or VERB + OBJECT",
+      "examples": [
+        "Fa! (Come!)",
+        "Fa bé! (Come here!)",
+        "Dokho bé! (Sit here!)",
+        "A mato (Look at him/her)"
+      ]
+    },
+    "location_markers": {
+      "here": "bé",
+      "there": "yire",
+      "inside": "kouï",
+      "to_person": "A yire (to him/her, his/her place)",
+      "pattern": "VERB + LOCATION or VERB + OBJECT + kouï"
+    },
+    "question_formation": {
+      "intonation": "Statement with rising tone",
+      "formal": "Eské + statement (from French 'est-ce que')",
+      "continuation": "PRONOUN + go/ngo (what about...?)",
+      "examples": [
+        "Ina fafé? (Are you coming? - intonation)",
+        "Eské I no'mma guira? (Can you do this? - formal)",
+        "Itan go? (And you? - continuation)"
+      ]
+    },
+    "french_english_mixing": {
+      "description": "Natural integration of French/English words and particles",
+      "common_french": [
+        "un peu (a bit)",
+        "situation",
+        "problème",
+        "compte/abonnement",
+        "Eské (est-ce que)",
+        "hier (yesterday)"
+      ],
+      "pattern": "French nouns and modifiers fit naturally into Soussou SOAM structure"
+    },
+    "phonetic_variations": {
+      "description": "Multiple spellings for same word due to no official orthography",
+      "rules": [
+        "Case insensitive",
+        "Apostrophes optional: n'na ≈ nna ≈ na",
+        "Double consonants optional: nn → n, ff → f",
+        "Accents optional: é ≈ e, è ≈ e"
+      ],
+      "examples": [
+        "N'na fafé = Na fafé = Nna Fafé = n'a fafé"
+      ]
+    }
+  },
+  "cultural_themes": {
+    "street_talk": "Urban Conakry style - casual, fast, with French mixing",
+    "dash_tone": "Calm, confident, smart, trustworthy - business context",
+    "iptv_context": "Subscription management, customer support, technical help",
+    "relationship_building": "Showing empathy, understanding, checking on others",
+    "directness": "Commands are direct but not rude - cultural norm",
+    "language_learning": "People teach by filling gaps with known languages (French/English)",
+    "ai_training": "This conversation itself is about building first Soussou AI"
+  },
+  "usage_notes": {
+    "teaching_approach": "Fill gaps with French/English until Soussou vocabulary learned",
+    "context_dependent": "Words like 'khafé' and 'm'ma' have multiple meanings based on context",
+    "tone_matters": "Same sentence with/without 'Eské' changes from challenge to genuine question",
+    "inclusive_exclusive": "Whon' vs Moukhou shows whether listener is included in 'we'",
+    "verb_productivity": "Any French/English verb + fé = valid Soussou verb",
+    "modern_terms": "Tech words (ChatGPT, Netflix, compte) naturally integrated",
+    "business_language": "IPTV/subscription vocabulary shows real-world usage"
+  }
+}

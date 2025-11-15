@@ -1,0 +1,1385 @@
+{
+  "metadata": {
+    "source": "docs/soussou-engine-FILTERED.md",
+    "extracted_at": "2025-11-15",
+    "total_entries": 147,
+    "agent": "Vocabulary Extraction Agent",
+    "note": "Comprehensive extraction from ChatGPT teaching sessions - includes all words, phrases, and grammatical patterns"
+  },
+  "vocabulary": [
+    {
+      "soussou": "Ntan",
+      "variants": [],
+      "french": "moi",
+      "english": "me / I (emphatic)",
+      "category": "pronoun",
+      "usage_notes": "Used to emphasize 'me' as topic or subject",
+      "examples": [
+        {
+          "soussou": "Ntan fafé",
+          "french": "Moi, je viens",
+          "english": "I'm coming (emphatic)",
+          "context": "Emphasis on the speaker"
+        }
+      ]
+    },
+    {
+      "soussou": "N'na",
+      "variants": ["Nna"],
+      "french": "je suis / je",
+      "english": "I am / I (action)",
+      "category": "pronoun",
+      "usage_notes": "Action form of 'I'",
+      "examples": [
+        {
+          "soussou": "N'na fafé",
+          "french": "J'arrive / Je viens",
+          "english": "I'm coming",
+          "context": "Common response to location questions"
+        }
+      ]
+    },
+    {
+      "soussou": "M'ma",
+      "variants": ["Mma"],
+      "french": "mon/ma/mes",
+      "english": "my",
+      "category": "possessive",
+      "usage_notes": "Possessive marker for first person",
+      "examples": [
+        {
+          "soussou": "M'ma woto",
+          "french": "Ma voiture",
+          "english": "My car",
+          "context": "Possession"
+        }
+      ]
+    },
+    {
+      "soussou": "Itan",
+      "variants": ["I"],
+      "french": "toi / tu",
+      "english": "you (singular)",
+      "category": "pronoun",
+      "usage_notes": "I is short form used in teasing/quick context",
+      "examples": [
+        {
+          "soussou": "Itan ngo?",
+          "french": "Et toi?",
+          "english": "What about you?",
+          "context": "Follow-up question"
+        }
+      ]
+    },
+    {
+      "soussou": "Ina",
+      "variants": [],
+      "french": "tu es / es-tu",
+      "english": "you are / are you?",
+      "category": "pronoun",
+      "usage_notes": "Question form determined by intonation",
+      "examples": [
+        {
+          "soussou": "Ina fafé?",
+          "french": "Tu viens? / Est-ce que tu viens?",
+          "english": "Are you coming?",
+          "context": "Question"
+        },
+        {
+          "soussou": "Ina mindé",
+          "french": "Tu es où? / Où es-tu?",
+          "english": "Where are you?",
+          "context": "Location inquiry"
+        }
+      ]
+    },
+    {
+      "soussou": "Atan",
+      "variants": ["A"],
+      "french": "lui / elle",
+      "english": "him / her",
+      "category": "pronoun",
+      "usage_notes": "Third person singular, no gender distinction",
+      "examples": [
+        {
+          "soussou": "Atan go",
+          "french": "Et lui/elle?",
+          "english": "What about him/her?",
+          "context": "Asking about third person"
+        }
+      ]
+    },
+    {
+      "soussou": "Ana",
+      "variants": [],
+      "french": "il/elle est",
+      "english": "he/she is",
+      "category": "pronoun",
+      "usage_notes": "Third person action form",
+      "examples": [
+        {
+          "soussou": "Ana fafé",
+          "french": "Il/Elle vient",
+          "english": "He/She is coming",
+          "context": "Action statement"
+        }
+      ]
+    },
+    {
+      "soussou": "Akha",
+      "variants": [],
+      "french": "son/sa/ses",
+      "english": "his / her",
+      "category": "possessive",
+      "usage_notes": "Third person possessive",
+      "examples": [
+        {
+          "soussou": "Akha woto",
+          "french": "Sa voiture",
+          "english": "His/Her car",
+          "context": "Possession"
+        }
+      ]
+    },
+    {
+      "soussou": "Whon'",
+      "variants": ["Whon"],
+      "french": "nous (inclusif)",
+      "english": "we (inclusive)",
+      "category": "pronoun",
+      "usage_notes": "Includes the person being spoken to",
+      "examples": [
+        {
+          "soussou": "Whon' fafé",
+          "french": "Nous venons",
+          "english": "We're coming (including you)",
+          "context": "Inclusive we"
+        }
+      ]
+    },
+    {
+      "soussou": "Moukhou",
+      "variants": [],
+      "french": "nous (exclusif)",
+      "english": "we (exclusive)",
+      "category": "pronoun",
+      "usage_notes": "Excludes the person being spoken to",
+      "examples": [
+        {
+          "soussou": "Moukhou fafé",
+          "french": "Nous venons (pas toi)",
+          "english": "We're coming (not including you)",
+          "context": "Exclusive we"
+        }
+      ]
+    },
+    {
+      "soussou": "Whonma",
+      "variants": [],
+      "french": "notre/nos",
+      "english": "our",
+      "category": "possessive",
+      "usage_notes": "First person plural possessive",
+      "examples": [
+        {
+          "soussou": "Whonma woto",
+          "french": "Notre voiture",
+          "english": "Our car",
+          "context": "Possession"
+        },
+        {
+          "soussou": "Whonma bateau",
+          "french": "Notre bateau",
+          "english": "Our boat",
+          "context": "Possession"
+        }
+      ]
+    },
+    {
+      "soussou": "Whontan",
+      "variants": [],
+      "french": "nous (objet)",
+      "english": "us",
+      "category": "pronoun",
+      "usage_notes": "Object form of we",
+      "examples": [
+        {
+          "soussou": "Whontan m'ma kolon",
+          "french": "Nous ne savons pas",
+          "english": "We don't know",
+          "context": "Negation with us"
+        }
+      ]
+    },
+    {
+      "soussou": "Etan",
+      "variants": [],
+      "french": "eux / elles",
+      "english": "they",
+      "category": "pronoun",
+      "usage_notes": "Third person plural",
+      "examples": [
+        {
+          "soussou": "Etan fafé",
+          "french": "Ils/Elles viennent",
+          "english": "They are coming",
+          "context": "Action statement"
+        }
+      ]
+    },
+    {
+      "soussou": "Etan kha",
+      "variants": ["Ekha"],
+      "french": "leur/leurs",
+      "english": "their",
+      "category": "possessive",
+      "usage_notes": "Third person plural possessive",
+      "examples": [
+        {
+          "soussou": "Ekha woto",
+          "french": "Leur voiture",
+          "english": "Their car",
+          "context": "Possession"
+        },
+        {
+          "soussou": "Etan kha avion",
+          "french": "Leur avion",
+          "english": "Their plane",
+          "context": "Possession"
+        }
+      ]
+    },
+    {
+      "soussou": "fafé",
+      "variants": ["fafe"],
+      "french": "venir / arriver",
+      "english": "to come / coming",
+      "category": "verb",
+      "usage_notes": "Core movement verb with fé suffix",
+      "examples": [
+        {
+          "soussou": "N'na fafé",
+          "french": "Je viens / J'arrive",
+          "english": "I'm coming",
+          "context": "Common response"
+        }
+      ]
+    },
+    {
+      "soussou": "Fa",
+      "variants": [],
+      "french": "viens / venez",
+      "english": "come (imperative)",
+      "category": "verb",
+      "usage_notes": "Command form",
+      "examples": [
+        {
+          "soussou": "Fa!",
+          "french": "Viens!",
+          "english": "Come!",
+          "context": "Command"
+        }
+      ]
+    },
+    {
+      "soussou": "kolon",
+      "variants": ["kolo"],
+      "french": "savoir / connaître",
+      "english": "to know",
+      "category": "verb",
+      "usage_notes": "Knowledge verb",
+      "examples": [
+        {
+          "soussou": "Ntan m'ma kolon",
+          "french": "Je ne sais pas",
+          "english": "I don't know",
+          "context": "Negation"
+        }
+      ]
+    },
+    {
+      "soussou": "comprendfé",
+      "variants": ["comprefé"],
+      "french": "comprendre",
+      "english": "to understand",
+      "category": "verb",
+      "usage_notes": "French 'comprendre' + fé suffix, street form can shorten to comprefé",
+      "examples": [
+        {
+          "soussou": "Ntan itan situation comprendfé un peu",
+          "french": "Je comprends un peu ta situation",
+          "english": "I understand your situation a bit",
+          "context": "Empathy/support"
+        },
+        {
+          "soussou": "Ina comprendfé?",
+          "french": "Tu comprends?",
+          "english": "Do you understand?",
+          "context": "Question"
+        }
+      ]
+    },
+    {
+      "soussou": "Siga",
+      "variants": [],
+      "french": "va / aller / partir",
+      "english": "go / leave",
+      "category": "verb",
+      "usage_notes": "Movement away, can mean both go and leave",
+      "examples": [
+        {
+          "soussou": "Siga!",
+          "french": "Va! / Pars!",
+          "english": "Go! / Leave!",
+          "context": "Command"
+        },
+        {
+          "soussou": "Siga yire",
+          "french": "Va là-bas",
+          "english": "Go there",
+          "context": "Direction"
+        }
+      ]
+    },
+    {
+      "soussou": "Dokho",
+      "variants": [],
+      "french": "assieds-toi",
+      "english": "sit",
+      "category": "verb",
+      "usage_notes": "Command form",
+      "examples": [
+        {
+          "soussou": "Dokho!",
+          "french": "Assieds-toi!",
+          "english": "Sit!",
+          "context": "Command"
+        },
+        {
+          "soussou": "Dokho bé",
+          "french": "Assieds-toi ici",
+          "english": "Sit here",
+          "context": "Location command"
+        }
+      ]
+    },
+    {
+      "soussou": "T'ti",
+      "variants": [],
+      "french": "debout / lève-toi",
+      "english": "stand",
+      "category": "verb",
+      "usage_notes": "Command form",
+      "examples": [
+        {
+          "soussou": "T'ti!",
+          "french": "Lève-toi! / Debout!",
+          "english": "Stand!",
+          "context": "Command"
+        }
+      ]
+    },
+    {
+      "soussou": "Mato",
+      "variants": [],
+      "french": "regarde",
+      "english": "look",
+      "category": "verb",
+      "usage_notes": "Visual attention command",
+      "examples": [
+        {
+          "soussou": "Mato!",
+          "french": "Regarde!",
+          "english": "Look!",
+          "context": "Command"
+        },
+        {
+          "soussou": "A mato",
+          "french": "Regarde-le/la",
+          "english": "Look at him/her",
+          "context": "Directed attention"
+        },
+        {
+          "soussou": "I Mato",
+          "french": "Regarde-toi",
+          "english": "Look at you",
+          "context": "Directed attention"
+        }
+      ]
+    },
+    {
+      "soussou": "Sonyi",
+      "variants": [],
+      "french": "donne",
+      "english": "give",
+      "category": "verb",
+      "usage_notes": "Transfer action",
+      "examples": [
+        {
+          "soussou": "Sonyi!",
+          "french": "Donne!",
+          "english": "Give!",
+          "context": "Command"
+        },
+        {
+          "soussou": "Gui sonyi",
+          "french": "Donne-moi ça",
+          "english": "Give me that",
+          "context": "Request"
+        }
+      ]
+    },
+    {
+      "soussou": "Facta",
+      "variants": [],
+      "french": "apporte",
+      "english": "bring",
+      "category": "verb",
+      "usage_notes": "Bring something command",
+      "examples": [
+        {
+          "soussou": "Facta!",
+          "french": "Apporte!",
+          "english": "Bring!",
+          "context": "Command"
+        }
+      ]
+    },
+    {
+      "soussou": "Alou",
+      "variants": [],
+      "french": "arrête / stop",
+      "english": "stop",
+      "category": "verb",
+      "usage_notes": "Cessation command",
+      "examples": [
+        {
+          "soussou": "Alou!",
+          "french": "Arrête! / Stop!",
+          "english": "Stop!",
+          "context": "Command"
+        }
+      ]
+    },
+    {
+      "soussou": "Mmèmé",
+      "variants": ["Mmèmè"],
+      "french": "attends",
+      "english": "wait",
+      "category": "verb",
+      "usage_notes": "Pause/wait command",
+      "examples": [
+        {
+          "soussou": "Mmèmé!",
+          "french": "Attends!",
+          "english": "Wait!",
+          "context": "Command"
+        },
+        {
+          "soussou": "Mmèmé bé",
+          "french": "Attends ici",
+          "english": "Wait here",
+          "context": "Location command"
+        }
+      ]
+    },
+    {
+      "soussou": "Khili",
+      "variants": [],
+      "french": "appelle",
+      "english": "call",
+      "category": "verb",
+      "usage_notes": "Contact/summon action",
+      "examples": [
+        {
+          "soussou": "N'khili",
+          "french": "Appelle-moi",
+          "english": "Call me",
+          "context": "Request"
+        }
+      ]
+    },
+    {
+      "soussou": "Kelli",
+      "variants": [],
+      "french": "quitte / pars",
+      "english": "leave",
+      "category": "verb",
+      "usage_notes": "Departure action",
+      "examples": [
+        {
+          "soussou": "Kelli bé",
+          "french": "Quitte ici / Pars d'ici",
+          "english": "Leave here",
+          "context": "Dismissal"
+        }
+      ]
+    },
+    {
+      "soussou": "m'ma",
+      "variants": [],
+      "french": "ne ... pas",
+      "english": "not / don't",
+      "category": "grammar_marker",
+      "usage_notes": "Negation marker, placed before verb",
+      "examples": [
+        {
+          "soussou": "Ntan m'ma kolon",
+          "french": "Je ne sais pas",
+          "english": "I don't know",
+          "context": "Negation"
+        },
+        {
+          "soussou": "Ina m'ma fafé",
+          "french": "Tu ne viens pas",
+          "english": "You're not coming",
+          "context": "Negative statement"
+        }
+      ]
+    },
+    {
+      "soussou": "no'mma",
+      "variants": [],
+      "french": "pouvoir / être capable",
+      "english": "can / able to",
+      "category": "grammar_marker",
+      "usage_notes": "Ability marker, placed after pronoun before action",
+      "examples": [
+        {
+          "soussou": "Ntan no'mma comprendfé itan situation",
+          "french": "Je peux comprendre ta situation",
+          "english": "I can understand your situation",
+          "context": "Ability statement"
+        },
+        {
+          "soussou": "I no'mma guira?",
+          "french": "Tu peux faire ça?",
+          "english": "Can you do this?",
+          "context": "Challenging question"
+        }
+      ]
+    },
+    {
+      "soussou": "khafé",
+      "variants": [],
+      "french": "à cause de / situation",
+      "english": "because of / situation",
+      "category": "grammar_marker",
+      "usage_notes": "Cause marker or situation noun, combines with pronouns",
+      "examples": [
+        {
+          "soussou": "Itan khafé",
+          "french": "À cause de toi",
+          "english": "Because of you",
+          "context": "Causality"
+        },
+        {
+          "soussou": "Atan khafé",
+          "french": "À cause de lui/elle",
+          "english": "Because of him/her",
+          "context": "Causality"
+        },
+        {
+          "soussou": "Itan khafé gbo",
+          "french": "Tu as beaucoup de problèmes / Ta situation",
+          "english": "You have a lot going on / Your situation",
+          "context": "Checking on someone"
+        }
+      ]
+    },
+    {
+      "soussou": "fé",
+      "variants": ["fè"],
+      "french": "-er (suffixe verbal)",
+      "english": "action suffix",
+      "category": "grammar_marker",
+      "usage_notes": "Added to French verbs to create Soussou verbs (comprendre + fé = comprendfé)",
+      "examples": [
+        {
+          "soussou": "comprendfé",
+          "french": "comprendre",
+          "english": "to understand",
+          "context": "Verb formation"
+        }
+      ]
+    },
+    {
+      "soussou": "bé",
+      "variants": ["be"],
+      "french": "ici",
+      "english": "here",
+      "category": "location",
+      "usage_notes": "Location marker for 'here'",
+      "examples": [
+        {
+          "soussou": "Fa bé",
+          "french": "Viens ici",
+          "english": "Come here",
+          "context": "Location command"
+        },
+        {
+          "soussou": "Dokho bé",
+          "french": "Assieds-toi ici",
+          "english": "Sit here",
+          "context": "Location command"
+        }
+      ]
+    },
+    {
+      "soussou": "yire",
+      "variants": [],
+      "french": "là-bas",
+      "english": "there",
+      "category": "location",
+      "usage_notes": "Location marker for 'there'",
+      "examples": [
+        {
+          "soussou": "Siga yire",
+          "french": "Va là-bas",
+          "english": "Go there",
+          "context": "Direction"
+        },
+        {
+          "soussou": "A yire",
+          "french": "Chez lui/elle / À sa place",
+          "english": "To him/her / His/her place",
+          "context": "Destination"
+        }
+      ]
+    },
+    {
+      "soussou": "kouï",
+      "variants": [],
+      "french": "dans / dedans",
+      "english": "in / inside",
+      "category": "location",
+      "usage_notes": "Interior location marker",
+      "examples": [
+        {
+          "soussou": "Fa bangui kouï",
+          "french": "Viens dans la maison",
+          "english": "Come inside the house",
+          "context": "Location"
+        },
+        {
+          "soussou": "Fa woto kouï",
+          "french": "Viens dans la voiture",
+          "english": "Come inside the car",
+          "context": "Location"
+        }
+      ]
+    },
+    {
+      "soussou": "fokhora",
+      "variants": ["fokho"],
+      "french": "après moi / derrière moi",
+      "english": "after me / behind me",
+      "category": "location",
+      "usage_notes": "Following/sequence location",
+      "examples": [
+        {
+          "soussou": "Fa fokhora",
+          "french": "Suis-moi / Viens après moi",
+          "english": "Follow me",
+          "context": "Command"
+        }
+      ]
+    },
+    {
+      "soussou": "woto",
+      "variants": [],
+      "french": "voiture",
+      "english": "car",
+      "category": "noun",
+      "usage_notes": "Vehicle",
+      "examples": [
+        {
+          "soussou": "M'ma woto",
+          "french": "Ma voiture",
+          "english": "My car",
+          "context": "Possession"
+        }
+      ]
+    },
+    {
+      "soussou": "bateau",
+      "variants": [],
+      "french": "bateau",
+      "english": "boat",
+      "category": "noun",
+      "usage_notes": "Watercraft, French loanword",
+      "examples": [
+        {
+          "soussou": "Whonma bateau",
+          "french": "Notre bateau",
+          "english": "Our boat",
+          "context": "Possession"
+        }
+      ]
+    },
+    {
+      "soussou": "avion",
+      "variants": [],
+      "french": "avion",
+      "english": "plane",
+      "category": "noun",
+      "usage_notes": "Aircraft, French loanword",
+      "examples": [
+        {
+          "soussou": "Etan kha avion",
+          "french": "Leur avion",
+          "english": "Their plane",
+          "context": "Possession"
+        }
+      ]
+    },
+    {
+      "soussou": "bangui",
+      "variants": [],
+      "french": "maison",
+      "english": "house",
+      "category": "noun",
+      "usage_notes": "Building/dwelling",
+      "examples": [
+        {
+          "soussou": "Fa bangui kouï",
+          "french": "Viens dans la maison",
+          "english": "Come inside the house",
+          "context": "Location"
+        }
+      ]
+    },
+    {
+      "soussou": "guira",
+      "variants": [],
+      "french": "cette chose / cela",
+      "english": "this thing / that thing",
+      "category": "demonstrative",
+      "usage_notes": "Object demonstrative",
+      "examples": [
+        {
+          "soussou": "Fa guira",
+          "french": "Apporte ça",
+          "english": "Bring that",
+          "context": "Request"
+        },
+        {
+          "soussou": "Kha fa guira?",
+          "french": "Je dois apporter ça?",
+          "english": "Should I bring this?",
+          "context": "Question"
+        }
+      ]
+    },
+    {
+      "soussou": "gui",
+      "variants": [],
+      "french": "ceci / ça",
+      "english": "this",
+      "category": "demonstrative",
+      "usage_notes": "Demonstrative pronoun",
+      "examples": [
+        {
+          "soussou": "Gui sonyi",
+          "french": "Donne-moi ça",
+          "english": "Give me that",
+          "context": "Request"
+        }
+      ]
+    },
+    {
+      "soussou": "compte",
+      "variants": [],
+      "french": "compte / abonnement",
+      "english": "account / subscription",
+      "category": "noun",
+      "usage_notes": "French loanword, used for subscriptions",
+      "examples": [
+        {
+          "soussou": "Compte n'ma yitima na",
+          "french": "Ton compte est presque fini",
+          "english": "Your account is almost finished",
+          "context": "IPTV/subscription"
+        }
+      ]
+    },
+    {
+      "soussou": "situation",
+      "variants": [],
+      "french": "situation",
+      "english": "situation",
+      "category": "noun",
+      "usage_notes": "French loanword, commonly used",
+      "examples": [
+        {
+          "soussou": "Ntan itan situation comprendfé un peu",
+          "french": "Je comprends un peu ta situation",
+          "english": "I understand your situation a bit",
+          "context": "Empathy"
+        }
+      ]
+    },
+    {
+      "soussou": "plan",
+      "variants": [],
+      "french": "plan",
+      "english": "plan",
+      "category": "noun",
+      "usage_notes": "French loanword",
+      "examples": [
+        {
+          "soussou": "Ina ntan plan comprendfé?",
+          "french": "Tu comprends mon plan?",
+          "english": "Do you understand my plan?",
+          "context": "Question"
+        }
+      ]
+    },
+    {
+      "soussou": "problème",
+      "variants": [],
+      "french": "problème",
+      "english": "problem",
+      "category": "noun",
+      "usage_notes": "French loanword",
+      "examples": [
+        {
+          "soussou": "Ina m'ma problème comprendfé",
+          "french": "Tu ne comprends pas le problème",
+          "english": "You don't understand the problem",
+          "context": "Statement"
+        }
+      ]
+    },
+    {
+      "soussou": "travail",
+      "variants": [],
+      "french": "travail",
+      "english": "work",
+      "category": "noun",
+      "usage_notes": "French loanword",
+      "examples": [
+        {
+          "soussou": "Whon akha travail comprendfé",
+          "french": "Nous comprenons son travail",
+          "english": "We understand his work",
+          "context": "Statement"
+        }
+      ]
+    },
+    {
+      "soussou": "numero",
+      "variants": [],
+      "french": "numéro",
+      "english": "number",
+      "category": "noun",
+      "usage_notes": "French loanword, often used for phone numbers",
+      "examples": [
+        {
+          "soussou": "M'ma numero na",
+          "french": "Voici mon numéro",
+          "english": "Here is my number",
+          "context": "Sharing contact"
+        }
+      ]
+    },
+    {
+      "soussou": "kouli",
+      "variants": [],
+      "french": "ver",
+      "english": "worm",
+      "category": "noun",
+      "usage_notes": "Animal",
+      "examples": []
+    },
+    {
+      "soussou": "whouli",
+      "variants": [],
+      "french": "sang",
+      "english": "blood",
+      "category": "noun",
+      "usage_notes": "Body substance",
+      "examples": []
+    },
+    {
+      "soussou": "gbo",
+      "variants": ["gbooo"],
+      "french": "beaucoup",
+      "english": "a lot / many",
+      "category": "adverb",
+      "usage_notes": "Quantity/intensity modifier, can be intensified with extra 'o's",
+      "examples": [
+        {
+          "soussou": "Itan khafé gbo",
+          "french": "Tu as beaucoup de problèmes",
+          "english": "You have a lot going on",
+          "context": "Checking on someone"
+        },
+        {
+          "soussou": "Etan itan khafé comprendfé gbo",
+          "french": "Ils comprennent beaucoup à cause de toi",
+          "english": "They understand a lot because of you",
+          "context": "Statement"
+        }
+      ]
+    },
+    {
+      "soussou": "un peu",
+      "variants": [],
+      "french": "un peu",
+      "english": "a bit / a little",
+      "category": "adverb",
+      "usage_notes": "French filler, commonly used in street Soussou",
+      "examples": [
+        {
+          "soussou": "Ntan comprendfé sosokhoui un peu",
+          "french": "Je comprends le soussou un peu",
+          "english": "I understand Soussou a bit",
+          "context": "Self-description"
+        }
+      ]
+    },
+    {
+      "soussou": "yite",
+      "variants": ["ite"],
+      "french": "un peu",
+      "english": "a little",
+      "category": "adverb",
+      "usage_notes": "Quantity modifier",
+      "examples": [
+        {
+          "soussou": "M'ma woto yite",
+          "french": "Ma voiture est là",
+          "english": "My car is here",
+          "context": "Location/arrival"
+        }
+      ]
+    },
+    {
+      "soussou": "sogbè",
+      "variants": ["sogbé"],
+      "french": "sérieux",
+      "english": "serious",
+      "category": "adjective",
+      "usage_notes": "Descriptive",
+      "examples": []
+    },
+    {
+      "soussou": "ngo",
+      "variants": ["go"],
+      "french": "et / quoi",
+      "english": "and / what about",
+      "category": "conjunction",
+      "usage_notes": "Connector word for follow-up questions",
+      "examples": [
+        {
+          "soussou": "Itan ngo?",
+          "french": "Et toi?",
+          "english": "And you? / What about you?",
+          "context": "Follow-up"
+        },
+        {
+          "soussou": "Atan go",
+          "french": "Et lui/elle?",
+          "english": "What about him/her?",
+          "context": "Follow-up"
+        }
+      ]
+    },
+    {
+      "soussou": "kha",
+      "variants": [],
+      "french": "de (possession)",
+      "english": "of (possessive marker)",
+      "category": "grammar_marker",
+      "usage_notes": "Ownership/possession marker",
+      "examples": [
+        {
+          "soussou": "Akha woto",
+          "french": "Sa voiture (à lui/elle)",
+          "english": "His/Her car",
+          "context": "Possession"
+        },
+        {
+          "soussou": "Kha fa guira?",
+          "french": "Je dois apporter ça?",
+          "english": "Should I bring this?",
+          "context": "Question with modal"
+        }
+      ]
+    },
+    {
+      "soussou": "Eské",
+      "variants": [],
+      "french": "est-ce que",
+      "english": "question marker",
+      "category": "grammar_marker",
+      "usage_notes": "French-derived question marker for formal/genuine questions",
+      "examples": [
+        {
+          "soussou": "Eské I no'mma guira?",
+          "french": "Est-ce que tu peux faire ça?",
+          "english": "Can you do this? (genuine question)",
+          "context": "Polite inquiry"
+        },
+        {
+          "soussou": "Eské ina mma situation comprendfé?",
+          "french": "Est-ce que tu comprends ma situation?",
+          "english": "Do you understand my situation?",
+          "context": "Question"
+        }
+      ]
+    },
+    {
+      "soussou": "sosokhoui",
+      "variants": [],
+      "french": "soussou (langue)",
+      "english": "Soussou (language)",
+      "category": "noun",
+      "usage_notes": "The Soussou language itself",
+      "examples": [
+        {
+          "soussou": "Ntan sosokhoui kolon un peu",
+          "french": "Je connais le soussou un peu",
+          "english": "I know Soussou a bit",
+          "context": "Language learning"
+        },
+        {
+          "soussou": "Ngui fala madi sosokhoui?",
+          "french": "Comment je dis ça en soussou?",
+          "english": "How do I say this in Soussou?",
+          "context": "Translation request"
+        }
+      ]
+    },
+    {
+      "soussou": "foulekhoui",
+      "variants": [],
+      "french": "pular/fulani (langue)",
+      "english": "Pular/Fulani (language)",
+      "category": "noun",
+      "usage_notes": "The Pular language",
+      "examples": [
+        {
+          "soussou": "Ngui fala madi foulekhoui?",
+          "french": "Comment je dis ça en pular?",
+          "english": "How do I say this in Pular?",
+          "context": "Translation request"
+        }
+      ]
+    },
+    {
+      "soussou": "mindé",
+      "variants": ["minde"],
+      "french": "où",
+      "english": "where",
+      "category": "question_word",
+      "usage_notes": "Location question word",
+      "examples": [
+        {
+          "soussou": "Ina mindé?",
+          "french": "Tu es où?",
+          "english": "Where are you?",
+          "context": "Location inquiry"
+        }
+      ]
+    },
+    {
+      "soussou": "kɔlɛ",
+      "variants": [],
+      "french": "aujourd'hui",
+      "english": "today",
+      "category": "time",
+      "usage_notes": "Time reference",
+      "examples": [
+        {
+          "soussou": "Ntan hé kɔlɛ?",
+          "french": "Comment vas-tu aujourd'hui?",
+          "english": "How are you today?",
+          "context": "Daily greeting"
+        }
+      ]
+    },
+    {
+      "soussou": "Ntan hé",
+      "variants": ["Nna hé", "n'a hé"],
+      "french": "Comment vas-tu?",
+      "english": "How are you?",
+      "category": "greeting",
+      "usage_notes": "Informal greeting, second person singular",
+      "examples": [
+        {
+          "soussou": "Ntan hé kɔlɛ?",
+          "french": "Comment vas-tu aujourd'hui?",
+          "english": "How are you today?",
+          "context": "Daily greeting"
+        }
+      ]
+    },
+    {
+      "soussou": "Ina mindé?",
+      "variants": ["Ina minde"],
+      "french": "Tu es où? / Où es-tu?",
+      "english": "Where are you?",
+      "category": "greeting",
+      "usage_notes": "Common informal greeting/check-in",
+      "examples": [
+        {
+          "soussou": "Ina mindé? - N'na fafé",
+          "french": "Où es-tu? - J'arrive",
+          "english": "Where are you? - I'm coming",
+          "context": "Friends checking location"
+        }
+      ]
+    },
+    {
+      "soussou": "Fa bé",
+      "variants": ["Fabé"],
+      "french": "Viens ici",
+      "english": "Come here",
+      "category": "phrase",
+      "usage_notes": "Command with location",
+      "examples": [
+        {
+          "soussou": "Fa bé!",
+          "french": "Viens ici!",
+          "english": "Come here!",
+          "context": "Summoning someone"
+        },
+        {
+          "soussou": "Fabé?",
+          "french": "Tu viens ici?",
+          "english": "Are you coming here? / Come here?",
+          "context": "Question or invitation"
+        }
+      ]
+    },
+    {
+      "soussou": "Siga yire",
+      "variants": [],
+      "french": "Va là-bas",
+      "english": "Go there",
+      "category": "phrase",
+      "usage_notes": "Direction command",
+      "examples": [
+        {
+          "soussou": "Siga yire!",
+          "french": "Va là-bas!",
+          "english": "Go there!",
+          "context": "Directing someone"
+        }
+      ]
+    },
+    {
+      "soussou": "Siga A yire",
+      "variants": [],
+      "french": "Va chez lui/elle",
+      "english": "Go to him/her",
+      "category": "phrase",
+      "usage_notes": "Direction to person's location",
+      "examples": [
+        {
+          "soussou": "Siga A yire!",
+          "french": "Va chez lui/elle!",
+          "english": "Go to him/her!",
+          "context": "Directing to person"
+        }
+      ]
+    },
+    {
+      "soussou": "Fa A yire",
+      "variants": [],
+      "french": "Viens chez lui/elle",
+      "english": "Come to him/her",
+      "category": "phrase",
+      "usage_notes": "Direction toward person",
+      "examples": [
+        {
+          "soussou": "Fa A yire!",
+          "french": "Viens chez lui/elle!",
+          "english": "Come to him/her!",
+          "context": "Summoning to person's location"
+        }
+      ]
+    },
+    {
+      "soussou": "Fa fokhora",
+      "variants": [],
+      "french": "Suis-moi",
+      "english": "Follow me",
+      "category": "phrase",
+      "usage_notes": "Literally 'come after me'",
+      "examples": [
+        {
+          "soussou": "Fa fokhora!",
+          "french": "Suis-moi!",
+          "english": "Follow me!",
+          "context": "Leading someone"
+        }
+      ]
+    },
+    {
+      "soussou": "Compte n'ma yitima na",
+      "variants": [],
+      "french": "Ton compte est presque fini",
+      "english": "Your account is almost finished",
+      "category": "phrase",
+      "usage_notes": "IPTV/subscription context",
+      "examples": [
+        {
+          "soussou": "Compte n'ma yitima na",
+          "french": "Ton compte est presque fini",
+          "english": "Your account is almost finished",
+          "context": "Subscription warning"
+        }
+      ]
+    },
+    {
+      "soussou": "Ntan itan situation comprendfé un peu",
+      "variants": [],
+      "french": "Je comprends un peu ta situation",
+      "english": "I understand your situation a bit",
+      "category": "phrase",
+      "usage_notes": "SOAM structure example (Subject-Object-Action-Modifier)",
+      "examples": [
+        {
+          "soussou": "Ntan itan situation comprendfé un peu",
+          "french": "Je comprends un peu ta situation",
+          "english": "I understand your situation a bit",
+          "context": "Empathy/support"
+        }
+      ]
+    },
+    {
+      "soussou": "Ina ntan khafé m'ma comprendfé",
+      "variants": [],
+      "french": "Tu ne comprends pas à cause de moi",
+      "english": "You don't understand because of me",
+      "category": "phrase",
+      "usage_notes": "Causality with negation",
+      "examples": [
+        {
+          "soussou": "Ina ntan khafé m'ma comprendfé",
+          "french": "Tu ne comprends pas à cause de moi",
+          "english": "You don't understand because of me",
+          "context": "Reflective/conflict"
+        }
+      ]
+    },
+    {
+      "soussou": "Etan itan khafé comprendfé gbo",
+      "variants": [],
+      "french": "Ils comprennent beaucoup à cause de toi",
+      "english": "They understand a lot because of you",
+      "category": "phrase",
+      "usage_notes": "Causality with modifier",
+      "examples": [
+        {
+          "soussou": "Etan itan khafé comprendfé gbo",
+          "french": "Ils comprennent beaucoup à cause de toi",
+          "english": "They understand a lot because of you",
+          "context": "Acknowledgment"
+        }
+      ]
+    },
+    {
+      "soussou": "Ikha ChatGPT no'mma guira?",
+      "variants": [],
+      "french": "Ton ChatGPT peut faire ça?",
+      "english": "Can your ChatGPT do this?",
+      "category": "phrase",
+      "usage_notes": "Ability question with possession",
+      "examples": [
+        {
+          "soussou": "Ikha ChatGPT no'mma guira?",
+          "french": "Ton ChatGPT peut faire ça?",
+          "english": "Can your ChatGPT do this?",
+          "context": "Testing capability"
+        }
+      ]
+    },
+    {
+      "soussou": "I no'mma guira?",
+      "variants": [],
+      "french": "Tu peux faire ça?",
+      "english": "Can you do this?",
+      "category": "phrase",
+      "usage_notes": "Challenging/doubting question",
+      "examples": [
+        {
+          "soussou": "I no'mma guira?",
+          "french": "Tu peux faire ça?",
+          "english": "Can you do this?",
+          "context": "Challenge/poke"
+        }
+      ]
+    },
+    {
+      "soussou": "Ngui fala madi sosokhoui?",
+      "variants": [],
+      "french": "Comment je dis ça en soussou?",
+      "english": "How do I say this in Soussou?",
+      "category": "phrase",
+      "usage_notes": "Language learning request",
+      "examples": [
+        {
+          "soussou": "Ngui fala madi sosokhoui?",
+          "french": "Comment je dis ça en soussou?",
+          "english": "How do I say this in Soussou?",
+          "context": "Translation request"
+        }
+      ]
+    },
+    {
+      "soussou": "Ngui fala madi foulekhoui?",
+      "variants": [],
+      "french": "Comment je dis ça en pular?",
+      "english": "How do I say this in Pular?",
+      "category": "phrase",
+      "usage_notes": "Language learning request",
+      "examples": [
+        {
+          "soussou": "Ngui fala madi foulekhoui?",
+          "french": "Comment je dis ça en pular?",
+          "english": "How do I say this in Pular?",
+          "context": "Translation request"
+        }
+      ]
+    }
+  ],
+  "grammar_patterns": {
+    "word_order": "SOAM (Subject - Object - Action - Modifier)",
+    "sentence_structure": "Pronoun + Object/Context + Verb-fé + Modifier",
+    "negation": "Pronoun + m'ma + Verb",
+    "ability": "Pronoun + no'mma + Object/Action",
+    "causality": "Pronoun + khafé = because of Pronoun",
+    "possession": "Pronoun + kha + Object OR Possessive + Object",
+    "imperatives": "Verb root + optional location marker (bé/yire)",
+    "verb_formation": "French verb root + fé/fè suffix (comprendre → comprendfé)",
+    "questions": "Intonation OR Eské prefix for formal questions",
+    "location": "bé (here), yire (there), kouï (inside), A yire (to him/her)"
+  },
+  "phonetic_notes": {
+    "vowels": ["a", "e", "i", "o", "u"],
+    "common_consonant_clusters": ["kh", "gb", "gn", "mb", "nd"],
+    "syllable_patterns": ["CV", "CVC", "CVCV"],
+    "spelling_variations": "Multiple spellings accepted for same sound (N'na/Nna, fafé/fafe)",
+    "french_integration": "French words commonly mixed, especially nouns and modifiers"
+  },
+  "pular_vocabulary": [
+    {
+      "pular": "A jam tan?",
+      "french": "Ça va?",
+      "english": "How are you?",
+      "category": "greeting",
+      "examples": []
+    },
+    {
+      "pular": "Jam tan, ko fii?",
+      "french": "Ça va, et toi?",
+      "english": "I'm fine, and you?",
+      "category": "greeting",
+      "examples": []
+    }
+  ]
+}
