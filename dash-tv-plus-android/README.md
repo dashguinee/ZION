@@ -66,6 +66,144 @@ The app supports any Xtream Codes provider. Users enter credentials at login:
 
 No hardcoded credentials needed!
 
+## Starshare Configuration
+
+DASH TV+ is pre-configured for **Starshare** streaming service for the Guinea market.
+
+### Default Server
+
+The app comes with the Starshare server pre-configured:
+
+**Portal URL:** `http://starshare.live:8080`
+
+This is automatically populated in the login screen, so users don't need to manually enter the server URL.
+
+### How Resellers Get Credentials
+
+Resellers obtain customer credentials through the **Starshare Reseller Panel**:
+
+1. **Access the Panel:** Log in to your Starshare reseller account
+2. **Create Customer:** Generate a new subscription for your customer
+3. **Receive Credentials:** The panel provides:
+   - Username (unique for each customer)
+   - Password
+   - Subscription duration
+4. **Distribute to Customer:** Send credentials via WhatsApp (+224 611 361 300)
+
+### Testing with a Trial Account
+
+To test DASH TV+ before deploying to customers:
+
+1. **Request Trial Access:**
+   - Contact Starshare support
+   - Request a test/trial account
+   - Or use your reseller demo account
+
+2. **Test Credentials Format:**
+   ```
+   Server: http://starshare.live:8080
+   Username: test_user_123
+   Password: test_pass_456
+   ```
+
+3. **Verify Functionality:**
+   - Login works correctly
+   - Channel categories load
+   - Live streams play smoothly
+   - EPG data displays
+   - Search functionality works
+
+### Managing Subscriptions
+
+Resellers manage customer subscriptions through the **Starshare Reseller Panel**:
+
+**Panel Features:**
+- Create new subscriptions
+- Extend/renew existing subscriptions
+- Check customer usage statistics
+- Monitor active connections
+- Generate customer reports
+- View available credits
+
+**Panel Access:** Contact your Starshare distributor for reseller panel access
+
+### Customer Account Status
+
+Customer accounts can have different statuses:
+
+| Status | Description | What Happens |
+|--------|-------------|--------------|
+| **Active** | Subscription is valid | Full access to all channels |
+| **Expired** | Subscription period ended | Login fails with authentication error |
+| **Disabled** | Account temporarily suspended | Cannot log in |
+| **Banned** | Account permanently blocked | Cannot log in |
+
+**Renewal Process:**
+1. Customer contacts reseller (via WhatsApp)
+2. Reseller extends subscription in panel
+3. Customer's access is immediately restored
+4. No need to change username/password
+
+### Troubleshooting Common Issues
+
+#### "Erreur d'authentification" (Authentication Error)
+
+**Possible Causes:**
+- Username or password incorrect
+- Subscription expired
+- Account disabled/banned
+- Typing error (case-sensitive)
+
+**Solutions:**
+1. Verify credentials with reseller
+2. Check subscription status in reseller panel
+3. Ensure customer copied credentials exactly (no extra spaces)
+4. Renew subscription if expired
+
+#### "Erreur réseau" (Network Error)
+
+**Possible Causes:**
+- Customer has no internet connection
+- Starshare server temporarily down
+- Firewall blocking connection
+
+**Solutions:**
+1. Ask customer to check internet connection
+2. Verify Starshare server status: `curl http://starshare.live:8080`
+3. Try accessing from different network
+4. Wait and retry (if server maintenance)
+
+#### Channels Load But Don't Play
+
+**Possible Causes:**
+- Customer's internet too slow (< 5 Mbps)
+- ISP blocking streaming ports
+- Regional restrictions
+
+**Solutions:**
+1. Test customer's internet speed
+2. Recommend minimum 10 Mbps connection
+3. Try different ISP or mobile data
+4. Check if VPN helps (for regional issues)
+
+### Reseller Panel Access
+
+To manage your customers effectively, you'll need access to the Starshare Reseller Panel.
+
+**Request Access:**
+- Contact: Starshare distribution team
+- Provide: Your business details and expected customer volume
+- Receive: Panel URL, username, and password
+
+**Panel URL:** Provided by your Starshare distributor
+
+**Best Practices:**
+- Check panel daily for customer issues
+- Monitor credits and top up before running out
+- Keep records of all customer credentials
+- Respond to customer renewal requests within 24 hours
+- Use panel statistics to understand customer viewing habits
+
 ## Building the APK
 
 ### Debug Build (for testing)

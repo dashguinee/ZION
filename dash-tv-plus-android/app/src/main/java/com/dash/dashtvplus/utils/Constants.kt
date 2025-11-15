@@ -52,6 +52,7 @@ object Constants {
     const val SEARCH_DEBOUNCE_DELAY = 300L
 
     // Default Values
+    const val DEFAULT_PORTAL_URL = "http://starshare.live:8080"
     const val DEFAULT_CATEGORY_ID = "all"
     const val DEFAULT_CATEGORY_NAME = "Toutes les chaînes"
 
