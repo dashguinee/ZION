@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASH TV+ - Télécharger l'App | IPTV en Guinée</title>
+    <meta name="description" content="Téléchargez DASH TV+ - L'app IPTV officielle. 10,000+ chaînes, 60,000+ films. Installation simple en 4 étapes.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            margin-top: 30px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .app-info {
+            background: linear-gradient(135deg, #f0f4ff 0%, #f5f0ff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #667eea;
+        }
+
+        .app-info h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .app-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px 0;
+        }
+
+        .app-feature::before {
+            content: "📺";
+            font-size: 1.5em;
+            margin-right: 12px;
+            min-width: 30px;
+        }
+
+        .app-feature:nth-child(2)::before {
+            content: "🎬";
+        }
+
+        .app-feature:nth-child(3)::before {
+            content: "📱";
+        }
+
+        .app-feature:nth-child(4)::before {
+            content: "🇬🇳";
+        }
+
+        .screenshot-placeholder {
+            background: #f0f4ff;
+            border-radius: 20px;
+            padding: 60px 20px;
+            margin: 30px 0;
+            text-align: center;
+            border: 3px dashed #667eea;
+        }
+
+        .screenshot-placeholder p {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .screenshot-placeholder small {
+            color: #999;
+        }
+
+        .installation-steps {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .installation-steps h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 30px 0;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .benefits {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .benefit:last-child {
+            margin-bottom: 0;
+        }
+
+        .benefit::before {
+            content: "✅";
+            font-size: 1.3em;
+            margin-right: 12px;
+        }
+
+        .benefit strong {
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .guarantee {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+        }
+
+        .guarantee strong {
+            color: #2ecc71;
+            font-size: 1.1em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .back-button {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .back-button:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 25px;
+            }
+
+            .logo h1 {
+                font-size: 2em;
+            }
+
+            .hero h2 {
+                font-size: 1.4em;
+            }
+
+            .download-btn {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+
+            .installation-steps {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Retour à l'accueil</a>
+
+        <div class="card">
+            <!-- Logo -->
+            <div class="logo">
+                <h1>📱 DASH TV+</h1>
+                <p>L'App Officielle DASH IPTV</p>
+            </div>
+
+            <!-- Hero -->
+            <div class="hero">
+                <h2>
+                    <span class="highlight">Téléchargez l'App</span><br>
+                    Regardez Partout, Anytime
+                </h2>
+            </div>
+
+            <!-- App Screenshots Placeholder -->
+            <div class="screenshot-placeholder">
+                <p>📲</p>
+                <small>Aperçu de l'application (prochainement avec images réelles)</small>
+            </div>
+
+            <!-- Download Button -->
+            <button class="download-btn" onclick="window.location.href='https://wa.me/224611361300?text=Bonjour%20DASH!%20Je%20veux%20telecharger%20DASH%20TV%2B%20APK'">
+                ⬇️ TÉLÉCHARGER DASH TV+ APK
+            </button>
+
+            <!-- App Features -->
+            <div class="app-info">
+                <h3>🌟 Ce que vous obtenez:</h3>
+                <div class="app-feature">
+                    <strong>10,000+ Chaînes en Direct</strong>
+                </div>
+                <div class="app-feature">
+                    <strong>60,000+ Films & Séries</strong>
+                </div>
+                <div class="app-feature">
+                    <strong>Interface Simple et Intuitive</strong>
+                </div>
+                <div class="app-feature">
+                    <strong>Optimisé pour la Guinée</strong>
+                </div>
+            </div>
+
+            <!-- Installation Steps -->
+            <div class="installation-steps">
+                <h3>📖 Installation en 4 Étapes</h3>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Téléchargez l'APK</h4>
+                        <p>Cliquez sur le bouton "TÉLÉCHARGER" pour obtenir le fichier APK officiel DASH TV+</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Autorisez les Sources Inconnues</h4>
+                        <p>Allez dans Paramètres → Sécurité → Autoriser l'installation d'apps depuis des sources inconnues</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Installez l'Application</h4>
+                        <p>Ouvrez le fichier APK téléchargé et cliquez sur "INSTALLER"</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Connectez-vous</h4>
+                        <p>Lancez l'app, entrez vos identifiants DASH IPTV et regardez!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compatibility -->
+            <div class="benefits">
+                <h3 style="color: #333; margin-bottom: 15px;">✅ Compatible avec:</h3>
+                <div class="benefit">
+                    <strong>Téléphones & Tablettes Android 5.0+</strong>
+                </div>
+                <div class="benefit">
+                    <strong>Smart TV Android</strong>
+                </div>
+                <div class="benefit">
+                    <strong>Firestick Amazon</strong>
+                </div>
+                <div class="benefit">
+                    <strong>Boîtiers TV Android</strong>
+                </div>
+                <div class="benefit">
+                    <strong>Connexion Internet Stable (2+ Mbps recommandé)</strong>
+                </div>
+            </div>
+
+            <!-- Support Button -->
+            <a href="https://wa.me/224611361300?text=Bonjour%20DASH!%20J'ai%20un%20probleme%20avec%20DASH%20TV%2B" class="whatsapp-button">
+                💬 Besoin d'Aide? Contactez le Support
+            </a>
+
+            <!-- Guarantee -->
+            <div class="guarantee">
+                <strong>✅ Support Technique Gratuit</strong><br>
+                Problème d'installation? Le support DASH est là pour vous, 7j/7 via WhatsApp
+            </div>
+
+            <!-- Why Choose DASH -->
+            <div style="background: #f0f8ff; border-radius: 15px; padding: 25px; margin: 30px 0;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Pourquoi DASH TV+?</h3>
+                <div class="benefit" style="margin-bottom: 10px;">
+                    <strong>App Officielle & Sécurisée - Développée par l'équipe DASH</strong>
+                </div>
+                <div class="benefit" style="margin-bottom: 10px;">
+                    <strong>Mise à Jour Régulière - Nouvelles chaînes chaque semaine</strong>
+                </div>
+                <div class="benefit" style="margin-bottom: 10px;">
+                    <strong>Sans Publicité Intrusive - Une expérience de visionnage pure</strong>
+                </div>
+                <div class="benefit">
+                    <strong>Essai Gratuit 24h - Aucune Carte Bancaire Requise</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 DASH IPTV - DASH Entertainment Services</p>
+            <p>Support: WhatsApp <a href="https://wa.me/224611361300" style="color: #667eea; text-decoration: none;">+224 611 361 300</a></p>
+        </div>
+    </div>
+</body>
+</html>

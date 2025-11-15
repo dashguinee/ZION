@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASH IPTV - FAQ | Questions Fréquemment Posées</title>
+    <meta name="description" content="FAQ DASH IPTV - Réponses à vos questions. Légal? Appareils? Contrat? Support? Tout ce que vous devez savoir.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            margin-top: 30px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .faq-section {
+            margin: 30px 0;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateX(5px);
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::before {
+            content: "❓";
+            margin-right: 10px;
+        }
+
+        .toggle-icon {
+            font-size: 1.3em;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .trust-badges {
+            background: #e8f5e9;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #2ecc71;
+        }
+
+        .trust-badges h3 {
+            color: #2ecc71;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px 0;
+        }
+
+        .badge-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge-item::before {
+            content: "✅";
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .badge-item strong {
+            color: #333;
+            font-size: 1em;
+        }
+
+        .devices-section {
+            background: #f0f8ff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #667eea;
+        }
+
+        .devices-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .devices-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .device {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .device::before {
+            display: block;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .device:nth-child(1)::before {
+            content: "📱";
+        }
+
+        .device:nth-child(2)::before {
+            content: "💻";
+        }
+
+        .device:nth-child(3)::before {
+            content: "📺";
+        }
+
+        .device:nth-child(4)::before {
+            content: "🎮";
+        }
+
+        .device:nth-child(5)::before {
+            content: "⌚";
+        }
+
+        .device:nth-child(6)::before {
+            content: "🔥";
+        }
+
+        .device small {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .payment-methods {
+            background: #fff3cd;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #ffc107;
+        }
+
+        .payment-methods h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .payment-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .payment-item::before {
+            content: "💳";
+            font-size: 1.3em;
+            margin-right: 12px;
+        }
+
+        .payment-item:nth-child(2)::before {
+            content: "📱";
+        }
+
+        .payment-item:nth-child(3)::before {
+            content: "🏦";
+        }
+
+        .payment-item:nth-child(4)::before {
+            content: "💰";
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .trial-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .trial-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .trial-btn:active {
+            transform: translateY(0);
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .back-button {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .back-button:hover {
+            opacity: 0.8;
+        }
+
+        .guarantee {
+            text-align: center;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .guarantee strong {
+            color: #2ecc71;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 25px;
+            }
+
+            .logo h1 {
+                font-size: 2em;
+            }
+
+            .hero h2 {
+                font-size: 1.4em;
+            }
+
+            .devices-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Retour à l'accueil</a>
+
+        <div class="card">
+            <!-- Logo -->
+            <div class="logo">
+                <h1>❓ DASH IPTV</h1>
+                <p>Questions Fréquemment Posées</p>
+            </div>
+
+            <!-- Hero -->
+            <div class="hero">
+                <h2>
+                    <span class="highlight">Vos Questions,</span><br>
+                    Nos Réponses Claires
+                </h2>
+                <p>Tout ce que vous devez savoir sur DASH IPTV</p>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <!-- FAQ 1 -->
+                <div class="faq-item active">
+                    <div class="faq-question">
+                        Est-ce que DASH IPTV est légal?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Oui, 100% légal!</strong> DASH IPTV est un service de streaming légal agréé. Nous avons les licences nécessaires pour diffuser les chaînes et contenus. Aucun risque légal pour utiliser notre service. Vous regardez simplement comme vous le feriez avec Netflix ou Disney+.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Sur quels appareils ça marche?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>DASH IPTV fonctionne sur pratiquement tous les appareils!</strong> Téléphones Android, iPhones, Tablettes, Smart TV, Firestick Amazon, PC/Mac, boîtiers TV Android, et bien d'autres. Un seul compte peut être utilisé sur plusieurs appareils en même temps.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Et si ma connexion Internet est lente?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>DASH IPTV s'adapte automatiquement!</strong> Notre système de qualité adaptative ajuste automatiquement la qualité vidéo selon votre vitesse Internet. Même avec 1 Mbps, vous pouvez regarder en qualité SD. Nous recommandons 2+ Mbps pour HD et 5+ Mbps pour 4K.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Y a-t-il un contrat? Puis-je annuler?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Aucun contrat, zéro engagement!</strong> Vous pouvez arrêter votre abonnement quand vous voulez, sans pénalité. Il n'y a pas de période de verrouillage. Commencez votre essai gratuit 24 heures sans risque - aucune carte de crédit requise.
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Le support est en français?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Oui, 100% support en français!</strong> Notre équipe DASH en Guinée parle couramment le français. Nous répondons sur WhatsApp 24/7. Problème d'installation? Besoin d'aide? Contactez-nous et nous résolvons le problème immédiatement.
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Quelles sont les méthodes de paiement?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Plusieurs options de paiement!</strong> Nous acceptons Orange Money, MTN Money, virement bancaire, et autres méthodes locales guinéennes. Vous payez seulement après votre essai gratuit. Pas de surprise de facturation.
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Combien de temps avant d'avoir accès?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>30 secondes maximum!</strong> Après avoir soumis votre formulaire d'essai gratuit, vous recevez immédiatement vos identifiants par WhatsApp. Vous pouvez commencer à regarder en quelques minutes. Pas d'attente, pas de démarrage complexe.
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Puis-je partager mon compte?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Un compte = Accès depuis plusieurs appareils</strong>, mais utilisé par la même personne ou famille. Nous détectons l'accès simultané excessif depuis des localisations différentes. Contactez-nous pour les comptes familiaux si vous avez besoin de plus de flexibilité.
+                    </div>
+                </div>
+
+                <!-- FAQ 9 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Que se passe-t-il si le service s'arrête?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Garantie de remboursement 100%!</strong> Si vous n'êtes pas satisfait pendant l'essai gratuit 24 heures, aucun frais ne vous sera demandé. Après l'essai, si vous annulez dans les 7 jours, remboursement complet. Service stable et fiable depuis 2+ ans.
+                    </div>
+                </div>
+
+                <!-- FAQ 10 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Besoin d'un compte de messagerie ou d'une carte de crédit?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Juste votre numéro WhatsApp!</strong> Pas besoin de compte Gmail, pas de carte de crédit pour l'essai gratuit. Contactez-nous via WhatsApp avec votre nom et numéro de téléphone, et vous avez accès immédiatement.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="trust-badges">
+                <h3>🛡️ Pourquoi Faire Confiance à DASH</h3>
+                <div class="badge-item">
+                    <strong>Service Local Guinéen - Équipe basée à Conakry</strong>
+                </div>
+                <div class="badge-item">
+                    <strong>Support 24/7 - Réponse immédiate sur WhatsApp</strong>
+                </div>
+                <div class="badge-item">
+                    <strong>Garantie Satisfait ou Remboursé - 7 jours complets</strong>
+                </div>
+                <div class="badge-item">
+                    <strong>50+ Clients Actifs & Satisfaits - Croissance constante</strong>
+                </div>
+                <div class="badge-item">
+                    <strong>Transparence Totale - Aucune surprise de facturation</strong>
+                </div>
+            </div>
+
+            <!-- Devices Section -->
+            <div class="devices-section">
+                <h3>📱 Appareils Compatibles</h3>
+                <div class="devices-grid">
+                    <div class="device">
+                        <small>Téléphones</small>
+                    </div>
+                    <div class="device">
+                        <small>Ordinateurs</small>
+                    </div>
+                    <div class="device">
+                        <small>Smart TV</small>
+                    </div>
+                    <div class="device">
+                        <small>Firestick</small>
+                    </div>
+                    <div class="device">
+                        <small>Tablettes</small>
+                    </div>
+                    <div class="device">
+                        <small>Boîtiers Android</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <h3>💳 Méthodes de Paiement Acceptées</h3>
+                <div class="payment-item">
+                    Orange Money - Portefeuille numérique
+                </div>
+                <div class="payment-item">
+                    Mobile Money - Tous les opérateurs
+                </div>
+                <div class="payment-item">
+                    Virements Bancaires - Comptes locaux
+                </div>
+                <div class="payment-item">
+                    Orange Genie - Service Orange
+                </div>
+            </div>
+
+            <!-- Guarantee -->
+            <div class="guarantee">
+                <strong>✅ Garantie Satisfait ou Remboursé</strong><br>
+                Essai gratuit 24 heures. Remboursement complet dans 7 jours. Zéro engagement.
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h3 style="color: #333; margin-bottom: 20px;">Prêt à Commencer?</h3>
+                <button class="trial-btn" onclick="window.location.href='iptv-landing-page.html'">
+                    🎁 ESSAI GRATUIT 24 HEURES
+                </button>
+                <p style="color: #666; margin: 15px 0;">Questions supplémentaires? Contactez-nous:</p>
+                <a href="https://wa.me/224611361300?text=Bonjour%20DASH!%20J'ai%20une%20question%20sur%20DASH%20IPTV" class="whatsapp-button">
+                    💬 Chat WhatsApp
+                </a>
+            </div>
+
+            <!-- Related Pages -->
+            <div style="background: #f0f4ff; border-radius: 15px; padding: 25px; margin: 30px 0; text-align: center; border: 2px dashed #667eea;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Parcourez nos autres pages:</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                    <a href="iptv-landing-page.html" style="display: inline-block; color: #667eea; font-weight: bold; text-decoration: none; padding: 8px 15px; border: 2px solid #667eea; border-radius: 50px; transition: all 0.2s; font-size: 0.9em;">
+                        Accueil IPTV
+                    </a>
+                    <a href="dash-tv-plus-download.html" style="display: inline-block; color: #667eea; font-weight: bold; text-decoration: none; padding: 8px 15px; border: 2px solid #667eea; border-radius: 50px; transition: all 0.2s; font-size: 0.9em;">
+                        Télécharger App
+                    </a>
+                    <a href="iptv-vs-cable.html" style="display: inline-block; color: #667eea; font-weight: bold; text-decoration: none; padding: 8px 15px; border: 2px solid #667eea; border-radius: 50px; transition: all 0.2s; font-size: 0.9em;">
+                        Vs Câble
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 DASH IPTV - DASH Entertainment Services</p>
+            <p>Support: WhatsApp <a href="https://wa.me/224611361300" style="color: #667eea; text-decoration: none;">+224 611 361 300</a></p>
+        </div>
+    </div>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Close other items
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== this) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                // Toggle current item
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

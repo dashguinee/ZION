@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASH IPTV vs Câble Traditionnel | Comparaison</title>
+    <meta name="description" content="Comparez DASH IPTV avec le câble/satellite traditionnel. 10,000+ chaînes vs 100-200. Zéro engagement vs contrat 12 mois.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            margin-top: 30px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tbody tr:nth-child(odd) {
+            background: #f8f9fa;
+        }
+
+        .feature-name {
+            font-weight: 600;
+            color: #333;
+            width: 35%;
+        }
+
+        .dash-col {
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .cable-col {
+            text-align: center;
+            color: #999;
+        }
+
+        .dash-col strong {
+            color: #2ecc71;
+            font-size: 1.1em;
+        }
+
+        .cable-col strong {
+            color: #e74c3c;
+        }
+
+        .winner {
+            background: #e8f5e9;
+        }
+
+        .social-proof {
+            text-align: center;
+            padding: 20px;
+            background: #ffe6e6;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+
+        .social-proof span {
+            font-size: 1.2em;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .testimonials {
+            margin: 30px 0;
+        }
+
+        .testimonial {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-style: italic;
+            border-left: 4px solid #ffc107;
+        }
+
+        .testimonial .name {
+            font-weight: bold;
+            margin-top: 10px;
+            font-style: normal;
+        }
+
+        .testimonial .role {
+            font-size: 0.85em;
+            color: #666;
+            font-style: normal;
+        }
+
+        .comparison-highlight {
+            background: #f0f8ff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #667eea;
+        }
+
+        .comparison-highlight h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .highlight-point {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px 0;
+        }
+
+        .highlight-point::before {
+            content: "✨";
+            font-size: 1.3em;
+            margin-right: 12px;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .trial-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .trial-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .trial-btn:active {
+            transform: translateY(0);
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .guarantee {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+        }
+
+        .guarantee strong {
+            color: #2ecc71;
+            font-size: 1.1em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .back-button {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .back-button:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 25px;
+            }
+
+            .logo h1 {
+                font-size: 2em;
+            }
+
+            .hero h2 {
+                font-size: 1.4em;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+
+            .feature-name {
+                width: 40%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Retour à l'accueil</a>
+
+        <div class="card">
+            <!-- Logo -->
+            <div class="logo">
+                <h1>⚡ DASH IPTV</h1>
+                <p>Le Choix Intelligent en Guinée</p>
+            </div>
+
+            <!-- Hero -->
+            <div class="hero">
+                <h2>
+                    <span class="highlight">DASH IPTV vs Câble</span><br>
+                    Pourquoi Changer?
+                </h2>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="social-proof">
+                <span>🔥 50+ Clients Qui Ont Switché du Câble à DASH IPTV</span>
+            </div>
+
+            <!-- Comparison Table -->
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Caractéristique</th>
+                        <th>DASH IPTV ✅</th>
+                        <th>Câble/Satellite ❌</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="winner">
+                        <td class="feature-name">Nombre de Chaînes</td>
+                        <td class="dash-col"><strong>10,000+</strong></td>
+                        <td class="cable-col"><strong>100-200</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Films & Séries</td>
+                        <td class="dash-col"><strong>60,000+</strong></td>
+                        <td class="cable-col"><strong>Très Limité</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Appareils Compatibles</td>
+                        <td class="dash-col"><strong>Tous</strong></td>
+                        <td class="cable-col"><strong>TV Seulement</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Temps Installation</td>
+                        <td class="dash-col"><strong>1 Heure</strong></td>
+                        <td class="cable-col"><strong>3-5 Jours</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Coût Installation</td>
+                        <td class="dash-col"><strong>0 GNF</strong></td>
+                        <td class="cable-col"><strong>50,000+ GNF</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Prix par Mois</td>
+                        <td class="dash-col"><strong>15,000 GNF</strong></td>
+                        <td class="cable-col"><strong>50,000+ GNF</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Contrat Minimum</td>
+                        <td class="dash-col"><strong>Aucun</strong></td>
+                        <td class="cable-col"><strong>6-12 Mois</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Qualité Vidéo</td>
+                        <td class="dash-col"><strong>HD à 4K</strong></td>
+                        <td class="cable-col"><strong>SD/HD</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Flexibilité</td>
+                        <td class="dash-col"><strong>Ultra Flexible</strong></td>
+                        <td class="cable-col"><strong>Rigide</strong></td>
+                    </tr>
+                    <tr class="winner">
+                        <td class="feature-name">Support Local</td>
+                        <td class="dash-col"><strong>WhatsApp 24/7</strong></td>
+                        <td class="cable-col"><strong>Limité</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Comparison Highlights -->
+            <div class="comparison-highlight">
+                <h3>💰 Économies Réelles</h3>
+                <div class="highlight-point">
+                    <strong>Mensuel: Sauvegardez 35,000 GNF (Câble 50K vs DASH 15K)</strong>
+                </div>
+                <div class="highlight-point">
+                    <strong>Annuel: Sauvegardez 420,000 GNF sans Contrat!</strong>
+                </div>
+                <div class="highlight-point">
+                    <strong>Installation: Zéro frais vs 50,000+ GNF chez le câble</strong>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="testimonials">
+                <h3 style="text-align: center; color: #333; margin-bottom: 20px;">💬 Ce Que Disent Nos Clients</h3>
+
+                <div class="testimonial">
+                    "Je payais 60,000 par mois avec le câble et j'avais que 150 chaînes. Avec DASH IPTV à 15,000, j'ai 10,000+ chaînes et j'économise 45,000 GNF chaque mois!"
+                    <div class="name">- Mamadou T.</div>
+                    <div class="role">Ancien Client Câble (3 mois chez DASH)</div>
+                </div>
+
+                <div class="testimonial">
+                    "L'installation était super facile, juste 30 minutes. Le support sur WhatsApp répond tout de suite. Je ne reviendrais jamais au câble."
+                    <div class="name">- Aïssatou K.</div>
+                    <div class="role">Client DASH (2 mois)</div>
+                </div>
+
+                <div class="testimonial">
+                    "Flexible, pas de contrat de 2 ans comme le câble. Je peux arrêter quand je veux. C'est moderne et ça marche partout sur ma Smart TV et mon téléphone."
+                    <div class="name">- Bouba S.</div>
+                    <div class="role">Client DASH (1 mois)</div>
+                </div>
+            </div>
+
+            <!-- Key Benefits Section -->
+            <div style="background: #e8f5e9; border-radius: 15px; padding: 25px; margin: 30px 0;">
+                <h3 style="color: #2ecc71; margin-bottom: 15px;">✅ Avantages DASH IPTV</h3>
+                <div style="margin-bottom: 12px;">
+                    <strong>🎯 Aucun Engagement</strong> - Arrêtez quand vous voulez, sans pénalité
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>📱 Partout</strong> - TV, Téléphone, Tablette, Firestick
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>🚀 Immédiat</strong> - Installation en minutes, pas de technicien
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>🌍 Global</strong> - Chaînes du monde entier + locales
+                </div>
+                <div>
+                    <strong>💪 Support Local</strong> - Équipe en Guinée qui parle votre langue
+                </div>
+            </div>
+
+            <!-- Trial Section -->
+            <div class="cta-section">
+                <h3 style="color: #333; margin-bottom: 20px;">Prêt à Passer à DASH IPTV?</h3>
+                <button class="trial-btn" onclick="window.location.href='iptv-landing-page.html'">
+                    🎁 ESSAI GRATUIT 24 HEURES
+                </button>
+                <p style="color: #666; margin-bottom: 15px;">ou contactez-nous directement:</p>
+                <a href="https://wa.me/224611361300?text=Bonjour%20DASH!%20Je%20viens%20du%20câble%20et%20je%20veux%20passer%20à%20DASH%20IPTV" class="whatsapp-button">
+                    💬 Discuter avec un Expert
+                </a>
+            </div>
+
+            <!-- Guarantee -->
+            <div class="guarantee">
+                <strong>✅ Garantie Satisfait ou Remboursé</strong><br>
+                Essai gratuit 24 heures. Aucun engagement. Pas de carte de crédit requise.
+            </div>
+
+            <!-- FAQ Quick -->
+            <div style="background: #f0f4ff; border-radius: 15px; padding: 25px; margin: 30px 0; border: 2px dashed #667eea;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">❓ Vous Avez des Questions?</h3>
+                <p style="margin-bottom: 15px;">Visitez notre page FAQ complète pour répondre à vos préoccupations:</p>
+                <a href="iptv-faq.html" style="display: inline-block; color: #667eea; font-weight: bold; text-decoration: none; padding: 10px 20px; border: 2px solid #667eea; border-radius: 50px; transition: all 0.2s;">
+                    Voir les FAQ Complètes →
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 DASH IPTV - DASH Entertainment Services</p>
+            <p>Support: WhatsApp <a href="https://wa.me/224611361300" style="color: #667eea; text-decoration: none;">+224 611 361 300</a></p>
+        </div>
+    </div>
+</body>
+</html>

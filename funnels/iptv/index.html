@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASH IPTV - Ensemble de Pages de Vente</title>
+    <meta name="description" content="DASH IPTV - Funnel de vente complet. Essai gratuit, télécharger app, comparaison avec câble, FAQ et support.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            margin-top: 30px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .pages-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .page-card {
+            background: linear-gradient(135deg, #f0f4ff 0%, #f5f0ff 100%);
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .page-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-color: #764ba2;
+        }
+
+        .page-card-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .page-card h3 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .page-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 0;
+        }
+
+        .quick-stats {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .stat:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .stat-icon {
+            font-size: 2em;
+            margin-right: 15px;
+            min-width: 40px;
+        }
+
+        .stat-text strong {
+            color: #333;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .stat-text span {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .funnel-flow {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f0f8ff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px dashed #2ecc71;
+            text-align: center;
+        }
+
+        .funnel-flow h3 {
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            margin: 5px;
+            border: 2px solid #2ecc71;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .flow-step::after {
+            content: " → ";
+            margin: 0 5px;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .flow-step:last-child::after {
+            content: "";
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .primary-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .social-proof {
+            text-align: center;
+            padding: 20px;
+            background: #ffe6e6;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .social-proof span {
+            font-size: 1.1em;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .feature {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .feature::before {
+            display: block;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .feature:nth-child(1)::before {
+            content: "📺";
+        }
+
+        .feature:nth-child(2)::before {
+            content: "🎬";
+        }
+
+        .feature:nth-child(3)::before {
+            content: "📱";
+        }
+
+        .feature:nth-child(4)::before {
+            content: "💰";
+        }
+
+        .feature small {
+            font-weight: 600;
+            color: #333;
+            display: block;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .footer-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 25px;
+            }
+
+            .logo h1 {
+                font-size: 2.2em;
+            }
+
+            .hero h2 {
+                font-size: 1.4em;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-step {
+                display: block;
+                margin: 8px 0;
+            }
+
+            .flow-step::after {
+                content: "↓";
+                display: block;
+                margin: 5px 0;
+            }
+
+            .pages-grid {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- Logo -->
+            <div class="logo">
+                <h1>📺 DASH IPTV</h1>
+                <p>Plateforme Complète de Vente en Guinée</p>
+            </div>
+
+            <!-- Hero -->
+            <div class="hero">
+                <h2>Bienvenue sur <span class="highlight">DASH IPTV</span></h2>
+                <p>Accédez à 10,000+ chaînes et 60,000+ films</p>
+                <p style="font-size: 0.95em; color: #667eea;">Choisissez votre point d'entrée ci-dessous</p>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="social-proof">
+                <span>🔥 50+ Clients Satisfaits en Guinée</span>
+            </div>
+
+            <!-- Funnel Flow -->
+            <div class="funnel-flow">
+                <h3>📊 Le Parcours DASH IPTV</h3>
+                <div style="overflow-x: auto; padding: 10px 0;">
+                    <div class="flow-step">Essai Gratuit</div>
+                    <div class="flow-step">Télécharger App</div>
+                    <div class="flow-step">Comparer vs Câble</div>
+                    <div class="flow-step">FAQ & Confiance</div>
+                    <div class="flow-step">Client Heureux</div>
+                </div>
+            </div>
+
+            <!-- Pages Grid -->
+            <div class="pages-grid">
+                <!-- Page 1: Main Landing Page -->
+                <a href="iptv-landing-page.html" class="page-card">
+                    <div class="page-card-icon">🎁</div>
+                    <h3>Essai Gratuit 24H</h3>
+                    <p>Accès immédiat - Aucune carte bancaire requise</p>
+                </a>
+
+                <!-- Page 2: App Download -->
+                <a href="dash-tv-plus-download.html" class="page-card">
+                    <div class="page-card-icon">📱</div>
+                    <h3>Télécharger DASH TV+</h3>
+                    <p>L'app officielle - Installation en 4 étapes</p>
+                </a>
+
+                <!-- Page 3: Comparison -->
+                <a href="iptv-vs-cable.html" class="page-card">
+                    <div class="page-card-icon">⚡</div>
+                    <h3>DASH vs Câble</h3>
+                    <p>Comparaison complète - 10,000+ chaînes vs 100-200</p>
+                </a>
+
+                <!-- Page 4: FAQ -->
+                <a href="iptv-faq.html" class="page-card">
+                    <div class="page-card-icon">❓</div>
+                    <h3>Questions Fréquentes</h3>
+                    <p>Réponses à vos préoccupations - Légal? Appareils?</p>
+                </a>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <h3 style="color: #333; margin-bottom: 20px; text-align: center;">💪 Pourquoi DASH IPTV</h3>
+                <div class="stat">
+                    <div class="stat-icon">📺</div>
+                    <div class="stat-text">
+                        <strong>10,000+ Chaînes</strong>
+                        <span>Sport, Films, Actualités, Documentaires</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">🎬</div>
+                    <div class="stat-text">
+                        <strong>60,000+ Films & Séries</strong>
+                        <span>Netflix, Disney+, Amazon Prime et plus</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-text">
+                        <strong>15,000 GNF/mois</strong>
+                        <span>3x moins cher que le câble - Aucun engagement</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-text">
+                        <strong>Support 24/7</strong>
+                        <span>Équipe locale en Guinée sur WhatsApp</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div style="margin: 30px 0;">
+                <h3 style="color: #333; text-align: center; margin-bottom: 20px;">✨ Avantages DASH</h3>
+                <div class="features-grid">
+                    <div class="feature">
+                        <small>10,000+ Chaînes</small>
+                    </div>
+                    <div class="feature">
+                        <small>60,000+ Contenus</small>
+                    </div>
+                    <div class="feature">
+                        <small>Prix Imbattable</small>
+                    </div>
+                    <div class="feature">
+                        <small>Aucun Engagement</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <button class="primary-btn" onclick="window.location.href='iptv-landing-page.html'">
+                    🚀 COMMENCER ESSAI GRATUIT
+                </button>
+                <p style="color: #666; margin-bottom: 15px;">ou discutez avec notre équipe:</p>
+                <a href="https://wa.me/224611361300?text=Bonjour%20DASH%20IPTV!%20Je%20veux%20commencer%20mon%20essai%20gratuit" class="whatsapp-button">
+                    💬 WhatsApp Support
+                </a>
+            </div>
+
+            <!-- Dashboard Info -->
+            <div style="background: #e8f5e9; border-radius: 15px; padding: 20px; margin: 30px 0; border: 2px solid #2ecc71; text-align: center;">
+                <strong style="color: #2ecc71;">✅ Garantie 100% Satisfait</strong><br>
+                <span style="color: #666; font-size: 0.95em;">Essai 24h gratuit + remboursement 7 jours si non satisfait</span>
+            </div>
+
+            <!-- Info Section -->
+            <div style="background: #f0f8ff; border-radius: 15px; padding: 20px; margin: 20px 0; border: 2px dashed #667eea;">
+                <h3 style="color: #667eea; margin-bottom: 15px; text-align: center;">📍 À Propos du Funnel</h3>
+                <p style="text-align: center; color: #666; margin-bottom: 15px;">
+                    Ce site contient <strong>4 pages d'optimisation de conversion</strong> conçues pour convertir les visiteurs en clients heureux:
+                </p>
+                <ul style="color: #666; font-size: 0.95em; margin-left: 20px;">
+                    <li><strong>Page 1 (Essai):</strong> Capture des leads et conversion directe</li>
+                    <li><strong>Page 2 (App):</strong> Support technique et facilité d'utilisation</li>
+                    <li><strong>Page 3 (vs Câble):</strong> Suppression des objections concurrentielles</li>
+                    <li><strong>Page 4 (FAQ):</strong> Construction de confiance et résolution de doutes</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 DASH IPTV - DASH Entertainment Services</p>
+            <p>Support: WhatsApp <a href="https://wa.me/224611361300" class="footer-link">+224 611 361 300</a></p>
+            <p style="margin-top: 10px; font-size: 0.85em;">Tous les droits réservés | Service légal agréé</p>
+        </div>
+    </div>
+</body>
+</html>

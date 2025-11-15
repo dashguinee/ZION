@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme -->
+    <style name="Theme.DashTVPlus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/purple_primary</item>
+        <item name="colorPrimaryVariant">@color/purple_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/purple_primary</item>
+        <item name="colorSecondaryVariant">@color/purple_dark</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">@color/purple_dark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:colorBackground">@color/background_dark</item>
+
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+    </style>
+
+    <!-- Splash Screen Theme -->
+    <style name="Theme.DashTVPlus.Splash" parent="Theme.DashTVPlus">
+        <item name="android:windowBackground">@drawable/gradient_background</item>
+        <item name="android:statusBarColor">@color/purple_primary</item>
+    </style>
+
+    <!-- Fullscreen Player Theme -->
+    <style name="Theme.DashTVPlus.Fullscreen" parent="Theme.DashTVPlus">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
+    <!-- Button Style -->
+    <style name="DashButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="backgroundTint">@color/purple_primary</item>
+    </style>
+
+    <!-- Input Field Style -->
+    <style name="DashInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/purple_primary</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="hintTextColor">@color/purple_primary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+    </style>
+
+    <!-- Card Style -->
+    <style name="DashCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/card_background</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">4dp</item>
+    </style>
+</resources>

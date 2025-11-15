@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Top Controls -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/overlay_dark"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@id/exo_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/close"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:tint="@color/white" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Bottom Controls -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/overlay_dark"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Playback Controls -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- Previous Channel -->
+            <ImageButton
+                android:id="@+id/btnPrevChannel"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/previous_channel"
+                android:src="@android:drawable/ic_media_previous"
+                android:tint="@color/white" />
+
+            <Space
+                android:layout_width="32dp"
+                android:layout_height="1dp" />
+
+            <!-- Play/Pause -->
+            <ImageButton
+                android:id="@id/exo_play_pause"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/ok"
+                android:tint="@color/white" />
+
+            <Space
+                android:layout_width="32dp"
+                android:layout_height="1dp" />
+
+            <!-- Next Channel -->
+            <ImageButton
+                android:id="@+id/btnNextChannel"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/next_channel"
+                android:src="@android:drawable/ic_media_next"
+                android:tint="@color/white" />
+
+        </LinearLayout>
+
+        <!-- Buffering Text -->
+        <TextView
+            android:id="@id/exo_buffering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="@string/buffering"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>
