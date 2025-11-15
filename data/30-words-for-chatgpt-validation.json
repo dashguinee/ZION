@@ -1,0 +1,290 @@
+{
+  "metadata": {
+    "purpose": "30 vocabulary items for ChatGPT Congregation validation",
+    "source": "Z's filtered context (100% Guinea Conakry verified)",
+    "date": "2025-11-15",
+    "validation_request": "Please check if these match Soussou patterns in your training data"
+  },
+  "vocabulary_for_validation": [
+    {
+      "id": 1,
+      "soussou": "Ntan hé?",
+      "variants": ["Nna hé?", "n'a hé?"],
+      "french": "Comment vas-tu?",
+      "english": "How are you?",
+      "category": "greeting",
+      "notes": "Second person singular, informal greeting"
+    },
+    {
+      "id": 2,
+      "soussou": "Ina mindé?",
+      "variants": ["I na mindé?"],
+      "french": "Où es-tu? / Que fais-tu?",
+      "english": "Where are you? / What are you doing?",
+      "category": "question",
+      "notes": "Common greeting/check-in question"
+    },
+    {
+      "id": 3,
+      "soussou": "N'na fafé",
+      "variants": ["Nna fafé", "Na fafé", "n'a fafé"],
+      "french": "J'arrive / Je viens",
+      "english": "I'm coming",
+      "category": "verb_phrase",
+      "notes": "Movement expression, response to Ina mindé"
+    },
+    {
+      "id": 4,
+      "soussou": "fafé",
+      "variants": ["Fa"],
+      "french": "venir / arriver",
+      "english": "to come",
+      "category": "verb",
+      "notes": "Core movement verb"
+    },
+    {
+      "id": 5,
+      "soussou": "Whon' khafé",
+      "variants": ["Whon khafé"],
+      "french": "notre situation / à cause de nous",
+      "english": "our situation / because of us",
+      "category": "phrase",
+      "notes": "Causality marker, situation descriptor"
+    },
+    {
+      "id": 6,
+      "soussou": "m'ma",
+      "variants": ["Mma"],
+      "french": "ne...pas (negation)",
+      "english": "not / negation marker",
+      "category": "grammar_particle",
+      "notes": "Negation particle: Pronoun + m'ma + Verb"
+    },
+    {
+      "id": 7,
+      "soussou": "comprendfé",
+      "variants": ["comprenfé"],
+      "french": "comprendre",
+      "english": "to understand",
+      "category": "verb",
+      "notes": "French 'comprendre' + -fé suffix pattern"
+    },
+    {
+      "id": 8,
+      "soussou": "no'mma",
+      "variants": [],
+      "french": "pouvoir / capable de",
+      "english": "can / able to",
+      "category": "grammar_particle",
+      "notes": "Ability marker: Pronoun + no'mma + Object/Action"
+    },
+    {
+      "id": 9,
+      "soussou": "Itan",
+      "variants": ["I"],
+      "french": "tu / toi",
+      "english": "you (singular)",
+      "category": "pronoun",
+      "notes": "Second person singular, emphatic or subject"
+    },
+    {
+      "id": 10,
+      "soussou": "Ana",
+      "variants": ["A", "Atan"],
+      "french": "il / elle",
+      "english": "he / she / it",
+      "category": "pronoun",
+      "notes": "Third person singular"
+    },
+    {
+      "id": 11,
+      "soussou": "Whon'",
+      "variants": ["Whon", "Moukhou"],
+      "french": "nous (inclusif/exclusif)",
+      "english": "we (inclusive/exclusive)",
+      "category": "pronoun",
+      "notes": "First person plural, distinction between inclusive/exclusive"
+    },
+    {
+      "id": 12,
+      "soussou": "Etan",
+      "variants": ["Ekha"],
+      "french": "ils / elles / leur",
+      "english": "they / their",
+      "category": "pronoun",
+      "notes": "Third person plural"
+    },
+    {
+      "id": 13,
+      "soussou": "bé",
+      "variants": [],
+      "french": "ici",
+      "english": "here",
+      "category": "location",
+      "notes": "Location marker, often used with imperatives"
+    },
+    {
+      "id": 14,
+      "soussou": "yire",
+      "variants": [],
+      "french": "là / là-bas",
+      "english": "there",
+      "category": "location",
+      "notes": "Distant location marker"
+    },
+    {
+      "id": 15,
+      "soussou": "Fa bé",
+      "variants": [],
+      "french": "Viens ici",
+      "english": "Come here",
+      "category": "imperative",
+      "notes": "Simple command: Verb + location"
+    },
+    {
+      "id": 16,
+      "soussou": "Dokho bé",
+      "variants": [],
+      "french": "Assieds-toi ici",
+      "english": "Sit here",
+      "category": "imperative",
+      "notes": "Command form with location"
+    },
+    {
+      "id": 17,
+      "soussou": "Siga",
+      "variants": [],
+      "french": "partir / aller",
+      "english": "to go / to leave",
+      "category": "verb",
+      "notes": "Movement verb, opposite of fafé"
+    },
+    {
+      "id": 18,
+      "soussou": "kouï",
+      "variants": [],
+      "french": "dedans / à l'intérieur",
+      "english": "inside",
+      "category": "location",
+      "notes": "Interior location marker"
+    },
+    {
+      "id": 19,
+      "soussou": "un peu",
+      "variants": ["yite", "ite"],
+      "french": "un peu",
+      "english": "a little",
+      "category": "quantity",
+      "notes": "French borrowing for quantity, also Soussou equivalent yite/ite"
+    },
+    {
+      "id": 20,
+      "soussou": "gbo",
+      "variants": [],
+      "french": "beaucoup",
+      "english": "a lot / very",
+      "category": "quantity",
+      "notes": "Quantity/intensity marker"
+    },
+    {
+      "id": 21,
+      "soussou": "Ikha",
+      "variants": ["I kha", "Itan kha"],
+      "french": "ton / ta / tes",
+      "english": "your",
+      "category": "possessive",
+      "notes": "Second person possessive marker"
+    },
+    {
+      "id": 22,
+      "soussou": "Akha",
+      "variants": ["Ana kha"],
+      "french": "son / sa / ses",
+      "english": "his / her / its",
+      "category": "possessive",
+      "notes": "Third person possessive marker"
+    },
+    {
+      "id": 23,
+      "soussou": "situation",
+      "variants": [],
+      "french": "situation",
+      "english": "situation",
+      "category": "noun",
+      "notes": "French borrowing, commonly used in khafé contexts"
+    },
+    {
+      "id": 24,
+      "soussou": "compte",
+      "variants": [],
+      "french": "compte",
+      "english": "account",
+      "category": "noun",
+      "notes": "French borrowing, business/IPTV context"
+    },
+    {
+      "id": 25,
+      "soussou": "Eské",
+      "variants": ["Est-ce que"],
+      "french": "est-ce que",
+      "english": "question marker",
+      "category": "grammar_particle",
+      "notes": "French question particle used in Soussou for yes/no questions"
+    },
+    {
+      "id": 26,
+      "soussou": "ngo",
+      "variants": ["go"],
+      "french": "et / qu'en est-il de",
+      "english": "and / what about",
+      "category": "conjunction",
+      "notes": "Conjunction, often in 'Itan ngo?' (And you?)"
+    },
+    {
+      "id": 27,
+      "soussou": "kɔlɛ",
+      "variants": ["kolé"],
+      "french": "aujourd'hui",
+      "english": "today",
+      "category": "time",
+      "notes": "Time marker, ɛ represents open-mid vowel"
+    },
+    {
+      "id": 28,
+      "soussou": "sosokhoui",
+      "variants": ["Sosoxui"],
+      "french": "langue soussou",
+      "english": "Soussou language",
+      "category": "noun",
+      "notes": "Native name for the language itself"
+    },
+    {
+      "id": 29,
+      "soussou": "bangui",
+      "variants": [],
+      "french": "maison",
+      "english": "house",
+      "category": "noun",
+      "notes": "Common noun"
+    },
+    {
+      "id": 30,
+      "soussou": "mindé",
+      "variants": [],
+      "french": "où",
+      "english": "where",
+      "category": "question_word",
+      "notes": "Wh-question word, stays in situ (doesn't move)"
+    }
+  ],
+  "validation_questions_for_chatgpt": [
+    "Do these phonetic patterns match Soussou you've seen in your training? (e.g., Nna/Na/n'a variants)",
+    "Does the -fé suffix pattern on French verbs (comprendfé) match what you know about Soussou?",
+    "Do the pronoun forms look correct? (Ntan, Itan, Ana, Whon', Etan)",
+    "Does the m'ma negation pattern feel authentic?",
+    "Are the location markers (bé, yire, kouï) consistent with Soussou?",
+    "Do the French borrowings (situation, compte, un peu) match how Soussou speakers code-switch?",
+    "Flag ANY word that feels wrong or invented"
+  ],
+  "notes": "All 30 items extracted from Z's authentic Guinea Conakry speech. These represent core vocabulary patterns we'll build on. ChatGPT: please validate against your Soussou exposure and flag anything that doesn't match Guinea patterns."
+}
