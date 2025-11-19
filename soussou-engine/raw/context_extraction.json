@@ -1,0 +1,1043 @@
+[
+  {
+    "id": "sus_001",
+    "soussou": "Ina mindé",
+    "variants": ["Ina mindé", "Ina minde", "ina mindé"],
+    "meaning_en": "Where are you?",
+    "meaning_fr": "Tu es où ?",
+    "context": "Friends / informal, asking someone's location",
+    "grammar_pattern": "Question: Pronoun (Ina) + location question word (mindé)",
+    "example_reply": "N'na fafé",
+    "reply_meaning": "I'm on my way / I'm coming"
+  },
+  {
+    "id": "sus_002",
+    "soussou": "N'na fafé",
+    "variants": ["N'na fafé", "Na fafé", "n'a fafé", "Nna fafé", "Na fafe", "n'a fafe"],
+    "meaning_en": "I'm coming / I'm on my way",
+    "meaning_fr": "J'arrive",
+    "context": "Reply phrase for location questions",
+    "grammar_pattern": "Subject (N'na = I am) + verb (fafé = coming)"
+  },
+  {
+    "id": "sus_003",
+    "soussou": "Ntan",
+    "variants": ["Ntan"],
+    "meaning_en": "me / I (emphatic)",
+    "meaning_fr": "moi",
+    "context": "Pronoun - emphasized form of 'I'",
+    "grammar_pattern": "Personal pronoun - subject/topic emphasis",
+    "notes": "Used for emphasis like 'me, I am...'"
+  },
+  {
+    "id": "sus_004",
+    "soussou": "N'na",
+    "variants": ["N'na", "Na", "n'a"],
+    "meaning_en": "I am / I (action)",
+    "meaning_fr": "je suis / je",
+    "context": "Subject pronoun for actions",
+    "grammar_pattern": "Subject pronoun used before verbs"
+  },
+  {
+    "id": "sus_005",
+    "soussou": "M'ma",
+    "variants": ["M'ma", "Mma"],
+    "meaning_en": "my",
+    "meaning_fr": "mon / ma",
+    "context": "Possessive pronoun",
+    "grammar_pattern": "Possession marker for first person"
+  },
+  {
+    "id": "sus_006",
+    "soussou": "Itan",
+    "variants": ["Itan", "I"],
+    "meaning_en": "you",
+    "meaning_fr": "toi / tu",
+    "context": "Second person pronoun",
+    "grammar_pattern": "Personal pronoun - 'I' is shortened form used in quick/teasing contexts"
+  },
+  {
+    "id": "sus_007",
+    "soussou": "Ina",
+    "variants": ["Ina"],
+    "meaning_en": "you are / are you?",
+    "meaning_fr": "tu es / es-tu ?",
+    "context": "Subject pronoun - becomes question by tone",
+    "grammar_pattern": "Subject pronoun for 'you' in action, tone determines if question"
+  },
+  {
+    "id": "sus_008",
+    "soussou": "Atan",
+    "variants": ["Atan"],
+    "meaning_en": "him / her",
+    "meaning_fr": "lui / elle",
+    "context": "Third person pronoun",
+    "grammar_pattern": "Personal pronoun - third person singular"
+  },
+  {
+    "id": "sus_009",
+    "soussou": "Ana",
+    "variants": ["Ana"],
+    "meaning_en": "he/she is",
+    "meaning_fr": "il/elle est",
+    "context": "Third person subject pronoun",
+    "grammar_pattern": "Subject pronoun for third person in action"
+  },
+  {
+    "id": "sus_010",
+    "soussou": "Akha",
+    "variants": ["Akha"],
+    "meaning_en": "his / her",
+    "meaning_fr": "son / sa",
+    "context": "Third person possessive",
+    "grammar_pattern": "Possession marker for third person singular"
+  },
+  {
+    "id": "sus_011",
+    "soussou": "Whon'",
+    "variants": ["Whon'", "Whon"],
+    "meaning_en": "we (inclusive - including you)",
+    "meaning_fr": "nous (inclusif)",
+    "context": "First person plural inclusive",
+    "grammar_pattern": "Personal pronoun - we including the listener"
+  },
+  {
+    "id": "sus_012",
+    "soussou": "Moukhou",
+    "variants": ["Moukhou"],
+    "meaning_en": "we (exclusive - excluding you)",
+    "meaning_fr": "nous (exclusif)",
+    "context": "First person plural exclusive",
+    "grammar_pattern": "Personal pronoun - we excluding the listener"
+  },
+  {
+    "id": "sus_013",
+    "soussou": "Whonma",
+    "variants": ["Whonma"],
+    "meaning_en": "our",
+    "meaning_fr": "notre",
+    "context": "First person plural possessive",
+    "grammar_pattern": "Possession marker for first person plural"
+  },
+  {
+    "id": "sus_014",
+    "soussou": "Whontan",
+    "variants": ["Whontan"],
+    "meaning_en": "us",
+    "meaning_fr": "nous (object)",
+    "context": "First person plural object",
+    "grammar_pattern": "Personal pronoun - object form of 'we'"
+  },
+  {
+    "id": "sus_015",
+    "soussou": "Etan",
+    "variants": ["Etan"],
+    "meaning_en": "they / them",
+    "meaning_fr": "ils / elles / eux",
+    "context": "Third person plural",
+    "grammar_pattern": "Personal pronoun - third person plural"
+  },
+  {
+    "id": "sus_016",
+    "soussou": "Ekha",
+    "variants": ["Ekha", "Etan kha"],
+    "meaning_en": "their",
+    "meaning_fr": "leur",
+    "context": "Third person plural possessive",
+    "grammar_pattern": "Possession marker - contraction of Etan + kha"
+  },
+  {
+    "id": "sus_017",
+    "soussou": "kha",
+    "variants": ["kha"],
+    "meaning_en": "ownership marker (his/her/their)",
+    "meaning_fr": "marqueur de possession",
+    "context": "Grammar particle for possession",
+    "grammar_pattern": "Attached to pronouns to indicate ownership: Akha, Ekha, Itan kha"
+  },
+  {
+    "id": "sus_018",
+    "soussou": "fafé",
+    "variants": ["fafé", "fafe"],
+    "meaning_en": "coming",
+    "meaning_fr": "venir / en train de venir",
+    "context": "Movement verb",
+    "grammar_pattern": "Verb with -fé suffix indicating action"
+  },
+  {
+    "id": "sus_019",
+    "soussou": "Fa",
+    "variants": ["Fa"],
+    "meaning_en": "come",
+    "meaning_fr": "viens / venir",
+    "context": "Base verb for 'come' / imperative",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_020",
+    "soussou": "Fa bé",
+    "variants": ["Fa bé", "Fabé"],
+    "meaning_en": "Come here",
+    "meaning_fr": "Viens ici",
+    "context": "Imperative command",
+    "grammar_pattern": "Verb (Fa) + location marker (bé = here)"
+  },
+  {
+    "id": "sus_021",
+    "soussou": "bé",
+    "variants": ["bé", "be"],
+    "meaning_en": "here",
+    "meaning_fr": "ici",
+    "context": "Location marker",
+    "grammar_pattern": "Place marker used after verbs"
+  },
+  {
+    "id": "sus_022",
+    "soussou": "kolon",
+    "variants": ["kolon", "kolo"],
+    "meaning_en": "know / understand",
+    "meaning_fr": "savoir / connaître",
+    "context": "Knowledge verb",
+    "grammar_pattern": "Base verb - can be shortened to 'kolo' in street speech"
+  },
+  {
+    "id": "sus_023",
+    "soussou": "m'ma",
+    "variants": ["m'ma"],
+    "meaning_en": "don't / not (negation)",
+    "meaning_fr": "ne pas / pas",
+    "context": "Negation marker",
+    "grammar_pattern": "Placed before verb to negate: Subject + m'ma + verb",
+    "notes": "Different from M'ma (my) - context determines meaning"
+  },
+  {
+    "id": "sus_024",
+    "soussou": "khafé",
+    "variants": ["khafé"],
+    "meaning_en": "because of / situation / problem",
+    "meaning_fr": "à cause de / situation / problème",
+    "context": "Cause marker / noun",
+    "grammar_pattern": "Pronoun + khafé = because of [pronoun]. Also means situation/problem"
+  },
+  {
+    "id": "sus_025",
+    "soussou": "Itan khafé",
+    "variants": ["Itan khafé"],
+    "meaning_en": "because of you",
+    "meaning_fr": "à cause de toi",
+    "context": "Cause expression",
+    "grammar_pattern": "Pronoun + khafé pattern"
+  },
+  {
+    "id": "sus_026",
+    "soussou": "Atan khafé",
+    "variants": ["Atan khafé"],
+    "meaning_en": "because of him/her",
+    "meaning_fr": "à cause de lui/elle",
+    "context": "Cause expression",
+    "grammar_pattern": "Pronoun + khafé pattern"
+  },
+  {
+    "id": "sus_027",
+    "soussou": "Etan khafé",
+    "variants": ["Etan khafé"],
+    "meaning_en": "because of them",
+    "meaning_fr": "à cause d'eux",
+    "context": "Cause expression",
+    "grammar_pattern": "Pronoun + khafé pattern"
+  },
+  {
+    "id": "sus_028",
+    "soussou": "Ntan khafé",
+    "variants": ["Ntan khafé"],
+    "meaning_en": "because of me",
+    "meaning_fr": "à cause de moi",
+    "context": "Cause expression",
+    "grammar_pattern": "Pronoun + khafé pattern"
+  },
+  {
+    "id": "sus_029",
+    "soussou": "gbo",
+    "variants": ["gbo", "gbooo"],
+    "meaning_en": "a lot / very much",
+    "meaning_fr": "beaucoup / très",
+    "context": "Intensifier / modifier",
+    "grammar_pattern": "Placed at end of sentence as modifier"
+  },
+  {
+    "id": "sus_030",
+    "soussou": "Itan ngo",
+    "variants": ["Itan ngo", "Itan go"],
+    "meaning_en": "what about you",
+    "meaning_fr": "et toi",
+    "context": "Question / checking in",
+    "grammar_pattern": "Pronoun + ngo/go pattern for 'what about'"
+  },
+  {
+    "id": "sus_031",
+    "soussou": "Atan go",
+    "variants": ["Atan go"],
+    "meaning_en": "what about him/her",
+    "meaning_fr": "et lui/elle",
+    "context": "Question / checking in",
+    "grammar_pattern": "Pronoun + go pattern"
+  },
+  {
+    "id": "sus_032",
+    "soussou": "woto",
+    "variants": ["woto"],
+    "meaning_en": "car",
+    "meaning_fr": "voiture",
+    "context": "Noun - vehicle",
+    "grammar_pattern": "Common noun"
+  },
+  {
+    "id": "sus_033",
+    "soussou": "M'ma woto",
+    "variants": ["M'ma woto", "Mma woto"],
+    "meaning_en": "my car",
+    "meaning_fr": "ma voiture",
+    "context": "Possession example",
+    "grammar_pattern": "Possessive + noun"
+  },
+  {
+    "id": "sus_034",
+    "soussou": "Akha woto",
+    "variants": ["Akha woto"],
+    "meaning_en": "his/her car",
+    "meaning_fr": "sa voiture",
+    "context": "Possession example",
+    "grammar_pattern": "Possessive + noun"
+  },
+  {
+    "id": "sus_035",
+    "soussou": "Ekha woto",
+    "variants": ["Ekha woto", "Etan kha woto"],
+    "meaning_en": "their car",
+    "meaning_fr": "leur voiture",
+    "context": "Possession example",
+    "grammar_pattern": "Possessive + noun"
+  },
+  {
+    "id": "sus_036",
+    "soussou": "Whonma woto",
+    "variants": ["Whonma woto"],
+    "meaning_en": "our car",
+    "meaning_fr": "notre voiture",
+    "context": "Possession example",
+    "grammar_pattern": "Possessive + noun"
+  },
+  {
+    "id": "sus_037",
+    "soussou": "Whonma bateau",
+    "variants": ["Whonma bateau"],
+    "meaning_en": "our boat",
+    "meaning_fr": "notre bateau",
+    "context": "Possession example with French noun",
+    "grammar_pattern": "Possessive + French noun (hybrid)"
+  },
+  {
+    "id": "sus_038",
+    "soussou": "Etan kha avion",
+    "variants": ["Etan kha avion", "Ekha avion"],
+    "meaning_en": "their airplane",
+    "meaning_fr": "leur avion",
+    "context": "Possession example with French noun",
+    "grammar_pattern": "Possessive + French noun (hybrid)"
+  },
+  {
+    "id": "sus_039",
+    "soussou": "Whon' fafé",
+    "variants": ["Whon' fafé", "Whon fafé"],
+    "meaning_en": "we are coming",
+    "meaning_fr": "nous venons",
+    "context": "Movement statement",
+    "grammar_pattern": "Subject + verb"
+  },
+  {
+    "id": "sus_040",
+    "soussou": "Moukhou fafé",
+    "variants": ["Moukhou fafé"],
+    "meaning_en": "we are coming (exclusive)",
+    "meaning_fr": "nous venons (sans toi)",
+    "context": "Movement statement - exclusive we",
+    "grammar_pattern": "Subject + verb"
+  },
+  {
+    "id": "sus_041",
+    "soussou": "Ana fafé",
+    "variants": ["Ana fafé"],
+    "meaning_en": "he/she is coming",
+    "meaning_fr": "il/elle vient",
+    "context": "Movement statement",
+    "grammar_pattern": "Subject + verb"
+  },
+  {
+    "id": "sus_042",
+    "soussou": "Ina fafé",
+    "variants": ["Ina fafé"],
+    "meaning_en": "you are coming",
+    "meaning_fr": "tu viens",
+    "context": "Movement statement",
+    "grammar_pattern": "Subject + verb"
+  },
+  {
+    "id": "sus_043",
+    "soussou": "Ina fafé?",
+    "variants": ["Ina fafé ?"],
+    "meaning_en": "Are you coming?",
+    "meaning_fr": "Tu viens ?",
+    "context": "Question by tone",
+    "grammar_pattern": "Same structure as statement, question indicated by tone/punctuation"
+  },
+  {
+    "id": "sus_044",
+    "soussou": "Whontan m'ma kolon",
+    "variants": ["Whontan m'ma kolon"],
+    "meaning_en": "us, we don't know",
+    "meaning_fr": "nous, on ne sait pas",
+    "context": "Negation example",
+    "grammar_pattern": "Emphatic subject + negation + verb"
+  },
+  {
+    "id": "sus_045",
+    "soussou": "Etan m'ma kolon",
+    "variants": ["Etan m'ma kolon", "Etan m'ma kolo"],
+    "meaning_en": "they don't know",
+    "meaning_fr": "ils ne savent pas",
+    "context": "Negation example",
+    "grammar_pattern": "Subject + negation + verb"
+  },
+  {
+    "id": "sus_046",
+    "soussou": "Ntan fafé",
+    "variants": ["Ntan fafé"],
+    "meaning_en": "me, I am coming (emphatic)",
+    "meaning_fr": "moi, je viens",
+    "context": "Emphatic movement statement",
+    "grammar_pattern": "Emphatic pronoun + verb"
+  },
+  {
+    "id": "sus_047",
+    "soussou": "comprendfé",
+    "variants": ["comprendfé", "comprenfé"],
+    "meaning_en": "understand / understanding",
+    "meaning_fr": "comprendre",
+    "context": "Verb - French root + Soussou suffix",
+    "grammar_pattern": "French verb root + fé (action marker)",
+    "notes": "Example of Soussou verb-building: comprend + fé"
+  },
+  {
+    "id": "sus_048",
+    "soussou": "no'mma",
+    "variants": ["no'mma"],
+    "meaning_en": "can / able to / capable of",
+    "meaning_fr": "pouvoir / être capable",
+    "context": "Ability marker",
+    "grammar_pattern": "Pronoun + no'mma + object/action"
+  },
+  {
+    "id": "sus_049",
+    "soussou": "Eské",
+    "variants": ["Eské"],
+    "meaning_en": "is it that / do (question marker)",
+    "meaning_fr": "est-ce que",
+    "context": "Question particle from French",
+    "grammar_pattern": "Placed at beginning for genuine questions vs challenging tone without it"
+  },
+  {
+    "id": "sus_050",
+    "soussou": "Ngui fala madi sosokhoui",
+    "variants": ["Ngui fala madi sosokhoui"],
+    "meaning_en": "How do I say this in Soussou?",
+    "meaning_fr": "Comment je dis ça en Soussou ?",
+    "context": "Language learning question",
+    "grammar_pattern": "Question phrase for translation"
+  },
+  {
+    "id": "sus_051",
+    "soussou": "Ngui fala madi foulekhoui",
+    "variants": ["Ngui fala madi foulekhoui"],
+    "meaning_en": "How do I say this in Pular?",
+    "meaning_fr": "Comment je dis ça en Pular ?",
+    "context": "Language learning question",
+    "grammar_pattern": "Question phrase for translation"
+  },
+  {
+    "id": "sus_052",
+    "soussou": "sosokhoui",
+    "variants": ["sosokhoui"],
+    "meaning_en": "Soussou (language)",
+    "meaning_fr": "Soussou (langue)",
+    "context": "Language name",
+    "grammar_pattern": "Noun"
+  },
+  {
+    "id": "sus_053",
+    "soussou": "foulekhoui",
+    "variants": ["foulekhoui"],
+    "meaning_en": "Pular (language)",
+    "meaning_fr": "Pular (langue)",
+    "context": "Language name",
+    "grammar_pattern": "Noun"
+  },
+  {
+    "id": "sus_054",
+    "soussou": "guira",
+    "variants": ["guira", "gui"],
+    "meaning_en": "this thing / that thing",
+    "meaning_fr": "cette chose / ça",
+    "context": "Demonstrative",
+    "grammar_pattern": "Demonstrative pronoun - gui is shortened form"
+  },
+  {
+    "id": "sus_055",
+    "soussou": "Ikha ChatGPT no'mma guira?",
+    "variants": ["Ikha ChatGPT no'mma guira ?"],
+    "meaning_en": "Your ChatGPT can do this?",
+    "meaning_fr": "Ton ChatGPT peut faire ça ?",
+    "context": "Question about ability",
+    "grammar_pattern": "Possessive + subject + no'mma + object"
+  },
+  {
+    "id": "sus_056",
+    "soussou": "I no'mma guira?",
+    "variants": ["I no'mma guira ?"],
+    "meaning_en": "You can do this? (challenging/teasing)",
+    "meaning_fr": "Tu peux faire ça ? (défi)",
+    "context": "Challenging question",
+    "grammar_pattern": "Shortened pronoun (I = Itan) + no'mma + object",
+    "notes": "Without Eské, tone is challenging/poking"
+  },
+  {
+    "id": "sus_057",
+    "soussou": "Eské I no'mma guira?",
+    "variants": ["Eské I no'mma guira ?"],
+    "meaning_en": "Are you able to do this? (genuine)",
+    "meaning_fr": "Est-ce que tu peux faire ça ?",
+    "context": "Genuine question",
+    "grammar_pattern": "Eské + pronoun + no'mma + object",
+    "notes": "With Eské, tone is genuine/formal"
+  },
+  {
+    "id": "sus_058",
+    "soussou": "Ntan itan situation comprendfé un peu",
+    "variants": ["Ntan itan situation comprendfé un peu"],
+    "meaning_en": "I understand your situation a bit",
+    "meaning_fr": "Je comprends un peu ta situation",
+    "context": "Empathy / support statement",
+    "grammar_pattern": "SOAM: Subject + Object + Action + Modifier",
+    "notes": "Demonstrates proper word order and French filler 'un peu'"
+  },
+  {
+    "id": "sus_059",
+    "soussou": "Dokho",
+    "variants": ["Dokho"],
+    "meaning_en": "sit",
+    "meaning_fr": "assieds-toi",
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_060",
+    "soussou": "Dokho bé",
+    "variants": ["Dokho bé"],
+    "meaning_en": "sit here",
+    "meaning_fr": "assieds-toi ici",
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + location marker"
+  },
+  {
+    "id": "sus_061",
+    "soussou": "T'ti",
+    "variants": ["T'ti"],
+    "meaning_en": "stand",
+    "meaning_fr": "lève-toi / debout",
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_062",
+    "soussou": "Mato",
+    "variants": ["Mato"],
+    "meaning_en": "look",
+    "meaning_fr": "regarde",
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_063",
+    "soussou": "A mato",
+    "variants": ["A mato"],
+    "meaning_en": "look at him/her",
+    "meaning_fr": "regarde-le/la",
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (A = him/her) + verb"
+  },
+  {
+    "id": "sus_064",
+    "soussou": "I mato",
+    "variants": ["I mato"],
+    "meaning_en": "look at you",
+    "meaning_fr": "te regarder",
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (I = you) + verb"
+  },
+  {
+    "id": "sus_065",
+    "soussou": "Siga",
+    "variants": ["Siga"],
+    "meaning_en": "go / leave",
+    "meaning_fr": "va / pars",
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_066",
+    "soussou": "yire",
+    "variants": ["yire"],
+    "meaning_en": "there",
+    "meaning_fr": "là-bas",
+    "context": "Location marker",
+    "grammar_pattern": "Place marker - also used as 'to (someone's place)'"
+  },
+  {
+    "id": "sus_067",
+    "soussou": "Siga yire",
+    "variants": ["Siga yire"],
+    "meaning_en": "go there",
+    "meaning_fr": "va là-bas",
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + location marker"
+  },
+  {
+    "id": "sus_068",
+    "soussou": "Siga A yire",
+    "variants": ["Siga A yire"],
+    "meaning_en": "go to him/her",
+    "meaning_fr": "va chez lui/elle",
+    "context": "Imperative with destination",
+    "grammar_pattern": "Verb + pronoun + location marker",
+    "notes": "A yire = to him/her (destination marker)"
+  },
+  {
+    "id": "sus_069",
+    "soussou": "Fa A yire",
+    "variants": ["Fa A yire"],
+    "meaning_en": "come to him/her",
+    "meaning_fr": "viens chez lui/elle",
+    "context": "Imperative with destination",
+    "grammar_pattern": "Verb + pronoun + location marker"
+  },
+  {
+    "id": "sus_070",
+    "soussou": "Sonyi",
+    "variants": ["Sonyi"],
+    "meaning_en": "give",
+    "meaning_fr": "donne",
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_071",
+    "soussou": "Gui sonyi",
+    "variants": ["Gui sonyi"],
+    "meaning_en": "give me that",
+    "meaning_fr": "donne-moi ça",
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (gui = that) + verb"
+  },
+  {
+    "id": "sus_072",
+    "soussou": "Facta",
+    "variants": ["Facta"],
+    "meaning_en": "bring",
+    "meaning_fr": "apporte",
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_073",
+    "soussou": "Fa guira",
+    "variants": ["Fa guira"],
+    "meaning_en": "bring that / bring this",
+    "meaning_fr": "apporte ça",
+    "context": "Imperative - bring command",
+    "grammar_pattern": "Literally 'come this/that thing'",
+    "notes": "Soussou uses 'come + object' for 'bring'"
+  },
+  {
+    "id": "sus_074",
+    "soussou": "Kha fa guira?",
+    "variants": ["Kha fa guira ?"],
+    "meaning_en": "Should I bring this?",
+    "meaning_fr": "Je dois apporter ça ?",
+    "context": "Question about action",
+    "grammar_pattern": "Question structure for 'should I...'"
+  },
+  {
+    "id": "sus_075",
+    "soussou": "Alou",
+    "variants": ["Alou"],
+    "meaning_en": "stop",
+    "meaning_fr": "arrête",
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_076",
+    "soussou": "Mmèmé",
+    "variants": ["Mmèmé", "Mmèmè"],
+    "meaning_en": "wait",
+    "meaning_fr": "attends",
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_077",
+    "soussou": "Mmèmé bé",
+    "variants": ["Mmèmé bé", "Mmèmè bé"],
+    "meaning_en": "wait here",
+    "meaning_fr": "attends ici",
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + location marker"
+  },
+  {
+    "id": "sus_078",
+    "soussou": "Fa fokhora",
+    "variants": ["Fa fokhora"],
+    "meaning_en": "follow me / come after me",
+    "meaning_fr": "suis-moi / viens après moi",
+    "context": "Imperative - follow command",
+    "grammar_pattern": "Verb (fa = come) + fokhora (after me)",
+    "notes": "Literally 'come after me'"
+  },
+  {
+    "id": "sus_079",
+    "soussou": "fokhora",
+    "variants": ["fokhora", "fokho"],
+    "meaning_en": "after me",
+    "meaning_fr": "après moi",
+    "context": "Relational phrase",
+    "grammar_pattern": "Used with Fa for 'follow me'"
+  },
+  {
+    "id": "sus_080",
+    "soussou": "Kelli bé",
+    "variants": ["Kelli bé"],
+    "meaning_en": "leave here",
+    "meaning_fr": "pars d'ici",
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + location marker"
+  },
+  {
+    "id": "sus_081",
+    "soussou": "N'khili",
+    "variants": ["N'khili"],
+    "meaning_en": "call me",
+    "meaning_fr": "appelle-moi",
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (N' = me) + verb (khili = call)"
+  },
+  {
+    "id": "sus_082",
+    "soussou": "khili",
+    "variants": ["khili"],
+    "meaning_en": "call",
+    "meaning_fr": "appeler",
+    "context": "Verb",
+    "grammar_pattern": "Root verb"
+  },
+  {
+    "id": "sus_083",
+    "soussou": "bangui",
+    "variants": ["bangui"],
+    "meaning_en": "house",
+    "meaning_fr": "maison",
+    "context": "Noun - building",
+    "grammar_pattern": "Common noun"
+  },
+  {
+    "id": "sus_084",
+    "soussou": "kouï",
+    "variants": ["kouï"],
+    "meaning_en": "in / inside",
+    "meaning_fr": "dans / à l'intérieur",
+    "context": "Location marker - interior",
+    "grammar_pattern": "Postposition for 'inside'"
+  },
+  {
+    "id": "sus_085",
+    "soussou": "Fa bangui kouï",
+    "variants": ["Fa bangui kouï"],
+    "meaning_en": "come inside the house",
+    "meaning_fr": "entre dans la maison",
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + noun + interior marker"
+  },
+  {
+    "id": "sus_086",
+    "soussou": "Fa woto kouï",
+    "variants": ["Fa woto kouï"],
+    "meaning_en": "come inside the car",
+    "meaning_fr": "entre dans la voiture",
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + noun + interior marker"
+  },
+  {
+    "id": "sus_087",
+    "soussou": "Ina m'ma fafé",
+    "variants": ["Ina m'ma fafé"],
+    "meaning_en": "you're not coming",
+    "meaning_fr": "tu ne viens pas",
+    "context": "Negation statement",
+    "grammar_pattern": "Subject + negation + verb"
+  },
+  {
+    "id": "sus_088",
+    "soussou": "Ana m'ma kolon",
+    "variants": ["Ana m'ma kolon"],
+    "meaning_en": "he/she doesn't know",
+    "meaning_fr": "il/elle ne sait pas",
+    "context": "Negation statement",
+    "grammar_pattern": "Subject + negation + verb"
+  },
+  {
+    "id": "sus_089",
+    "soussou": "Etan m'ma fafé",
+    "variants": ["Etan m'ma fafé"],
+    "meaning_en": "they're not coming",
+    "meaning_fr": "ils ne viennent pas",
+    "context": "Negation statement",
+    "grammar_pattern": "Subject + negation + verb"
+  },
+  {
+    "id": "sus_090",
+    "soussou": "Ntan m'ma kolon",
+    "variants": ["Ntan m'ma kolon"],
+    "meaning_en": "I don't know",
+    "meaning_fr": "je ne sais pas",
+    "context": "Negation statement",
+    "grammar_pattern": "Subject + negation + verb"
+  },
+  {
+    "id": "sus_091",
+    "soussou": "Itan khafé gbo",
+    "variants": ["Itan khafé gbo"],
+    "meaning_en": "you have many problems / how is your situation",
+    "meaning_fr": "tu as beaucoup de soucis",
+    "context": "Social / checking on someone",
+    "grammar_pattern": "Subject + situation marker + intensifier"
+  },
+  {
+    "id": "sus_092",
+    "soussou": "Eské ina mma situation comprendfé?",
+    "variants": ["Eské ina mma situation comprendfé ?"],
+    "meaning_en": "Do you understand my situation?",
+    "meaning_fr": "Est-ce que tu comprends ma situation ?",
+    "context": "Question - genuine",
+    "grammar_pattern": "Eské + subject + possessive + object + verb"
+  },
+  {
+    "id": "sus_093",
+    "soussou": "Toma",
+    "variants": ["Toma"],
+    "meaning_en": "(homonym - multiple meanings)",
+    "meaning_fr": "(homonyme)",
+    "context": "Real Soussou word",
+    "grammar_pattern": "CVCV pattern",
+    "notes": "Confirmed real word - exact meaning depends on context"
+  },
+  {
+    "id": "sus_094",
+    "soussou": "kouli",
+    "variants": ["kouli"],
+    "meaning_en": "worm",
+    "meaning_fr": "ver",
+    "context": "Noun - creature",
+    "grammar_pattern": "Common noun"
+  },
+  {
+    "id": "sus_095",
+    "soussou": "whouli",
+    "variants": ["whouli"],
+    "meaning_en": "blood",
+    "meaning_fr": "sang",
+    "context": "Noun - body",
+    "grammar_pattern": "Common noun"
+  },
+  {
+    "id": "sus_096",
+    "soussou": "sogbè",
+    "variants": ["sogbè", "sogbé"],
+    "meaning_en": "serious",
+    "meaning_fr": "sérieux",
+    "context": "Adjective",
+    "grammar_pattern": "Adjective - gb cluster common in West African languages"
+  },
+  {
+    "id": "sus_097",
+    "soussou": "Ina ntan khafé m'ma comprendfé",
+    "variants": ["Ina ntan khafé m'ma comprendfé"],
+    "meaning_en": "You don't understand because of me",
+    "meaning_fr": "Tu ne comprends pas à cause de moi",
+    "context": "Negation with cause",
+    "grammar_pattern": "Subject + cause marker + negation + verb"
+  },
+  {
+    "id": "sus_098",
+    "soussou": "Etan itan khafé comprendfé gbo",
+    "variants": ["Etan itan khafé comprendfé gbo"],
+    "meaning_en": "They understand a lot because of you",
+    "meaning_fr": "Ils comprennent beaucoup à cause de toi",
+    "context": "Statement with cause and modifier",
+    "grammar_pattern": "Subject + cause marker + verb + modifier"
+  },
+  {
+    "id": "sus_099",
+    "soussou": "Ntan sosokhoui kolon un peu",
+    "variants": ["Ntan sosokhoui kolon un peu"],
+    "meaning_en": "I understand Soussou a bit",
+    "meaning_fr": "Je comprends un peu le Soussou",
+    "context": "Language knowledge statement",
+    "grammar_pattern": "Subject + object + verb + modifier (French filler)",
+    "notes": "Correct Soussou word order: Subject-Object-Verb"
+  },
+  {
+    "id": "sus_100",
+    "soussou": "Ntan no'mma comprendfé itan situation",
+    "variants": ["Ntan no'mma comprendfé itan situation"],
+    "meaning_en": "I can understand your situation",
+    "meaning_fr": "Je peux comprendre ta situation",
+    "context": "Ability statement",
+    "grammar_pattern": "Subject + ability marker + verb + object"
+  },
+  {
+    "id": "sus_101",
+    "soussou": "A lafia?",
+    "variants": ["A lafia ?", "A lafia"],
+    "meaning_en": "How are you? / Are you well?",
+    "meaning_fr": "Ça va ? / Tu vas bien ?",
+    "context": "Standard greeting",
+    "grammar_pattern": "Greeting question",
+    "notes": "Common greeting - referenced but not fully explained in context"
+  },
+  {
+    "id": "sus_102",
+    "soussou": "Awa",
+    "variants": ["Awa"],
+    "meaning_en": "yes / okay / agreed",
+    "meaning_fr": "oui / d'accord",
+    "context": "Affirmation",
+    "grammar_pattern": "Interjection / response word"
+  },
+  {
+    "id": "sus_103",
+    "soussou": "yite",
+    "variants": ["yite"],
+    "meaning_en": "here / arrived / finished",
+    "meaning_fr": "ici / arrivé / fini",
+    "context": "Location / completion marker",
+    "grammar_pattern": "Marker for arrival or completion"
+  },
+  {
+    "id": "sus_104",
+    "soussou": "don",
+    "variants": ["don"],
+    "meaning_en": "already / now",
+    "meaning_fr": "déjà / maintenant",
+    "context": "Time marker",
+    "grammar_pattern": "Temporal adverb"
+  },
+  {
+    "id": "sus_105",
+    "soussou": "tan",
+    "variants": ["tan"],
+    "meaning_en": "only / just / also",
+    "meaning_fr": "seulement / juste / aussi",
+    "context": "Modifier",
+    "grammar_pattern": "Particle for emphasis or limitation"
+  },
+  {
+    "id": "sus_106",
+    "soussou": "Ikha",
+    "variants": ["Ikha"],
+    "meaning_en": "your",
+    "meaning_fr": "ton / ta",
+    "context": "Second person possessive",
+    "grammar_pattern": "Contraction of Itan + kha"
+  },
+  {
+    "id": "sus_107",
+    "soussou": "i balakè",
+    "variants": ["i balakè"],
+    "meaning_en": "thank you",
+    "meaning_fr": "merci",
+    "context": "Gratitude expression",
+    "grammar_pattern": "Polite phrase"
+  },
+  {
+    "id": "sus_108",
+    "soussou": "Account n'ma yitima na",
+    "variants": ["Account n'ma yitima na", "Compte n'ma yitima na"],
+    "meaning_en": "Your account is almost finished",
+    "meaning_fr": "Ton compte est presque fini",
+    "context": "IPTV / subscription warning",
+    "grammar_pattern": "French noun + Soussou grammar hybrid"
+  },
+  {
+    "id": "sus_109",
+    "soussou": "mindé",
+    "variants": ["mindé", "minde"],
+    "meaning_en": "where",
+    "meaning_fr": "où",
+    "context": "Question word",
+    "grammar_pattern": "Interrogative for location"
+  },
+  {
+    "id": "sus_110",
+    "soussou": "N'mato",
+    "variants": ["N'mato", "N' mato"],
+    "meaning_en": "look at me",
+    "meaning_fr": "regarde-moi",
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (N' = me) + verb"
+  },
+  {
+    "id": "sus_111",
+    "soussou": "fé",
+    "variants": ["fé", "fè"],
+    "meaning_en": "action verb suffix",
+    "meaning_fr": "suffixe verbal d'action",
+    "context": "Grammar - verb formation",
+    "grammar_pattern": "Added to noun/French verb to create action verb",
+    "notes": "Key pattern: comprend + fé = comprendfé (understanding)"
+  },
+  {
+    "id": "sus_112",
+    "soussou": "A",
+    "variants": ["A"],
+    "meaning_en": "him / her (object pronoun)",
+    "meaning_fr": "le / la (objet)",
+    "context": "Object pronoun - third person",
+    "grammar_pattern": "Used before verbs for 'him/her' as object"
+  },
+  {
+    "id": "sus_113",
+    "soussou": "I",
+    "variants": ["I"],
+    "meaning_en": "you (shortened form)",
+    "meaning_fr": "toi (forme courte)",
+    "context": "Pronoun - casual/quick speech",
+    "grammar_pattern": "Shortened from Itan, used in teasing/quick contexts"
+  },
+  {
+    "id": "sus_114",
+    "soussou": "N'",
+    "variants": ["N'"],
+    "meaning_en": "me (object pronoun)",
+    "meaning_fr": "me / moi (objet)",
+    "context": "Object pronoun - first person",
+    "grammar_pattern": "Used before verbs for 'me' as object"
+  }
+]
