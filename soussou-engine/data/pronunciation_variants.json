@@ -1,0 +1,603 @@
+{
+  "version": "1.0",
+  "language": "Soussou",
+  "description": "Pronunciation variant handler for spoken Soussou across Guinea regions",
+
+  "tone_patterns": {
+    "description": "Soussou is a two-tone language - tone changes meaning",
+    "system": "two_level",
+    "tones": {
+      "high": {
+        "mark": "acute_accent",
+        "symbol": "á",
+        "ipa": "˥",
+        "description": "High tone - marked with acute accent"
+      },
+      "low": {
+        "mark": "grave_accent",
+        "symbol": "à",
+        "ipa": "˩",
+        "description": "Low tone - marked with grave accent"
+      }
+    },
+    "tone_bearing_unit": "mora",
+    "disyllabic_patterns": [
+      {
+        "pattern": "HH",
+        "example": "túlí",
+        "meaning": "ear",
+        "description": "Both syllables high"
+      },
+      {
+        "pattern": "HL",
+        "example": "kérì",
+        "meaning": "hoe",
+        "description": "First high, second low"
+      },
+      {
+        "pattern": "LH",
+        "example": "gìnɛ́",
+        "meaning": "woman",
+        "description": "First low, second high"
+      },
+      {
+        "pattern": "LL",
+        "example": "implicit",
+        "meaning": "various",
+        "description": "Both syllables low"
+      }
+    ],
+    "tonal_processes": {
+      "neutralization_by_copy": {
+        "description": "In compounds, final tone of first element copies to first TBU of second element",
+        "example": "Creates predictable melodies like HH.HL or LL.HL"
+      },
+      "affaissement": {
+        "description": "Tone settling - LH sequences become LL before high-toned words",
+        "trigger": "Before high-toned word"
+      },
+      "tone_raising": {
+        "description": "HL sequences become HH under specific prosodic conditions",
+        "trigger": "Prosodic boundaries"
+      },
+      "terraced_downstep": {
+        "description": "Characteristic West African downstep in tonality",
+        "shared_with": ["Yalunka", "Mandinka", "Bambara"]
+      }
+    },
+    "written_representation": {
+      "formal": "Diacritical marks (á, à)",
+      "informal": "Tone often unmarked in casual writing",
+      "voice_handling": "Context and pitch pattern analysis required"
+    }
+  },
+
+  "vowel_mappings": {
+    "description": "Seven-vowel system with phonemic length contrast",
+    "inventory": {
+      "front": ["i", "e", "ɛ"],
+      "central": ["a"],
+      "back": ["u", "o", "ɔ"]
+    },
+    "phonemic_length": {
+      "enabled": true,
+      "description": "All vowels can be short or long - length changes meaning",
+      "written_as": {
+        "doubled_letter": "aa, ee, ii, oo, uu",
+        "macron": "ā, ē, ī, ō, ū",
+        "note": "No standard - varies by transcription"
+      }
+    },
+    "special_characters": {
+      "open_mid_front": {
+        "ipa": "ɛ",
+        "ascii_variants": ["e", "è", "ê", "ae"],
+        "description": "Open-mid front unrounded vowel"
+      },
+      "open_mid_back": {
+        "ipa": "ɔ",
+        "ascii_variants": ["o", "ò", "ô", "ao"],
+        "description": "Open-mid back rounded vowel"
+      }
+    },
+    "vowel_harmony": {
+      "type": "ATR_harmony",
+      "description": "Vowels in suffixes tend to harmonize with root vowels",
+      "strictness": "Less strict than some African languages",
+      "sets": {
+        "advanced": ["i", "e", "u", "o"],
+        "retracted": ["ɛ", "ɔ", "a"]
+      }
+    },
+    "regional_variations": {
+      "conakry": {
+        "tendency": "More French-influenced pronunciation",
+        "features": ["Nasal vowels from French loanwords"]
+      },
+      "rural_guinea": {
+        "tendency": "More traditional pronunciation",
+        "features": ["Clearer vowel distinctions", "Less French mixing"]
+      },
+      "sierra_leone": {
+        "tendency": "Krio/English influence",
+        "features": ["Different vowel coloring"]
+      }
+    },
+    "normalization_rules": [
+      {
+        "from": ["é", "è", "ê", "ë"],
+        "to": "e",
+        "context": "General normalization"
+      },
+      {
+        "from": ["à", "â", "ä"],
+        "to": "a",
+        "context": "General normalization"
+      },
+      {
+        "from": ["ó", "ò", "ô", "ö"],
+        "to": "o",
+        "context": "General normalization"
+      },
+      {
+        "from": ["ú", "ù", "û", "ü"],
+        "to": "u",
+        "context": "General normalization"
+      },
+      {
+        "from": ["í", "ì", "î", "ï"],
+        "to": "i",
+        "context": "General normalization"
+      }
+    ]
+  },
+
+  "consonant_mappings": {
+    "description": "Consonant inventory with regional variations",
+    "inventory": {
+      "stops": {
+        "voiceless": ["p", "t", "k"],
+        "voiced": ["b", "d", "g"]
+      },
+      "nasals": {
+        "bilabial": "m",
+        "alveolar": "n",
+        "palatal": "ɲ",
+        "velar": "ŋ"
+      },
+      "fricatives": {
+        "voiceless": ["f", "s"],
+        "voiced": ["v", "z"]
+      },
+      "approximants": ["l", "w", "y"]
+    },
+    "special_consonants": {
+      "palatal_nasal": {
+        "ipa": "ɲ",
+        "written_as": ["ny", "ɲ", "gn"],
+        "examples": ["ɲa", "nya"]
+      },
+      "velar_nasal": {
+        "ipa": "ŋ",
+        "written_as": ["ng", "ŋ", "n'"],
+        "examples": ["bangui", "ŋa"]
+      }
+    },
+    "consonant_clusters": {
+      "description": "Common West African consonant clusters",
+      "clusters": [
+        {
+          "cluster": "kh",
+          "pronunciation": "aspirated k or fricative",
+          "examples": ["khafé", "kha", "khili", "khere"],
+          "regional_note": "Some regions pronounce as simple k"
+        },
+        {
+          "cluster": "gb",
+          "pronunciation": "labial-velar plosive",
+          "examples": ["gbo", "sogbè"],
+          "ipa": "ɡ͡b"
+        },
+        {
+          "cluster": "ng",
+          "pronunciation": "velar nasal",
+          "examples": ["bangui", "tongo"],
+          "position": "Usually medial or final"
+        },
+        {
+          "cluster": "nd",
+          "pronunciation": "prenasalized d",
+          "examples": ["mindé"],
+          "ipa": "ⁿd"
+        },
+        {
+          "cluster": "mb",
+          "pronunciation": "prenasalized b",
+          "examples": ["present in some words"],
+          "ipa": "ᵐb"
+        }
+      ]
+    },
+    "aspiration_patterns": {
+      "kh_aspiration": {
+        "description": "kh represents either aspirated k or voiceless velar fricative",
+        "contexts": ["Initial position", "After vowels"],
+        "regional_variation": "Conakry tends more fricative, rural more aspirated"
+      }
+    },
+    "regional_consonant_shifts": {
+      "conakry_urban": {
+        "features": [
+          "French r (uvular) in loanwords",
+          "kh often pronounced as [x]",
+          "More palatalization before front vowels"
+        ]
+      },
+      "rural_guinea": {
+        "features": [
+          "Traditional kh as aspirated [kʰ]",
+          "Stronger prenasalization",
+          "Clear gb pronunciation"
+        ]
+      },
+      "sierra_leone": {
+        "features": [
+          "Krio influence on certain sounds",
+          "th sometimes appears in loanwords",
+          "Different l/r distribution"
+        ]
+      }
+    },
+    "normalization_rules": [
+      {
+        "from": ["kh", "x"],
+        "to": "kh",
+        "description": "Standardize aspirated/fricative k"
+      },
+      {
+        "from": ["ny", "gn", "ñ"],
+        "to": "ny",
+        "description": "Standardize palatal nasal"
+      },
+      {
+        "from": ["ng", "ŋ"],
+        "to": "ng",
+        "description": "Standardize velar nasal"
+      }
+    ]
+  },
+
+  "contraction_rules": {
+    "description": "Rules for spoken contractions and elisions",
+    "apostrophe_contractions": {
+      "description": "Apostrophe indicates elision or contraction",
+      "patterns": [
+        {
+          "full_form": "n + na",
+          "contracted": "N'na",
+          "meaning": "I am (with action verb)",
+          "fast_speech": ["nna", "na"]
+        },
+        {
+          "full_form": "n + ma",
+          "contracted": "M'ma",
+          "meaning": "my",
+          "fast_speech": ["mma", "ma"]
+        },
+        {
+          "full_form": "won",
+          "contracted": "Whon'",
+          "meaning": "we (inclusive)",
+          "fast_speech": ["whon", "won"]
+        },
+        {
+          "full_form": "n + khili",
+          "contracted": "N'khili",
+          "meaning": "call me",
+          "fast_speech": ["nkhili", "nkili"]
+        }
+      ]
+    },
+    "fast_speech_elisions": {
+      "description": "Sound deletions in rapid speech",
+      "patterns": [
+        {
+          "type": "vowel_deletion",
+          "description": "Unstressed vowels often deleted",
+          "examples": [
+            {"slow": "faxamu", "fast": "faxmu"},
+            {"slow": "adamadi", "fast": "adamdi"}
+          ]
+        },
+        {
+          "type": "final_vowel_reduction",
+          "description": "Final vowels become schwa or deleted",
+          "examples": [
+            {"slow": "fafé", "fast": "faf"},
+            {"slow": "kolon", "fast": "koln"}
+          ]
+        },
+        {
+          "type": "consonant_deletion",
+          "description": "Some consonants deleted between vowels",
+          "examples": [
+            {"slow": "baxi", "fast": "bai"},
+            {"slow": "kelixi", "fast": "kelii"}
+          ]
+        },
+        {
+          "type": "double_consonant_simplification",
+          "description": "Double consonants reduce to single",
+          "examples": [
+            {"slow": "nna", "fast": "na"},
+            {"slow": "mma", "fast": "ma"}
+          ]
+        }
+      ]
+    },
+    "pronoun_contractions": {
+      "emphatic_tan": [
+        {"base": "n", "emphatic": "Ntan", "fast": ["ntan", "tan"]},
+        {"base": "i", "emphatic": "Itan", "fast": ["itan", "tan"]},
+        {"base": "a", "emphatic": "Atan", "fast": ["atan", "tan"]},
+        {"base": "e", "emphatic": "Etan", "fast": ["etan", "tan"]}
+      ],
+      "subject_na": [
+        {"base": "n", "subject": "N'na", "fast": ["nna", "na"]},
+        {"base": "i", "subject": "Ina", "fast": ["ina", "na"]}
+      ]
+    },
+    "clitic_attachment": {
+      "description": "Clitics attach to preceding word in fast speech",
+      "patterns": [
+        {
+          "clitic": "-e (plural)",
+          "attachment": "Attaches without pause",
+          "example": {"separate": "di e", "attached": "diye"}
+        },
+        {
+          "clitic": "-xi (perfective)",
+          "attachment": "Attaches directly to verb",
+          "example": {"separate": "fala xi", "attached": "falaxi"}
+        }
+      ]
+    }
+  },
+
+  "regional_variants": {
+    "description": "Regional pronunciation differences across Guinea and Sierra Leone",
+    "regions": {
+      "conakry": {
+        "name": "Conakry Urban",
+        "population": "Largest speaker population",
+        "characteristics": {
+          "speech_speed": "Generally faster",
+          "french_influence": "High - frequent code-switching",
+          "tone_realization": "Sometimes reduced in casual speech",
+          "special_features": [
+            "French loanwords with French pronunciation",
+            "More contractions",
+            "Urban slang integration"
+          ]
+        },
+        "phonetic_features": {
+          "kh": "Often pronounced as [x] (fricative)",
+          "final_vowels": "Often reduced or deleted",
+          "r": "Uvular [ʁ] in French loanwords"
+        }
+      },
+      "boke_region": {
+        "name": "Boke/Coastal Guinea",
+        "population": "Traditional Susu heartland",
+        "characteristics": {
+          "speech_speed": "Moderate",
+          "french_influence": "Moderate",
+          "tone_realization": "Clear tone distinctions",
+          "special_features": [
+            "Traditional vocabulary preserved",
+            "Less code-switching",
+            "Maritime terminology"
+          ]
+        },
+        "phonetic_features": {
+          "kh": "Aspirated [kʰ]",
+          "gb": "Clear labial-velar",
+          "vowels": "Full pronunciation"
+        }
+      },
+      "kindia_region": {
+        "name": "Kindia/Interior Guinea",
+        "population": "Mixed with other ethnic groups",
+        "characteristics": {
+          "speech_speed": "Moderate to slow",
+          "french_influence": "Lower",
+          "tone_realization": "Very clear",
+          "special_features": [
+            "Contact with Pular and Maninka",
+            "Some vocabulary borrowings",
+            "Traditional greetings preserved"
+          ]
+        },
+        "phonetic_features": {
+          "prenasals": "Stronger nd, mb, ng",
+          "vowel_length": "More distinct"
+        }
+      },
+      "sierra_leone": {
+        "name": "Sierra Leone Susu",
+        "population": "206,000 speakers",
+        "characteristics": {
+          "speech_speed": "Varies",
+          "english_influence": "Significant",
+          "krio_influence": "High in urban areas",
+          "special_features": [
+            "English loanwords",
+            "Krio expressions mixed in",
+            "Different formal register"
+          ]
+        },
+        "phonetic_features": {
+          "th": "Appears in English loanwords",
+          "vowels": "Some Krio coloring"
+        }
+      }
+    },
+    "honorific_vocabulary": {
+      "description": "Traditional 'Vrai Soussou' uses different words for respected people",
+      "context": "Village Susu - body parts differ when referring to elders vs peers",
+      "formality_levels": {
+        "informal": "Standard vocabulary for peers and self",
+        "formal": "Honorific vocabulary for elders and respected persons"
+      }
+    }
+  },
+
+  "voice_input_handling": {
+    "description": "Guidelines for handling spoken Soussou input",
+    "speech_recognition_challenges": [
+      "No standardized orthography",
+      "Tone is phonemic but hard to transcribe",
+      "Heavy code-switching with French",
+      "Regional accent variations",
+      "Fast speech contractions"
+    ],
+    "matching_strategies": {
+      "fuzzy_matching": {
+        "description": "Use phonetic similarity, not exact spelling",
+        "algorithm": "Normalized Levenshtein distance",
+        "threshold": 0.75,
+        "example": "fafé, fafe, fafeh all match to 'fafe'"
+      },
+      "normalization_pipeline": {
+        "steps": [
+          "Lowercase all input",
+          "Remove diacritics (NFD normalization)",
+          "Remove apostrophes",
+          "Compress double consonants",
+          "Remove trailing h",
+          "Map special characters (ɛ→e, ɔ→o)"
+        ]
+      },
+      "phonetic_equivalence_sets": {
+        "description": "Groups of sounds that are often confused or equivalent",
+        "sets": [
+          ["é", "è", "e", "ɛ"],
+          ["ó", "ò", "o", "ɔ"],
+          ["kh", "k", "x"],
+          ["ng", "n", "ŋ"],
+          ["ny", "gn", "ɲ"]
+        ]
+      }
+    },
+    "confidence_scoring": {
+      "description": "How to score match confidence for speech input",
+      "factors": [
+        {
+          "factor": "exact_match",
+          "weight": 1.0,
+          "description": "Perfect normalized match"
+        },
+        {
+          "factor": "phonetic_match",
+          "weight": 0.9,
+          "description": "Sounds same but spelled differently"
+        },
+        {
+          "factor": "regional_variant",
+          "weight": 0.85,
+          "description": "Recognized regional pronunciation"
+        },
+        {
+          "factor": "fast_speech",
+          "weight": 0.8,
+          "description": "Identified as fast speech contraction"
+        },
+        {
+          "factor": "partial_match",
+          "weight": 0.6,
+          "description": "Only part of word matches"
+        }
+      ],
+      "minimum_threshold": 0.6
+    },
+    "context_disambiguation": {
+      "description": "Use context to disambiguate homophonous forms",
+      "examples": [
+        {
+          "sound": "mma",
+          "options": ["M'ma (possessive: my)", "m'ma (negation: not)"],
+          "disambiguation": "Following word type - noun vs verb"
+        },
+        {
+          "sound": "na",
+          "options": ["na (locative)", "N'na (I am)", "na (copula)"],
+          "disambiguation": "Sentence position and following elements"
+        }
+      ]
+    },
+    "french_detection": {
+      "description": "Detect and handle French code-switching",
+      "indicators": [
+        "French phonemes (uvular r, nasal vowels)",
+        "French morphology",
+        "Common French words",
+        "Hybrid constructions (French root + Soussou suffix)"
+      ],
+      "handling": "Accept as valid Soussou - code-switching is authentic"
+    }
+  },
+
+  "transcription_conventions": {
+    "description": "Common ways Soussou is written",
+    "systems": {
+      "latin_standard": {
+        "description": "1988 standardized orthography (African reference alphabet)",
+        "special_chars": ["ɛ", "ɔ", "ɲ", "ŋ"],
+        "tone_marking": "Optional diacritics"
+      },
+      "latin_informal": {
+        "description": "Phonetic spelling without special characters",
+        "conventions": [
+          "e for ɛ",
+          "o for ɔ",
+          "ny for ɲ",
+          "ng for ŋ"
+        ]
+      },
+      "french_influenced": {
+        "description": "French spelling conventions applied to Soussou",
+        "conventions": [
+          "ou for u",
+          "gn for ɲ",
+          "Accent marks for tone"
+        ]
+      },
+      "ajami": {
+        "description": "Arabic script (traditional)",
+        "status": "Still used by some communities"
+      },
+      "nko": {
+        "description": "Pan-Mande alphabet",
+        "status": "Limited adoption among Soussou speakers"
+      }
+    }
+  },
+
+  "metadata": {
+    "source_files": [
+      "/home/user/ZION/soussou-engine/raw/agent_06_sil_linguistic/linguistic_notes.md",
+      "/home/user/ZION/soussou-engine/data/morphology_patterns.json",
+      "/home/user/ZION/soussou-engine/data/lexicon.json"
+    ],
+    "speaker_population": {
+      "total": 2900000,
+      "guinea": 2600000,
+      "sierra_leone": 206000,
+      "senegal": 55000,
+      "guinea_bissau": 6400,
+      "gambia": 5200
+    },
+    "generated_date": "2025-11-20",
+    "purpose": "Handle spoken Soussou input from any Guinea region with proper variant recognition"
+  }
+}
