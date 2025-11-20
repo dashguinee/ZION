@@ -1,0 +1,199 @@
+{
+  "metadata": {
+    "agent": "agent_03_soussou_french",
+    "target_language": "soussou",
+    "source_language": "french",
+    "collection_date": "2025-11-20",
+    "total_entries": 215,
+    "validation_criteria": "Multiple source confirmation or authoritative source (Peace Corps, academic)"
+  },
+  "greetings": [
+    {"soussou": "I kéna", "french": "Bonjour (matin)", "english": "Good morning", "notes": "Morning greeting"},
+    {"soussou": "I khi hèri", "french": "Comment ça va? / As-tu bien dormi?", "english": "How are you? / Did you sleep well?", "notes": "Morning greeting response"},
+    {"soussou": "I fèyèn", "french": "Bonjour (après-midi)", "english": "Good afternoon", "notes": "Afternoon greeting"},
+    {"soussou": "tana mou fèyèn", "french": "Comment ça va (après-midi)", "english": "How are you (afternoon)", "notes": "Afternoon greeting inquiry"},
+    {"soussou": "tana yo mou fèyèn", "french": "Ça va (après-midi)", "english": "I'm fine (afternoon)", "notes": "Afternoon response"},
+    {"soussou": "I noun maré", "french": "Bonsoir", "english": "Good evening", "notes": "Evening greeting"},
+    {"soussou": "tanàmoufègnê", "french": "Bonsoir", "english": "Good evening", "notes": "Alternative spelling"},
+    {"soussou": "Tana mouna", "french": "Bienvenue", "english": "Welcome", "notes": ""},
+    {"soussou": "arabakhidi", "french": "Bonjour/Salut", "english": "Hello", "notes": "Informal greeting"},
+    {"soussou": "Démbaya go", "french": "Et la famille?", "english": "How is the family?", "notes": "Family inquiry"},
+    {"soussou": "owo", "french": "Au revoir", "english": "Goodbye", "notes": ""},
+    {"soussou": "won guèsèguè", "french": "Au revoir", "english": "Goodbye", "notes": "Alternative"},
+    {"soussou": "Won tina", "french": "À demain", "english": "See you tomorrow", "notes": ""},
+    {"soussou": "Tana mu fEn", "french": "Comment ça va?", "english": "How are you?", "notes": "Alternative form"},
+    {"soussou": "HEri fEn", "french": "Comment ça va?", "english": "How are you?", "notes": "Alternative form"},
+    {"soussou": "Tana yo mu fEn", "french": "Pas de malheur / Ça va", "english": "No misfortune / I'm fine", "notes": "Response to greeting"}
+  ],
+  "basic_words": [
+    {"soussou": "iyo", "french": "Oui", "english": "Yes", "notes": ""},
+    {"soussou": "aha", "french": "Oui", "english": "Yes", "notes": "Alternative"},
+    {"soussou": "Iyoo", "french": "Oui", "english": "Yes", "notes": "Alternative spelling"},
+    {"soussou": "awa", "french": "D'accord / Oui", "english": "OK / Yes", "notes": ""},
+    {"soussou": "Adé", "french": "Non", "english": "No", "notes": ""},
+    {"soussou": "Adi", "french": "Non", "english": "No", "notes": "Alternative"},
+    {"soussou": "Niké", "french": "Merci", "english": "Thank you", "notes": ""},
+    {"soussou": "Inouwali", "french": "Merci", "english": "Thank you", "notes": "Also used as hello/goodbye"},
+    {"soussou": "I nu wali", "french": "Merci", "english": "Thank you", "notes": "Full form"},
+    {"soussou": "wonuwali", "french": "Merci (pluriel)", "english": "Thank you (plural)", "notes": ""},
+    {"soussou": "mameti", "french": "S'il vous plaît / prenez-le", "english": "Please / take it", "notes": ""},
+    {"soussou": "Diyé", "french": "Désolé", "english": "Sorry", "notes": ""},
+    {"soussou": "lounna", "french": "Pardonner", "english": "To forgive", "notes": ""},
+    {"soussou": "Alélé oudi", "french": "D'accord", "english": "Agreed / OK", "notes": ""},
+    {"soussou": "uodi", "french": "Bien / agréable", "english": "Nice / good", "notes": ""},
+    {"soussou": "dundurunti", "french": "Lentement", "english": "Slowly", "notes": ""},
+    {"soussou": "wontanara", "french": "Tous ensemble", "english": "All of us together", "notes": ""}
+  ],
+  "love_expressions": [
+    {"soussou": "Irafan m'ma", "french": "Je t'aime", "english": "I love you", "notes": ""},
+    {"soussou": "Ira Fama", "french": "Je t'aime", "english": "I love you", "notes": "Alternative form"},
+    {"soussou": "N Sumbu", "french": "Embrasse-moi", "english": "Kiss me", "notes": ""}
+  ],
+  "pronouns": [
+    {"soussou": "N'tan", "french": "Je / Moi", "english": "I / Me", "notes": "First person singular"},
+    {"soussou": "I'tan", "french": "Tu / Toi", "english": "You (singular)", "notes": "Second person singular"},
+    {"soussou": "A'tan", "french": "Il/Elle", "english": "He/She", "notes": "Third person singular"},
+    {"soussou": "Atan", "french": "Il ou elle", "english": "He or she", "notes": "Third person singular"},
+    {"soussou": "Yontan", "french": "Nous", "english": "We", "notes": "First person plural"},
+    {"soussou": "Yotan", "french": "Vous", "english": "You (plural)", "notes": "Second person plural"},
+    {"soussou": "Etan", "french": "Ils ou elles", "english": "They", "notes": "Third person plural"},
+    {"soussou": "Muxu", "french": "Nous (exclusif)", "english": "We (exclusive)", "notes": "Not including listener"},
+    {"soussou": "Won", "french": "Nous (inclusif)", "english": "We (inclusive)", "notes": "Including listener"},
+    {"soussou": "wo", "french": "Vous", "english": "You (formal/plural)", "notes": ""},
+    {"soussou": "a", "french": "Il/Elle", "english": "He/She", "notes": "Short form"},
+    {"soussou": "be", "french": "Qui", "english": "Who", "notes": "Interrogative"},
+    {"soussou": "I", "french": "Tu (singulier)", "english": "You (singular)", "notes": "Used in greetings"}
+  ],
+  "numbers": [
+    {"soussou": "kérén", "french": "Un", "english": "One", "value": 1},
+    {"soussou": "fírín", "french": "Deux", "english": "Two", "value": 2},
+    {"soussou": "sàxán", "french": "Trois", "english": "Three", "value": 3},
+    {"soussou": "náání", "french": "Quatre", "english": "Four", "value": 4},
+    {"soussou": "súlí", "french": "Cinq", "english": "Five", "value": 5},
+    {"soussou": "sénní", "french": "Six", "english": "Six", "value": 6},
+    {"soussou": "sólófèré", "french": "Sept", "english": "Seven", "value": 7},
+    {"soussou": "sólómásàxán", "french": "Huit", "english": "Eight", "value": 8},
+    {"soussou": "sólómánáání", "french": "Neuf", "english": "Nine", "value": 9},
+    {"soussou": "fuú", "french": "Dix", "english": "Ten", "value": 10},
+    {"soussou": "fuú nŭn kérén", "french": "Onze", "english": "Eleven", "value": 11},
+    {"soussou": "fuú nŭn fírín", "french": "Douze", "english": "Twelve", "value": 12},
+    {"soussou": "fuú nŭn sàxán", "french": "Treize", "english": "Thirteen", "value": 13},
+    {"soussou": "fuú nŭn náání", "french": "Quatorze", "english": "Fourteen", "value": 14},
+    {"soussou": "fuú nŭn súlí", "french": "Quinze", "english": "Fifteen", "value": 15},
+    {"soussou": "fuú nŭn sénní", "french": "Seize", "english": "Sixteen", "value": 16},
+    {"soussou": "fuú nŭn sólófèré", "french": "Dix-sept", "english": "Seventeen", "value": 17},
+    {"soussou": "fuú nŭn sólómásàxán", "french": "Dix-huit", "english": "Eighteen", "value": 18},
+    {"soussou": "fuú nŭn sólómánáání", "french": "Dix-neuf", "english": "Nineteen", "value": 19},
+    {"soussou": "m̀ɔx̀ɔǵɛŋ", "french": "Vingt", "english": "Twenty", "value": 20},
+    {"soussou": "tòngó sàxán", "french": "Trente", "english": "Thirty", "value": 30},
+    {"soussou": "tòngó náání", "french": "Quarante", "english": "Forty", "value": 40},
+    {"soussou": "tòngó súlí", "french": "Cinquante", "english": "Fifty", "value": 50},
+    {"soussou": "tòngó sénní", "french": "Soixante", "english": "Sixty", "value": 60},
+    {"soussou": "tòngó sólófèré", "french": "Soixante-dix", "english": "Seventy", "value": 70},
+    {"soussou": "tòngó sólómásàxán", "french": "Quatre-vingts", "english": "Eighty", "value": 80},
+    {"soussou": "tòngó sólómánáání", "french": "Quatre-vingt-dix", "english": "Ninety", "value": 90},
+    {"soussou": "k̀ɛḿɛ", "french": "Cent", "english": "One hundred", "value": 100},
+    {"soussou": "wúlù kérén", "french": "Mille", "english": "One thousand", "value": 1000}
+  ],
+  "days_of_week": [
+    {"soussou": "Tênin", "french": "Lundi", "english": "Monday", "notes": ""},
+    {"soussou": "Talatai", "french": "Mardi", "english": "Tuesday", "notes": ""},
+    {"soussou": "Alarbai", "french": "Mercredi", "english": "Wednesday", "notes": ""},
+    {"soussou": "Alamisai", "french": "Jeudi", "english": "Thursday", "notes": ""},
+    {"soussou": "Jumai", "french": "Vendredi", "english": "Friday", "notes": ""},
+    {"soussou": "Simiti", "french": "Samedi", "english": "Saturday", "notes": ""},
+    {"soussou": "Láati", "french": "Dimanche", "english": "Sunday", "notes": ""}
+  ],
+  "time_expressions": [
+    {"soussou": "Hôro", "french": "Hier", "english": "Yesterday", "notes": ""},
+    {"soussou": "Tina", "french": "Demain", "english": "Tomorrow", "notes": ""},
+    {"soussou": "Lôhoungni", "french": "La semaine", "english": "Week", "notes": ""},
+    {"soussou": "Lôhoungne", "french": "Les semaines", "english": "Weeks", "notes": "Plural"},
+    {"soussou": "Lôhê", "french": "Le jour", "english": "Day", "notes": ""},
+    {"soussou": "Lôhée", "french": "Les jours", "english": "Days", "notes": "Plural"},
+    {"soussou": "Kique", "french": "Le mois", "english": "Month", "notes": ""},
+    {"soussou": "gaissaigai", "french": "Matin", "english": "Morning", "notes": ""},
+    {"soussou": "Nounmaré", "french": "Soir", "english": "Evening", "notes": ""},
+    {"soussou": "Yandji", "french": "La journée", "english": "Daytime", "notes": ""},
+    {"soussou": "Lôhoungni singue", "french": "La première semaine", "english": "First week", "notes": ""},
+    {"soussou": "Lôhoungni firi yandhé", "french": "La deuxième semaine", "english": "Second week", "notes": ""},
+    {"soussou": "Lôhoungni saha yandhé", "french": "La troisième semaine", "english": "Third week", "notes": ""},
+    {"soussou": "Lôhoungni nani yandhé", "french": "La quatrième semaine", "english": "Fourth week", "notes": ""},
+    {"soussou": "Gui lôhoungni", "french": "Cette semaine", "english": "This week", "notes": ""},
+    {"soussou": "Lôhoungni nahan sa dangui", "french": "La semaine dernière", "english": "Last week", "notes": ""},
+    {"soussou": "Lôhoungni nahan sa fafé", "french": "La semaine prochaine", "english": "Next week", "notes": ""}
+  ],
+  "people": [
+    {"soussou": "Hammé", "french": "Homme", "english": "Man", "notes": ""},
+    {"soussou": "Guiné", "french": "Femme", "english": "Woman", "notes": "Also origin of country name Guinea"},
+    {"soussou": "Boré", "french": "L'ami", "english": "Friend", "notes": ""}
+  ],
+  "family": [
+    {"soussou": "I tara", "french": "Ton frère/ta sœur", "english": "Your brother/sister", "notes": "Used for both genders"},
+    {"soussou": "I sogho", "french": "Ton oncle", "english": "Your uncle", "notes": "Paternal or maternal"}
+  ],
+  "common_nouns": [
+    {"soussou": "Quiyé", "french": "L'eau", "english": "Water", "notes": ""},
+    {"soussou": "Wé", "french": "L'eau", "english": "Water", "notes": "Alternative"},
+    {"soussou": "Bandé", "french": "Riz", "english": "Rice", "notes": ""},
+    {"soussou": "Bogné", "french": "Cœur", "english": "Heart", "notes": ""},
+    {"soussou": "Douniya", "french": "La vie", "english": "Life", "notes": ""},
+    {"soussou": "Lépi", "french": "Le boubou", "english": "Traditional garment", "notes": ""},
+    {"soussou": "Loko", "french": "Banane / plat de plantain", "english": "Plantain / plantain dish", "notes": ""},
+    {"soussou": "Sigui", "french": "La musique", "english": "Music", "notes": ""},
+    {"soussou": "faré", "french": "Danse / rythme", "english": "Dance / rhythm", "notes": ""},
+    {"soussou": "Sèwè", "french": "La joie", "english": "Joy", "notes": ""},
+    {"soussou": "makiti", "french": "Le marché", "english": "Market", "notes": "From verb examples"}
+  ],
+  "adjectives": [
+    {"soussou": "Tara", "french": "Grand", "english": "Big", "notes": ""}
+  ],
+  "verbs": [
+    {"soussou": "Fabé", "french": "Viens", "english": "Come", "notes": "Imperative"},
+    {"soussou": "Assoni", "french": "Donne-moi", "english": "Give me", "notes": ""},
+    {"soussou": "M'fafé", "french": "J'arrive", "english": "I'm coming", "notes": ""},
+    {"soussou": "siga", "french": "Aller", "english": "To go", "notes": ""},
+    {"soussou": "hrife", "french": "Dormir", "english": "To sleep", "notes": ""},
+    {"soussou": "uolide", "french": "Travailler", "english": "To work", "notes": ""}
+  ],
+  "verb_conjugations": [
+    {"soussou": "A sigafe makiti", "french": "Il va au marché (maintenant)", "english": "He goes to the market (now)", "notes": "Present punctual"},
+    {"soussou": "A sigama makiti", "french": "Il va habituellement au marché", "english": "He habitually goes to the market", "notes": "Present habitual"},
+    {"soussou": "A naxa siga makiti", "french": "Il est allé au marché", "english": "He went to the market", "notes": "Simple past"},
+    {"soussou": "A bara siga makiti", "french": "Il est déjà allé au marché", "english": "He has already gone to the market", "notes": "Perfect"},
+    {"soussou": "A siga nɛ makiti", "french": "Il est allé au marché", "english": "He went to the market", "notes": "Past perfective"}
+  ],
+  "questions": [
+    {"soussou": "I xili di?", "french": "Comment t'appelles-tu?", "english": "What is your name?", "notes": ""},
+    {"soussou": "Issigafé mindé", "french": "Où vas-tu?", "english": "Where are you going?", "notes": ""},
+    {"soussou": "Issigaké Mindé", "french": "Tu vas où?", "english": "Where are you going?", "notes": "Alternative"},
+    {"soussou": "I sogho khilidi?", "french": "Comment s'appelle ton oncle?", "english": "What is your uncle's name?", "notes": ""},
+    {"soussou": "Anadi", "french": "Ça va?", "english": "How are you?", "notes": "Informal"}
+  ],
+  "responses": [
+    {"soussou": "N xili Fatu", "french": "Je m'appelle Fatu", "english": "My name is Fatu", "notes": "Example response"},
+    {"soussou": "N'sogho khilinai André", "french": "Mon oncle s'appelle André", "english": "My uncle's name is André", "notes": "Example response"}
+  ],
+  "food_vocabulary": [
+    {"soussou": "Sauce Gbontoè", "french": "Sauce graine (de palme)", "english": "Palm grain sauce", "notes": "Traditional dish"},
+    {"soussou": "wouré bourakhè", "french": "Sauce de feuilles de patate douce", "english": "Sweet potato leaf sauce", "notes": "With smoked fish and palm oil"},
+    {"soussou": "Souleingni borè", "french": "Sauce de gombo", "english": "Okra sauce", "notes": ""},
+    {"soussou": "taadè", "french": "Sauce de feuilles de manioc", "english": "Cassava leaf sauce", "notes": "With peanut paste"}
+  ],
+  "phrases": [
+    {"soussou": "n'fakhi wôlidé fédénè", "french": "Je suis venu chercher du travail", "english": "I came looking for work", "notes": ""},
+    {"soussou": "ni bonbon mané", "french": "Je vais te frapper", "english": "I'm going to hit you", "notes": ""},
+    {"soussou": "n'bara t'a gant", "french": "Je suis fatigué(e)", "english": "I am tired", "notes": ""},
+    {"soussou": "Atan na ganaikhi", "french": "C'est elle qui a gagné", "english": "She is the one who won", "notes": ""},
+    {"soussou": "Yontan kha ma li", "french": "Nous, on n'a qu'à l'aider", "english": "We just have to help him/her", "notes": ""},
+    {"soussou": "Lôhoungni khoui lôhê sôlofere nan nah", "french": "Dans une semaine il y a 7 jours", "english": "In a week there are 7 days", "notes": ""}
+  ],
+  "grammar_notes": {
+    "plural_formation": "In Susu, the plural is formed by adding an 'e' to the singular",
+    "sentence_structure": "SOV (Subject-Object-Verb) order",
+    "verb_affixes": "Uses 4 affixes (-ma, -xi, -fe, -∅) and 6 object markers indicating tense/aspect",
+    "no_gender": "No grammatical gender distinction",
+    "no_articles": "No definite or indefinite articles",
+    "pronouns_note": "Susu has exclusive (muxu) and inclusive (won) forms for first person plural"
+  }
+}

@@ -1,0 +1,370 @@
+{
+  "version": "1.0",
+  "description": "Slot to lexicon category mappings for Soussou sentence generation",
+  "generated_date": "2025-11-20",
+
+  "slots": {
+    "SUBJECT": {
+      "description": "Subject pronouns for sentences",
+      "lexicon_category": "pronoun",
+      "values": {
+        "base": ["N'na", "Ina", "Ana", "Whon'", "Etan", "Moukhou", "Wo"],
+        "emphatic": ["Ntan", "Itan", "Atan", "Whontan", "Etan", "Moukhoutan", "Wotan"]
+      },
+      "person_mapping": {
+        "1sg": {"base": "N'na", "emphatic": "Ntan"},
+        "2sg": {"base": "Ina", "emphatic": "Itan"},
+        "3sg": {"base": "Ana", "emphatic": "Atan"},
+        "1pl_incl": {"base": "Whon'", "emphatic": "Whontan"},
+        "1pl_excl": {"base": "Moukhou", "emphatic": "Moukhoutan"},
+        "2pl": {"base": "Wo", "emphatic": "Wotan"},
+        "3pl": {"base": "Etan", "emphatic": "Etan"}
+      }
+    },
+
+    "OBJECT": {
+      "description": "Object pronouns",
+      "lexicon_category": "pronoun",
+      "values": ["N'", "I", "A", "Whon'", "Wo", "Etan", "Gui"],
+      "person_mapping": {
+        "1sg": "N'",
+        "2sg": "I",
+        "3sg": "A",
+        "1pl": "Whon'",
+        "2pl": "Wo",
+        "3pl": "Etan",
+        "demonstrative": "Gui"
+      }
+    },
+
+    "POSSESSIVE": {
+      "description": "Possessive markers",
+      "lexicon_category": "particle",
+      "values": ["M'ma", "Ikha", "Akha", "Whonma", "Ekha", "Etan kha", "I", "A", "E"],
+      "person_mapping": {
+        "1sg": "M'ma",
+        "2sg": "Ikha",
+        "3sg": "Akha",
+        "1pl": "Whonma",
+        "3pl": "Ekha",
+        "3pl_full": "Etan kha"
+      },
+      "short_forms": {
+        "2sg": "I",
+        "3sg": "A",
+        "3pl": "E"
+      }
+    },
+
+    "PRONOUN": {
+      "description": "General pronouns for questions like 'what about X'",
+      "lexicon_category": "pronoun",
+      "values": ["Itan", "Atan", "Etan", "Whontan", "Wotan"]
+    },
+
+    "VERB": {
+      "description": "Common verbs",
+      "lexicon_category": "verb",
+      "values": {
+        "movement": ["fafe", "sigafe", "kelli", "fa", "siga"],
+        "perception": ["mato", "to", "kolon"],
+        "communication": ["fala", "khili"],
+        "action": ["dege", "min", "rasa", "fen", "sonyi"],
+        "state": ["lafia", "malade", "yite", "marche"],
+        "ability": ["no'mma", "nomma"],
+        "understanding": ["comprendfe", "faxamu"]
+      },
+      "conjugation_patterns": {
+        "continuous": "-fe / -fafe",
+        "past": "-xi"
+      }
+    },
+
+    "NOUN": {
+      "description": "Common nouns",
+      "lexicon_category": "noun",
+      "values": {
+        "transportation": ["woto", "taxi", "bus", "avion", "bateau", "moto"],
+        "places": ["bangui", "marche", "hopital", "ecole", "pharmacie", "restaurant", "mosquee", "bureau"],
+        "food": ["riz", "poisson", "poulet", "viande", "mangue", "banane", "papaye", "oignon", "piment", "te", "cafe", "eau", "huile palme"],
+        "objects": ["telephone", "cle", "parapluie", "veste", "chemise", "affaires"],
+        "nature": ["furu", "soleil", "vent", "nuage", "nuit"],
+        "family": ["baba", "na", "tara", "boke", "tonton", "soeur", "frere", "dimedi", "denbaya"],
+        "abstract": ["travail", "khafe", "situation", "probleme", "kira", "wakhati", "songo"]
+      }
+    },
+
+    "FAMILY_MEMBER": {
+      "description": "Family relationship terms",
+      "lexicon_category": "noun",
+      "values": ["baba", "na", "tara", "boke", "tonton", "soeur", "frere", "dimedi", "denbaya"],
+      "translations": {
+        "baba": "father",
+        "na": "mother",
+        "tara": "husband",
+        "boke": "mother",
+        "tonton": "uncle",
+        "soeur": "sister",
+        "frere": "brother",
+        "dimedi": "child",
+        "denbaya": "family"
+      }
+    },
+
+    "PLACE": {
+      "description": "Place names for directions and locations",
+      "lexicon_category": "noun",
+      "values": ["Hopital", "Ecole", "Marche", "Pharmacie", "Restaurant", "Mosquee", "Bureau", "Cuisine", "Bangui"],
+      "note": "Many places use French words"
+    },
+
+    "LOCATION": {
+      "description": "Location markers/postpositions",
+      "lexicon_category": "particle",
+      "values": ["be", "yire", "koui", "pres"],
+      "meanings": {
+        "be": "here",
+        "yire": "there",
+        "koui": "inside",
+        "pres": "near"
+      }
+    },
+
+    "DIRECTION": {
+      "description": "Direction words",
+      "values": ["tout droit", "droite", "gauche"],
+      "note": "Uses French direction words"
+    },
+
+    "TIME": {
+      "description": "Time expressions",
+      "values": {
+        "duration": ["Cinq minutes", "Dix minutes", "Une heure"],
+        "relative": ["Maintenant", "Bientot", "Demain", "Hier", "Prochaine fois"],
+        "periods": ["Matin", "Midi", "Soir", "Nuit"],
+        "days": ["Araba", "Jeudi", "Vendredi", "Samedi"]
+      },
+      "note": "Mix of Soussou and French time expressions"
+    },
+
+    "INTENSITY": {
+      "description": "Intensity/degree markers",
+      "lexicon_category": "particle",
+      "values": ["gbo", "un peu", "tan"],
+      "meanings": {
+        "gbo": "very/a lot",
+        "un peu": "a little",
+        "tan": "just/only"
+      }
+    },
+
+    "QUALITY": {
+      "description": "Quality/state adjectives",
+      "values": {
+        "food_quality": ["fra", "fra gbo", "ten gbo", "mur", "bon", "fort"],
+        "condition": ["longue gbo", "bon gbo", "cheri gbo", "lent"],
+        "state": ["pret", "marche", "yite"]
+      }
+    },
+
+    "AMOUNT": {
+      "description": "Price/quantity amounts",
+      "values": {
+        "prices": ["Dix mille", "Vingt mille", "Trente mille", "Quarante mille", "Cinquante mille", "Cinq cent mille"],
+        "quantities": ["Keren", "Firin", "Saxan", "Naani", "Suli"]
+      },
+      "numbers": {
+        "1": "keren",
+        "2": "firin",
+        "3": "saxan",
+        "4": "naani",
+        "5": "suli",
+        "6": "seni",
+        "7": "solofere",
+        "8": "solomasaxan",
+        "9": "solomanaani",
+        "10": "fuu"
+      }
+    },
+
+    "WEATHER": {
+      "description": "Weather phenomena",
+      "lexicon_category": "noun",
+      "values": ["Furu", "Soleil", "Vent", "Nuage", "Eclaire", "Tonnerre"],
+      "translations": {
+        "Furu": "rain",
+        "Soleil": "sun",
+        "Vent": "wind",
+        "Nuage": "cloud",
+        "Eclaire": "lightning",
+        "Tonnerre": "thunder"
+      }
+    },
+
+    "GREETING": {
+      "description": "Greeting expressions",
+      "values": {
+        "morning": "I kena",
+        "evening": "I suba",
+        "inquiry": ["Tana mu a ra?", "Ina lafia?", "Kisi?", "Kisi yire?"]
+      }
+    },
+
+    "BLESSING": {
+      "description": "Blessing expressions",
+      "values": ["baraka", "a kisi", "whon' kisi", "i kisi"],
+      "full_forms": ["Ala xa baraka", "Ala xa a kisi", "Ala xa whon' kisi"]
+    },
+
+    "QUESTION_WORD": {
+      "description": "Question particles",
+      "lexicon_category": "question",
+      "values": {
+        "where": "minde",
+        "how_much": "songo yiri",
+        "what_time": "wakhati yiri",
+        "when": "tuma yiri",
+        "what": "di ra",
+        "why": "khafe mu ra",
+        "what_about": ["ngo", "go"],
+        "how_many": "yiri"
+      }
+    },
+
+    "NEGATION": {
+      "description": "Negation markers",
+      "lexicon_category": "particle",
+      "values": ["m'ma", "mu"],
+      "usage": {
+        "m'ma": "Before verb for negation (contracted form)",
+        "mu": "Standalone negation particle"
+      }
+    },
+
+    "CONNECTOR": {
+      "description": "Sentence connectors",
+      "values": {
+        "soussou": ["nun", "barima", "alako", "kono", "fo"],
+        "french": ["mais", "apres", "parce que", "d'accord"]
+      },
+      "meanings": {
+        "nun": "and",
+        "barima": "because",
+        "alako": "so that",
+        "kono": "but",
+        "fo": "except",
+        "mais": "but",
+        "apres": "then/after"
+      }
+    },
+
+    "ACTION": {
+      "description": "Action phrases for commands and suggestions",
+      "values": {
+        "movement": ["fafe", "siga", "kelli", "fa be", "siga yire"],
+        "communication": ["etan fala", "i khili", "a mato"],
+        "daily": ["dege", "min", "dokho", "t'ti"]
+      }
+    },
+
+    "RESPONSE": {
+      "description": "Response words",
+      "values": {
+        "positive": ["Awa", "Tanante", "Lafia", "Kisi tan"],
+        "negative": ["M'ma", "Ntan m'ma kolon"],
+        "acknowledgment": ["D'accord", "Bon", "Cool"]
+      }
+    },
+
+    "REASON": {
+      "description": "Reason/explanation phrases",
+      "values": ["Telephone m'ma marche", "Travail gbo", "Malade", "Retard", "A lafia un peu"]
+    }
+  },
+
+  "french_fillers": {
+    "description": "Common French words used in Soussou sentences",
+    "modifiers": ["un peu", "bien", "vite", "encore", "maintenant", "demain", "toujours"],
+    "conjunctions": ["mais", "apres", "parce que", "d'accord", "alors"],
+    "exclamations": ["Pardon!", "Merci!", "Cool!", "Dommage!"],
+    "question_markers": ["Eske"],
+    "places": ["marche", "hopital", "ecole", "pharmacie", "restaurant", "cuisine", "bureau", "garage"],
+    "food": ["riz", "poisson", "poulet", "viande", "cafe", "the", "eau"],
+    "transport": ["taxi", "bus", "avion", "bateau", "moto"],
+    "time": ["minutes", "heures", "demain", "maintenant", "matin", "soir"]
+  },
+
+  "code_switching_rules": {
+    "description": "Rules for Soussou-French mixing",
+    "patterns": [
+      {
+        "rule": "French nouns with Soussou possessives",
+        "example": "M'ma telephone",
+        "note": "Most common pattern"
+      },
+      {
+        "rule": "French verb roots with Soussou -fe suffix",
+        "example": "comprendfé, négociefé",
+        "note": "Creates Soussou action verbs from French"
+      },
+      {
+        "rule": "French modifiers in Soussou sentences",
+        "example": "un peu, bien, vite",
+        "note": "French adverbs integrate naturally"
+      },
+      {
+        "rule": "French conjunctions",
+        "example": "Mais ca va",
+        "note": "mais, apres commonly used"
+      },
+      {
+        "rule": "French numbers for prices/time",
+        "example": "Cinquante mille, Neuf heures",
+        "note": "French numbers often preferred for modern contexts"
+      },
+      {
+        "rule": "French place names",
+        "example": "Hopital, Pharmacie",
+        "note": "Modern establishments use French"
+      }
+    ],
+    "mixing_contexts": {
+      "high_french": ["prices", "time", "modern_places", "technology"],
+      "mostly_soussou": ["greetings", "family", "emotions", "traditional_contexts"],
+      "balanced": ["daily_conversation", "shopping", "directions"]
+    }
+  },
+
+  "validation_rules": {
+    "subject_verb_agreement": {
+      "rule": "Subject pronoun form must match verb position",
+      "example": "N'na fafe (not *N fafe)"
+    },
+    "possessive_noun_order": {
+      "rule": "Possessive comes before noun",
+      "example": "M'ma woto (my car)"
+    },
+    "negation_position": {
+      "rule": "m'ma comes directly before verb",
+      "example": "Ntan m'ma kolon (not *Ntan kolon m'ma)"
+    },
+    "question_word_position": {
+      "rule": "Question words typically come at end",
+      "example": "Ina minde? (not *Minde ina?)"
+    },
+    "object_verb_order": {
+      "rule": "In imperatives, object precedes verb",
+      "example": "Gui sonyi (give me that)"
+    },
+    "intensifier_position": {
+      "rule": "gbo comes after what it modifies",
+      "example": "Urgent gbo (very urgent)"
+    }
+  },
+
+  "metadata": {
+    "total_slot_types": 24,
+    "lexicon_integration": true,
+    "supports_french_mixing": true
+  }
+}

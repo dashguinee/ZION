@@ -1,0 +1,545 @@
+{
+  "flows": [
+    {
+      "id": "greeting_flow",
+      "name": "Standard Greeting Exchange",
+      "description": "Typical greeting sequence with wellness inquiries",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "greeting",
+          "speaker": "A",
+          "example": "I kena! Tana mu a ra?",
+          "english": "Good morning! How are you?"
+        },
+        {
+          "turn": 2,
+          "type": "greeting_response",
+          "speaker": "B",
+          "example": "Tanante, Ala xa baraka! I fan?",
+          "english": "Fine, God bless! And you?"
+        },
+        {
+          "turn": 3,
+          "type": "family_inquiry",
+          "speaker": "A",
+          "example": "Ntan lafia. I denbaya lafia?",
+          "english": "I'm well. Is your family well?"
+        },
+        {
+          "turn": 4,
+          "type": "family_response",
+          "speaker": "B",
+          "example": "Etan birin lafia, Ala xa baraka!",
+          "english": "They're all well, God bless!"
+        }
+      ],
+      "variations": [
+        {
+          "context": "evening",
+          "turn_1": "I suba! Kisi yire?",
+          "turn_2": "Kisi tan. Barka Ala xa."
+        },
+        {
+          "context": "quick",
+          "turn_1": "Tana?",
+          "turn_2": "Tana tan. I go?"
+        }
+      ]
+    },
+    {
+      "id": "location_meeting_flow",
+      "name": "Location and Meeting Arrangement",
+      "description": "Arranging to meet someone at a location",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "location_question",
+          "speaker": "A",
+          "example": "Ina minde?",
+          "english": "Where are you?"
+        },
+        {
+          "turn": 2,
+          "type": "location_response",
+          "speaker": "B",
+          "example": "N'na fafe. Cinq minutes.",
+          "english": "I'm coming. Five minutes."
+        },
+        {
+          "turn": 3,
+          "type": "confirmation",
+          "speaker": "A",
+          "example": "Awa, mmeme. N'na i mato.",
+          "english": "Okay, wait. I'll look for you."
+        },
+        {
+          "turn": 4,
+          "type": "arrival_confirmation",
+          "speaker": "B",
+          "example": "N'na yite. Ina minde exactement?",
+          "english": "I've arrived. Where exactly are you?"
+        }
+      ]
+    },
+    {
+      "id": "shopping_flow",
+      "name": "Market Shopping Conversation",
+      "description": "Typical market transaction with price negotiation",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "price_question",
+          "speaker": "A",
+          "example": "Mangue gui songo yiri?",
+          "english": "How much are these mangoes?"
+        },
+        {
+          "turn": 2,
+          "type": "price_response",
+          "speaker": "B",
+          "example": "Dix mille tan. Frais gbo!",
+          "english": "Just ten thousand. Very fresh!"
+        },
+        {
+          "turn": 3,
+          "type": "negotiation",
+          "speaker": "A",
+          "example": "Cheri gbo! Huit mille?",
+          "english": "Too expensive! Eight thousand?"
+        },
+        {
+          "turn": 4,
+          "type": "counter_offer",
+          "speaker": "B",
+          "example": "Neuf mille, derniere prix.",
+          "english": "Nine thousand, final price."
+        },
+        {
+          "turn": 5,
+          "type": "acceptance",
+          "speaker": "A",
+          "example": "Awa, n'sa gui rasa.",
+          "english": "Okay, I'll buy this."
+        },
+        {
+          "turn": 6,
+          "type": "quantity_question",
+          "speaker": "B",
+          "example": "Yiri tan?",
+          "english": "How many?"
+        }
+      ]
+    },
+    {
+      "id": "problem_help_flow",
+      "name": "Problem and Help Exchange",
+      "description": "Someone has a problem and seeks help",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "problem_statement",
+          "speaker": "A",
+          "example": "M'ma woto m'ma fafe aujourd'hui.",
+          "english": "My car is not coming today."
+        },
+        {
+          "turn": 2,
+          "type": "inquiry",
+          "speaker": "B",
+          "example": "Khafe mu ra? Garage?",
+          "english": "Why? At the garage?"
+        },
+        {
+          "turn": 3,
+          "type": "explanation",
+          "speaker": "A",
+          "example": "Awa, reparation. N'ra besoin taxi.",
+          "english": "Yes, repairs. I need a taxi."
+        },
+        {
+          "turn": 4,
+          "type": "offer_help",
+          "speaker": "B",
+          "example": "N'na i rafa. N'ma woto be.",
+          "english": "I'll come get you. My car is here."
+        },
+        {
+          "turn": 5,
+          "type": "gratitude",
+          "speaker": "A",
+          "example": "I balake gbo! Coeur propre.",
+          "english": "Thank you so much! Pure heart."
+        }
+      ]
+    },
+    {
+      "id": "directions_flow",
+      "name": "Asking for Directions",
+      "description": "Getting directions to a location",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "directions_question",
+          "speaker": "A",
+          "example": "Hopital gui kira minde?",
+          "english": "Where is the road to this hospital?"
+        },
+        {
+          "turn": 2,
+          "type": "directions_response",
+          "speaker": "B",
+          "example": "Siga tout droit, kirin kole. A gauche apres.",
+          "english": "Go straight, at the end. Then left."
+        },
+        {
+          "turn": 3,
+          "type": "clarification",
+          "speaker": "A",
+          "example": "A loin gbo?",
+          "english": "Is it very far?"
+        },
+        {
+          "turn": 4,
+          "type": "distance_response",
+          "speaker": "B",
+          "example": "M'ma loin. Dix minutes tan.",
+          "english": "Not far. Just ten minutes."
+        },
+        {
+          "turn": 5,
+          "type": "gratitude",
+          "speaker": "A",
+          "example": "I balake gbo!",
+          "english": "Thank you very much!"
+        }
+      ]
+    },
+    {
+      "id": "urgent_command_flow",
+      "name": "Urgent Request Flow",
+      "description": "Urgent situation requiring immediate response",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "urgent_command",
+          "speaker": "A",
+          "example": "Fa be vite! Urgent gbo!",
+          "english": "Come here quickly! Very urgent!"
+        },
+        {
+          "turn": 2,
+          "type": "urgent_response",
+          "speaker": "B",
+          "example": "N'na fafe! Khafe mu ra?",
+          "english": "I'm coming! What's the problem?"
+        },
+        {
+          "turn": 3,
+          "type": "explanation",
+          "speaker": "A",
+          "example": "Ana malade. A hopital besoin.",
+          "english": "He/she is sick. Needs hospital."
+        },
+        {
+          "turn": 4,
+          "type": "action",
+          "speaker": "B",
+          "example": "Awa! N'na appeler ambulance.",
+          "english": "Okay! I'm calling ambulance."
+        }
+      ]
+    },
+    {
+      "id": "family_inquiry_flow",
+      "name": "Family News Exchange",
+      "description": "Asking about family members",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "family_question",
+          "speaker": "A",
+          "example": "I baba minde?",
+          "english": "Where is your father?"
+        },
+        {
+          "turn": 2,
+          "type": "family_response",
+          "speaker": "B",
+          "example": "A siga mosquee. A fafe bientot.",
+          "english": "He went to the mosque. He's coming soon."
+        },
+        {
+          "turn": 3,
+          "type": "wellness_check",
+          "speaker": "A",
+          "example": "A lafia?",
+          "english": "Is he well?"
+        },
+        {
+          "turn": 4,
+          "type": "wellness_response",
+          "speaker": "B",
+          "example": "Awa, a lafia. Ala xa baraka!",
+          "english": "Yes, he's well. God bless!"
+        }
+      ]
+    },
+    {
+      "id": "weather_conversation_flow",
+      "name": "Weather Discussion",
+      "description": "Conversation about weather conditions",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "weather_observation",
+          "speaker": "A",
+          "example": "Furu gbo nun bi!",
+          "english": "It's raining a lot today!"
+        },
+        {
+          "turn": 2,
+          "type": "weather_reaction",
+          "speaker": "B",
+          "example": "Awa. Parapluie mu n'bolo.",
+          "english": "Yes. I don't have an umbrella."
+        },
+        {
+          "turn": 3,
+          "type": "suggestion",
+          "speaker": "A",
+          "example": "Mmeme be. Furu sa stop.",
+          "english": "Wait here. The rain will stop."
+        },
+        {
+          "turn": 4,
+          "type": "agreement",
+          "speaker": "B",
+          "example": "Awa, n'na mmeme.",
+          "english": "Okay, I'll wait."
+        }
+      ]
+    },
+    {
+      "id": "scheduling_flow",
+      "name": "Schedule and Timing",
+      "description": "Arranging schedules and times",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "time_question",
+          "speaker": "A",
+          "example": "Whon' kha meeting commence wakhati yiri?",
+          "english": "What time does our meeting start?"
+        },
+        {
+          "turn": 2,
+          "type": "time_response",
+          "speaker": "B",
+          "example": "Neuf heures. Retard m'ma bon!",
+          "english": "Nine o'clock. Being late is not good!"
+        },
+        {
+          "turn": 3,
+          "type": "confirmation",
+          "speaker": "A",
+          "example": "Awa, n'na yite avant.",
+          "english": "Okay, I'll arrive before."
+        },
+        {
+          "turn": 4,
+          "type": "acknowledgment",
+          "speaker": "B",
+          "example": "Bon. A demain!",
+          "english": "Good. See you tomorrow!"
+        }
+      ]
+    },
+    {
+      "id": "farewell_flow",
+      "name": "Farewell Exchange",
+      "description": "Ending a conversation with blessings",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "departure_notice",
+          "speaker": "A",
+          "example": "Nuit yite. Whon' sa siga bangui.",
+          "english": "Night has come. We should go home."
+        },
+        {
+          "turn": 2,
+          "type": "agreement",
+          "speaker": "B",
+          "example": "Awa. Demain whon' se encore.",
+          "english": "Yes. Tomorrow we'll meet again."
+        },
+        {
+          "turn": 3,
+          "type": "blessing",
+          "speaker": "A",
+          "example": "Ala xa whon' kisi! A demain!",
+          "english": "May God protect us! See you tomorrow!"
+        },
+        {
+          "turn": 4,
+          "type": "blessing_response",
+          "speaker": "B",
+          "example": "Amin! Nuit bon. A demain!",
+          "english": "Amen! Good night. See you tomorrow!"
+        }
+      ]
+    },
+    {
+      "id": "apology_flow",
+      "name": "Apology and Explanation",
+      "description": "Apologizing for missing something or being late",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "searching",
+          "speaker": "A",
+          "example": "I na minde? N'na i fen gbo!",
+          "english": "Where are you? I've been looking for you a lot!"
+        },
+        {
+          "turn": 2,
+          "type": "apology",
+          "speaker": "B",
+          "example": "Pardon! Telephone m'ma marche.",
+          "english": "Sorry! My phone wasn't working."
+        },
+        {
+          "turn": 3,
+          "type": "understanding",
+          "speaker": "A",
+          "example": "Awa, ntan comprendfe. Problem m'ma.",
+          "english": "Okay, I understand. No problem."
+        }
+      ]
+    },
+    {
+      "id": "invitation_flow",
+      "name": "Invitation and Response",
+      "description": "Inviting someone and getting response",
+      "steps": [
+        {
+          "turn": 1,
+          "type": "invitation",
+          "speaker": "A",
+          "example": "Whon' tan fafe, itan ngo?",
+          "english": "We are coming, and you?"
+        },
+        {
+          "turn": 2,
+          "type": "acceptance",
+          "speaker": "B",
+          "example": "N'tan fafe aussi! Ensemble!",
+          "english": "I'm coming too! Together!"
+        }
+      ],
+      "variations": [
+        {
+          "context": "decline",
+          "turn_2": "Moukhou m'ma fafe. Travail gbo.",
+          "turn_2_english": "We're not coming. Too much work."
+        }
+      ]
+    }
+  ],
+  "flow_transitions": {
+    "greeting_flow": {
+      "can_lead_to": ["location_meeting_flow", "family_inquiry_flow", "scheduling_flow"],
+      "signals": ["minde", "wakhati", "lafia"]
+    },
+    "location_meeting_flow": {
+      "can_lead_to": ["problem_help_flow", "farewell_flow"],
+      "signals": ["khafe", "probleme", "a demain"]
+    },
+    "shopping_flow": {
+      "can_lead_to": ["farewell_flow"],
+      "signals": ["merci", "balake", "a demain"]
+    },
+    "problem_help_flow": {
+      "can_lead_to": ["farewell_flow", "scheduling_flow"],
+      "signals": ["balake", "demain", "promis"]
+    }
+  },
+  "response_patterns": {
+    "greeting_response": {
+      "structure": "[Wellness statement], [Blessing]! [Reciprocal question]",
+      "examples": [
+        "Tanante, Ala xa baraka! I fan?",
+        "Kisi tan. Barka Ala xa. I go?"
+      ]
+    },
+    "location_response": {
+      "structure": "[Status]. [Time estimate].",
+      "examples": [
+        "N'na fafe. Cinq minutes.",
+        "A siga [location]. A fafe bientot."
+      ]
+    },
+    "price_response": {
+      "structure": "[Price] tan. [Quality]!",
+      "examples": [
+        "Dix mille tan. Frais gbo!",
+        "Cinquante mille. Qualite gbo!"
+      ]
+    },
+    "acknowledgment": {
+      "structure": "[Agreement], [Follow-up action/question].",
+      "examples": [
+        "Awa. Kilo yiri n'sa rasa?",
+        "Awa, n'na i khili. Promis!"
+      ]
+    },
+    "problem_reaction": {
+      "structure": "[Exclamation]! [Question/Suggestion]?",
+      "examples": [
+        "Ay! Gui muxundi gbo! Bougie be?",
+        "Khafe mu ra? Taxi tan?"
+      ]
+    },
+    "blessing_response": {
+      "structure": "[Blessing]! [Compliment].",
+      "examples": [
+        "Ala xa baraka! Style gbo.",
+        "Ala xa a kisi! Courage!"
+      ]
+    }
+  },
+  "turn_taking_rules": [
+    {
+      "rule": "greeting_requires_reciprocation",
+      "description": "A greeting must be returned before continuing",
+      "example": "A: I kena! -> B: I kena! THEN continue"
+    },
+    {
+      "rule": "question_requires_answer",
+      "description": "Questions must be answered, not ignored",
+      "example": "A: Ina minde? -> B must give location"
+    },
+    {
+      "rule": "blessing_requires_amin",
+      "description": "Blessings are acknowledged with Amin",
+      "example": "A: Ala xa baraka! -> B: Amin!"
+    },
+    {
+      "rule": "gratitude_requires_response",
+      "description": "Thanks should be acknowledged",
+      "example": "A: I balake! -> B: Probleme m'ma / Bienvenu"
+    },
+    {
+      "rule": "family_inquiry_expected",
+      "description": "After initial greeting, family wellness inquiry is expected",
+      "example": "After Tana exchange, ask about denbaya/boke/baba"
+    }
+  ],
+  "context_persistence": {
+    "topic_sticky_turns": 3,
+    "formality_sticky_turns": 5,
+    "relationship_sticky": true,
+    "reset_signals": ["A demain", "Ala xa whon' kisi", "Bye"]
+  }
+}

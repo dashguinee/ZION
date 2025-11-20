@@ -1,0 +1,206 @@
+{
+  "metadata": {
+    "agent": "agent_04_vocabulary_lists",
+    "date_collected": "2025-11-20",
+    "total_entries": 48,
+    "status": "needs_review",
+    "notes": "These entries need verification - may have inconsistent spellings, unclear translations, or come from single sources"
+  },
+  "needs_verification": {
+    "potential_vocabulary": [
+      {
+        "susu": "naga",
+        "english": "mother (inferred from context)",
+        "source": "Peace Corps phrase",
+        "issue": "Only seen in phrase 'n naga ra' - needs direct confirmation"
+      },
+      {
+        "susu": "yi/yeri",
+        "english": "have/age-related",
+        "source": "Multiple",
+        "issue": "Appears in multiple contexts with different meanings - needs clarification"
+      },
+      {
+        "susu": "Ginea/Guinea",
+        "english": "woman (said to be origin of country name)",
+        "source": "101 Last Tribes",
+        "issue": "Single source claims this - needs verification"
+      },
+      {
+        "susu": "fa",
+        "english": "give/return",
+        "source": "Peace Corps",
+        "issue": "Seen in 'I fa nu wali' - exact meaning unclear"
+      },
+      {
+        "susu": "bara",
+        "english": "indicates past action",
+        "source": "French-Susu dictionary",
+        "issue": "Grammar function needs verification"
+      },
+      {
+        "susu": "wali",
+        "english": "work/action",
+        "source": "Peace Corps",
+        "issue": "Appears in multiple contexts - polysemous"
+      },
+      {
+        "susu": "rabama",
+        "english": "for work/doing",
+        "source": "Peace Corps",
+        "issue": "Compound needs breakdown"
+      },
+      {
+        "susu": "faxamui",
+        "english": "conscience",
+        "source": "UDHR translation",
+        "issue": "Single source"
+      },
+      {
+        "susu": "fondoe",
+        "english": "reason",
+        "source": "UDHR translation",
+        "issue": "Single source"
+      },
+      {
+        "susu": "boresuxu",
+        "english": "brotherhood",
+        "source": "UDHR translation",
+        "issue": "Single source"
+      },
+      {
+        "susu": "bariboreya",
+        "english": "spirit",
+        "source": "UDHR translation",
+        "issue": "Single source"
+      },
+      {
+        "susu": "fanyi",
+        "english": "manner/way",
+        "source": "UDHR translation",
+        "issue": "Single source"
+      },
+      {
+        "susu": "kolonyi",
+        "english": "dignity",
+        "source": "UDHR translation",
+        "issue": "Single source"
+      },
+      {
+        "susu": "kima",
+        "english": "like/similar",
+        "source": "UDHR translation",
+        "issue": "Single source"
+      }
+    ],
+    "orthographic_variants": [
+      {
+        "variants": ["Tana mu na?", "Tana mu fɛn?", "Tana mu fE¯En?"],
+        "english": "How are you?",
+        "issue": "Different transcription systems - need standardization"
+      },
+      {
+        "variants": ["I feyen", "I fɛyɛn"],
+        "english": "Good afternoon",
+        "issue": "Vowel representation varies"
+      },
+      {
+        "variants": ["kérén", "keren"],
+        "english": "one (1)",
+        "issue": "Tone marking varies across sources"
+      },
+      {
+        "variants": ["fírín", "firin"],
+        "english": "two (2)",
+        "issue": "Tone marking varies across sources"
+      }
+    ],
+    "incomplete_categories": [
+      {
+        "category": "colors",
+        "status": "not_found",
+        "note": "No reliable sources found for color vocabulary"
+      },
+      {
+        "category": "body_parts",
+        "status": "not_found",
+        "note": "PolyglotClub has a page but access was blocked"
+      },
+      {
+        "category": "animals",
+        "status": "partial",
+        "found": ["susuwi = horse"],
+        "note": "Only one animal word found"
+      },
+      {
+        "category": "food_drink",
+        "status": "not_found",
+        "note": "Basic food vocabulary not found in accessible sources"
+      },
+      {
+        "category": "days_of_week",
+        "status": "not_found",
+        "note": "PolyglotClub has a dedicated page but access was blocked"
+      },
+      {
+        "category": "months",
+        "status": "not_found",
+        "note": "No sources found"
+      },
+      {
+        "category": "adjectives",
+        "status": "not_found",
+        "note": "No dedicated adjective lists found"
+      },
+      {
+        "category": "verbs",
+        "status": "partial",
+        "note": "Only 4 verbs confirmed - need more comprehensive list"
+      }
+    ],
+    "sources_to_explore": [
+      {
+        "source": "Peace Corps Susu Language Course PDF",
+        "url": "https://www.livelingua.com/peace-corps/Susu/susu-language-course.pdf",
+        "note": "404-page comprehensive course - needs manual extraction",
+        "potential_words": "500+"
+      },
+      {
+        "source": "Lacan Dictionary (1942)",
+        "url": "https://www.calameo.com/books/000061616e6f8234fccef",
+        "note": "404-page French-Soussou dictionary - fetch failed",
+        "potential_words": "3000+"
+      },
+      {
+        "source": "Sierra Leone Peace Corps Manual",
+        "url": "https://www.sierra-leone.org/Books/SusuManual.pdf",
+        "note": "Different dialect variant - needs extraction",
+        "potential_words": "300+"
+      },
+      {
+        "source": "Quizlet - Susu Language Course",
+        "url": "https://quizlet.com/858424508/susu-language-course-214-flash-cards/",
+        "note": "79 terms - fetch failed",
+        "potential_words": "79"
+      },
+      {
+        "source": "Project_Susu Quizlet Profile",
+        "url": "https://quizlet.com/Project_Susu",
+        "note": "Multiple flashcard sets - fetch failed",
+        "potential_words": "200+"
+      },
+      {
+        "source": "Indiana University CELT Susu Basic Course",
+        "url": "https://celt.indiana.edu/portal/Susu/b01.html",
+        "note": "50 lessons with audio - fetch failed due to SSL",
+        "potential_words": "400+"
+      },
+      {
+        "source": "Duport Grammar (1886)",
+        "url": "https://theswissbay.ch/pdf/Books/Linguistics/Mega linguistics pack/African/Niger-Congo/Mande/Susu Language, Outlines of a Grammar of the (Duport) (1886).pdf",
+        "note": "Historical grammar book",
+        "potential_words": "200+"
+      }
+    ]
+  }
+}
