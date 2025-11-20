@@ -280,6 +280,7 @@ app.get('/congregation/thread', async (req, res) => {
 
 // Helper functions for Soussou operations
 function normalize(text) {
+  if (!text || typeof text !== 'string') return '';
   return text
     .toLowerCase()
     .replace(/['\u2019]/g, '')
