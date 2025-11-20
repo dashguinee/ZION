@@ -1,0 +1,458 @@
+{
+  "normalization": [
+    {
+      "input": "N'na fafé",
+      "expected": "na fafe",
+      "description": "Apostrophe and accent removal"
+    },
+    {
+      "input": "Nna faffé",
+      "expected": "na fafe",
+      "description": "Double consonant compression"
+    },
+    {
+      "input": "I khèré ma",
+      "expected": "i khere ma",
+      "description": "Grave accent removal"
+    },
+    {
+      "input": "fafeh",
+      "expected": "fafe",
+      "description": "Trailing h removal"
+    },
+    {
+      "input": "Tanna",
+      "expected": "tana",
+      "description": "Double n compression"
+    },
+    {
+      "input": "kɛmɛ",
+      "expected": "keme",
+      "description": "IPA epsilon conversion"
+    },
+    {
+      "input": "ɲɔri",
+      "expected": "nyori",
+      "description": "IPA ny and open-o conversion"
+    },
+    {
+      "input": "M'ma",
+      "expected": "ma",
+      "description": "My (possessive) normalization"
+    },
+    {
+      "input": "whon'",
+      "expected": "whon",
+      "description": "Trailing apostrophe removal"
+    },
+    {
+      "input": "Ala xa baraka!",
+      "expected": "ala xa baraka",
+      "description": "Multi-word phrase with punctuation"
+    },
+    {
+      "input": "  spaced   out  ",
+      "expected": "spaced out",
+      "description": "Extra whitespace normalization"
+    },
+    {
+      "input": "UPPERCASE TEXT",
+      "expected": "uppercase text",
+      "description": "Case normalization"
+    }
+  ],
+
+  "equivalence": [
+    {
+      "a": "N'na fafé",
+      "b": "na fafe"
+    },
+    {
+      "a": "Ina mindé?",
+      "b": "ina minde"
+    },
+    {
+      "a": "I khèré ma",
+      "b": "i khere ma"
+    },
+    {
+      "a": "Tanna",
+      "b": "tana"
+    },
+    {
+      "a": "faffeh",
+      "b": "fafe"
+    },
+    {
+      "a": "Ala xa baraka",
+      "b": "ala xa baraka"
+    },
+    {
+      "a": "M'ma woto",
+      "b": "ma woto"
+    }
+  ],
+
+  "generation": [
+    {
+      "input": "I kena! Tana mu a ra?",
+      "expected_context": "greeting_morning",
+      "description": "Morning greeting recognition"
+    },
+    {
+      "input": "I suba! Kisi yire?",
+      "expected_context": "greeting_evening",
+      "description": "Evening greeting recognition"
+    },
+    {
+      "input": "Ina minde?",
+      "expected_context": "location_question",
+      "description": "Location question detection"
+    },
+    {
+      "input": "Wakhati yiri ra?",
+      "expected_context": "time_question",
+      "description": "Time question detection"
+    },
+    {
+      "input": "Mangue gui songo yiri?",
+      "expected_context": "shopping_price",
+      "description": "Price question detection"
+    },
+    {
+      "input": "Ina no'mma fafe maintenant?",
+      "expected_context": "ability_question",
+      "description": "Ability question detection"
+    },
+    {
+      "input": "Siga marche yire. Riz rasa.",
+      "expected_context": "command_shopping",
+      "description": "Command recognition"
+    },
+    {
+      "input": "Fa be vite! Urgent gbo!",
+      "expected_context": "command_urgent",
+      "description": "Urgent command recognition"
+    },
+    {
+      "input": "I denbaya lafia?",
+      "expected_context": "greeting_family",
+      "description": "Family greeting recognition"
+    },
+    {
+      "input": "Furu gbo nun bi!",
+      "expected_context": "weather_rain",
+      "description": "Weather statement recognition"
+    },
+    {
+      "input": "Nun di ra?",
+      "expected_context": "time_day",
+      "description": "Day question recognition"
+    },
+    {
+      "input": "N'tan fafe m'ma woto yite.",
+      "expected_context": "transportation_ready",
+      "description": "Transportation statement"
+    }
+  ],
+
+  "responses": [
+    {
+      "input": "Ina minde?",
+      "context": "location_question",
+      "expected_response_contains": ["fafe", "minutes"]
+    },
+    {
+      "input": "I kena! Tana mu a ra?",
+      "context": "greeting_morning",
+      "expected_response_contains": ["tanante", "ala", "baraka"]
+    },
+    {
+      "input": "Wakhati yiri ra?",
+      "context": "time_question",
+      "expected_response_contains": ["wulu", "heures"]
+    },
+    {
+      "input": "Mangue gui songo yiri?",
+      "context": "shopping_price",
+      "expected_response_contains": ["mille", "frais"]
+    },
+    {
+      "input": "I denbaya lafia?",
+      "context": "greeting_family",
+      "expected_response_contains": ["lafia", "ala"]
+    },
+    {
+      "input": "Fa be vite! Urgent gbo!",
+      "context": "command_urgent",
+      "expected_response_contains": ["fafe", "khafe"]
+    },
+    {
+      "input": "Ina no'mma fafe maintenant?",
+      "context": "ability_question",
+      "expected_response_contains": ["nomma", "demain"]
+    },
+    {
+      "input": "Di ra ina dege?",
+      "context": "food_question",
+      "expected_response_contains": ["riz", "sauce"]
+    },
+    {
+      "input": "Ina wama?",
+      "context": "concern_check",
+      "expected_response_contains": ["wama", "merci"]
+    },
+    {
+      "input": "I baba minde?",
+      "context": "family_location",
+      "expected_response_contains": ["siga", "fafe"]
+    }
+  ],
+
+  "fuzzy": [
+    {
+      "input": "kemer",
+      "expected_base": "keme",
+      "threshold": 0.6,
+      "description": "Close misspelling"
+    },
+    {
+      "input": "faffe",
+      "should_match": true,
+      "threshold": 0.6,
+      "description": "Double consonant variant"
+    },
+    {
+      "input": "sousou",
+      "expected_base": "soussou",
+      "threshold": 0.6,
+      "description": "Common spelling variation"
+    },
+    {
+      "input": "xxxxxxxxx",
+      "should_match": false,
+      "threshold": 0.6,
+      "description": "Completely unknown input"
+    },
+    {
+      "input": "barak",
+      "should_match": true,
+      "threshold": 0.5,
+      "description": "Partial word match"
+    },
+    {
+      "input": "kheer",
+      "should_match": true,
+      "threshold": 0.5,
+      "description": "Vowel variation"
+    }
+  ],
+
+  "context_detection": [
+    {
+      "input": "I kena! Tana mu a ra?",
+      "expected_context": "greeting_morning"
+    },
+    {
+      "input": "I suba! Kisi yire?",
+      "expected_context": "greeting_evening"
+    },
+    {
+      "input": "Ina minde?",
+      "expected_context": "location_question"
+    },
+    {
+      "input": "Mangue gui songo yiri?",
+      "expected_context": "shopping_price"
+    },
+    {
+      "input": "Wakhati yiri ra?",
+      "expected_context": "time_question"
+    },
+    {
+      "input": "Fa be vite! Urgent gbo!",
+      "expected_context": "command_urgent"
+    },
+    {
+      "input": "M'ma woto m'ma fafe aujourd'hui.",
+      "expected_context": "transportation_problem"
+    },
+    {
+      "input": "Furu gbo nun bi!",
+      "expected_context": "weather_rain"
+    },
+    {
+      "input": "I denbaya lafia?",
+      "expected_context": "greeting_family"
+    },
+    {
+      "input": "Ala xa whon' kisi! A demain!",
+      "expected_context": "farewell_blessing"
+    }
+  ],
+
+  "sentence_types": [
+    {
+      "input": "Ina minde?",
+      "expected_type": "location_question",
+      "description": "Location question"
+    },
+    {
+      "input": "Poisson gui fra gbo?",
+      "expected_type": "yes_no_question",
+      "description": "Yes/no question"
+    },
+    {
+      "input": "Eske ina mma situation comprendfe?",
+      "expected_type": "formal_question",
+      "description": "Formal question with Eske"
+    },
+    {
+      "input": "Fa be vite!",
+      "expected_type": "imperative",
+      "description": "Simple imperative"
+    },
+    {
+      "input": "Siga marche yire",
+      "expected_type": "imperative",
+      "description": "Imperative with destination"
+    },
+    {
+      "input": "Ntan m'ma kolon",
+      "expected_type": "negative_statement",
+      "description": "Negative statement"
+    },
+    {
+      "input": "Ala xa baraka!",
+      "expected_type": "blessing",
+      "description": "Blessing"
+    },
+    {
+      "input": "I kena!",
+      "expected_type": "greeting",
+      "description": "Morning greeting"
+    }
+  ],
+
+  "mixed_french": [
+    {
+      "input": "M'ma woto m'ma marche aujourd'hui",
+      "description": "Soussou structure with French word",
+      "expected_words": ["ma", "woto", "ma", "marche", "aujourdhui"]
+    },
+    {
+      "input": "Taxi songo yiri Conakry sigafe?",
+      "description": "Mixed with French city name and word",
+      "expected_words": ["taxi", "songo", "yiri", "conakry", "sigafe"]
+    },
+    {
+      "input": "Eh, travail gbo! Mais ca va.",
+      "description": "French interjections and words",
+      "expected_words": ["eh", "travail", "gbo", "mais", "ca", "va"]
+    },
+    {
+      "input": "Restaurant gui pres?",
+      "description": "French noun with Soussou structure",
+      "expected_words": ["restaurant", "gui", "pres"]
+    }
+  ],
+
+  "edge_cases": [
+    {
+      "input": "",
+      "expected": "",
+      "description": "Empty string"
+    },
+    {
+      "input": "   ",
+      "expected": "",
+      "description": "Whitespace only"
+    },
+    {
+      "input": "a",
+      "expected": "a",
+      "description": "Single character"
+    },
+    {
+      "input": "123",
+      "expected": "123",
+      "description": "Numbers"
+    },
+    {
+      "input": "!@#$%",
+      "expected": "",
+      "description": "Special characters only"
+    },
+    {
+      "input": "word-with-hyphens",
+      "expected": "wordwithyphen",
+      "description": "Hyphens handling (removes and trailing)"
+    }
+  ],
+
+  "conversation_flows": [
+    {
+      "name": "Morning greeting exchange",
+      "turns": [
+        {
+          "speaker": "A",
+          "input": "I kena! Tana mu a ra?"
+        },
+        {
+          "speaker": "B",
+          "expected_contains": ["tanante", "ala"]
+        },
+        {
+          "speaker": "A",
+          "input": "I denbaya lafia?"
+        },
+        {
+          "speaker": "B",
+          "expected_contains": ["lafia"]
+        }
+      ]
+    },
+    {
+      "name": "Shopping negotiation",
+      "turns": [
+        {
+          "speaker": "A",
+          "input": "Mangue gui songo yiri?"
+        },
+        {
+          "speaker": "B",
+          "expected_contains": ["mille"]
+        },
+        {
+          "speaker": "A",
+          "input": "Poisson gui fra gbo?"
+        },
+        {
+          "speaker": "B",
+          "expected_contains": ["frais", "nun"]
+        }
+      ]
+    },
+    {
+      "name": "Location inquiry",
+      "turns": [
+        {
+          "speaker": "A",
+          "input": "Ina minde?"
+        },
+        {
+          "speaker": "B",
+          "expected_contains": ["fafe", "minutes"]
+        },
+        {
+          "speaker": "A",
+          "input": "Ina no'mma fafe maintenant?"
+        },
+        {
+          "speaker": "B",
+          "expected_contains": ["demain"]
+        }
+      ]
+    }
+  ]
+}

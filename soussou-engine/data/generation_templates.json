@@ -1,0 +1,578 @@
+{
+  "version": "1.0",
+  "description": "Sentence generation templates for Soussou language",
+  "generated_date": "2025-11-20",
+
+  "templates": {
+    "greeting_morning": {
+      "pattern": "I kena! {FOLLOW_UP}",
+      "slots": {
+        "FOLLOW_UP": ["Tana mu a ra?", "Ina lafia?", "Kisi?"]
+      },
+      "examples": ["I kena! Tana mu a ra?", "I kena! Ina lafia?"],
+      "context": "morning_greeting",
+      "french_equivalent": "Bonjour! Comment ca va?"
+    },
+    "greeting_evening": {
+      "pattern": "I suba! {FOLLOW_UP}",
+      "slots": {
+        "FOLLOW_UP": ["Kisi yire?", "Tana mu a ra?", "Ina lafia?"]
+      },
+      "examples": ["I suba! Kisi yire?"],
+      "context": "evening_greeting",
+      "french_equivalent": "Bonsoir! Ca va la-bas?"
+    },
+    "greeting_response": {
+      "pattern": "{RESPONSE}, {BLESSING}! {RECIPROCAL}",
+      "slots": {
+        "RESPONSE": ["Tanante", "Kisi tan", "Lafia"],
+        "BLESSING": ["Ala xa baraka", "Barka Ala xa"],
+        "RECIPROCAL": ["I fan?", "Itan ngo?", "Itan go?"]
+      },
+      "examples": ["Tanante, Ala xa baraka! I fan?", "Kisi tan. Barka Ala xa."],
+      "context": "greeting_response",
+      "french_equivalent": "Bien, que Dieu benisse! Et toi?"
+    },
+    "family_wellness": {
+      "pattern": "{POSSESSIVE} {FAMILY_MEMBER} lafia?",
+      "slots": {
+        "POSSESSIVE": ["I", "Wo", "Whon' kha"],
+        "FAMILY_MEMBER": ["baba", "na", "tara", "boke", "tonton", "denbaya", "soeur", "frere"]
+      },
+      "examples": ["I baba lafia?", "I tara lafia?", "I denbaya lafia?", "I boke lafia?"],
+      "context": "family_health_check",
+      "french_equivalent": "Ton [membre] va bien?"
+    },
+    "wellness_response": {
+      "pattern": "{CONFIRMATION}, {BLESSING}! {EXTRA}",
+      "slots": {
+        "CONFIRMATION": ["A lafia", "Awa, a lafia", "Etan birin lafia"],
+        "BLESSING": ["Ala xa baraka", "Merci"],
+        "EXTRA": ["", "A i sonyi salam."]
+      },
+      "examples": ["A lafia, Ala xa baraka!", "Etan birin lafia, Ala xa baraka!"],
+      "context": "wellness_response",
+      "french_equivalent": "Il/elle va bien, grace a Dieu!"
+    },
+    "location_question": {
+      "pattern": "{SUBJECT} minde?",
+      "slots": {
+        "SUBJECT": ["Ina", "Ana", "I baba", "I na", "I tara", "M'ma na"]
+      },
+      "examples": ["Ina minde?", "I baba minde?", "Ana minde?"],
+      "context": "asking_location",
+      "french_equivalent": "Ou est [sujet]?"
+    },
+    "movement_statement": {
+      "pattern": "{SUBJECT} fafe",
+      "slots": {
+        "SUBJECT": ["N'na", "Ina", "Ana", "Whon'", "Etan", "Moukhou"]
+      },
+      "examples": ["N'na fafe", "Ina fafe", "Ana fafe", "Whon' fafe", "Etan fafe"],
+      "context": "stating_movement",
+      "french_equivalent": "[sujet] arrive"
+    },
+    "movement_with_time": {
+      "pattern": "{SUBJECT} fafe. {TIME}.",
+      "slots": {
+        "SUBJECT": ["N'na", "Ina", "Ana", "Whon'"],
+        "TIME": ["Cinq minutes", "Dix minutes", "Bientot", "Maintenant"]
+      },
+      "examples": ["N'na fafe. Cinq minutes.", "Ana fafe bientot."],
+      "context": "movement_with_timing",
+      "french_equivalent": "[sujet] arrive. [temps]."
+    },
+    "negation_know": {
+      "pattern": "{SUBJECT} m'ma kolon {OBJECT}",
+      "slots": {
+        "SUBJECT": ["Ntan", "Ina", "Ana", "Etan", "Whontan"],
+        "OBJECT": ["", "gui yire", "gui khafe"]
+      },
+      "examples": ["Ntan m'ma kolon", "Ntan m'ma kolon gui yire", "Etan m'ma kolon"],
+      "context": "not_knowing",
+      "french_equivalent": "[sujet] ne connait pas [objet]"
+    },
+    "negation_come": {
+      "pattern": "{SUBJECT} m'ma fafe {REASON}",
+      "slots": {
+        "SUBJECT": ["Ina", "Ana", "Etan", "Moukhou", "M'ma woto"],
+        "REASON": ["", "aujourd'hui", ". A malade.", ". Travail gbo."]
+      },
+      "examples": ["Ina m'ma fafe", "Ana m'ma fafe. A malade.", "M'ma woto m'ma fafe aujourd'hui."],
+      "context": "not_coming",
+      "french_equivalent": "[sujet] ne vient pas [raison]"
+    },
+    "negation_ability": {
+      "pattern": "{SUBJECT} m'ma no'mma. {ALTERNATIVE}",
+      "slots": {
+        "SUBJECT": ["Ntan", "Ana", "Etan"],
+        "ALTERNATIVE": ["Demain?", "Demain, d'accord?", "Prochaine fois."]
+      },
+      "examples": ["Ntan m'ma no'mma. Demain, d'accord?"],
+      "context": "inability",
+      "french_equivalent": "[sujet] ne peut pas. [alternative]"
+    },
+    "possession_state": {
+      "pattern": "{POSSESSIVE} {NOUN} {STATE}",
+      "slots": {
+        "POSSESSIVE": ["M'ma", "Akha", "Ikha", "Whonma", "Ekha", "Etan kha"],
+        "NOUN": ["woto", "telephone", "avion", "bateau", "maison"],
+        "STATE": ["yite", "fafe", "m'ma fafe", "pret", "m'ma marche"]
+      },
+      "examples": ["M'ma woto yite", "Akha woto fafe", "Etan kha avion yite?"],
+      "context": "possession_status",
+      "french_equivalent": "[possessif] [nom] [etat]"
+    },
+    "price_question": {
+      "pattern": "{NOUN} gui songo {UNIT}?",
+      "slots": {
+        "NOUN": ["Mangue", "Poisson", "Telephone", "Taxi", "Poulet", "Riz", "Huile palme", "Chemise", "Papaye", "Oignon"],
+        "UNIT": ["", "yiri", "kilo"]
+      },
+      "examples": ["Mangue gui songo yiri?", "Telephone gui songo?", "Oignon gui songo kilo?"],
+      "context": "asking_price",
+      "french_equivalent": "C'est combien [nom]?"
+    },
+    "price_response": {
+      "pattern": "{AMOUNT}. {QUALITY}",
+      "slots": {
+        "AMOUNT": ["Dix mille tan", "Vingt mille", "Cinquante mille", "Cinq cent mille", "Trente mille", "Quarante mille"],
+        "QUALITY": ["Frais gbo!", "Qualite gbo!", "Bon gbo!", "Gros gbo!", "Coton pur!"]
+      },
+      "examples": ["Dix mille tan. Frais gbo!", "Cinquante mille. Qualite gbo!"],
+      "context": "giving_price",
+      "french_equivalent": "[montant]. [qualite]"
+    },
+    "quality_question": {
+      "pattern": "{NOUN} gui {QUALITY}?",
+      "slots": {
+        "NOUN": ["Poisson", "Viande", "Cafe", "Piment", "Banane", "Kira"],
+        "QUALITY": ["fra gbo", "fra", "fort gbo", "ten gbo", "mur", "longue gbo", "bon gbo"]
+      },
+      "examples": ["Poisson gui fra gbo?", "Piment gui ten gbo?", "Kira gui longue gbo?"],
+      "context": "asking_quality",
+      "french_equivalent": "[nom] est [qualite]?"
+    },
+    "time_question": {
+      "pattern": "Wakhati yiri ra?",
+      "slots": {},
+      "examples": ["Wakhati yiri ra?"],
+      "context": "asking_time",
+      "french_equivalent": "Quelle heure est-il?"
+    },
+    "when_question": {
+      "pattern": "{SUBJECT} {ACTION} tuma yiri?",
+      "slots": {
+        "SUBJECT": ["M'ma soeur", "Ana", "Etan", "Whon' kha meeting"],
+        "ACTION": ["fafe", "malade", "commence"]
+      },
+      "examples": ["M'ma soeur fafe tuma yiri?", "Ana malade tuma yiri?"],
+      "context": "asking_when",
+      "french_equivalent": "[sujet] [action] quand?"
+    },
+    "schedule_question": {
+      "pattern": "{SUBJECT} {ACTION} wakhati yiri?",
+      "slots": {
+        "SUBJECT": ["Bus sigafe Kamsar", "Whon' kha meeting commence", "Whonma bureau ferme"],
+        "ACTION": [""]
+      },
+      "examples": ["Whon' kha meeting commence wakhati yiri?", "Whonma bureau ferme wakhati yiri?"],
+      "context": "asking_schedule",
+      "french_equivalent": "[sujet] [action] a quelle heure?"
+    },
+    "what_question": {
+      "pattern": "Di ra {SUBJECT} {VERB}?",
+      "slots": {
+        "SUBJECT": ["ina", "i"],
+        "VERB": ["dege", "fen", "sigafe demain"]
+      },
+      "examples": ["Di ra ina dege?", "I di ra fen?", "I di ra sigafe demain?"],
+      "context": "asking_what",
+      "french_equivalent": "Qu'est-ce que [sujet] [verbe]?"
+    },
+    "what_about": {
+      "pattern": "{PRONOUN} {QUESTION_WORD}?",
+      "slots": {
+        "PRONOUN": ["Itan", "Atan", "Etan"],
+        "QUESTION_WORD": ["ngo", "go"]
+      },
+      "examples": ["Itan ngo?", "Atan go?"],
+      "context": "asking_about_others",
+      "french_equivalent": "Et [pronom]?"
+    },
+    "ability_question": {
+      "pattern": "{PREFIX}{SUBJECT} no'mma {ACTION}?",
+      "slots": {
+        "PREFIX": ["", "Eske "],
+        "SUBJECT": ["Ina", "I", "Ana"],
+        "ACTION": ["fafe maintenant", "guira"]
+      },
+      "examples": ["Ina no'mma fafe maintenant?", "Eske i no'mma guira?"],
+      "context": "asking_ability",
+      "french_equivalent": "[sujet] peut [action]?"
+    },
+    "imperative_simple": {
+      "pattern": "{VERB}",
+      "slots": {
+        "VERB": ["Fa", "Siga", "Dokho", "Alou", "Mmeme", "T'ti", "Kelli"]
+      },
+      "examples": ["Fa", "Siga", "Dokho", "Alou"],
+      "context": "simple_command",
+      "french_equivalent": "[verbe]!"
+    },
+    "imperative_location": {
+      "pattern": "{VERB} {LOCATION}",
+      "slots": {
+        "VERB": ["Fa", "Siga", "Dokho", "Mmeme", "Kelli"],
+        "LOCATION": ["be", "yire", "bangui koui"]
+      },
+      "examples": ["Fa be", "Siga yire", "Dokho be", "Mmeme be", "Fa bangui koui"],
+      "context": "command_with_location",
+      "french_equivalent": "[verbe] [lieu]!"
+    },
+    "imperative_urgent": {
+      "pattern": "{COMMAND}! {URGENCY}!",
+      "slots": {
+        "COMMAND": ["Fa be vite", "Fa be", "N' mato"],
+        "URGENCY": ["Urgent gbo", "Important", "Danger"]
+      },
+      "examples": ["Fa be vite! Urgent gbo!", "N' mato! Gui important."],
+      "context": "urgent_command",
+      "french_equivalent": "[commande]! [urgence]!"
+    },
+    "imperative_object": {
+      "pattern": "{OBJECT} {VERB}",
+      "slots": {
+        "OBJECT": ["Gui", "A", "N'", "Etan"],
+        "VERB": ["sonyi", "mato", "khili", "fala"]
+      },
+      "examples": ["Gui sonyi", "A mato", "N'khili", "N'mato"],
+      "context": "command_with_object",
+      "french_equivalent": "[objet] [verbe]!"
+    },
+    "imperative_destination": {
+      "pattern": "{VERB} {PRONOUN} yire",
+      "slots": {
+        "VERB": ["Siga", "Fa"],
+        "PRONOUN": ["A", "etan", "marche"]
+      },
+      "examples": ["Siga A yire", "Fa A yire", "Siga marche yire"],
+      "context": "command_to_destination",
+      "french_equivalent": "[verbe] chez [pronom]!"
+    },
+    "imperative_follow": {
+      "pattern": "Fa fokhora. {PURPOSE}",
+      "slots": {
+        "PURPOSE": ["N'na i rafa kira.", ""]
+      },
+      "examples": ["Fa fokhora", "Fa fokhora. N'na i rafa kira."],
+      "context": "follow_command",
+      "french_equivalent": "Suis-moi. [but]"
+    },
+    "weather_statement": {
+      "pattern": "{WEATHER} {INTENSITY} nun bi!",
+      "slots": {
+        "WEATHER": ["Furu", "Soleil", "Vent", "Eclaire"],
+        "INTENSITY": ["gbo", ""]
+      },
+      "examples": ["Furu gbo nun bi!", "Soleil gbo nun bi!", "Vent gbo!"],
+      "context": "weather_observation",
+      "french_equivalent": "[meteo] [intensite] aujourd'hui!"
+    },
+    "weather_cold": {
+      "pattern": "Nun bi froid gbo. {CONSEQUENCE}",
+      "slots": {
+        "CONSEQUENCE": ["Hiver fafe.", "Veste rafa."]
+      },
+      "examples": ["Nun bi froid gbo. Hiver fafe."],
+      "context": "cold_weather",
+      "french_equivalent": "Aujourd'hui il fait tres froid. [consequence]"
+    },
+    "weather_rain_coming": {
+      "pattern": "{SIGN}! Furu fafe.",
+      "slots": {
+        "SIGN": ["Vent gbo", "Nuage gbo", "Eclaire gbo"]
+      },
+      "examples": ["Vent gbo! Furu fafe.", "Eclaire gbo! Tonnerre fafe!"],
+      "context": "rain_warning",
+      "french_equivalent": "[signe]! La pluie arrive."
+    },
+    "directions_question": {
+      "pattern": "{PLACE} gui kira minde?",
+      "slots": {
+        "PLACE": ["Hopital", "Ecole", "Marche", "Pharmacie", "Restaurant"]
+      },
+      "examples": ["Hopital gui kira minde?"],
+      "context": "asking_directions",
+      "french_equivalent": "Ou est le chemin de [lieu]?"
+    },
+    "directions_nearby": {
+      "pattern": "{PLACE} gui pres?",
+      "slots": {
+        "PLACE": ["Restaurant", "Pharmacie", "Hopital", "Ecole", "Marche"]
+      },
+      "examples": ["Restaurant gui pres?", "Pharmacie gui pres?"],
+      "context": "asking_nearby",
+      "french_equivalent": "Il y a un [lieu] pres d'ici?"
+    },
+    "directions_giving": {
+      "pattern": "Siga {DIRECTION}, {THEN} {NEXT}. {LANDMARK}",
+      "slots": {
+        "DIRECTION": ["tout droit", "droite", "gauche"],
+        "THEN": ["apres", "kirin kole"],
+        "NEXT": ["gauche", "droite", "tout droit"],
+        "LANDMARK": ["Ecole yire.", "Hopital yire.", "A yire."]
+      },
+      "examples": ["Siga tout droit, kirin kole. A gauche apres.", "Siga droite, apres gauche. Ecole yire."],
+      "context": "giving_directions",
+      "french_equivalent": "Va [direction], puis [suivant]. [repere]"
+    },
+    "understanding_question": {
+      "pattern": "Eske ina {POSSESSIVE} situation comprendfe?",
+      "slots": {
+        "POSSESSIVE": ["mma", "akha", "ekha"]
+      },
+      "examples": ["Eske ina mma situation comprendfe?"],
+      "context": "asking_understanding",
+      "french_equivalent": "Est-ce que tu comprends [possessif] situation?"
+    },
+    "understanding_statement": {
+      "pattern": "{SUBJECT} {OBJECT} khafe comprendfe gbo.",
+      "slots": {
+        "SUBJECT": ["Ntan", "Etan"],
+        "OBJECT": ["itan", "akha", "whontan"]
+      },
+      "examples": ["Ntan itan khafe comprendfe gbo."],
+      "context": "stating_understanding",
+      "french_equivalent": "[sujet] comprend beaucoup [objet] situation."
+    },
+    "not_understand": {
+      "pattern": "Ntan m'ma comprendfe. {REQUEST}",
+      "slots": {
+        "REQUEST": ["Repete!", "Lentement!", "Encore!"]
+      },
+      "examples": ["Ntan m'ma comprendfe. Repete!"],
+      "context": "not_understanding",
+      "french_equivalent": "Je ne comprends pas. [demande]"
+    },
+    "blessing": {
+      "pattern": "Ala xa {BLESSING}!",
+      "slots": {
+        "BLESSING": ["baraka", "a kisi", "whon' kisi"]
+      },
+      "examples": ["Ala xa baraka!", "Ala xa a kisi!", "Ala xa whon' kisi!"],
+      "context": "blessing",
+      "french_equivalent": "Que Dieu [benisse/guerisse/protege]!"
+    },
+    "farewell": {
+      "pattern": "{BLESSING}! A {TIME}!",
+      "slots": {
+        "BLESSING": ["Ala xa whon' kisi", "Kisi", "Salam"],
+        "TIME": ["demain", "bientot", "prochaine fois"]
+      },
+      "examples": ["Ala xa whon' kisi! A demain!"],
+      "context": "farewell",
+      "french_equivalent": "[benediction]! A [temps]!"
+    },
+    "thanks": {
+      "pattern": "I balake{INTENSITY}! {COMMENT}",
+      "slots": {
+        "INTENSITY": ["", " gbo"],
+        "COMMENT": ["Gentil.", "Coeur propre.", ""]
+      },
+      "examples": ["I balake!", "I balake gbo! Gentil.", "I balake gbo! Coeur propre."],
+      "context": "thanking",
+      "french_equivalent": "Merci [intensite]! [commentaire]"
+    },
+    "apology": {
+      "pattern": "Pardon! {REASON}",
+      "slots": {
+        "REASON": ["Telephone m'ma marche.", "Retard.", "N'ma kolon."]
+      },
+      "examples": ["Pardon! Telephone m'ma marche."],
+      "context": "apologizing",
+      "french_equivalent": "Pardon! [raison]"
+    },
+    "agreement": {
+      "pattern": "Awa, {STATEMENT}. {REASSURANCE}",
+      "slots": {
+        "STATEMENT": ["ntan kolon", "n'na fafe", "a lafia"],
+        "REASSURANCE": ["Gui m'ma probleme.", "Demain!", "Merci."]
+      },
+      "examples": ["Awa, ntan kolon. Gui m'ma probleme."],
+      "context": "agreeing",
+      "french_equivalent": "Oui, [declaration]. [reassurance]"
+    },
+    "suggestion": {
+      "pattern": "Whon' sa {ACTION}",
+      "slots": {
+        "ACTION": ["etan fala", "siga bangui", "fafe ensemble"]
+      },
+      "examples": ["Whon' sa etan fala", "Whon' sa siga bangui"],
+      "context": "suggesting",
+      "french_equivalent": "On devrait [action]"
+    },
+    "checking_in": {
+      "pattern": "{SUBJECT} khafe {INTENSITY}?",
+      "slots": {
+        "SUBJECT": ["Itan", "Atan", "Ekha"],
+        "INTENSITY": ["gbo", ""]
+      },
+      "examples": ["Itan khafe gbo?", "Atan khafe?"],
+      "context": "checking_situation",
+      "french_equivalent": "[sujet] a beaucoup de soucis?"
+    },
+    "situation_response": {
+      "pattern": "Eh, {ISSUE}! Mais {RESOLUTION}.",
+      "slots": {
+        "ISSUE": ["travail gbo", "khafe gbo", "probleme gbo"],
+        "RESOLUTION": ["ca va", "a lafia", "on gere"]
+      },
+      "examples": ["Eh, travail gbo! Mais ca va."],
+      "context": "describing_situation",
+      "french_equivalent": "Eh, [probleme]! Mais [resolution]."
+    },
+    "inside_location": {
+      "pattern": "A {PLACE} koui. {ACTION}",
+      "slots": {
+        "PLACE": ["cuisine", "bangui", "woto"],
+        "ACTION": ["A dege rafe.", "A dokho.", ""]
+      },
+      "examples": ["A cuisine koui. A dege rafe."],
+      "context": "location_inside",
+      "french_equivalent": "Il/elle est dans [lieu]. [action]"
+    },
+    "waiting_instruction": {
+      "pattern": "Mmeme {LOCATION}. {FOLLOW_UP}",
+      "slots": {
+        "LOCATION": ["be", ""],
+        "FOLLOW_UP": ["N'na i rafa.", "N'na fafe.", "Cinq minutes."]
+      },
+      "examples": ["Mmeme be. N'na i rafa.", "Mmeme. N'na fafe."],
+      "context": "instructing_wait",
+      "french_equivalent": "Attends [lieu]. [suite]"
+    },
+    "call_instruction": {
+      "pattern": "N'khili {CONDITION}!",
+      "slots": {
+        "CONDITION": ["quand ina yitema", "demain", "maintenant"]
+      },
+      "examples": ["N'khili quand ina yitema!"],
+      "context": "instructing_call",
+      "french_equivalent": "Appelle-moi [condition]!"
+    },
+    "reason_question": {
+      "pattern": "Khafe mu ra?",
+      "slots": {},
+      "examples": ["Khafe mu ra?"],
+      "context": "asking_reason",
+      "french_equivalent": "Pourquoi? / C'est quoi le probleme?"
+    },
+    "hospitality": {
+      "pattern": "Dokho be. {OFFER}",
+      "slots": {
+        "OFFER": ["Te min.", "Eau min.", "Dege."]
+      },
+      "examples": ["Dokho be. Te min."],
+      "context": "hospitality",
+      "french_equivalent": "Assieds-toi ici. [offre]"
+    },
+    "transportation_taxi": {
+      "pattern": "Taxi songo yiri {DESTINATION} sigafe?",
+      "slots": {
+        "DESTINATION": ["Conakry", "Kindia", "Kamsar", "marche"]
+      },
+      "examples": ["Taxi songo yiri Conakry sigafe?"],
+      "context": "taxi_price",
+      "french_equivalent": "C'est combien le taxi pour [destination]?"
+    },
+    "language_question": {
+      "pattern": "I sosokhoui kolon?",
+      "slots": {},
+      "examples": ["I sosokhoui kolon?"],
+      "context": "asking_language",
+      "french_equivalent": "Tu connais le Soussou?"
+    },
+    "language_response": {
+      "pattern": "Ntan kolon {LEVEL}. {ACTION}",
+      "slots": {
+        "LEVEL": ["un peu", "gbo", ""],
+        "ACTION": ["N'na apprendre.", ""]
+      },
+      "examples": ["Ntan kolon un peu. N'na apprendre."],
+      "context": "language_skill",
+      "french_equivalent": "Je connais [niveau]. [action]"
+    },
+    "children_question": {
+      "pattern": "I dimedi yiri?",
+      "slots": {},
+      "examples": ["I dimedi yiri?"],
+      "context": "asking_children",
+      "french_equivalent": "Tu as combien d'enfants?"
+    },
+    "children_response": {
+      "pattern": "{NUMBER}. {DETAILS}",
+      "slots": {
+        "NUMBER": ["Keren", "Firin", "Saxan", "Naani", "Suli"],
+        "DETAILS": ["Firin xemma, keren ginema.", "Birin xemma.", "Birin ginema."]
+      },
+      "examples": ["Saxan. Firin xemma, keren ginema."],
+      "context": "children_count",
+      "french_equivalent": "[nombre]. [details]"
+    },
+    "time_statement": {
+      "pattern": "{TIME_PERIOD}. {CONSEQUENCE}",
+      "slots": {
+        "TIME_PERIOD": ["Midi", "Nuit yite", "Matin"],
+        "CONSEQUENCE": ["Dege wakhati.", "Whon' sa siga bangui.", "Travail wakhati."]
+      },
+      "examples": ["Midi. Dege wakhati.", "Nuit yite. Whon' sa siga bangui."],
+      "context": "time_announcement",
+      "french_equivalent": "[periode]. [consequence]"
+    }
+  },
+
+  "response_templates": {
+    "greeting_response": {
+      "triggers": ["I kena", "I suba", "Tana mu a ra"],
+      "templates": ["greeting_response"]
+    },
+    "location_response": {
+      "triggers": ["minde"],
+      "templates": ["movement_with_time", "inside_location"]
+    },
+    "price_response": {
+      "triggers": ["songo yiri", "songo"],
+      "templates": ["price_response"]
+    },
+    "wellness_response": {
+      "triggers": ["lafia"],
+      "templates": ["wellness_response"]
+    },
+    "reason_response": {
+      "triggers": ["Khafe mu ra", "mu ra"],
+      "templates": ["situation_response", "apology"]
+    },
+    "ability_response": {
+      "triggers": ["no'mma"],
+      "templates": ["agreement", "negation_ability"]
+    }
+  },
+
+  "sentence_type_mapping": {
+    "greeting": ["greeting_morning", "greeting_evening", "greeting_response", "family_wellness", "wellness_response"],
+    "question": ["location_question", "price_question", "quality_question", "time_question", "when_question", "what_question", "what_about", "ability_question", "directions_question", "directions_nearby", "understanding_question", "reason_question", "language_question", "children_question", "schedule_question"],
+    "statement": ["movement_statement", "movement_with_time", "negation_know", "negation_come", "negation_ability", "possession_state", "weather_statement", "weather_cold", "weather_rain_coming", "understanding_statement", "not_understand", "situation_response", "inside_location", "time_statement", "language_response", "children_response"],
+    "command": ["imperative_simple", "imperative_location", "imperative_urgent", "imperative_object", "imperative_destination", "imperative_follow", "waiting_instruction", "call_instruction", "hospitality"],
+    "response": ["greeting_response", "wellness_response", "price_response", "agreement", "apology", "thanks"],
+    "blessing": ["blessing", "farewell"],
+    "navigation": ["directions_question", "directions_nearby", "directions_giving"]
+  },
+
+  "metadata": {
+    "total_templates": 52,
+    "slot_types": ["SUBJECT", "POSSESSIVE", "NOUN", "VERB", "LOCATION", "TIME", "INTENSITY", "QUALITY", "AMOUNT", "FAMILY_MEMBER", "PLACE", "DIRECTION", "BLESSING", "REASON", "ACTION"],
+    "based_on_examples": 100,
+    "language_pair": "Soussou-French"
+  }
+}

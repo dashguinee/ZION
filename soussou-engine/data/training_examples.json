@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "ex_001",
+    "soussou": "I kena! Tana mu a ra?",
+    "english": "Good morning! How are you?",
+    "french": "Bonjour! Comment ca va?",
+    "context": "greeting_morning",
+    "response": {
+      "soussou": "Tanante, Ala xa baraka! I fan?",
+      "english": "Fine, God bless! And you?",
+      "french": "Bien, que Dieu benisse! Et toi?"
+    }
+  },
+  {
+    "id": "ex_002",
+    "soussou": "Ina minde?",
+    "english": "Where are you?",
+    "french": "Tu es ou?",
+    "context": "location_question",
+    "response": {
+      "soussou": "N'na fafe. Cinq minutes.",
+      "english": "I'm coming. Five minutes.",
+      "french": "J'arrive. Cinq minutes."
+    }
+  },
+  {
+    "id": "ex_003",
+    "soussou": "M'ma woto m'ma fafe aujourd'hui.",
+    "english": "My car is not coming today.",
+    "french": "Ma voiture ne vient pas aujourd'hui.",
+    "context": "transportation_problem",
+    "response": {
+      "soussou": "Khafe mu ra? Taxi tan?",
+      "english": "Why? Taxi only?",
+      "french": "Pourquoi? Juste taxi alors?"
+    }
+  },
+  {
+    "id": "ex_004",
+    "soussou": "Itan khafe gbo?",
+    "english": "You have a lot going on? / How's your situation?",
+    "french": "Tu as beaucoup de soucis?",
+    "context": "checking_in",
+    "response": {
+      "soussou": "Eh, travail gbo! Mais ca va.",
+      "english": "Yeah, lots of work! But it's okay.",
+      "french": "Oui, beaucoup de travail! Mais ca va."
+    }
+  },
+  {
+    "id": "ex_005",
+    "soussou": "I suba! Kisi yire?",
+    "english": "Good evening! Peace there?",
+    "french": "Bonsoir! Ca va la-bas?",
+    "context": "greeting_evening",
+    "response": {
+      "soussou": "Kisi tan. Barka Ala xa.",
+      "english": "Just peace. Thanks to God.",
+      "french": "Que la paix. Grace a Dieu."
+    }
+  },
+  {
+    "id": "ex_006",
+    "soussou": "Ntan m'ma kolon gui yire.",
+    "english": "I don't know that place.",
+    "french": "Je ne connais pas cet endroit.",
+    "context": "directions_unknown",
+    "response": {
+      "soussou": "Mmeme be. N'na i rafa.",
+      "english": "Wait here. I'll come get you.",
+      "french": "Attends ici. Je viens te chercher."
+    }
+  },
+  {
+    "id": "ex_007",
+    "soussou": "Mangue gui songo yiri?",
+    "english": "How much are these mangoes?",
+    "french": "C'est combien ces mangues?",
+    "context": "shopping_price",
+    "response": {
+      "soussou": "Dix mille tan. Frais gbo!",
+      "english": "Just ten thousand. Very fresh!",
+      "french": "Dix mille seulement. Tres frais!"
+    }
+  },
+  {
+    "id": "ex_008",
+    "soussou": "I baba minde?",
+    "english": "Where is your father?",
+    "french": "Ou est ton pere?",
+    "context": "family_location",
+    "response": {
+      "soussou": "A siga mosquee. A fafe bientot.",
+      "english": "He went to the mosque. He's coming soon.",
+      "french": "Il est parti a la mosquee. Il arrive bientot."
+    }
+  },
+  {
+    "id": "ex_009",
+    "soussou": "Furu gbo nun bi!",
+    "english": "It's raining a lot today!",
+    "french": "Il pleut beaucoup aujourd'hui!",
+    "context": "weather_rain",
+    "response": {
+      "soussou": "Awa. Parapluie mu n'bolo.",
+      "english": "Yes. I don't have an umbrella.",
+      "french": "Oui. Je n'ai pas de parapluie."
+    }
+  },
+  {
+    "id": "ex_010",
+    "soussou": "Wakhati yiri ra?",
+    "english": "What time is it?",
+    "french": "Quelle heure est-il?",
+    "context": "time_question",
+    "response": {
+      "soussou": "Wulu sakhé firin. Deux heures.",
+      "english": "Sun passed two. Two o'clock.",
+      "french": "Le soleil a passe deux. Deux heures."
+    }
+  },
+  {
+    "id": "ex_011",
+    "soussou": "N'na fafe, itan go?",
+    "english": "I'm coming, what about you?",
+    "french": "J'arrive, et toi?",
+    "context": "movement_question",
+    "response": {
+      "soussou": "N'tan fafe. Whon' fafe ensemble!",
+      "english": "Me too I'm coming. We're coming together!",
+      "french": "Moi aussi j'arrive. On vient ensemble!"
+    }
+  },
+  {
+    "id": "ex_012",
+    "soussou": "Ina no'mma fafe maintenant?",
+    "english": "Can you come now?",
+    "french": "Tu peux venir maintenant?",
+    "context": "ability_question",
+    "response": {
+      "soussou": "Ntan m'ma no'mma. Demain, d'accord?",
+      "english": "I can't. Tomorrow, okay?",
+      "french": "Je ne peux pas. Demain, d'accord?"
+    }
+  },
+  {
+    "id": "ex_013",
+    "soussou": "Siga marche yire. Riz rasa.",
+    "english": "Go to the market. Buy rice.",
+    "french": "Va au marche. Achete du riz.",
+    "context": "command_shopping",
+    "response": {
+      "soussou": "Awa. Kilo yiri n'sa rasa?",
+      "english": "Okay. How many kilos should I buy?",
+      "french": "D'accord. Combien de kilos j'achete?"
+    }
+  },
+  {
+    "id": "ex_014",
+    "soussou": "I na minde? N'na i fen gbo!",
+    "english": "Where are you? I've been looking for you a lot!",
+    "french": "Tu es ou? Je te cherche beaucoup!",
+    "context": "searching_person",
+    "response": {
+      "soussou": "Pardon! Telephone m'ma marche.",
+      "english": "Sorry! My phone wasn't working.",
+      "french": "Pardon! Mon telephone ne marchait pas."
+    }
+  },
+  {
+    "id": "ex_015",
+    "soussou": "Nun di ra?",
+    "english": "What day is it?",
+    "french": "Quel jour on est?",
+    "context": "time_day",
+    "response": {
+      "soussou": "Araba. Demain jeudi.",
+      "english": "Wednesday. Tomorrow is Thursday.",
+      "french": "Mercredi. Demain jeudi."
+    }
+  },
+  {
+    "id": "ex_016",
+    "soussou": "M'ma na minde?",
+    "english": "Where is my mom?",
+    "french": "Ou est ma mere?",
+    "context": "family_location",
+    "response": {
+      "soussou": "A cuisine koui. A dege rafe.",
+      "english": "She's in the kitchen. She's cooking.",
+      "french": "Elle est dans la cuisine. Elle prepare a manger."
+    }
+  },
+  {
+    "id": "ex_017",
+    "soussou": "Fa be vite! Urgent gbo!",
+    "english": "Come here quickly! Very urgent!",
+    "french": "Viens ici vite! Tres urgent!",
+    "context": "command_urgent",
+    "response": {
+      "soussou": "N'na fafe! Khafe mu ra?",
+      "english": "I'm coming! What's the problem?",
+      "french": "J'arrive! Qu'est-ce qui se passe?"
+    }
+  },
+  {
+    "id": "ex_018",
+    "soussou": "Taxi songo yiri Conakry sigafe?",
+    "english": "How much is a taxi to go to Conakry?",
+    "french": "C'est combien le taxi pour aller a Conakry?",
+    "context": "transportation_price",
+    "response": {
+      "soussou": "Cinquante mille. Mais ina negociefé!",
+      "english": "Fifty thousand. But you can negotiate!",
+      "french": "Cinquante mille. Mais tu peux negocier!"
+    }
+  },
+  {
+    "id": "ex_019",
+    "soussou": "Soleil gbo nun bi. Chaleur!",
+    "english": "Big sun today. Hot!",
+    "french": "Gros soleil aujourd'hui. Chaleur!",
+    "context": "weather_hot",
+    "response": {
+      "soussou": "Awa! Ye min. Eau min.",
+      "english": "Yes! Drink water. Drink water.",
+      "french": "Oui! Bois de l'eau. Bois de l'eau."
+    }
+  },
+  {
+    "id": "ex_020",
+    "soussou": "I tara lafia?",
+    "english": "Is your husband well?",
+    "french": "Ton mari va bien?",
+    "context": "family_health",
+    "response": {
+      "soussou": "Awa, a lafia. Merci.",
+      "english": "Yes, he's well. Thanks.",
+      "french": "Oui, il va bien. Merci."
+    }
+  },
+  {
+    "id": "ex_021",
+    "soussou": "Poisson gui fra gbo?",
+    "english": "Is this fish fresh?",
+    "french": "Ce poisson est frais?",
+    "context": "shopping_quality",
+    "response": {
+      "soussou": "Eh! Nun bi tan whon' a rasa!",
+      "english": "Hey! We just got it today!",
+      "french": "Eh! On vient de l'acheter aujourd'hui!"
+    }
+  },
+  {
+    "id": "ex_022",
+    "soussou": "N'khili quand ina yitema!",
+    "english": "Call me when you arrive!",
+    "french": "Appelle-moi quand tu arrives!",
+    "context": "command_communication",
+    "response": {
+      "soussou": "Awa, n'na i khili. Promis!",
+      "english": "Okay, I'll call you. Promise!",
+      "french": "D'accord, je t'appelle. Promis!"
+    }
+  },
+  {
+    "id": "ex_023",
+    "soussou": "Hopital gui kira minde?",
+    "english": "Where is the road to this hospital?",
+    "french": "Ou est le chemin de cet hopital?",
+    "context": "directions_question",
+    "response": {
+      "soussou": "Siga tout droit, kirin kole. A gauche apres.",
+      "english": "Go straight, at the end. Then left.",
+      "french": "Va tout droit, au bout. Apres a gauche."
+    }
+  },
+  {
+    "id": "ex_024",
+    "soussou": "Di ra ina dege?",
+    "english": "What are you eating?",
+    "french": "Tu manges quoi?",
+    "context": "food_question",
+    "response": {
+      "soussou": "Riz sauce arachide. Tu veux?",
+      "english": "Rice with peanut sauce. You want some?",
+      "french": "Riz sauce arachide. Tu en veux?"
+    }
+  },
+  {
+    "id": "ex_025",
+    "soussou": "I denbaya lafia?",
+    "english": "Is your family well?",
+    "french": "Ta famille va bien?",
+    "context": "greeting_family",
+    "response": {
+      "soussou": "Etan birin lafia, Ala xa baraka!",
+      "english": "They're all well, God bless!",
+      "french": "Ils vont tous bien, grace a Dieu!"
+    }
+  },
+  {
+    "id": "ex_026",
+    "soussou": "Ana m'ma fafe. A malade.",
+    "english": "He/she is not coming. He/she is sick.",
+    "french": "Il/elle ne vient pas. Il/elle est malade.",
+    "context": "absence_reason",
+    "response": {
+      "soussou": "Ay! Ala xa a kisi! Ana hopital?",
+      "english": "Oh! May God heal him/her! Is he/she at the hospital?",
+      "french": "Oh! Que Dieu le/la guerisse! Il/elle est a l'hopital?"
+    }
+  },
+  {
+    "id": "ex_027",
+    "soussou": "Whon' kha meeting commence wakhati yiri?",
+    "english": "What time does our meeting start?",
+    "french": "Notre reunion commence a quelle heure?",
+    "context": "time_schedule",
+    "response": {
+      "soussou": "Neuf heures. Retard m'ma bon!",
+      "english": "Nine o'clock. Being late is not good!",
+      "french": "Neuf heures. Le retard c'est pas bon!"
+    }
+  },
+  {
+    "id": "ex_028",
+    "soussou": "Dokho be. Te min.",
+    "english": "Sit here. Drink tea.",
+    "french": "Assieds-toi ici. Bois du the.",
+    "context": "hospitality",
+    "response": {
+      "soussou": "I balake! I genereusefé gbo.",
+      "english": "Thank you! You're very generous.",
+      "french": "Merci! Tu es tres genereux."
+    }
+  },
+  {
+    "id": "ex_029",
+    "soussou": "Telephone gui songo yiri?",
+    "english": "How much is this phone?",
+    "french": "C'est combien ce telephone?",
+    "context": "shopping_electronics",
+    "response": {
+      "soussou": "Cinq cent mille. Qualite gbo!",
+      "english": "Five hundred thousand. Very good quality!",
+      "french": "Cinq cent mille. Tres bonne qualite!"
+    }
+  },
+  {
+    "id": "ex_030",
+    "soussou": "Vent gbo! Furu fafe.",
+    "english": "Strong wind! Rain is coming.",
+    "french": "Gros vent! La pluie arrive.",
+    "context": "weather_warning",
+    "response": {
+      "soussou": "Whon' fafe bangui koui vite!",
+      "english": "Let's get inside the house quickly!",
+      "french": "Rentrons vite dans la maison!"
+    }
+  },
+  {
+    "id": "ex_031",
+    "soussou": "I di ra fen?",
+    "english": "What are you looking for?",
+    "french": "Tu cherches quoi?",
+    "context": "helping_question",
+    "response": {
+      "soussou": "M'ma cle. Tu as vu?",
+      "english": "My keys. Have you seen them?",
+      "french": "Mes cles. Tu as vu?"
+    }
+  },
+  {
+    "id": "ex_032",
+    "soussou": "Eske ina mma situation comprendfe?",
+    "english": "Do you understand my situation?",
+    "french": "Est-ce que tu comprends ma situation?",
+    "context": "empathy_question",
+    "response": {
+      "soussou": "Awa, ntan comprendfe. Khafe gbo.",
+      "english": "Yes, I understand. It's a big problem.",
+      "french": "Oui, je comprends. C'est un gros probleme."
+    }
+  },
+  {
+    "id": "ex_033",
+    "soussou": "I di ra sigafe demain?",
+    "english": "Where are you going tomorrow?",
+    "french": "Tu vas ou demain?",
+    "context": "plans_question",
+    "response": {
+      "soussou": "N'na siga Kindia. Affaires.",
+      "english": "I'm going to Kindia. Business.",
+      "french": "Je vais a Kindia. Des affaires."
+    }
+  },
+  {
+    "id": "ex_034",
+    "soussou": "Piment gui ten gbo?",
+    "english": "Is this pepper very hot?",
+    "french": "Ce piment est tres piquant?",
+    "context": "shopping_food",
+    "response": {
+      "soussou": "Eh! Ten gbooo! Attention!",
+      "english": "Hey! Very very hot! Be careful!",
+      "french": "Eh! Tres tres piquant! Attention!"
+    }
+  },
+  {
+    "id": "ex_035",
+    "soussou": "I dimedi yiri?",
+    "english": "How many children do you have?",
+    "french": "Tu as combien d'enfants?",
+    "context": "family_question",
+    "response": {
+      "soussou": "Saxan. Firin xemma, kelen ginema.",
+      "english": "Three. Two boys, one girl.",
+      "french": "Trois. Deux garcons, une fille."
+    }
+  },
+  {
+    "id": "ex_036",
+    "soussou": "Kira gui longue gbo?",
+    "english": "Is this road very long?",
+    "french": "Cette route est tres longue?",
+    "context": "directions_distance",
+    "response": {
+      "soussou": "M'ma longue. Dix minutes tan.",
+      "english": "Not long. Just ten minutes.",
+      "french": "Pas longue. Dix minutes seulement."
+    }
+  },
+  {
+    "id": "ex_037",
+    "soussou": "N'tan fafe m'ma woto yite.",
+    "english": "I'm coming, my car is already here.",
+    "french": "J'arrive, ma voiture est deja la.",
+    "context": "transportation_ready",
+    "response": {
+      "soussou": "Cool! Mmeme. N'na descendre maintenant.",
+      "english": "Cool! Wait. I'm coming down now.",
+      "french": "Cool! Attends. Je descends maintenant."
+    }
+  },
+  {
+    "id": "ex_038",
+    "soussou": "Electricite parti encore!",
+    "english": "Electricity went out again!",
+    "french": "L'electricite est partie encore!",
+    "context": "utilities_problem",
+    "response": {
+      "soussou": "Ay! Gui muxundi gbo! Bougie be?",
+      "english": "Oh! This annoys a lot! Is there a candle?",
+      "french": "Ah! Ca ennuie beaucoup! Il y a une bougie?"
+    }
+  },
+  {
+    "id": "ex_039",
+    "soussou": "Whon' kha baba lafia?",
+    "english": "Is our father well?",
+    "french": "Notre pere va bien?",
+    "context": "family_health",
+    "response": {
+      "soussou": "A lafia un peu. Fatigue tan.",
+      "english": "He's okay a bit. Just tired.",
+      "french": "Il va un peu. Juste fatigue."
+    }
+  },
+  {
+    "id": "ex_040",
+    "soussou": "Ina wama?",
+    "english": "Are you okay?",
+    "french": "Tu vas bien?",
+    "context": "concern_check",
+    "response": {
+      "soussou": "Ntan wama. Merci. I khafe gbo?",
+      "english": "I'm okay. Thanks. You have a lot going on?",
+      "french": "Ca va. Merci. Tu as beaucoup de soucis?"
+    }
+  },
+  {
+    "id": "ex_041",
+    "soussou": "Bus sigafe Kamsar wakhati yiri?",
+    "english": "What time does the bus leave for Kamsar?",
+    "french": "Le bus part a quelle heure pour Kamsar?",
+    "context": "transportation_schedule",
+    "response": {
+      "soussou": "Sept heures matin. Depart fixe!",
+      "english": "Seven in the morning. Fixed departure!",
+      "french": "Sept heures du matin. Depart fixe!"
+    }
+  },
+  {
+    "id": "ex_042",
+    "soussou": "Awa, ntan kolon. Gui m'ma probleme.",
+    "english": "Yes, I know. That's not a problem.",
+    "french": "Oui, je sais. C'est pas un probleme.",
+    "context": "agreement_reassurance",
+    "response": {
+      "soussou": "I balake gbo! Coeur propre.",
+      "english": "Thank you very much! Clean heart.",
+      "french": "Merci beaucoup! Coeur pur."
+    }
+  },
+  {
+    "id": "ex_043",
+    "soussou": "Huile palme gui songo?",
+    "english": "How much is this palm oil?",
+    "french": "C'est combien cette huile de palme?",
+    "context": "shopping_price",
+    "response": {
+      "soussou": "Vingt mille le litre. I ra yiri?",
+      "english": "Twenty thousand per liter. How many do you want?",
+      "french": "Vingt mille le litre. Tu en veux combien?"
+    }
+  },
+  {
+    "id": "ex_044",
+    "soussou": "Nun bi froid gbo. Hiver fafe.",
+    "english": "Today is very cold. Dry season is coming.",
+    "french": "Aujourd'hui il fait tres froid. L'hiver arrive.",
+    "context": "weather_cold",
+    "response": {
+      "soussou": "Awa. Veste rafa. M'ma vouloir malade.",
+      "english": "Yes. Bring your jacket. I don't want to get sick.",
+      "french": "Oui. Prends ta veste. Je ne veux pas tomber malade."
+    }
+  },
+  {
+    "id": "ex_045",
+    "soussou": "Cafe gui fort gbo?",
+    "english": "Is this coffee very strong?",
+    "french": "Ce cafe est tres fort?",
+    "context": "food_beverage",
+    "response": {
+      "soussou": "Fort un peu. Sucre bole?",
+      "english": "A bit strong. Add sugar?",
+      "french": "Un peu fort. Tu ajoutes du sucre?"
+    }
+  },
+  {
+    "id": "ex_046",
+    "soussou": "M'ma soeur fafe tuma yiri?",
+    "english": "When is my sister coming?",
+    "french": "Ma soeur vient quand?",
+    "context": "family_schedule",
+    "response": {
+      "soussou": "A fafe samedi. Avion.",
+      "english": "She's coming Saturday. By plane.",
+      "french": "Elle vient samedi. En avion."
+    }
+  },
+  {
+    "id": "ex_047",
+    "soussou": "Siga droite, apres gauche. Ecole yire.",
+    "english": "Go right, then left. The school is there.",
+    "french": "Va a droite, apres a gauche. L'ecole est la-bas.",
+    "context": "directions_giving",
+    "response": {
+      "soussou": "I balake! A loin gbo?",
+      "english": "Thank you! Is it very far?",
+      "french": "Merci! C'est tres loin?"
+    }
+  },
+  {
+    "id": "ex_048",
+    "soussou": "Etan birin fafe mariage.",
+    "english": "They're all coming to the wedding.",
+    "french": "Ils viennent tous au mariage.",
+    "context": "event_attendance",
+    "response": {
+      "soussou": "Ala xa baraka! Famille complete!",
+      "english": "God bless! Complete family!",
+      "french": "Que Dieu benisse! Famille au complet!"
+    }
+  },
+  {
+    "id": "ex_049",
+    "soussou": "Gui sonyi. N'ra besoin.",
+    "english": "Give me that. I need it.",
+    "french": "Donne-moi ca. J'en ai besoin.",
+    "context": "request_item",
+    "response": {
+      "soussou": "Prends. Mais rends moi demain!",
+      "english": "Take it. But give it back tomorrow!",
+      "french": "Prends. Mais rends-moi ca demain!"
+    }
+  },
+  {
+    "id": "ex_050",
+    "soussou": "I compte yite?",
+    "english": "Is your account finished?",
+    "french": "Ton compte est fini?",
+    "context": "subscription_check",
+    "response": {
+      "soussou": "Presque. Jours saxan reste.",
+      "english": "Almost. Three days left.",
+      "french": "Presque. Il reste trois jours."
+    }
+  },
+  {
+    "id": "ex_051",
+    "soussou": "Moukhou m'ma fafe. Travail gbo.",
+    "english": "We (not you) are not coming. Too much work.",
+    "french": "Nous ne venons pas. Trop de travail.",
+    "context": "declining_invitation",
+    "response": {
+      "soussou": "Dommage! Prochaine fois alors.",
+      "english": "Too bad! Next time then.",
+      "french": "Dommage! La prochaine fois alors."
+    }
+  },
+  {
+    "id": "ex_052",
+    "soussou": "Ntan itan khafe comprendfe gbo.",
+    "english": "I understand your situation a lot.",
+    "french": "Je comprends beaucoup ta situation.",
+    "context": "empathy_statement",
+    "response": {
+      "soussou": "I balake. Gui muxundi gbo.",
+      "english": "Thank you. This bothers me a lot.",
+      "french": "Merci. Ca me derange beaucoup."
+    }
+  },
+  {
+    "id": "ex_053",
+    "soussou": "Viande gui fra?",
+    "english": "Is this meat fresh?",
+    "french": "Cette viande est fraiche?",
+    "context": "shopping_quality",
+    "response": {
+      "soussou": "Nun bi matin! Odeur bon.",
+      "english": "This morning! Good smell.",
+      "french": "Ce matin! Bonne odeur."
+    }
+  },
+  {
+    "id": "ex_054",
+    "soussou": "Whon' tan fafe, itan ngo?",
+    "english": "We are coming, and you?",
+    "french": "Nous on vient, et toi?",
+    "context": "invitation_question",
+    "response": {
+      "soussou": "N'tan fafe aussi! Ensemble!",
+      "english": "I'm coming too! Together!",
+      "french": "Moi aussi je viens! Ensemble!"
+    }
+  },
+  {
+    "id": "ex_055",
+    "soussou": "Alou! I m'ma fafe gui.",
+    "english": "Stop! Don't come here.",
+    "french": "Arrete! Ne viens pas ici.",
+    "context": "warning_command",
+    "response": {
+      "soussou": "Khafe mu ra? Danger?",
+      "english": "Why? Danger?",
+      "french": "Pourquoi? C'est dangereux?"
+    }
+  },
+  {
+    "id": "ex_056",
+    "soussou": "Pharmacie gui pres?",
+    "english": "Is there a pharmacy nearby?",
+    "french": "Il y a une pharmacie pres d'ici?",
+    "context": "directions_services",
+    "response": {
+      "soussou": "Awa. Coin droite. Cinq minutes.",
+      "english": "Yes. On the right corner. Five minutes.",
+      "french": "Oui. Au coin a droite. Cinq minutes."
+    }
+  },
+  {
+    "id": "ex_057",
+    "soussou": "I sosokhoui kolon?",
+    "english": "Do you know Soussou?",
+    "french": "Tu connais le Soussou?",
+    "context": "language_question",
+    "response": {
+      "soussou": "Ntan kolon un peu. N'na apprendre.",
+      "english": "I know a bit. I'm learning.",
+      "french": "Je connais un peu. J'apprends."
+    }
+  },
+  {
+    "id": "ex_058",
+    "soussou": "Semaine gui charge gbo?",
+    "english": "This week is very busy?",
+    "french": "Cette semaine est tres chargee?",
+    "context": "schedule_question",
+    "response": {
+      "soussou": "Gbooo! Reunions birin jours.",
+      "english": "Very! Meetings every day.",
+      "french": "Tres! Des reunions tous les jours."
+    }
+  },
+  {
+    "id": "ex_059",
+    "soussou": "Akha woto fafe. A pres.",
+    "english": "His/her car is coming. He/she is near.",
+    "french": "Sa voiture arrive. Il/elle est pres.",
+    "context": "transportation_update",
+    "response": {
+      "soussou": "Bon! N'na sortir maintenant.",
+      "english": "Good! I'm going out now.",
+      "french": "Bon! Je sors maintenant."
+    }
+  },
+  {
+    "id": "ex_060",
+    "soussou": "Banane gui mur?",
+    "english": "Are these bananas ripe?",
+    "french": "Ces bananes sont mures?",
+    "context": "shopping_fruit",
+    "response": {
+      "soussou": "Mur bien! Jaune jaune.",
+      "english": "Very ripe! Yellow yellow.",
+      "french": "Bien mures! Jaune jaune."
+    }
+  },
+  {
+    "id": "ex_061",
+    "soussou": "N' mato! Gui important.",
+    "english": "Look at me! This is important.",
+    "french": "Regarde-moi! C'est important.",
+    "context": "attention_command",
+    "response": {
+      "soussou": "Awa, n'na mato. Di ra?",
+      "english": "Okay, I'm looking. What is it?",
+      "french": "D'accord, je regarde. C'est quoi?"
+    }
+  },
+  {
+    "id": "ex_062",
+    "soussou": "Ina siga marche?",
+    "english": "Are you going to the market?",
+    "french": "Tu vas au marche?",
+    "context": "plans_question",
+    "response": {
+      "soussou": "Awa. I ra besoin di ra?",
+      "english": "Yes. What do you need?",
+      "french": "Oui. Tu as besoin de quoi?"
+    }
+  },
+  {
+    "id": "ex_063",
+    "soussou": "Eclaire gbo! Tonnerre fafe!",
+    "english": "Big lightning! Thunder is coming!",
+    "french": "Gros eclairs! Le tonnerre arrive!",
+    "context": "weather_storm",
+    "response": {
+      "soussou": "Ay! N'xoro. Bangui koui vite!",
+      "english": "Oh! I'm scared. Inside the house quickly!",
+      "french": "Ah! J'ai peur. Dans la maison vite!"
+    }
+  },
+  {
+    "id": "ex_064",
+    "soussou": "Etan kha avion yite?",
+    "english": "Has their plane arrived?",
+    "french": "Leur avion est arrive?",
+    "context": "transportation_status",
+    "response": {
+      "soussou": "M'ma yite encore. Retard une heure.",
+      "english": "Not arrived yet. One hour delay.",
+      "french": "Pas encore arrive. Une heure de retard."
+    }
+  },
+  {
+    "id": "ex_065",
+    "soussou": "I boke lafia?",
+    "english": "Is your mother well?",
+    "french": "Ta mere va bien?",
+    "context": "family_greeting",
+    "response": {
+      "soussou": "A lafia, Ala xa baraka! A i sonyi salam.",
+      "english": "She's well, God bless! She sends you greetings.",
+      "french": "Elle va bien, grace a Dieu! Elle te passe le bonjour."
+    }
+  },
+  {
+    "id": "ex_066",
+    "soussou": "Ngui fala madi sosokhoui?",
+    "english": "How do I say this in Soussou?",
+    "french": "Comment je dis ca en Soussou?",
+    "context": "language_learning",
+    "response": {
+      "soussou": "I fala: 'Ina mindé'. Easy!",
+      "english": "You say: 'Ina mindé'. Easy!",
+      "french": "Tu dis: 'Ina mindé'. Facile!"
+    }
+  },
+  {
+    "id": "ex_067",
+    "soussou": "Facta eau! Soif gbo.",
+    "english": "Bring water! Very thirsty.",
+    "french": "Apporte de l'eau! Tres soif.",
+    "context": "request_drink",
+    "response": {
+      "soussou": "Froid ou normale?",
+      "english": "Cold or normal?",
+      "french": "Froide ou normale?"
+    }
+  },
+  {
+    "id": "ex_068",
+    "soussou": "Whonma bureau ferme wakhati yiri?",
+    "english": "What time does our office close?",
+    "french": "Notre bureau ferme a quelle heure?",
+    "context": "work_schedule",
+    "response": {
+      "soussou": "Six heures. Mais vendredi cinq heures.",
+      "english": "Six o'clock. But Friday five o'clock.",
+      "french": "Six heures. Mais vendredi cinq heures."
+    }
+  },
+  {
+    "id": "ex_069",
+    "soussou": "Ecole gui bon gbo?",
+    "english": "Is this school very good?",
+    "french": "Cette ecole est tres bien?",
+    "context": "education_question",
+    "response": {
+      "soussou": "Bon gbo! Professeur bien forme.",
+      "english": "Very good! Well-trained teachers.",
+      "french": "Tres bien! Professeurs bien formes."
+    }
+  },
+  {
+    "id": "ex_070",
+    "soussou": "Atan go? A m'ma fafe?",
+    "english": "What about him/her? He/she is not coming?",
+    "french": "Et lui/elle? Il/elle ne vient pas?",
+    "context": "checking_others",
+    "response": {
+      "soussou": "A fafe. Retard un peu tan.",
+      "english": "He/she is coming. Just a bit late.",
+      "french": "Il/elle vient. Juste un peu en retard."
+    }
+  },
+  {
+    "id": "ex_071",
+    "soussou": "Chemise gui songo?",
+    "english": "How much is this shirt?",
+    "french": "C'est combien cette chemise?",
+    "context": "shopping_clothes",
+    "response": {
+      "soussou": "Trente mille. Coton pur!",
+      "english": "Thirty thousand. Pure cotton!",
+      "french": "Trente mille. Coton pur!"
+    }
+  },
+  {
+    "id": "ex_072",
+    "soussou": "Furu stop? Soleil fafe?",
+    "english": "Rain stopped? Sun is coming?",
+    "french": "La pluie s'est arretee? Le soleil arrive?",
+    "context": "weather_change",
+    "response": {
+      "soussou": "Awa, nuage parti. Ciel clair.",
+      "english": "Yes, clouds are gone. Clear sky.",
+      "french": "Oui, les nuages sont partis. Ciel clair."
+    }
+  },
+  {
+    "id": "ex_073",
+    "soussou": "I dimedi ecole sigafe?",
+    "english": "Is your child going to school?",
+    "french": "Ton enfant va a l'ecole?",
+    "context": "family_education",
+    "response": {
+      "soussou": "Awa, CP gui. A aime gbo!",
+      "english": "Yes, first grade this year. He/she loves it!",
+      "french": "Oui, CP cette annee. Il/elle adore!"
+    }
+  },
+  {
+    "id": "ex_074",
+    "soussou": "Fa fokhora. N'na i rafa kira.",
+    "english": "Follow me. I'll show you the way.",
+    "french": "Suis-moi. Je vais te montrer le chemin.",
+    "context": "directions_guiding",
+    "response": {
+      "soussou": "I balake gbo! Gentil.",
+      "english": "Thank you very much! Kind.",
+      "french": "Merci beaucoup! Gentil."
+    }
+  },
+  {
+    "id": "ex_075",
+    "soussou": "Moto gui marche bien?",
+    "english": "Does this motorcycle work well?",
+    "french": "Cette moto marche bien?",
+    "context": "transportation_condition",
+    "response": {
+      "soussou": "Marche bien gbo! Probleme m'ma.",
+      "english": "Works very well! No problem.",
+      "french": "Marche tres bien! Pas de probleme."
+    }
+  },
+  {
+    "id": "ex_076",
+    "soussou": "Kha fa guira?",
+    "english": "Should I bring this?",
+    "french": "Je dois apporter ca?",
+    "context": "question_action",
+    "response": {
+      "soussou": "Awa, fa guira. Important.",
+      "english": "Yes, bring it. Important.",
+      "french": "Oui, apporte ca. C'est important."
+    }
+  },
+  {
+    "id": "ex_077",
+    "soussou": "Ntan m'ma comprendfe. Repete!",
+    "english": "I don't understand. Repeat!",
+    "french": "Je ne comprends pas. Repete!",
+    "context": "communication_difficulty",
+    "response": {
+      "soussou": "D'accord. Lentement gui fois.",
+      "english": "Okay. Slowly this time.",
+      "french": "D'accord. Lentement cette fois."
+    }
+  },
+  {
+    "id": "ex_078",
+    "soussou": "Restaurant gui pres?",
+    "english": "Is there a restaurant nearby?",
+    "french": "Il y a un restaurant pres d'ici?",
+    "context": "directions_food",
+    "response": {
+      "soussou": "Awa. Tout droit, gauche apres. Bon manger!",
+      "english": "Yes. Straight, then left. Good food!",
+      "french": "Oui. Tout droit, apres a gauche. Bonne bouffe!"
+    }
+  },
+  {
+    "id": "ex_079",
+    "soussou": "Etan m'ma kolon gui khafe.",
+    "english": "They don't know about this problem.",
+    "french": "Ils ne connaissent pas ce probleme.",
+    "context": "information_gap",
+    "response": {
+      "soussou": "Whon' sa etan fala. Important!",
+      "english": "We should tell them. Important!",
+      "french": "On doit leur dire. C'est important!"
+    }
+  },
+  {
+    "id": "ex_080",
+    "soussou": "Fele bon gbo! Ala xa baraka.",
+    "english": "Very good view! God bless.",
+    "french": "Tres belle vue! Que Dieu benisse.",
+    "context": "appreciation_nature",
+    "response": {
+      "soussou": "Guinea joli gbo! Whon' kha pays.",
+      "english": "Guinea is very beautiful! Our country.",
+      "french": "La Guinee est tres jolie! Notre pays."
+    }
+  },
+  {
+    "id": "ex_081",
+    "soussou": "Siga A yire. A besoin aide.",
+    "english": "Go to him/her. He/she needs help.",
+    "french": "Va chez lui/elle. Il/elle a besoin d'aide.",
+    "context": "helping_command",
+    "response": {
+      "soussou": "N'na siga maintenant. Khafe mu ra?",
+      "english": "I'm going now. What's the problem?",
+      "french": "J'y vais maintenant. C'est quoi le probleme?"
+    }
+  },
+  {
+    "id": "ex_082",
+    "soussou": "Oignon gui songo kilo?",
+    "english": "How much is a kilo of onions?",
+    "french": "C'est combien le kilo d'oignons?",
+    "context": "shopping_vegetables",
+    "response": {
+      "soussou": "Cinq mille. I ra yiri?",
+      "english": "Five thousand. How many do you want?",
+      "french": "Cinq mille. Tu en veux combien?"
+    }
+  },
+  {
+    "id": "ex_083",
+    "soussou": "Ana malade tuma yiri?",
+    "english": "When did he/she get sick?",
+    "french": "Il/elle est tombe malade quand?",
+    "context": "health_question",
+    "response": {
+      "soussou": "Hier soir. Fievre gbo.",
+      "english": "Last night. High fever.",
+      "french": "Hier soir. Grosse fievre."
+    }
+  },
+  {
+    "id": "ex_084",
+    "soussou": "T'ti! Whon' sigafe.",
+    "english": "Stand up! We're leaving.",
+    "french": "Leve-toi! On part.",
+    "context": "command_departure",
+    "response": {
+      "soussou": "Mmeme! Affaires m'ma pret.",
+      "english": "Wait! My things aren't ready.",
+      "french": "Attends! Mes affaires ne sont pas pretes."
+    }
+  },
+  {
+    "id": "ex_085",
+    "soussou": "Eske i no'mma guira?",
+    "english": "Are you able to do this? (genuine question)",
+    "french": "Est-ce que tu peux faire ca?",
+    "context": "ability_genuine",
+    "response": {
+      "soussou": "Ntan no'mma. Difficile m'ma.",
+      "english": "I can. It's not difficult.",
+      "french": "Je peux. C'est pas difficile."
+    }
+  },
+  {
+    "id": "ex_086",
+    "soussou": "Wifi gui marche?",
+    "english": "Is the WiFi working?",
+    "french": "Le WiFi marche?",
+    "context": "utilities_question",
+    "response": {
+      "soussou": "M'ma marche. Connexion lent gbo!",
+      "english": "Not working. Very slow connection!",
+      "french": "Ca ne marche pas. Connexion tres lente!"
+    }
+  },
+  {
+    "id": "ex_087",
+    "soussou": "Ntan khafe gbo gui semaine.",
+    "english": "I have a lot going on this week.",
+    "french": "J'ai beaucoup de choses cette semaine.",
+    "context": "schedule_statement",
+    "response": {
+      "soussou": "Courage! Semaine prochaine mieux.",
+      "english": "Courage! Next week will be better.",
+      "french": "Courage! La semaine prochaine sera mieux."
+    }
+  },
+  {
+    "id": "ex_088",
+    "soussou": "Papaye gui songo?",
+    "english": "How much is this papaya?",
+    "french": "C'est combien cette papaye?",
+    "context": "shopping_fruit",
+    "response": {
+      "soussou": "Dix mille. Grosse gbo!",
+      "english": "Ten thousand. Very big!",
+      "french": "Dix mille. Tres grosse!"
+    }
+  },
+  {
+    "id": "ex_089",
+    "soussou": "I woto yite?",
+    "english": "Is your car here?",
+    "french": "Ta voiture est la?",
+    "context": "transportation_check",
+    "response": {
+      "soussou": "M'ma yite. Garage. Reparation.",
+      "english": "Not here. At the garage. Repair.",
+      "french": "Pas la. Au garage. En reparation."
+    }
+  },
+  {
+    "id": "ex_090",
+    "soussou": "Midi. Dege wakhati.",
+    "english": "Noon. Time to eat.",
+    "french": "Midi. L'heure de manger.",
+    "context": "time_meal",
+    "response": {
+      "soussou": "Awa! Faim gbo. Di ra dege?",
+      "english": "Yes! Very hungry. What are we eating?",
+      "french": "Oui! Tres faim. On mange quoi?"
+    }
+  },
+  {
+    "id": "ex_091",
+    "soussou": "Kelli be! I m'ma bienvenu.",
+    "english": "Leave here! You're not welcome.",
+    "french": "Pars d'ici! Tu n'es pas le bienvenu.",
+    "context": "conflict_command",
+    "response": {
+      "soussou": "D'accord, n'na siga. Pardon.",
+      "english": "Okay, I'm leaving. Sorry.",
+      "french": "D'accord, je pars. Pardon."
+    }
+  },
+  {
+    "id": "ex_092",
+    "soussou": "Whonma bateau fafe demain.",
+    "english": "Our boat is coming tomorrow.",
+    "french": "Notre bateau arrive demain.",
+    "context": "transportation_schedule",
+    "response": {
+      "soussou": "Bon! Marchandise birin pret?",
+      "english": "Good! Is all the merchandise ready?",
+      "french": "Bon! Toute la marchandise est prete?"
+    }
+  },
+  {
+    "id": "ex_093",
+    "soussou": "I tonton minde?",
+    "english": "Where is your uncle?",
+    "french": "Ou est ton oncle?",
+    "context": "family_location",
+    "response": {
+      "soussou": "A siga travail. Retour soir.",
+      "english": "He went to work. Back in the evening.",
+      "french": "Il est parti au travail. Retour ce soir."
+    }
+  },
+  {
+    "id": "ex_094",
+    "soussou": "Essence gui cheri gbo!",
+    "english": "This fuel is very expensive!",
+    "french": "L'essence est tres chere!",
+    "context": "transportation_cost",
+    "response": {
+      "soussou": "Awa! Prix monte chaque semaine.",
+      "english": "Yes! Price goes up every week.",
+      "french": "Oui! Le prix monte chaque semaine."
+    }
+  },
+  {
+    "id": "ex_095",
+    "soussou": "A mato! Beau gbo!",
+    "english": "Look at him/her! Very beautiful!",
+    "french": "Regarde-le/la! Tres beau/belle!",
+    "context": "admiration",
+    "response": {
+      "soussou": "Ala xa baraka! Style gbo.",
+      "english": "God bless! Great style.",
+      "french": "Que Dieu benisse! Super style."
+    }
+  },
+  {
+    "id": "ex_096",
+    "soussou": "Poulet gui songo?",
+    "english": "How much is this chicken?",
+    "french": "C'est combien ce poulet?",
+    "context": "shopping_meat",
+    "response": {
+      "soussou": "Quarante mille. Gros gbo!",
+      "english": "Forty thousand. Very big!",
+      "french": "Quarante mille. Tres gros!"
+    }
+  },
+  {
+    "id": "ex_097",
+    "soussou": "Nuit yite. Whon' sa siga bangui.",
+    "english": "Night has come. We should go home.",
+    "french": "La nuit est tombee. On devrait rentrer.",
+    "context": "time_evening",
+    "response": {
+      "soussou": "Awa. Demain whon' se encore.",
+      "english": "Yes. Tomorrow we'll meet again.",
+      "french": "Oui. Demain on se revoit."
+    }
+  },
+  {
+    "id": "ex_098",
+    "soussou": "Ikha ChatGPT no'mma guira?",
+    "english": "Your ChatGPT can do this?",
+    "french": "Ton ChatGPT peut faire ca?",
+    "context": "technology_question",
+    "response": {
+      "soussou": "Awa! A intelligent gbo. Essaye!",
+      "english": "Yes! It's very intelligent. Try it!",
+      "french": "Oui! Il est tres intelligent. Essaie!"
+    }
+  },
+  {
+    "id": "ex_099",
+    "soussou": "Bissap gui froid?",
+    "english": "Is this bissap cold?",
+    "french": "Ce bissap est froid?",
+    "context": "food_beverage",
+    "response": {
+      "soussou": "Froid gbo! Glace bole.",
+      "english": "Very cold! Added ice.",
+      "french": "Tres froid! Avec de la glace."
+    }
+  },
+  {
+    "id": "ex_100",
+    "soussou": "Ala xa whon' kisi! A demain!",
+    "english": "May God protect us! See you tomorrow!",
+    "french": "Que Dieu nous protege! A demain!",
+    "context": "farewell_blessing",
+    "response": {
+      "soussou": "Amin! Nuit bon. A demain!",
+      "english": "Amen! Good night. See you tomorrow!",
+      "french": "Amin! Bonne nuit. A demain!"
+    }
+  }
+]

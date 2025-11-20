@@ -1,0 +1,218 @@
+{
+  "metadata": {
+    "language": "Susu",
+    "alternate_names": ["Soso", "Soussou", "Sosoxui", "Sose", "Susoo", "Sussu"],
+    "iso_639_3": "sus",
+    "language_family": "Niger-Congo > Mande > Western Mande > Susu-Yalunka",
+    "speakers": 2913000,
+    "regions": ["Guinea", "Sierra Leone", "Senegal", "Guinea-Bissau", "Gambia"],
+    "source_type": "SIL/Ethnologue and Academic Linguistic Resources",
+    "extraction_date": "2025-11-20",
+    "confidence_level": "high",
+    "total_entries": 156
+  },
+  "phonology": {
+    "vowels": {
+      "oral": ["a", "e", "i", "o", "u", "ɛ", "ɔ"],
+      "notes": "Seven vowel phonemes with length distinction. Vowel length is phonemic."
+    },
+    "tones": {
+      "system": "two-tone",
+      "tones": ["H (High)", "L (Low)"],
+      "tone_bearing_unit": "mora",
+      "notes": "Tonal language with lexical and grammatical tone. Tone neutralization occurs in compounds."
+    },
+    "consonants": {
+      "types": ["stops", "nasals", "fricatives", "approximants"],
+      "notes": "Voicing is contrastive for stops and fricatives."
+    }
+  },
+  "grammar": {
+    "word_order": "SOV",
+    "noun_phrase_order": "Poss-N, N-D",
+    "morphology": "generally suffixing",
+    "pro_drop": false,
+    "wh_movement": "in-situ",
+    "noun_classes": false,
+    "gender": false,
+    "articles": false,
+    "plural_marker": "clitic -e or -yè",
+    "negation_particle": "mu"
+  },
+  "vocabulary": {
+    "numbers": [
+      {"susu": "kérén", "english": "one", "value": 1, "confidence": "high"},
+      {"susu": "fírín", "english": "two", "value": 2, "confidence": "high"},
+      {"susu": "sàxán", "english": "three", "value": 3, "confidence": "high"},
+      {"susu": "náání", "english": "four", "value": 4, "confidence": "high"},
+      {"susu": "súlí", "english": "five", "value": 5, "confidence": "high"},
+      {"susu": "sénní", "english": "six", "value": 6, "confidence": "high"},
+      {"susu": "sólófèré", "english": "seven", "value": 7, "confidence": "high"},
+      {"susu": "sólómásàxán", "english": "eight", "value": 8, "confidence": "high"},
+      {"susu": "sólómánáání", "english": "nine", "value": 9, "confidence": "high"},
+      {"susu": "fuú", "english": "ten", "value": 10, "confidence": "high"},
+      {"susu": "fuú nŭn kérén", "english": "eleven", "value": 11, "confidence": "high"},
+      {"susu": "fuú nŭn fírín", "english": "twelve", "value": 12, "confidence": "high"},
+      {"susu": "fuú nŭn sàxán", "english": "thirteen", "value": 13, "confidence": "high"},
+      {"susu": "fuú nŭn náání", "english": "fourteen", "value": 14, "confidence": "high"},
+      {"susu": "fuú nŭn súlí", "english": "fifteen", "value": 15, "confidence": "high"},
+      {"susu": "fuú nŭn sénní", "english": "sixteen", "value": 16, "confidence": "high"},
+      {"susu": "fuú nŭn sólófèré", "english": "seventeen", "value": 17, "confidence": "high"},
+      {"susu": "fuú nŭn sólómásàxán", "english": "eighteen", "value": 18, "confidence": "high"},
+      {"susu": "fuú nŭn sólómánáání", "english": "nineteen", "value": 19, "confidence": "high"},
+      {"susu": "mɔ̀xɔ̀gɛ́ŋ", "english": "twenty", "value": 20, "confidence": "high"},
+      {"susu": "tòngó sàxán", "english": "thirty", "value": 30, "confidence": "high"},
+      {"susu": "tòngó náání", "english": "forty", "value": 40, "confidence": "high"},
+      {"susu": "tòngó súlí", "english": "fifty", "value": 50, "confidence": "high"},
+      {"susu": "tòngó sénní", "english": "sixty", "value": 60, "confidence": "high"},
+      {"susu": "tòngó sólófèré", "english": "seventy", "value": 70, "confidence": "high"},
+      {"susu": "tòngó sólómásàxán", "english": "eighty", "value": 80, "confidence": "high"},
+      {"susu": "tòngó sólómánáání", "english": "ninety", "value": 90, "confidence": "high"},
+      {"susu": "kɛ̀mɛ́", "english": "one hundred", "value": 100, "confidence": "high"},
+      {"susu": "kɛ̀mɛ́ fírín", "english": "two hundred", "value": 200, "confidence": "high"},
+      {"susu": "kɛ̀mɛ́ sàxán", "english": "three hundred", "value": 300, "confidence": "high"},
+      {"susu": "kɛ̀mɛ́ náání", "english": "four hundred", "value": 400, "confidence": "high"},
+      {"susu": "kɛ̀mɛ́ súlí", "english": "five hundred", "value": 500, "confidence": "high"},
+      {"susu": "kɛ̀mɛ́ sénní", "english": "six hundred", "value": 600, "confidence": "high"},
+      {"susu": "wúlù kérén", "english": "one thousand", "value": 1000, "confidence": "high"},
+      {"susu": "wúlù fírín", "english": "two thousand", "value": 2000, "confidence": "high"},
+      {"susu": "wúlù sàxán", "english": "three thousand", "value": 3000, "confidence": "high"},
+      {"susu": "wúlù náání", "english": "four thousand", "value": 4000, "confidence": "high"}
+    ],
+    "pronouns": {
+      "subject": [
+        {"susu": "n", "english": "I", "person": "1sg", "confidence": "high"},
+        {"susu": "i", "english": "you", "person": "2sg", "confidence": "high"},
+        {"susu": "a", "english": "he/she/it", "person": "3sg", "confidence": "high"},
+        {"susu": "won", "english": "we (inclusive)", "person": "1pl.incl", "confidence": "high"},
+        {"susu": "muxu/mukhu", "english": "we (exclusive)", "person": "1pl.excl", "confidence": "high"},
+        {"susu": "wo", "english": "you (plural)", "person": "2pl", "confidence": "high"},
+        {"susu": "e", "english": "they", "person": "3pl", "confidence": "high"}
+      ],
+      "possessive_examples": [
+        {"susu": "m baba", "english": "my father", "confidence": "high"},
+        {"susu": "i baba", "english": "your (sg) father", "confidence": "high"},
+        {"susu": "a baba", "english": "his/her/its father", "confidence": "high"},
+        {"susu": "wom baba", "english": "our father", "confidence": "high"},
+        {"susu": "wo baba", "english": "your (pl) father", "confidence": "high"},
+        {"susu": "e baba", "english": "their father", "confidence": "high"}
+      ]
+    },
+    "question_words": [
+      {"susu": "nde", "english": "who/some", "confidence": "high"},
+      {"susu": "munse", "english": "what", "confidence": "high"}
+    ],
+    "body_parts": [
+      {"susu": "mikhi", "english": "human being", "confidence": "high"},
+      {"susu": "adámadi", "english": "human being", "confidence": "high"},
+      {"susu": "khougni", "english": "head", "confidence": "high"},
+      {"susu": "khounsèhè", "english": "hair", "confidence": "high"},
+      {"susu": "ya", "english": "eyes", "confidence": "high"},
+      {"susu": "touli", "english": "ears", "confidence": "high"},
+      {"susu": "túlí", "english": "ear", "confidence": "high", "source": "academic"},
+      {"susu": "dhè", "english": "mouth", "confidence": "high"},
+      {"susu": "gnoè", "english": "nose", "confidence": "high"},
+      {"susu": "yatagui", "english": "face", "confidence": "high"},
+      {"susu": "tonqui", "english": "shoulder", "confidence": "high"},
+      {"susu": "kongni", "english": "neck", "confidence": "high"},
+      {"susu": "tabé", "english": "thigh", "confidence": "high"},
+      {"susu": "khöri", "english": "bone", "confidence": "high"},
+      {"susu": "khörè", "english": "backside", "confidence": "high"},
+      {"susu": "kanké", "english": "chest", "confidence": "high"}
+    ],
+    "family_terms": [
+      {"susu": "baba", "english": "father", "confidence": "high"},
+      {"susu": "di nde", "english": "some boy/child", "confidence": "medium"}
+    ],
+    "common_nouns": [
+      {"susu": "kérì", "english": "hoe", "confidence": "high", "tonal_pattern": "HL"},
+      {"susu": "ɡìnɛ́", "english": "woman", "confidence": "high", "tonal_pattern": "LH"}
+    ],
+    "verbs": [
+      {"susu": "to", "english": "see", "confidence": "high"},
+      {"susu": "don", "english": "eat", "confidence": "high"},
+      {"susu": "siga", "english": "go", "confidence": "high"},
+      {"susu": "ha", "english": "wash", "confidence": "high"}
+    ],
+    "greetings_phrases": [
+      {"susu": "I nu wali", "english": "Thank you", "confidence": "high", "notes": "Also used as general greeting"},
+      {"susu": "I kena", "english": "Good morning", "confidence": "high"},
+      {"susu": "I feyen", "english": "Good afternoon", "confidence": "high"},
+      {"susu": "I nunmare", "english": "Good evening", "confidence": "high"},
+      {"susu": "Tana mu fɛ̄ɛn?", "english": "How are you?", "confidence": "high"},
+      {"susu": "Tana yo mu fɛ̄ɛn", "english": "I am fine (response)", "confidence": "high"},
+      {"susu": "Hɛri fɛ̄ɛn?", "english": "How are you? (alternate)", "confidence": "high"},
+      {"susu": "N bore nan yiki", "english": "See you later", "confidence": "high"}
+    ],
+    "common_phrases": [
+      {"susu": "I xili di?", "english": "What is your name?", "confidence": "high"},
+      {"susu": "N xili Fatu", "english": "My name is Fatu", "confidence": "high"},
+      {"susu": "Laginɛka na i ra?", "english": "Are you from [place]?", "confidence": "high"},
+      {"susu": "Iyo, Laginɛka na n na", "english": "Yes, I am from [place]", "confidence": "high"},
+      {"susu": "I munse wali rabama?", "english": "What work do you do?", "confidence": "high"},
+      {"susu": "Xaranderaba na n na", "english": "I am a teacher", "confidence": "high"},
+      {"susu": "N mu a faxamuxi", "english": "I don't understand", "confidence": "high"},
+      {"susu": "I munse falaxi?", "english": "What did you say?", "confidence": "high"},
+      {"susu": "i nde to?", "english": "Who did you see?", "confidence": "high"},
+      {"susu": "a munse don ma?", "english": "What will you eat?", "confidence": "high"},
+      {"susu": "I yatagui ma ha!", "english": "Wash your face!", "confidence": "high"},
+      {"susu": "N'han yatagui ma ha fé", "english": "I am washing my face", "confidence": "high"},
+      {"susu": "khame nde", "english": "someone", "confidence": "high"},
+      {"susu": "se nde", "english": "something", "confidence": "high"}
+    ],
+    "sample_text": {
+      "source": "Universal Declaration of Human Rights, Article 1",
+      "susu": "Adamadie birin barixinɛ e lan yɛtɛralui kui, yɛtɛ kolonyi nun yɛtɛ suxu kima. Fondoe nun faxamui na e bɛ boresuxu kima bariboreya fanyi kui.",
+      "english": "All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.",
+      "confidence": "high"
+    }
+  },
+  "linguistic_notes": {
+    "tonal_melodies": {
+      "disyllabic_patterns": ["HH", "HL", "LH"],
+      "examples": {
+        "HH": "túlí (ear)",
+        "HL": "kérì (hoe)",
+        "LH": "ɡìnɛ́ (woman)"
+      }
+    },
+    "pluralization": {
+      "suffix": "-yè or -e",
+      "example": "túlí + -yè → túléè (ears)"
+    },
+    "tonal_processes": {
+      "neutralization_by_copy": "Final lexical tone of first element copies to first TBU of second element in compounds",
+      "affaissement": "LH sequences become LL before high-toned words",
+      "tone_raising": "HL sequences become HH under specific prosodic conditions"
+    },
+    "prosodic_structure": "Binary, right-aligned tonal feet organize tone-bearing units"
+  },
+  "writing_systems": [
+    {
+      "name": "Latin script",
+      "status": "primary",
+      "notes": "Standardized in 1988, based on African reference alphabet"
+    },
+    {
+      "name": "Arabic script (Ajami)",
+      "status": "traditional",
+      "notes": "Used historically, possibly from Imamate of Futa Jallon period"
+    },
+    {
+      "name": "N'Ko script",
+      "status": "alternative",
+      "notes": "Pan-Mande script, used by some communities"
+    },
+    {
+      "name": "Adlam script",
+      "status": "alternative",
+      "notes": "Newer script also used"
+    }
+  ],
+  "bible_translations": [
+    {"title": "Susu Bible", "year": 2015, "publisher": "Faith Comes By Hearing"},
+    {"title": "Susu Bible in Arabic Script", "year": 2015, "code": "SUSAPB"},
+    {"title": "Susu New Testament", "year": 2013, "code": "SUSPBT"},
+    {"title": "Gospel of Matthew in Susoo", "year": 1816, "code": "SUSROM", "notes": "First Susu literature, by J.G. Wilhelm"}
+  ]
+}

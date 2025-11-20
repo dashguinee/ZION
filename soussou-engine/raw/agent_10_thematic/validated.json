@@ -1,0 +1,180 @@
+{
+  "metadata": {
+    "language": "Soussou (Susu)",
+    "iso_code": "sus",
+    "collection_date": "2025-11-20",
+    "total_entries": 98,
+    "categories": ["numbers", "colors", "body_parts", "animals", "food", "nature", "family", "people", "common_nouns", "greetings", "pronouns", "verbs"],
+    "notes": "Vocabulary collected from multiple online sources including Glosbe dictionary, Peace Corps materials, and linguistic resources. French loanwords are normal in Soussou."
+  },
+  "vocabulary": {
+    "numbers": {
+      "description": "Susu counting system",
+      "entries": [
+        {"susu": "keren", "english": "one", "notes": "Also written: kérén"},
+        {"susu": "firin", "english": "two", "notes": "Also written: fírín"},
+        {"susu": "saxan", "english": "three", "notes": "Also written: sàxán"},
+        {"susu": "naani", "english": "four", "notes": "Also written: náání"},
+        {"susu": "suli", "english": "five", "notes": "Also written: súlí"},
+        {"susu": "senni", "english": "six", "notes": "Also written: sénní"},
+        {"susu": "solofere", "english": "seven", "notes": "Also written: sólófèré"},
+        {"susu": "solomasaxan", "english": "eight", "notes": "Also written: sólómásàxán"},
+        {"susu": "solomanaani", "english": "nine", "notes": "Also written: sólómánáání"},
+        {"susu": "fuu", "english": "ten", "notes": "Also written: fuú"},
+        {"susu": "moxogen", "english": "twenty", "notes": "Also written: m̀ɔx̀ɔǵɛŋ"},
+        {"susu": "tongo saxan", "english": "thirty", "notes": "tòngó = to take"},
+        {"susu": "tongo naani", "english": "forty", "notes": ""},
+        {"susu": "tongo suli", "english": "fifty", "notes": ""},
+        {"susu": "tongo senni", "english": "sixty", "notes": ""},
+        {"susu": "tongo solofere", "english": "seventy", "notes": ""},
+        {"susu": "tongo solomasaxan", "english": "eighty", "notes": ""},
+        {"susu": "tongo solomanaani", "english": "ninety", "notes": ""},
+        {"susu": "keme", "english": "one hundred", "notes": "Also written: k̀ɛḿɛ"},
+        {"susu": "wulu keren", "english": "one thousand", "notes": "wúlù = thousand"}
+      ]
+    },
+    "colors": {
+      "description": "Basic color terms in Susu",
+      "entries": [
+        {"susu": "fixe", "english": "white", "notes": ""},
+        {"susu": "fore", "english": "black", "notes": ""}
+      ],
+      "gaps": ["red", "green", "blue", "yellow - need further research"]
+    },
+    "body_parts": {
+      "description": "Parts of the human body",
+      "entries": [
+        {"susu": "xunyi", "english": "head", "notes": "Also: khougni"},
+        {"susu": "khounseye", "english": "hair", "notes": "Related to khougni (head)"},
+        {"susu": "yatagui", "english": "face", "notes": "Used in: I yatagui ma ha (Wash your face!)"},
+        {"susu": "ya", "english": "eye", "notes": ""},
+        {"susu": "tuli", "english": "ear", "notes": ""},
+        {"susu": "nywe", "english": "nose", "notes": ""},
+        {"susu": "de", "english": "mouth", "notes": ""},
+        {"susu": "nyinyi", "english": "tooth", "notes": ""},
+        {"susu": "yi", "english": "hand", "notes": ""},
+        {"susu": "sanyi", "english": "foot", "notes": ""}
+      ]
+    },
+    "animals": {
+      "description": "Animal vocabulary",
+      "entries": [
+        {"susu": "bare", "english": "dog", "notes": ""},
+        {"susu": "nyari", "english": "cat", "notes": "Also: gnari"},
+        {"susu": "ninge", "english": "cow", "notes": ""},
+        {"susu": "si", "english": "goat", "notes": ""},
+        {"susu": "toxe", "english": "chicken", "notes": ""},
+        {"susu": "xoni", "english": "bird", "notes": ""},
+        {"susu": "swe", "english": "horse", "notes": "Also: susuwi (origin of ethnic name Susu)"},
+        {"susu": "yexe", "english": "fish", "notes": ""},
+        {"susu": "senyaxi", "english": "snake", "notes": ""}
+      ]
+    },
+    "food": {
+      "description": "Food and drink vocabulary",
+      "entries": [
+        {"susu": "ye", "english": "water", "notes": ""},
+        {"susu": "male", "english": "rice", "notes": "Primary crop of Susu people"},
+        {"susu": "sube", "english": "meat", "notes": ""}
+      ],
+      "gaps": ["bread, mango, banana, vegetables - need further research"]
+    },
+    "nature": {
+      "description": "Natural world vocabulary",
+      "entries": [
+        {"susu": "soge", "english": "sun", "notes": ""},
+        {"susu": "kike", "english": "moon", "notes": ""},
+        {"susu": "lolwe", "english": "star", "notes": ""},
+        {"susu": "wuri", "english": "tree", "notes": ""},
+        {"susu": "tune", "english": "rain", "notes": ""},
+        {"susu": "te", "english": "fire", "notes": ""}
+      ]
+    },
+    "family": {
+      "description": "Family relationship terms",
+      "entries": [
+        {"susu": "baba", "english": "father", "notes": ""},
+        {"susu": "n'ga", "english": "mother", "notes": ""},
+        {"susu": "di", "english": "child", "notes": ""},
+        {"susu": "tara", "english": "brother/sister", "notes": "Sibling"}
+      ]
+    },
+    "people": {
+      "description": "People and relationships",
+      "entries": [
+        {"susu": "adama", "english": "man", "notes": "Also: xame"},
+        {"susu": "xame", "english": "man", "notes": "Alternative to adama"},
+        {"susu": "gine", "english": "woman", "notes": "Origin of name 'Guinea'"},
+        {"susu": "bore", "english": "friend", "notes": "Also: funye"},
+        {"susu": "funye", "english": "friend", "notes": "Alternative to bore"}
+      ]
+    },
+    "common_nouns": {
+      "description": "Common everyday nouns",
+      "entries": [
+        {"susu": "banxi", "english": "house", "notes": ""},
+        {"susu": "tebili", "english": "table", "notes": ""},
+        {"susu": "wuli", "english": "blood", "notes": ""},
+        {"susu": "xili", "english": "name", "notes": "Used in: N xili (my name)"},
+        {"susu": "kira", "english": "road", "notes": ""},
+        {"susu": "kobri", "english": "money", "notes": "Also: bangoura"}
+      ]
+    },
+    "greetings": {
+      "description": "Common greetings and phrases",
+      "entries": [
+        {"susu": "Arabakhidi", "english": "hello", "notes": ""},
+        {"susu": "Inuwali", "english": "hello/goodbye/thanks", "notes": "Plural: wonuwali"},
+        {"susu": "I kena", "english": "good morning", "notes": "Plural: wo kena"},
+        {"susu": "I nunmare", "english": "good evening", "notes": ""},
+        {"susu": "I koe", "english": "good night", "notes": ""},
+        {"susu": "Iyo", "english": "yes", "notes": "Also: aha"},
+        {"susu": "Adi", "english": "no", "notes": "Also: Ade"},
+        {"susu": "Mameti", "english": "please", "notes": "Also means 'take it'"},
+        {"susu": "Awa", "english": "ok", "notes": ""},
+        {"susu": "Tana mu xi?", "english": "did you sleep well?", "notes": "Greeting"},
+        {"susu": "Tana yo mu xi", "english": "I slept well", "notes": "Response"},
+        {"susu": "Tana mu", "english": "how are you?", "notes": ""},
+        {"susu": "Dundurunti", "english": "slowly", "notes": ""},
+        {"susu": "N xili [name]", "english": "my name is [name]", "notes": ""}
+      ]
+    },
+    "useful_phrases": {
+      "description": "Travel and useful phrases",
+      "entries": [
+        {"susu": "N'khude na minde?", "english": "Where is my room?", "notes": ""},
+        {"susu": "Bade na minde?", "english": "Where is the beach?", "notes": ""},
+        {"susu": "Degede na minde?", "english": "Where is the bar?", "notes": ""},
+        {"susu": "Inakha ma sukhu!", "english": "Don't touch me there!", "notes": ""}
+      ]
+    },
+    "pronouns": {
+      "description": "Personal and interrogative pronouns",
+      "entries": [
+        {"susu": "be", "english": "who", "notes": ""},
+        {"susu": "won", "english": "we", "notes": ""},
+        {"susu": "wo", "english": "you", "notes": ""},
+        {"susu": "a", "english": "he/she", "notes": ""}
+      ]
+    },
+    "verbs": {
+      "description": "Common verbs",
+      "entries": [
+        {"susu": "to", "english": "see", "notes": ""},
+        {"susu": "don", "english": "eat", "notes": ""},
+        {"susu": "siga", "english": "go", "notes": ""}
+      ]
+    }
+  },
+  "linguistic_notes": {
+    "plural_formation": "Add 'e' to singular nouns",
+    "sentence_structure": "SOV (Subject-Object-Verb)",
+    "possessives": "Body parts and family are 'natural' possessions",
+    "negation": "Expressed with particle 'mu'",
+    "identifiers": {
+      "pronouns": ["Ntan", "Itan", "Ana", "Whon'", "Etan"],
+      "possessives": ["M'ma", "Akha"],
+      "negation": ["m'ma", "mu"]
+    }
+  }
+}

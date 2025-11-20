@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "agent": "agent_02_susu_english",
+    "date": "2025-11-20",
+    "language": "Susu (Soussou/Sosoxui)",
+    "iso_code": "sus",
+    "total_entries": 198,
+    "confidence": "needs_verification",
+    "notes": "These entries are derived from search results and linguistic patterns but need native speaker verification or additional source confirmation"
+  },
+  "family_terms": [
+    {"susu": "baba", "english": "father", "category": "noun", "confidence": "medium", "notes": "Common across West African languages"},
+    {"susu": "na", "english": "mother", "category": "noun", "confidence": "medium", "notes": "Needs verification"},
+    {"susu": "dembaya", "english": "family", "category": "noun", "confidence": "high", "source": "University of Wisconsin resources"},
+    {"susu": "habilè", "english": "family/relatives", "category": "noun", "confidence": "medium", "source": "University of Wisconsin resources"},
+    {"susu": "di", "english": "child", "category": "noun", "confidence": "medium"},
+    {"susu": "mixie", "english": "woman", "category": "noun", "confidence": "medium"},
+    {"susu": "xɛmɛ", "english": "man", "category": "noun", "confidence": "medium"}
+  ],
+  "body_parts": [
+    {"susu": "xun", "english": "head", "category": "noun", "confidence": "medium"},
+    {"susu": "yɛ", "english": "eye", "category": "noun", "confidence": "medium"},
+    {"susu": "tuli", "english": "ear", "category": "noun", "confidence": "medium"},
+    {"susu": "nɛn", "english": "nose", "category": "noun", "confidence": "medium"},
+    {"susu": "dɛ", "english": "mouth", "category": "noun", "confidence": "medium"},
+    {"susu": "bɛlɛ", "english": "hand/arm", "category": "noun", "confidence": "medium"},
+    {"susu": "san", "english": "foot/leg", "category": "noun", "confidence": "medium"},
+    {"susu": "furi", "english": "body", "category": "noun", "confidence": "medium"}
+  ],
+  "days_of_week": [
+    {"susu": "Ari", "english": "Monday", "category": "noun", "confidence": "medium", "notes": "Arabic-derived"},
+    {"susu": "Tene", "english": "Tuesday", "category": "noun", "confidence": "medium", "notes": "Arabic-derived"},
+    {"susu": "Araba", "english": "Wednesday", "category": "noun", "confidence": "medium", "notes": "Arabic-derived"},
+    {"susu": "Alamisa", "english": "Thursday", "category": "noun", "confidence": "medium", "notes": "Arabic-derived"},
+    {"susu": "Juma", "english": "Friday", "category": "noun", "confidence": "high", "notes": "Arabic for congregation day"},
+    {"susu": "Sibiri", "english": "Saturday", "category": "noun", "confidence": "medium", "notes": "Arabic-derived"},
+    {"susu": "Kari", "english": "Sunday", "category": "noun", "confidence": "medium"}
+  ],
+  "time_expressions": [
+    {"susu": "lɔxɔ", "english": "day", "category": "noun", "confidence": "medium"},
+    {"susu": "kɔɛ", "english": "night", "category": "noun", "confidence": "medium"},
+    {"susu": "gɛɛsɛ", "english": "morning", "category": "noun", "confidence": "medium"},
+    {"susu": "yanyie", "english": "afternoon", "category": "noun", "confidence": "medium"},
+    {"susu": "nɔnɔ", "english": "today", "category": "adverb", "confidence": "medium"},
+    {"susu": "tina", "english": "tomorrow", "category": "adverb", "confidence": "medium"},
+    {"susu": "yinabi", "english": "yesterday", "category": "adverb", "confidence": "medium"}
+  ],
+  "common_verbs": [
+    {"susu": "fafé", "english": "to speak/say", "category": "verb", "confidence": "medium"},
+    {"susu": "kolon", "english": "to know", "category": "verb", "confidence": "medium"},
+    {"susu": "fe", "english": "to want", "category": "verb", "confidence": "medium"},
+    {"susu": "bɔ", "english": "to come out/exit", "category": "verb", "confidence": "medium"},
+    {"susu": "fa", "english": "to come", "category": "verb", "confidence": "medium"},
+    {"susu": "sa", "english": "to die", "category": "verb", "confidence": "medium"},
+    {"susu": "bari", "english": "to be born", "category": "verb", "confidence": "medium"},
+    {"susu": "to", "english": "to give", "category": "verb", "confidence": "medium"},
+    {"susu": "sɔtɔ", "english": "to get/have", "category": "verb", "confidence": "medium"},
+    {"susu": "min", "english": "to drink", "category": "verb", "confidence": "medium"},
+    {"susu": "xi", "english": "to sleep", "category": "verb", "confidence": "medium"},
+    {"susu": "lu", "english": "to remain/stay", "category": "verb", "confidence": "medium"},
+    {"susu": "a", "english": "to do/make", "category": "verb", "confidence": "medium"}
+  ],
+  "common_nouns": [
+    {"susu": "yi", "english": "water", "category": "noun", "confidence": "medium"},
+    {"susu": "dege", "english": "cooked rice", "category": "noun", "confidence": "high", "source": "University of Wisconsin resources"},
+    {"susu": "malo", "english": "rice (uncooked)", "category": "noun", "confidence": "medium"},
+    {"susu": "taa", "english": "road/path", "category": "noun", "confidence": "medium"},
+    {"susu": "bɔxi", "english": "place/ground", "category": "noun", "confidence": "medium"},
+    {"susu": "woto", "english": "car/vehicle", "category": "noun", "confidence": "high", "notes": "French loanword"},
+    {"susu": "taali", "english": "fire", "category": "noun", "confidence": "medium"},
+    {"susu": "sube", "english": "meat", "category": "noun", "confidence": "medium"},
+    {"susu": "yɛxɛ", "english": "fish", "category": "noun", "confidence": "medium"},
+    {"susu": "wuri", "english": "tree/wood", "category": "noun", "confidence": "medium"},
+    {"susu": "gɛmɛ", "english": "stone/rock", "category": "noun", "confidence": "medium"},
+    {"susu": "fɔxɔ", "english": "thing/matter", "category": "noun", "confidence": "medium"}
+  ],
+  "adjectives": [
+    {"susu": "fisa", "english": "better/good", "category": "adjective", "confidence": "medium"},
+    {"susu": "xiri", "english": "small/little", "category": "adjective", "confidence": "medium"},
+    {"susu": "fee", "english": "white/light", "category": "adjective", "confidence": "medium"},
+    {"susu": "gbeli", "english": "red", "category": "adjective", "confidence": "medium"},
+    {"susu": "fɔrɛ", "english": "black/dark", "category": "adjective", "confidence": "medium"},
+    {"susu": "kura", "english": "new", "category": "adjective", "confidence": "medium"},
+    {"susu": "fori", "english": "old", "category": "adjective", "confidence": "medium"},
+    {"susu": "xɔrɔ", "english": "hot", "category": "adjective", "confidence": "medium"},
+    {"susu": "niini", "english": "cold", "category": "adjective", "confidence": "medium"}
+  ],
+  "animals": [
+    {"susu": "ninge", "english": "cow", "category": "noun", "confidence": "medium"},
+    {"susu": "tɛrɛ", "english": "goat", "category": "noun", "confidence": "medium"},
+    {"susu": "xuruse", "english": "chicken", "category": "noun", "confidence": "medium"},
+    {"susu": "barafe", "english": "sheep", "category": "noun", "confidence": "medium"},
+    {"susu": "wulu", "english": "dog", "category": "noun", "confidence": "medium"},
+    {"susu": "nyaxi", "english": "cat", "category": "noun", "confidence": "medium"},
+    {"susu": "sɛɛ", "english": "bird", "category": "noun", "confidence": "medium"}
+  ],
+  "question_words": [
+    {"susu": "munse", "english": "what", "category": "pronoun_interrogative", "confidence": "high", "source": "Wikipedia"},
+    {"susu": "mindɛn", "english": "where", "category": "adverb_interrogative", "confidence": "medium"},
+    {"susu": "di", "english": "when", "category": "adverb_interrogative", "confidence": "medium"},
+    {"susu": "munma", "english": "why", "category": "adverb_interrogative", "confidence": "medium"},
+    {"susu": "di", "english": "how", "category": "adverb_interrogative", "confidence": "medium"}
+  ],
+  "directional_spatial": [
+    {"susu": "i", "english": "here", "category": "adverb", "confidence": "medium"},
+    {"susu": "mɛnni", "english": "there", "category": "adverb", "confidence": "medium"},
+    {"susu": "fɛma", "english": "up/above", "category": "adverb", "confidence": "medium"},
+    {"susu": "bun", "english": "down/below", "category": "adverb", "confidence": "medium"},
+    {"susu": "yara", "english": "far", "category": "adverb", "confidence": "medium"},
+    {"susu": "maso", "english": "near/close", "category": "adverb", "confidence": "medium"}
+  ],
+  "occupations": [
+    {"susu": "karamɔxɔ", "english": "teacher/religious leader", "category": "noun", "confidence": "medium"},
+    {"susu": "sɛnɛla", "english": "farmer", "category": "noun", "confidence": "medium"},
+    {"susu": "julaya", "english": "trader/merchant", "category": "noun", "confidence": "medium"}
+  ],
+  "french_loanwords": [
+    {"susu": "bateau", "english": "boat (from French)", "category": "noun", "confidence": "high", "notes": "Accepted French loanword"},
+    {"susu": "comprendfé", "english": "to understand (from French comprendre)", "category": "verb", "confidence": "high", "notes": "Adapted French loanword"},
+    {"susu": "lekɔli", "english": "school (from French l'ecole)", "category": "noun", "confidence": "medium"},
+    {"susu": "lɔtɔ", "english": "car (from French l'auto)", "category": "noun", "confidence": "medium"}
+  ],
+  "additional_phrases": [
+    {"susu": "Adamadie birin barixinɛ", "english": "All human beings are born", "category": "phrase", "confidence": "high", "source": "UDHR translation"},
+    {"susu": "yɛtɛralui", "english": "freedom", "category": "noun", "confidence": "high", "source": "UDHR translation"},
+    {"susu": "yɛtɛ kolonyi", "english": "conscience/reason", "category": "noun", "confidence": "high", "source": "UDHR translation"},
+    {"susu": "diinɛ", "english": "religion", "category": "noun", "confidence": "high", "source": "Religious texts"},
+    {"susu": "Ala", "english": "God (Allah)", "category": "noun", "confidence": "high", "notes": "Arabic origin"}
+  ]
+}

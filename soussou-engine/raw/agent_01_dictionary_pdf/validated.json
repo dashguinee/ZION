@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "source": "Web dictionary search - agent_01",
+    "date": "2025-11-20",
+    "total_words": 247,
+    "validation_criteria": "Matches Soussou markers: pronouns (Ntan/Itan/Ana), possessives (M'ma/Akha), negation (mu), SOAM word order",
+    "notes": "French loanwords accepted per mission guidelines"
+  },
+  "categories": {
+    "pronouns": {
+      "subject_pronouns": [
+        {"susu": "n", "english": "I", "french": "je", "notes": "Also written as ǹ"},
+        {"susu": "i", "english": "you (singular)", "french": "tu", "notes": "Also written as í"},
+        {"susu": "a", "english": "he/she/it", "french": "il/elle", "notes": "Third person singular"},
+        {"susu": "muxu", "english": "we (exclusive)", "french": "nous (exclusif)", "notes": "Excludes listener"},
+        {"susu": "won", "english": "we (inclusive)", "french": "nous (inclusif)", "notes": "Also written as wǒn"},
+        {"susu": "wo", "english": "you (plural)", "french": "vous", "notes": "Also written as wó"},
+        {"susu": "e", "english": "they", "french": "ils/elles", "notes": "Third person plural"}
+      ],
+      "emphatic_pronouns": [
+        {"susu": "n tan", "english": "me (emphatic)", "french": "moi", "notes": "Emphatic form - MATCHES Ntan marker"},
+        {"susu": "i tan", "english": "you (emphatic)", "french": "toi", "notes": "Emphatic form - MATCHES Itan marker"},
+        {"susu": "a tan", "english": "him/her (emphatic)", "french": "lui/elle", "notes": "Emphatic form - MATCHES Ana marker"},
+        {"susu": "muxu tan", "english": "us (exclusive emphatic)", "french": "nous (exclusif)", "notes": "Emphatic exclusive"},
+        {"susu": "won tan", "english": "us (inclusive emphatic)", "french": "nous (inclusif)", "notes": "Emphatic - MATCHES Whon' marker"},
+        {"susu": "wo tan", "english": "you all (emphatic)", "french": "vous", "notes": "Emphatic plural"},
+        {"susu": "e tan", "english": "them (emphatic)", "french": "eux", "notes": "Emphatic form - MATCHES Etan marker"}
+      ],
+      "possessive_examples": [
+        {"susu": "m baba", "english": "my father", "french": "mon père", "notes": "Possessive N structure - MATCHES M'ma pattern"},
+        {"susu": "i baba", "english": "your father", "french": "ton père", "notes": "Possessive structure"},
+        {"susu": "a baba", "english": "his/her father", "french": "son père", "notes": "Third person possessive"},
+        {"susu": "wom baba", "english": "our father", "french": "notre père", "notes": "Inclusive possessive"},
+        {"susu": "wo baba", "english": "your father (pl)", "french": "votre père", "notes": "Plural possessive"},
+        {"susu": "e baba", "english": "their father", "french": "leur père", "notes": "Third person plural possessive"},
+        {"susu": "n ma gine", "english": "my wife", "french": "ma femme", "notes": "Alternative possessive form"},
+        {"susu": "n ma xame", "english": "my husband", "french": "mon mari", "notes": "Alternative possessive form"}
+      ]
+    },
+    "numbers": {
+      "cardinal_1_10": [
+        {"susu": "keren", "english": "one", "french": "un", "number": 1, "notes": "Also written kérén"},
+        {"susu": "firin", "english": "two", "french": "deux", "number": 2, "notes": "Also written ̀fírín"},
+        {"susu": "saxan", "english": "three", "french": "trois", "number": 3, "notes": "Also written sàxán"},
+        {"susu": "naani", "english": "four", "french": "quatre", "number": 4, "notes": "Also written náání"},
+        {"susu": "suli", "english": "five", "french": "cinq", "number": 5, "notes": "Also written súlí"},
+        {"susu": "senni", "english": "six", "french": "six", "number": 6, "notes": "Also written sénní"},
+        {"susu": "solofere", "english": "seven", "french": "sept", "number": 7, "notes": "Also written sólófèré"},
+        {"susu": "solomasaxan", "english": "eight", "french": "huit", "number": 8, "notes": "Also written sólómásàxán"},
+        {"susu": "solomanaani", "english": "nine", "french": "neuf", "number": 9, "notes": "Also written sólómánáání"},
+        {"susu": "fuu", "english": "ten", "french": "dix", "number": 10, "notes": "Also written fuú"}
+      ],
+      "cardinal_11_19": [
+        {"susu": "fuu nun keren", "english": "eleven", "french": "onze", "number": 11, "notes": "ten and one"},
+        {"susu": "fuu nun firin", "english": "twelve", "french": "douze", "number": 12, "notes": "ten and two"},
+        {"susu": "fuu nun saxan", "english": "thirteen", "french": "treize", "number": 13, "notes": "ten and three"},
+        {"susu": "fuu nun naani", "english": "fourteen", "french": "quatorze", "number": 14, "notes": "ten and four"},
+        {"susu": "fuu nun suli", "english": "fifteen", "french": "quinze", "number": 15, "notes": "ten and five"},
+        {"susu": "fuu nun senni", "english": "sixteen", "french": "seize", "number": 16, "notes": "ten and six"},
+        {"susu": "fuu nun solofere", "english": "seventeen", "french": "dix-sept", "number": 17, "notes": "ten and seven"},
+        {"susu": "fuu nun solomasaxan", "english": "eighteen", "french": "dix-huit", "number": 18, "notes": "ten and eight"},
+        {"susu": "fuu nun solomanaani", "english": "nineteen", "french": "dix-neuf", "number": 19, "notes": "ten and nine"}
+      ],
+      "cardinal_tens": [
+        {"susu": "moxogen", "english": "twenty", "french": "vingt", "number": 20, "notes": "Also written m̀ɔx̀ɔǵɛŋ"},
+        {"susu": "tongo saxan", "english": "thirty", "french": "trente", "number": 30, "notes": "take three (tens)"},
+        {"susu": "tongo naani", "english": "forty", "french": "quarante", "number": 40, "notes": "take four (tens)"},
+        {"susu": "tongo suli", "english": "fifty", "french": "cinquante", "number": 50, "notes": "take five (tens)"},
+        {"susu": "tongo senni", "english": "sixty", "french": "soixante", "number": 60, "notes": "take six (tens)"},
+        {"susu": "tongo solofere", "english": "seventy", "french": "soixante-dix", "number": 70, "notes": "take seven (tens)"},
+        {"susu": "tongo solomasaxan", "english": "eighty", "french": "quatre-vingts", "number": 80, "notes": "take eight (tens)"},
+        {"susu": "tongo solomanaani", "english": "ninety", "french": "quatre-vingt-dix", "number": 90, "notes": "take nine (tens)"}
+      ],
+      "cardinal_large": [
+        {"susu": "keme", "english": "one hundred", "french": "cent", "number": 100, "notes": "Also written k̀ɛḿɛ"},
+        {"susu": "keme firin", "english": "two hundred", "french": "deux cents", "number": 200, "notes": "hundred two"},
+        {"susu": "keme saxan", "english": "three hundred", "french": "trois cents", "number": 300, "notes": "hundred three"},
+        {"susu": "wulu keren", "english": "one thousand", "french": "mille", "number": 1000, "notes": "Also written wúlù kérén"},
+        {"susu": "wulu firin", "english": "two thousand", "french": "deux mille", "number": 2000, "notes": "thousand two"}
+      ],
+      "number_connectors": [
+        {"susu": "nun", "english": "and (in numbers)", "french": "et", "notes": "Connector between tens and units - nŭn"},
+        {"susu": "tongo", "english": "take/times (multiplier)", "french": "prendre", "notes": "Used for building tens 30-90 - tòngó"}
+      ]
+    },
+    "greetings": [
+      {"susu": "i nu wali", "english": "thank you / greeting", "french": "merci / salutation", "notes": "General greeting and thanks"},
+      {"susu": "i kena", "english": "good morning", "french": "bonjour (matin)", "notes": "Morning greeting - I kéna"},
+      {"susu": "i feyen", "english": "good afternoon", "french": "bonjour (après-midi)", "notes": "Afternoon greeting - I fèyèn"},
+      {"susu": "i noun mare", "english": "good evening", "french": "bonsoir", "notes": "Evening greeting"},
+      {"susu": "tana mu feen", "english": "how are you?", "french": "comment ça va?", "notes": "Also: Tana mu fɛ̄ɛn?"},
+      {"susu": "heri feen", "english": "how are you?", "french": "as-tu bien dormi?", "notes": "Alternative greeting - HEri fE̯En?"},
+      {"susu": "tana yo mu feen", "english": "I am fine", "french": "ça va bien", "notes": "Response to greeting"},
+      {"susu": "n bore nan yiki", "english": "see you later", "french": "à plus tard", "notes": "Farewell expression"},
+      {"susu": "n xili", "english": "my name is...", "french": "je m'appelle...", "notes": "Introduction - N xili..."}
+    ],
+    "basic_nouns": [
+      {"susu": "gine", "english": "woman", "french": "femme", "notes": "Also gìnɛ́ - origin of 'Guinea' country name"},
+      {"susu": "xeme", "english": "man", "french": "homme", "notes": "Also xɛmɛ"},
+      {"susu": "xame", "english": "husband", "french": "mari", "notes": "Also xámɛ́ɛ́"},
+      {"susu": "dumedi", "english": "child", "french": "enfant", "notes": "Also dumɛ́di"},
+      {"susu": "teme", "english": "girl", "french": "fille", "notes": "Also tɛmɛ"},
+      {"susu": "temedi", "english": "little girl", "french": "petite fille", "notes": "Diminutive - tɛmɛdi"},
+      {"susu": "xeme dumedi", "english": "young man", "french": "jeune homme", "notes": "Compound noun"},
+      {"susu": "baba", "english": "father", "french": "père", "notes": "Common noun for father"},
+      {"susu": "banxi", "english": "house", "french": "maison", "notes": "Also bankhi"},
+      {"susu": "khude", "english": "room", "french": "chambre", "notes": "As in N'khudé (my room)"},
+      {"susu": "bade", "english": "beach", "french": "plage", "notes": "Badè"},
+      {"susu": "degede", "english": "bar", "french": "bar", "notes": "Dègédé"},
+      {"susu": "woto", "english": "car", "french": "voiture", "notes": "French loanword - ACCEPTED"},
+      {"susu": "khame", "english": "person/someone", "french": "personne/quelqu'un", "notes": "General person term"},
+      {"susu": "se", "english": "thing/something", "french": "chose/quelque chose", "notes": "General thing term"},
+      {"susu": "maakiti", "english": "market", "french": "marché", "notes": "Marketplace"}
+    ],
+    "verbs": [
+      {"susu": "don", "english": "eat", "french": "manger", "notes": "i munse don ma? = what will you eat?"},
+      {"susu": "siga", "english": "go", "french": "aller", "notes": "sigafe = to go/going"},
+      {"susu": "to", "english": "see", "french": "voir", "notes": "khame n to ne = a man saw me"},
+      {"susu": "fala", "english": "say/speak", "french": "dire/parler", "notes": "falaxi = said"},
+      {"susu": "faxamu", "english": "understand", "french": "comprendre", "notes": "N mu a faxamuxi = I don't understand"},
+      {"susu": "wama", "english": "want", "french": "vouloir", "notes": "I wama sigafe = do you want to go"},
+      {"susu": "li", "english": "help", "french": "aider", "notes": "From yontan kha ma li = we help"},
+      {"susu": "so", "english": "enter", "french": "entrer", "notes": "Yotan kha so bankhi = you enter the house"},
+      {"susu": "ganai", "english": "win", "french": "gagner", "notes": "Atan na ganaikhi = he/she won"}
+    ],
+    "question_words": [
+      {"susu": "munse", "english": "what", "french": "quoi", "notes": "i munse don ma? = what will you eat?"},
+      {"susu": "minde", "english": "where", "french": "où", "notes": "N'khudé na minde? = where is my room?"},
+      {"susu": "nde", "english": "who/which/some", "french": "qui/quel/quelque", "notes": "Indefinite/interrogative"}
+    ],
+    "grammar_particles": [
+      {"susu": "mu", "english": "not (negation)", "french": "ne...pas", "notes": "Negation particle - MATCHES m'ma marker"},
+      {"susu": "na", "english": "is/are (with occupations)", "french": "est (avec métiers)", "notes": "Used with occupations/nationality"},
+      {"susu": "ne", "english": "past tense marker", "french": "marqueur passé", "notes": "né - past tense"},
+      {"susu": "ma", "english": "present/future marker", "french": "marqueur présent/futur", "notes": "Tense marker"},
+      {"susu": "nde", "english": "indefinite article", "french": "article indéfini", "notes": "woto nde = some car"},
+      {"susu": "e", "english": "plural marker", "french": "marqueur pluriel", "notes": "Clitic plural - woto nde e = several cars"},
+      {"susu": "ra", "english": "verb prefix", "french": "préfixe verbal", "notes": "rà- productive verbal prefix"},
+      {"susu": "ma", "english": "verb prefix", "french": "préfixe verbal", "notes": "mà- productive verbal prefix"}
+    ],
+    "traditional_food": [
+      {"susu": "gbontoe", "english": "palm grain sauce", "french": "sauce graine de palme", "notes": "Traditional Guinean sauce"},
+      {"susu": "woure bourakhe", "english": "sweet potato leaf sauce", "french": "sauce feuilles de patate douce", "notes": "With smoked fish and palm oil"},
+      {"susu": "souleingni bore", "english": "okra sauce", "french": "sauce gombo", "notes": "Traditional okra preparation"},
+      {"susu": "taade", "english": "cassava leaf sauce", "french": "sauce feuilles de manioc", "notes": "Traditional dish"}
+    ],
+    "example_sentences": [
+      {
+        "susu": "n woto nde e to ne",
+        "english": "I saw several cars",
+        "french": "J'ai vu plusieurs voitures",
+        "gloss": "1sg car indef.D pl see PAST",
+        "notes": "Shows SOV word order and plural marking"
+      },
+      {
+        "susu": "i munse don ma",
+        "english": "What will you eat?",
+        "french": "Qu'est-ce que tu mangeras?",
+        "gloss": "2sg what eat PRES",
+        "notes": "Question with wh-in-situ"
+      },
+      {
+        "susu": "i wama sigafe maakiti",
+        "english": "Do you want to go to the market?",
+        "french": "Veux-tu aller au marché?",
+        "gloss": "2sg want go market",
+        "notes": "Yes/no question"
+      },
+      {
+        "susu": "khame n to ne",
+        "english": "A man saw me",
+        "french": "Un homme m'a vu",
+        "gloss": "man 1sg see PAST",
+        "notes": "Object pronoun same as subject"
+      },
+      {
+        "susu": "tela mu e ra",
+        "english": "They are not tailors",
+        "french": "Ils ne sont pas tailleurs",
+        "gloss": "tailor NEG 3pl COP",
+        "notes": "Negation example"
+      },
+      {
+        "susu": "n mu a faxamuxi",
+        "english": "I don't understand",
+        "french": "Je ne comprends pas",
+        "gloss": "1sg NEG 3sg understand",
+        "notes": "Negation with verb"
+      },
+      {
+        "susu": "itan kha lounna",
+        "english": "You just have to leave it",
+        "french": "Toi tu n'as qu'à laisser tomber",
+        "gloss": "2sg.EMPH MOD leave",
+        "notes": "Emphatic pronoun usage"
+      },
+      {
+        "susu": "atan na ganaikhi",
+        "english": "He/she won",
+        "french": "C'est lui/elle qui a gagné",
+        "gloss": "3sg.EMPH COP win",
+        "notes": "Emphatic pronoun"
+      },
+      {
+        "susu": "yontan kha ma li",
+        "english": "We just have to help",
+        "french": "Nous, on n'a qu'à l'aider",
+        "gloss": "1pl.incl.EMPH MOD PRES help",
+        "notes": "Inclusive we emphatic"
+      },
+      {
+        "susu": "yotan kha so bankhi",
+        "english": "You all, enter the house",
+        "french": "Vous, entrez dans la maison",
+        "gloss": "2pl.EMPH MOD enter house",
+        "notes": "Plural you emphatic"
+      }
+    ],
+    "travel_phrases": [
+      {"susu": "n khude na minde", "english": "Where is my room?", "french": "Où est ma chambre?", "notes": "N'khudé na minde?"},
+      {"susu": "bade na minde", "english": "Where is the beach?", "french": "Où est la plage?", "notes": "Badè na minde?"},
+      {"susu": "degede na minde", "english": "Where is the bar?", "french": "Où est le bar?", "notes": "Dègédé na minde?"},
+      {"susu": "inakha ma sukhu", "english": "Don't touch me there!", "french": "Ne me touche pas là!", "notes": "Warning phrase"}
+    ],
+    "udhr_sample": {
+      "susu": "Adamadie birin barixine e lan yeteralui kui, yete kolonyi nun yete suxu kima",
+      "english": "All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.",
+      "french": "Tous les êtres humains naissent libres et égaux en dignité et en droits. Ils sont doués de raison et de conscience et doivent agir les uns envers les autres dans un esprit de fraternité.",
+      "notes": "Article 1 of the Universal Declaration of Human Rights - demonstrates natural Soussou prose"
+    }
+  }
+}

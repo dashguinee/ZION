@@ -1,0 +1,661 @@
+openapi: 3.0.3
+info:
+  title: Guinius API
+  description: |
+    The first AI that speaks Soussou - A living language documentation system.
+
+    ## How Guinius Works
+    1. **Generate** response in French
+    2. **Match** to Soussou words from lexicon
+    3. **Apply** SOAM sentence rules
+    4. **Fill** gaps with French (authentic code-switching)
+    5. **Ask** user for corrections
+    6. **Learn** from contributions
+    7. **Update** language database
+
+    ## Language Notes
+    - Soussou uses SOAM word order (Subject-Object-Action-Modifier)
+    - No official spelling - phonetic normalization handles variants
+    - French loanwords are normal (colonial influence)
+    - Pronouns can drop in casual speech (Ntan fafe → Fafe)
+  version: 1.0.0
+  contact:
+    name: DASH Base
+    email: contact@dashbase.tech
+
+servers:
+  - url: https://guinius.up.railway.app/api
+    description: Production server
+  - url: http://localhost:3000/api
+    description: Development server
+
+tags:
+  - name: lookup
+    description: Word and phrase lookup
+  - name: translate
+    description: Translation between languages
+  - name: generate
+    description: Sentence generation
+  - name: normalize
+    description: Phonetic normalization
+  - name: learn
+    description: User contributions and corrections
+
+paths:
+  /lookup:
+    get:
+      tags: [lookup]
+      summary: Look up a Soussou word
+      description: Returns word details including translations, variants, and examples
+      parameters:
+        - name: word
+          in: query
+          required: true
+          schema:
+            type: string
+          example: fafe
+        - name: exact
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: Exact match only (no normalization)
+      responses:
+        '200':
+          description: Word found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LookupResult'
+        '404':
+          description: Word not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+
+  /lookup/phrase:
+    get:
+      tags: [lookup]
+      summary: Look up a complete phrase
+      description: Returns phrase translation and breakdown
+      parameters:
+        - name: phrase
+          in: query
+          required: true
+          schema:
+            type: string
+          example: Ntan fafe tinan
+      responses:
+        '200':
+          description: Phrase analyzed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhraseResult'
+
+  /translate:
+    post:
+      tags: [translate]
+      summary: Translate text
+      description: Translate between Soussou, English, and French
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TranslateRequest'
+      responses:
+        '200':
+          description: Translation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslateResponse'
+
+  /generate:
+    post:
+      tags: [generate]
+      summary: Generate Soussou response
+      description: |
+        The core Guinius flow:
+        1. Receives user input + context
+        2. Generates response using patterns
+        3. Returns Soussou with confidence score
+        4. Marks uncertain parts for user feedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateRequest'
+      responses:
+        '200':
+          description: Generated response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateResponse'
+
+  /generate/from-template:
+    post:
+      tags: [generate]
+      summary: Generate from specific template
+      description: Use a named template with slot values
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateRequest'
+      responses:
+        '200':
+          description: Generated sentence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResponse'
+
+  /normalize:
+    post:
+      tags: [normalize]
+      summary: Normalize Soussou text
+      description: |
+        Standardizes spelling variants to base forms.
+        Handles: apostrophes, accents, double consonants, trailing h
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NormalizeRequest'
+      responses:
+        '200':
+          description: Normalized result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizeResponse'
+
+  /patterns:
+    get:
+      tags: [lookup]
+      summary: Get grammar patterns
+      description: Returns morphology and syntax patterns
+      parameters:
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [morphology, syntax, all]
+            default: all
+      responses:
+        '200':
+          description: Pattern data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatternsResponse'
+
+  /contribute:
+    post:
+      tags: [learn]
+      summary: Submit a word/phrase contribution
+      description: |
+        Users teach Guinius new words or correct existing ones.
+        Contributions are queued for review before being added to the lexicon.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContributionRequest'
+      responses:
+        '201':
+          description: Contribution received
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContributionResponse'
+
+  /feedback:
+    post:
+      tags: [learn]
+      summary: Provide feedback on a response
+      description: |
+        Rate and correct Guinius responses.
+        Used to improve pattern matching and generation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedbackRequest'
+      responses:
+        '201':
+          description: Feedback recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedbackResponse'
+
+  /stats:
+    get:
+      tags: [lookup]
+      summary: Get lexicon statistics
+      description: Returns counts and coverage metrics
+      responses:
+        '200':
+          description: Statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatsResponse'
+
+components:
+  schemas:
+    LookupResult:
+      type: object
+      properties:
+        found:
+          type: boolean
+          example: true
+        word:
+          type: string
+          example: fafe
+        normalized:
+          type: string
+          example: fafe
+        english:
+          type: string
+          example: coming, to come
+        french:
+          type: string
+          example: venir, arriver
+        category:
+          type: string
+          example: verb
+        variants:
+          type: array
+          items:
+            type: string
+          example: ["fafé", "fafeh", "fa fe"]
+        frequency:
+          type: integer
+          example: 1247
+        examples:
+          type: array
+          items:
+            $ref: '#/components/schemas/Example'
+
+    Example:
+      type: object
+      properties:
+        soussou:
+          type: string
+          example: Ntan fafe tinan
+        english:
+          type: string
+          example: I'm coming tomorrow
+        french:
+          type: string
+          example: Je viens demain
+
+    PhraseResult:
+      type: object
+      properties:
+        phrase:
+          type: string
+          example: Ntan fafe tinan
+        normalized:
+          type: string
+          example: ntan fafe tinan
+        english:
+          type: string
+          example: I'm coming tomorrow
+        french:
+          type: string
+          example: Je viens demain
+        breakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/WordBreakdown'
+        grammar_notes:
+          type: array
+          items:
+            type: string
+          example: ["SOAM word order: Subject (Ntan) + Verb (fafe) + Time (tinan)"]
+
+    WordBreakdown:
+      type: object
+      properties:
+        word:
+          type: string
+          example: Ntan
+        role:
+          type: string
+          example: subject
+        english:
+          type: string
+          example: I
+        french:
+          type: string
+          example: Je
+
+    TranslateRequest:
+      type: object
+      required:
+        - text
+        - from
+        - to
+      properties:
+        text:
+          type: string
+          example: I'm coming tomorrow
+        from:
+          type: string
+          enum: [soussou, english, french]
+          example: english
+        to:
+          type: string
+          enum: [soussou, english, french]
+          example: soussou
+
+    TranslateResponse:
+      type: object
+      properties:
+        original:
+          type: string
+          example: I'm coming tomorrow
+        translation:
+          type: string
+          example: Ntan fafe tinan
+        confidence:
+          type: number
+          format: float
+          example: 0.85
+        alternatives:
+          type: array
+          items:
+            type: string
+          example: ["Fafe tinan"]
+        uncertain_parts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UncertainPart'
+        notes:
+          type: array
+          items:
+            type: string
+
+    UncertainPart:
+      type: object
+      properties:
+        original:
+          type: string
+          example: tomorrow
+        attempted:
+          type: string
+          example: tinan
+        confidence:
+          type: number
+          example: 0.7
+        french_fallback:
+          type: string
+          example: demain
+        needs_verification:
+          type: boolean
+          example: true
+
+    GenerateRequest:
+      type: object
+      required:
+        - input
+      properties:
+        input:
+          type: string
+          description: User's message (in any language)
+          example: How are you?
+        context:
+          type: string
+          enum: [greeting, question, command, casual, formal]
+          example: greeting
+        user_language:
+          type: string
+          enum: [english, french, soussou]
+          default: english
+
+    GenerateResponse:
+      type: object
+      properties:
+        response:
+          type: string
+          description: Generated Soussou response
+          example: Tanante, Ala mu baraka!
+        english:
+          type: string
+          example: Fine, God bless!
+        french:
+          type: string
+          example: Ça va bien, que Dieu bénisse!
+        confidence:
+          type: number
+          format: float
+          example: 0.9
+        response_type:
+          type: string
+          example: greeting_response
+        uncertain_parts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UncertainPart'
+        suggestions:
+          type: array
+          items:
+            type: string
+          description: Alternative responses
+        request_feedback:
+          type: boolean
+          description: True if Guinius wants user verification
+          example: false
+
+    TemplateRequest:
+      type: object
+      required:
+        - template
+        - slots
+      properties:
+        template:
+          type: string
+          example: negation_know
+        slots:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            subject: Ntan
+            object: that
+
+    TemplateResponse:
+      type: object
+      properties:
+        sentence:
+          type: string
+          example: Ntan m'ma that kolon
+        template_used:
+          type: string
+          example: negation_know
+        english:
+          type: string
+          example: I don't know that
+        french:
+          type: string
+          example: Je ne sais pas ça
+
+    NormalizeRequest:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          example: N'na Fafé
+
+    NormalizeResponse:
+      type: object
+      properties:
+        original:
+          type: string
+          example: N'na Fafé
+        normalized:
+          type: string
+          example: na fafe
+        changes:
+          type: array
+          items:
+            type: string
+          example: ["removed apostrophe", "removed accent", "lowercased"]
+
+    PatternsResponse:
+      type: object
+      properties:
+        morphology:
+          type: object
+          description: Verb suffixes, contractions, possessives
+        syntax:
+          type: object
+          description: Sentence patterns, word order rules
+
+    ContributionRequest:
+      type: object
+      required:
+        - word
+        - english
+      properties:
+        word:
+          type: string
+          description: Soussou word or phrase
+          example: tinan
+        variants:
+          type: array
+          items:
+            type: string
+          example: ["tinane", "tinnan"]
+        english:
+          type: string
+          example: tomorrow
+        french:
+          type: string
+          example: demain
+        category:
+          type: string
+          enum: [noun, verb, adjective, adverb, pronoun, conjunction, preposition, interjection, phrase]
+          example: adverb
+        example_sentence:
+          type: string
+          example: Ntan fafe tinan
+        notes:
+          type: string
+          example: Can be used with dropped pronoun - Fafe tinan
+
+    ContributionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: contrib_abc123
+        status:
+          type: string
+          enum: [pending_review, auto_approved, merged]
+          example: pending_review
+        message:
+          type: string
+          example: Thank you! Your contribution is queued for review.
+        similar_existing:
+          type: array
+          items:
+            type: string
+          description: Similar words already in lexicon
+
+    FeedbackRequest:
+      type: object
+      required:
+        - response_id
+        - rating
+      properties:
+        response_id:
+          type: string
+          description: ID from the GenerateResponse
+          example: resp_xyz789
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 4
+        correction:
+          type: string
+          description: Correct Soussou if wrong
+          example: Tana mu nana
+        notes:
+          type: string
+          example: This is how my grandmother says it
+
+    FeedbackResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: fb_def456
+        status:
+          type: string
+          example: recorded
+        message:
+          type: string
+          example: Feedback recorded. This helps Guinius learn!
+        pattern_updated:
+          type: boolean
+          example: false
+
+    StatsResponse:
+      type: object
+      properties:
+        total_words:
+          type: integer
+          example: 8974
+        total_variants:
+          type: integer
+          example: 11275
+        total_templates:
+          type: integer
+          example: 52
+        contributions_pending:
+          type: integer
+          example: 12
+        categories:
+          type: object
+          additionalProperties:
+            type: integer
+          example:
+            noun: 3420
+            verb: 1856
+            adjective: 892
+
+    NotFoundResponse:
+      type: object
+      properties:
+        found:
+          type: boolean
+          example: false
+        word:
+          type: string
+          example: songo
+        suggestions:
+          type: array
+          items:
+            type: string
+          description: Similar words that might match
+        message:
+          type: string
+          example: Word not found. Would you like to contribute it?

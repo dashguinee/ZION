@@ -1,0 +1,885 @@
+{
+  "metadata": {
+    "source": "Peace Corps Susu Language Materials",
+    "language": "Susu/Soussou",
+    "iso_code": "sus",
+    "region": "Guinea, Sierra Leone",
+    "extraction_date": "2025-11-20",
+    "total_entries": 156,
+    "categories": [
+      "numbers",
+      "days_of_week",
+      "greetings",
+      "pronouns",
+      "question_words",
+      "family",
+      "time",
+      "household",
+      "verbs",
+      "grammar_particles",
+      "common_words",
+      "phrases"
+    ],
+    "notes": "Extracted from Peace Corps educational materials and related Susu learning resources. French loanwords present and accepted as normal for Susu."
+  },
+  "vocabulary": [
+    {
+      "susu": "keren",
+      "english": "one",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "firin",
+      "english": "two",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "saxan",
+      "english": "three",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "naani",
+      "english": "four",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "suli",
+      "english": "five",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "senni",
+      "english": "six",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "solofere",
+      "english": "seven",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "solomasaxan",
+      "english": "eight",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "solomanaani",
+      "english": "nine",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu",
+      "english": "ten",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun keren",
+      "english": "eleven",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun firin",
+      "english": "twelve",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun saxan",
+      "english": "thirteen",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun naani",
+      "english": "fourteen",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun suli",
+      "english": "fifteen",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun senni",
+      "english": "sixteen",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun solofere",
+      "english": "seventeen",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun solomasaxan",
+      "english": "eighteen",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "fuu nun solomanaani",
+      "english": "nineteen",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "moxogen",
+      "english": "twenty",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "tongo saxan",
+      "english": "thirty",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "tongo naani",
+      "english": "forty",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "tongo suli",
+      "english": "fifty",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "tongo senni",
+      "english": "sixty",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "tongo solofere",
+      "english": "seventy",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "tongo solomasaxan",
+      "english": "eighty",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "tongo solomanaani",
+      "english": "ninety",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "keme",
+      "english": "hundred",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "wulu keren",
+      "english": "thousand",
+      "category": "numbers",
+      "source": "Peace Corps/Languages and Numbers"
+    },
+    {
+      "susu": "Tene",
+      "english": "Monday",
+      "category": "days_of_week",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Telate",
+      "english": "Tuesday",
+      "category": "days_of_week",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Arabe",
+      "english": "Wednesday",
+      "category": "days_of_week",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Alxamse",
+      "english": "Thursday",
+      "category": "days_of_week",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Arume",
+      "english": "Friday",
+      "category": "days_of_week",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Simiti",
+      "english": "Saturday",
+      "category": "days_of_week",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Tana mu na?",
+      "english": "How are you?",
+      "category": "greetings",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "I kena",
+      "english": "Good morning",
+      "category": "greetings",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Heri xi?",
+      "english": "Did you spend the night in peace?",
+      "category": "greetings",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "I feyen",
+      "english": "Good afternoon",
+      "category": "greetings",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "I nunmare",
+      "english": "Good evening",
+      "category": "greetings",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "I nu wali",
+      "english": "Thank you",
+      "category": "greetings",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "I fa nu wali",
+      "english": "You're welcome",
+      "category": "greetings",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Tana yo mu feen",
+      "english": "No misfortune / I'm fine",
+      "category": "greetings",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "n",
+      "english": "I (first person singular)",
+      "category": "pronouns",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "i",
+      "english": "you (second person singular)",
+      "category": "pronouns",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "a",
+      "english": "he/she/it (third person singular)",
+      "category": "pronouns",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "muxu",
+      "english": "we (exclusive - listener not included)",
+      "category": "pronouns",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "won",
+      "english": "we (inclusive - listener included)",
+      "category": "pronouns",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "wo",
+      "english": "you (second person plural)",
+      "category": "pronouns",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "e",
+      "english": "they (third person plural)",
+      "category": "pronouns",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "munse",
+      "english": "what",
+      "category": "question_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "nde",
+      "english": "who",
+      "category": "question_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "khame nde",
+      "english": "someone",
+      "category": "question_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "se nde",
+      "english": "something",
+      "category": "question_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "baba",
+      "english": "father",
+      "category": "family",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "nga",
+      "english": "mother",
+      "category": "family",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "tara",
+      "english": "brother/sister (sibling)",
+      "category": "family",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "xamema",
+      "english": "brother (male sibling)",
+      "category": "family",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "ginema",
+      "english": "sister (female sibling)",
+      "category": "family",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "xunya",
+      "english": "younger sibling",
+      "category": "family",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "dembaya",
+      "english": "family",
+      "category": "family",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "feyin",
+      "english": "afternoon",
+      "category": "time",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "noumare",
+      "english": "evening/night",
+      "category": "time",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "tebili",
+      "english": "table",
+      "category": "household",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "fore gongni",
+      "english": "plastic chair",
+      "category": "household",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "kopi",
+      "english": "cup",
+      "category": "household",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "doho se",
+      "english": "seat/chair (something to sit on)",
+      "category": "household",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "banxi",
+      "english": "house",
+      "category": "household",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "khude",
+      "english": "room",
+      "category": "household",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "siga",
+      "english": "to go",
+      "category": "verbs",
+      "source": "Peace Corps/Glosbe"
+    },
+    {
+      "susu": "sigafe",
+      "english": "to go (infinitive form)",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "don",
+      "english": "to eat",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "min",
+      "english": "to drink",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "to",
+      "english": "to see",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "doho",
+      "english": "to sit",
+      "category": "verbs",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "fa",
+      "english": "to say/speak",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "kolon",
+      "english": "to know",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "wama",
+      "english": "to want",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "keli",
+      "english": "to get up/rise",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "lu",
+      "english": "to stay/remain",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "songnira",
+      "english": "to bring",
+      "category": "verbs",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "danguima",
+      "english": "to pass",
+      "category": "verbs",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "sebeli",
+      "english": "to write",
+      "category": "verbs",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "bara",
+      "english": "perfective marker (completed action)",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "mu",
+      "english": "negation particle",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "ma",
+      "english": "postposition/future marker",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "ra",
+      "english": "locative postposition (at/in)",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "na",
+      "english": "postposition (with/at)",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "xa",
+      "english": "possessive/subjunctive marker",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "xi",
+      "english": "past tense suffix",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "fe",
+      "english": "infinitive suffix",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "yi",
+      "english": "existential marker (there is)",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "xili",
+      "english": "name",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "guine",
+      "english": "woman",
+      "category": "common_words",
+      "source": "Peace Corps/Wikipedia"
+    },
+    {
+      "susu": "Ala",
+      "english": "God",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "susuwi",
+      "english": "horse/horseman",
+      "category": "common_words",
+      "source": "Peace Corps/Wikipedia"
+    },
+    {
+      "susu": "fan",
+      "english": "also/too",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "birin",
+      "english": "all/every",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "tela",
+      "english": "today",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "ye",
+      "english": "water",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "woto",
+      "english": "car/vehicle",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "maakiti",
+      "english": "market",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "xaranderaba",
+      "english": "student",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "yire",
+      "english": "place",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "adamadi",
+      "english": "human being/person",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "sariye",
+      "english": "law",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "N xili...",
+      "english": "My name is...",
+      "category": "phrases",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "I xili di?",
+      "english": "What is your name?",
+      "category": "phrases",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "N wama sigafe",
+      "english": "I want to go",
+      "category": "phrases",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "I wama sigafe maakiti?",
+      "english": "Do you want to go to the market?",
+      "category": "phrases",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "I munse don ma?",
+      "english": "What will you eat?",
+      "category": "phrases",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "I nde to?",
+      "english": "Who did you see?",
+      "category": "phrases",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "I munse falaxi?",
+      "english": "What did you say?",
+      "category": "phrases",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "N khude na minde?",
+      "english": "Where is my room?",
+      "category": "phrases",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Inakha ma sukhu!",
+      "english": "Don't touch me there!",
+      "category": "phrases",
+      "source": "Peace Corps/Wikivoyage"
+    },
+    {
+      "susu": "Noumare n famane, kha Allah tiin",
+      "english": "I'm going to return tonight (God willing)",
+      "category": "phrases",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "Tebili ra danguima, n ha sebeli ti",
+      "english": "Pass me the table, I'm going to write",
+      "category": "phrases",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "Fore gongni songnira, n ha doho",
+      "english": "Bring me a plastic chair, I'm going to sit down",
+      "category": "phrases",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "Kopi songnira n ha ye min",
+      "english": "Bring me a cup, I'm going to drink water",
+      "category": "phrases",
+      "source": "Peace Corps/Wisconsin"
+    },
+    {
+      "susu": "Fa hougni sasse firin nan m be",
+      "english": "Please bring me two pillows",
+      "category": "phrases",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "Iyo",
+      "english": "Yes",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "Ade",
+      "english": "No",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "Tana",
+      "english": "misfortune/trouble",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "heri",
+      "english": "peace/well-being",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "kande",
+      "english": "here",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "suturade",
+      "english": "a little/small",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "rafilide",
+      "english": "near/close",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "hougni",
+      "english": "pillow",
+      "category": "household",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "sasse",
+      "english": "cushion/pillow",
+      "category": "household",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "adamadie birin",
+      "english": "all human beings",
+      "category": "phrases",
+      "source": "Peace Corps/UDHR"
+    },
+    {
+      "susu": "barixine",
+      "english": "born",
+      "category": "verbs",
+      "source": "Peace Corps/UDHR"
+    },
+    {
+      "susu": "yetералui",
+      "english": "freedom/liberty",
+      "category": "common_words",
+      "source": "Peace Corps/UDHR"
+    },
+    {
+      "susu": "yete kolonyi",
+      "english": "dignity",
+      "category": "common_words",
+      "source": "Peace Corps/UDHR"
+    },
+    {
+      "susu": "yete suxu",
+      "english": "rights",
+      "category": "common_words",
+      "source": "Peace Corps/UDHR"
+    },
+    {
+      "susu": "lan",
+      "english": "equal/same",
+      "category": "common_words",
+      "source": "Peace Corps/UDHR"
+    },
+    {
+      "susu": "seedenya",
+      "english": "testimony/witness",
+      "category": "common_words",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "naxan",
+      "english": "which/that",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "alako",
+      "english": "so that/in order to",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "fera",
+      "english": "for/in order to",
+      "category": "grammar_particles",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "noma",
+      "english": "can/able",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "nabatude",
+      "english": "to obey/follow",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "famane",
+      "english": "to return",
+      "category": "verbs",
+      "source": "Peace Corps"
+    },
+    {
+      "susu": "ti",
+      "english": "to do/make",
+      "category": "verbs",
+      "source": "Peace Corps"
+    }
+  ]
+}

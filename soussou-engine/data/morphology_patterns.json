@@ -1,0 +1,455 @@
+{
+  "version": "1.0",
+  "language": "Soussou",
+  "description": "Morphological patterns for Soussou word formation and derivation",
+
+  "verb_suffixes": {
+    "description": "Suffixes and prefixes used in verb formation",
+    "patterns": [
+      {
+        "morpheme": "-fé",
+        "function": "action/continuous marker",
+        "description": "Creates action verbs, often from French roots or indicating ongoing action",
+        "examples": [
+          {"base": "comprend", "derived": "comprendfé", "meaning": "to understand/understanding"},
+          {"base": "fa", "derived": "fafé", "meaning": "coming/to come"},
+          {"base": "siga", "derived": "sigafé", "meaning": "going/to go"}
+        ],
+        "notes": "Can be spelled as -fé, -fe, or -fè depending on transcription"
+      },
+      {
+        "morpheme": "-xi",
+        "function": "past/perfective marker",
+        "description": "Indicates completed action or past participle",
+        "examples": [
+          {"base": "fala", "derived": "falaxi", "meaning": "said/spoken"},
+          {"base": "ba", "derived": "baxi", "meaning": "finished/done"},
+          {"base": "faxamu", "derived": "faxamuxi", "meaning": "understood"},
+          {"base": "keli", "derived": "kelixi", "meaning": "left/departed"},
+          {"base": "tongo", "derived": "tongoxi", "meaning": "taken"},
+          {"base": "to", "derived": "toxi", "meaning": "seen"},
+          {"base": "suxu", "derived": "suxuxi", "meaning": "held/touched"}
+        ],
+        "notes": "Very productive suffix for creating perfective aspect"
+      },
+      {
+        "morpheme": "ra-",
+        "function": "causative verbal prefix",
+        "description": "Adds causative meaning or indicates location/direction",
+        "examples": [
+          {"base": "verb", "derived": "ra-verb", "meaning": "to cause to verb"},
+          {"base": "ba", "derived": "raba", "meaning": "to cause to do/make do"}
+        ],
+        "notes": "Also functions as locative/at particle"
+      },
+      {
+        "morpheme": "ma-",
+        "function": "present/future tense marker",
+        "description": "Indicates present or future action",
+        "examples": [
+          {"base": "verb", "derived": "ma-verb", "meaning": "is verb-ing / will verb"}
+        ],
+        "notes": "Also functions as possessive marker in different context"
+      },
+      {
+        "morpheme": "ne/nɛ",
+        "function": "past tense marker",
+        "description": "Indicates past tense",
+        "examples": [
+          {"pattern": "Subject + ne + Verb", "meaning": "Subject did Verb"}
+        ],
+        "notes": "Particle placed after subject"
+      },
+      {
+        "morpheme": "bara",
+        "function": "perfective/completive marker",
+        "description": "Indicates completed action",
+        "examples": [
+          {"pattern": "Subject + bara + Verb", "meaning": "Subject has Verb-ed"}
+        ],
+        "notes": "Common in Bible translations"
+      }
+    ]
+  },
+
+  "pronoun_contractions": {
+    "description": "Pronoun forms and their contractions",
+    "base_pronouns": [
+      {
+        "base": "n",
+        "emphatic": "n tan / Ntan",
+        "subject": "N'na",
+        "object": "N' / n",
+        "person": "1st singular",
+        "meaning": "I / me"
+      },
+      {
+        "base": "i",
+        "emphatic": "i tan / Itan",
+        "subject": "Ina",
+        "object": "I / i",
+        "person": "2nd singular",
+        "meaning": "you"
+      },
+      {
+        "base": "a",
+        "emphatic": "a tan / Atan",
+        "subject": "Ana",
+        "object": "A / a",
+        "person": "3rd singular",
+        "meaning": "he / she / it"
+      },
+      {
+        "base": "won",
+        "emphatic": "won tan",
+        "variants": ["Whon", "Whon'"],
+        "subject": "won",
+        "object": "won",
+        "person": "1st plural inclusive",
+        "meaning": "we (including listener)"
+      },
+      {
+        "base": "muxu",
+        "emphatic": "muxu tan",
+        "variants": ["Moukhou", "mukhu"],
+        "subject": "muxu",
+        "object": "muxu",
+        "person": "1st plural exclusive",
+        "meaning": "we (excluding listener)"
+      },
+      {
+        "base": "wo",
+        "emphatic": "wo tan",
+        "subject": "wo",
+        "object": "wo",
+        "person": "2nd plural/formal",
+        "meaning": "you (plural/formal)"
+      },
+      {
+        "base": "e",
+        "emphatic": "e tan / Etan",
+        "subject": "e",
+        "object": "e",
+        "person": "3rd plural",
+        "meaning": "they / them"
+      }
+    ],
+    "contraction_rules": [
+      {
+        "pattern": "pronoun + na → contracted subject",
+        "examples": [
+          {"full": "n + na", "contracted": "N'na", "meaning": "I am (action)"},
+          {"full": "i + na", "contracted": "Ina", "meaning": "you are (action)"}
+        ]
+      },
+      {
+        "pattern": "pronoun + tan → emphatic form",
+        "examples": [
+          {"full": "n + tan", "contracted": "Ntan", "meaning": "I/me (emphatic)"},
+          {"full": "i + tan", "contracted": "Itan", "meaning": "you (emphatic)"},
+          {"full": "a + tan", "contracted": "Atan", "meaning": "he/she (emphatic)"},
+          {"full": "e + tan", "contracted": "Etan", "meaning": "they (emphatic)"}
+        ],
+        "notes": "Emphatic forms used for topic/emphasis"
+      },
+      {
+        "pattern": "n' + verb → object + verb",
+        "examples": [
+          {"full": "n' + khili", "contracted": "N'khili", "meaning": "call me"},
+          {"full": "n' + mato", "contracted": "N'mato", "meaning": "look at me"}
+        ]
+      }
+    ]
+  },
+
+  "possessive_rules": {
+    "description": "Rules for forming possessive constructions",
+    "patterns": [
+      {
+        "type": "first_person_singular",
+        "marker": "ma",
+        "forms": ["n ma", "M'ma", "mma"],
+        "meaning": "my",
+        "examples": [
+          {"soussou": "n ma gine", "english": "my wife"},
+          {"soussou": "M'ma woto", "english": "my car"},
+          {"soussou": "n ma xame", "english": "my husband"}
+        ]
+      },
+      {
+        "type": "second_person_singular",
+        "marker": "kha",
+        "forms": ["i kha", "Ikha"],
+        "meaning": "your",
+        "examples": [
+          {"soussou": "Ikha ChatGPT", "english": "your ChatGPT"},
+          {"soussou": "i kha woto", "english": "your car"}
+        ],
+        "alternate": {
+          "form": "itan + noun",
+          "example": {"soussou": "Itan khafé", "english": "your situation"}
+        }
+      },
+      {
+        "type": "third_person_singular",
+        "marker": "kha",
+        "forms": ["a kha", "Akha"],
+        "meaning": "his/her",
+        "examples": [
+          {"soussou": "Akha woto", "english": "his/her car"},
+          {"soussou": "a baba", "english": "his/her father"}
+        ]
+      },
+      {
+        "type": "first_person_plural",
+        "marker": "ma",
+        "forms": ["won ma", "Whonma"],
+        "meaning": "our",
+        "examples": [
+          {"soussou": "Whonma woto", "english": "our car"},
+          {"soussou": "Whonma bateau", "english": "our boat"}
+        ]
+      },
+      {
+        "type": "third_person_plural",
+        "marker": "kha",
+        "forms": ["e kha", "Ekha", "Etan kha"],
+        "meaning": "their",
+        "examples": [
+          {"soussou": "Ekha woto", "english": "their car"},
+          {"soussou": "e baba", "english": "their father"},
+          {"soussou": "Etan kha avion", "english": "their airplane"}
+        ]
+      }
+    ],
+    "general_rules": [
+      {
+        "rule": "First person uses -ma marker",
+        "applies_to": ["1st singular (n ma)", "1st plural (won ma)"]
+      },
+      {
+        "rule": "Third person uses -kha marker",
+        "applies_to": ["3rd singular (a kha)", "3rd plural (e kha)"]
+      },
+      {
+        "rule": "Second person can use -kha or pronoun directly",
+        "applies_to": ["2nd singular (i kha / itan)"]
+      },
+      {
+        "rule": "Possessive marker precedes noun",
+        "pattern": "POSSESSIVE + NOUN"
+      }
+    ]
+  },
+
+  "negation_rules": {
+    "description": "Rules for forming negative sentences",
+    "markers": [
+      {
+        "form": "mu",
+        "type": "negation particle",
+        "position": "before verb",
+        "examples": [
+          {"soussou": "N mu a faxamuxi", "english": "I don't understand"}
+        ]
+      },
+      {
+        "form": "m'ma",
+        "type": "contracted negation",
+        "position": "before verb",
+        "examples": [
+          {"soussou": "Ntan m'ma kolon", "english": "I don't know"},
+          {"soussou": "Ina m'ma fafé", "english": "you're not coming"},
+          {"soussou": "Ana m'ma kolon", "english": "he/she doesn't know"},
+          {"soussou": "Etan m'ma fafé", "english": "they're not coming"},
+          {"soussou": "Ntan m'ma comprendfé", "english": "I don't understand"}
+        ],
+        "notes": "Different from M'ma (possessive 'my') - context determines meaning"
+      }
+    ],
+    "sentence_pattern": {
+      "formula": "SUBJECT + m'ma/mu + VERB",
+      "examples": [
+        {"pattern": "Ntan + m'ma + kolon", "result": "I don't know"},
+        {"pattern": "Ana + m'ma + fafé", "result": "he/she isn't coming"},
+        {"pattern": "Whon + m'ma + fafé", "result": "we're not coming"}
+      ]
+    },
+    "disambiguation": {
+      "negation_m'ma": "Placed before VERB → negation",
+      "possessive_m'ma": "Placed before NOUN → possession (my)",
+      "example": {
+        "negation": "M'ma woto m'ma fafé",
+        "breakdown": "My car (possessive) is not (negation) coming"
+      }
+    }
+  },
+
+  "plural_rules": {
+    "description": "Rules for forming plurals",
+    "patterns": [
+      {
+        "suffix": "-e",
+        "function": "plural marker / 3rd person plural pronoun",
+        "examples": [
+          {"singular": "di", "plural": "diye", "meaning": "child → children"},
+          {"singular": "mixi", "plural": "mixie", "meaning": "person → people"}
+        ],
+        "notes": "Also functions as 3rd person plural pronoun 'they'"
+      }
+    ],
+    "usage": [
+      {
+        "context": "As noun suffix",
+        "example": "adamadie (humans/people)"
+      },
+      {
+        "context": "As pronoun",
+        "example": "e baba (their father)"
+      }
+    ],
+    "notes": "Soussou uses fewer overt plural markers than many languages; context often indicates plurality"
+  },
+
+  "compound_patterns": {
+    "description": "Patterns for forming compound words and phrases",
+    "types": [
+      {
+        "type": "number_compounds",
+        "connector": "nun",
+        "meaning": "and (in numbers)",
+        "examples": [
+          {"soussou": "fuu nun keren", "english": "11 (ten and one)"},
+          {"soussou": "moxogeng nun suli", "english": "25 (twenty and five)"},
+          {"soussou": "keme firin", "english": "200 (hundred two)"}
+        ]
+      },
+      {
+        "type": "possessive_compounds",
+        "pattern": "PRONOUN + ma/kha + NOUN",
+        "examples": [
+          {"soussou": "n ma gine", "english": "my wife"},
+          {"soussou": "a baba", "english": "his/her father"},
+          {"soussou": "e baba", "english": "their father"}
+        ]
+      },
+      {
+        "type": "verb_location_compounds",
+        "pattern": "VERB + LOCATION",
+        "examples": [
+          {"soussou": "Fa bé", "english": "come here"},
+          {"soussou": "Siga yire", "english": "go there"},
+          {"soussou": "Dokho bé", "english": "sit here"},
+          {"soussou": "Mmèmè bé", "english": "wait here"},
+          {"soussou": "Fa bangui kouï", "english": "come inside the house"}
+        ]
+      },
+      {
+        "type": "verb_object_compounds",
+        "pattern": "OBJECT + VERB",
+        "examples": [
+          {"soussou": "Gui sonyi", "english": "give me that"},
+          {"soussou": "A mato", "english": "look at him/her"},
+          {"soussou": "N'khili", "english": "call me"}
+        ],
+        "notes": "SOV order - object precedes verb"
+      },
+      {
+        "type": "question_compounds",
+        "patterns": [
+          {"pattern": "PRONOUN + go/ngo", "meaning": "what about PRONOUN"},
+          {"pattern": "PRONOUN + khafé", "meaning": "because of PRONOUN / PRONOUN's situation"},
+          {"pattern": "NOUN + na + mindé", "meaning": "where is NOUN"}
+        ],
+        "examples": [
+          {"soussou": "Itan ngo?", "english": "what about you?"},
+          {"soussou": "Itan khafé gbo?", "english": "you have a lot going on?"},
+          {"soussou": "bangkhi na minde?", "english": "where is the house?"}
+        ]
+      },
+      {
+        "type": "french_soussou_hybrids",
+        "description": "Code-switching patterns common in spoken Soussou",
+        "examples": [
+          {"soussou": "comprendfé", "breakdown": "comprend (French) + fé (Soussou)"},
+          {"soussou": "Whonma bateau", "breakdown": "Whonma (Soussou) + bateau (French)"},
+          {"soussou": "un peu", "context": "French modifier in Soussou sentence"},
+          {"soussou": "Account n'ma yitima na", "english": "Your account is almost finished"}
+        ],
+        "notes": "Natural code-switching between Soussou and French is authentic"
+      }
+    ]
+  },
+
+  "word_formation_templates": {
+    "description": "Templates for generating new valid words",
+    "verb_formation": [
+      {
+        "template": "FRENCH_ROOT + fé",
+        "generates": "continuous/action verb",
+        "example": "comprend + fé → comprendfé"
+      },
+      {
+        "template": "VERB_ROOT + xi",
+        "generates": "past/perfective form",
+        "example": "fala + xi → falaxi (said)"
+      },
+      {
+        "template": "ra + VERB",
+        "generates": "causative verb",
+        "example": "ra + ba → raba (cause to do)"
+      }
+    ],
+    "pronoun_formation": [
+      {
+        "template": "PRONOUN_BASE + tan",
+        "generates": "emphatic pronoun",
+        "example": "n + tan → Ntan (I, emphatic)"
+      },
+      {
+        "template": "PRONOUN_BASE + na",
+        "generates": "subject pronoun (action)",
+        "example": "i + na → Ina (you are)"
+      }
+    ],
+    "possessive_formation": [
+      {
+        "template": "n/won + ma + NOUN",
+        "generates": "1st person possession",
+        "example": "n ma woto → my car"
+      },
+      {
+        "template": "a/e/i + kha + NOUN",
+        "generates": "2nd/3rd person possession",
+        "example": "a kha woto → his/her car"
+      }
+    ]
+  },
+
+  "phonological_patterns": {
+    "description": "Sound patterns affecting morphology",
+    "apostrophe_contraction": {
+      "rule": "Apostrophe indicates elision/contraction",
+      "examples": ["N'na", "N'khili", "M'ma", "Whon'"]
+    },
+    "consonant_clusters": {
+      "common": ["kh", "gb", "ng", "nd", "mb"],
+      "notes": "These are common in West African languages"
+    },
+    "vowel_harmony": {
+      "tendency": "Vowels in suffixes often harmonize with root vowels",
+      "notes": "Less strict than some African languages"
+    }
+  },
+
+  "metadata": {
+    "source_files": [
+      "/home/user/ZION/soussou-engine/data/lexicon.json",
+      "/home/user/ZION/soussou-engine/data/patterns.md",
+      "/home/user/ZION/soussou-engine/raw/context_extraction.json"
+    ],
+    "total_lexicon_words": 8882,
+    "generated_date": "2025-11-20",
+    "purpose": "Enable AI systems to generate valid new Soussou words following morphological rules"
+  }
+}

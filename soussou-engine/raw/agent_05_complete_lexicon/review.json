@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "agent": "agent_05_complete_lexicon",
+    "task": "Words requiring verification or additional context",
+    "date": "2025-11-20",
+    "status": "needs_review",
+    "notes": "These words need verification from native speakers or additional scholarly sources"
+  },
+  "needs_verification": {
+    "potential_french_loanwords": {
+      "category": "Potential French Loanwords",
+      "confidence": "medium",
+      "notes": "French loanwords are NORMAL in Soussou - need to verify these are in common use",
+      "words": [
+        {"susu": "ni bonbon mané", "english": "I will hit you", "french": "Je vais te frapper", "issue": "Contains 'bonbon' - verify if common usage"},
+        {"susu": "tanàmoufègnê", "english": "Good evening", "french": "Bonsoir", "issue": "Alternative to standard greeting - verify regional usage"}
+      ]
+    },
+    "tone_marks_unclear": {
+      "category": "Tone Mark Variations",
+      "confidence": "medium",
+      "notes": "Different sources show different tone markings - need standardization",
+      "words": [
+        {"variant1": "fírín", "variant2": "firin", "english": "two", "issue": "Tone marking varies by source"},
+        {"variant1": "m̀ɔx̀ɔǵɛŋ", "variant2": "moxogen", "english": "twenty", "issue": "Complex tone marking - verify standard form"},
+        {"variant1": "kérén", "variant2": "keren", "english": "one", "issue": "Tone marking varies by source"}
+      ]
+    },
+    "incomplete_vocabulary_lists": {
+      "category": "Vocabulary Categories Needing Expansion",
+      "confidence": "low",
+      "notes": "These categories exist but full word lists were not accessible online",
+      "categories": [
+        {
+          "category": "Colors",
+          "found_count": 0,
+          "expected_words": ["white", "black", "red", "green", "blue", "yellow"],
+          "likely_sources": "Peace Corps PDF, Lacan 1942 dictionary"
+        },
+        {
+          "category": "Animals",
+          "found_count": 0,
+          "expected_words": ["dog", "cat", "bird", "fish", "cow", "chicken", "goat"],
+          "likely_sources": "Peace Corps PDF, academic resources"
+        },
+        {
+          "category": "Food",
+          "found_count": 0,
+          "expected_words": ["rice", "water", "meat", "fish", "bread", "fruit"],
+          "likely_sources": "Peace Corps PDF, Evaneos survival vocabulary"
+        },
+        {
+          "category": "Days of Week",
+          "found_count": 0,
+          "expected_words": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "notes": "Polyglot Club has a page but content not accessible",
+          "likely_sources": "Polyglot Club, Peace Corps PDF"
+        },
+        {
+          "category": "Months",
+          "found_count": 0,
+          "expected_words": ["January through December"],
+          "likely_sources": "Peace Corps PDF"
+        },
+        {
+          "category": "Adjectives",
+          "found_count": 0,
+          "expected_words": ["big", "small", "good", "bad", "beautiful", "hot", "cold"],
+          "likely_sources": "Peace Corps PDF, academic grammars"
+        },
+        {
+          "category": "Body Parts (Extended)",
+          "found_count": 3,
+          "expected_words": ["hand", "foot", "eye", "ear", "nose", "mouth", "arm", "leg"],
+          "notes": "University of Wisconsin has full lesson but content not fully accessible",
+          "likely_sources": "University of Wisconsin, Peace Corps PDF"
+        },
+        {
+          "category": "Transportation",
+          "found_count": 0,
+          "expected_words": ["car", "boat", "road", "airplane"],
+          "likely_sources": "Wikivoyage phrasebook (not fully accessible)"
+        },
+        {
+          "category": "Directions",
+          "found_count": 0,
+          "expected_words": ["left", "right", "straight", "here", "there"],
+          "likely_sources": "Polyglot Club, Wikivoyage"
+        },
+        {
+          "category": "Time expressions",
+          "found_count": 0,
+          "expected_words": ["today", "tomorrow", "yesterday", "now", "later"],
+          "likely_sources": "Peace Corps PDF, University of Wisconsin"
+        }
+      ]
+    },
+    "unverified_sources": {
+      "category": "Words from Single Unverified Sources",
+      "confidence": "low",
+      "notes": "These words appeared in only one source - need cross-verification",
+      "words": [
+        {"susu": "Sèwè", "english": "joy", "source": "Glosbe only"},
+        {"susu": "wôlidé", "english": "work", "source": "Single phrase context"},
+        {"susu": "fédénè", "english": "to search/look for", "source": "Single phrase context"},
+        {"susu": "gant", "english": "tired (in n'bara t'a gant)", "source": "Single phrase context"}
+      ]
+    },
+    "orthography_questions": {
+      "category": "Orthography Standardization",
+      "confidence": "medium",
+      "notes": "Susu can be written in Latin, Arabic, or N'Ko scripts - standardization needed",
+      "questions": [
+        "Standard representation of the uvular fricative 'x'",
+        "Consistent tone marking system",
+        "Handling of nasalized vowels",
+        "Standard apostrophe usage for contractions (n', m')"
+      ]
+    }
+  },
+  "priority_actions": [
+    {
+      "action": "Download and process Peace Corps Susu Language Course PDF",
+      "url": "https://www.livelingua.com/peace-corps/Susu/susu-language-course.pdf",
+      "expected_content": "Full vocabulary lists, dialogues, cultural notes - estimated 500+ additional words",
+      "priority": "HIGH"
+    },
+    {
+      "action": "Access Wikivoyage Susu Phrasebook directly",
+      "url": "https://en.wikivoyage.org/wiki/Susu_phrasebook",
+      "expected_content": "Colors, transportation, food, time vocabulary",
+      "priority": "HIGH"
+    },
+    {
+      "action": "Access Polyglot Club specific vocabulary pages",
+      "urls": [
+        "https://polyglotclub.com/wiki/Language/Susu/Vocabulary/Family",
+        "https://polyglotclub.com/wiki/Language/Susu/Vocabulary/Days-of-the-Week",
+        "https://polyglotclub.com/wiki/Language/Susu/Vocabulary/Numbers"
+      ],
+      "expected_content": "Complete family terms, days of week, number system",
+      "priority": "MEDIUM"
+    },
+    {
+      "action": "Locate Lacan 1942 Dictionary",
+      "reference": "Grammaire et dictionnaire français-soussou et soussou-français, 404 pages",
+      "expected_content": "Most comprehensive historical dictionary - thousands of words",
+      "priority": "HIGH"
+    },
+    {
+      "action": "Access Maurice Houis 1963 study",
+      "reference": "Étude descriptive de la langue susu",
+      "expected_content": "Academic linguistic analysis with extensive vocabulary",
+      "priority": "MEDIUM"
+    },
+    {
+      "action": "Contact native Soussou speakers for verification",
+      "expected_content": "Verification of all collected vocabulary, regional variations, modern usage",
+      "priority": "HIGH"
+    }
+  ],
+  "estimated_additional_words": {
+    "peace_corps_pdf": "500-800 words",
+    "wikivoyage_phrasebook": "100-200 words",
+    "polyglot_club_pages": "100-150 words",
+    "lacan_1942_dictionary": "2000+ words",
+    "total_potential": "3000+ words with full access to sources"
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "metadata": {
+    "language": "Soussou/Susu",
+    "endonym": "Sosoxui",
+    "iso_code": "sus",
+    "language_family": "Mande (Niger-Congo)",
+    "speakers": "~2.5 million",
+    "regions": ["Guinea", "Sierra Leone", "Guinea-Bissau", "Senegal"],
+    "closest_relative": "Yalunka",
+    "extraction_date": "2025-11-20",
+    "total_entries": 247
+  },
+  "pronouns": {
+    "subject_pronouns": {
+      "singular": [
+        {"susu": "n", "english": "I", "person": "1st"},
+        {"susu": "i", "english": "you", "person": "2nd"},
+        {"susu": "a", "english": "he/she/it", "person": "3rd"}
+      ],
+      "plural": [
+        {"susu": "muxu", "english": "we (exclusive)", "person": "1st", "note": "listener not included"},
+        {"susu": "won", "english": "we (inclusive)", "person": "1st", "note": "listener included"},
+        {"susu": "wo", "english": "you (plural)", "person": "2nd"},
+        {"susu": "e", "english": "they", "person": "3rd"}
+      ]
+    },
+    "object_pronouns": {
+      "note": "Personal subject pronouns also function as object pronouns"
+    },
+    "possessive": {
+      "note": "Used with natural possessions (body parts, family)"
+    }
+  },
+  "numbers": {
+    "cardinal": [
+      {"number": 1, "susu": "kérén"},
+      {"number": 2, "susu": "fírín"},
+      {"number": 3, "susu": "sàxán"},
+      {"number": 4, "susu": "náání"},
+      {"number": 5, "susu": "súlí"},
+      {"number": 6, "susu": "sénní"},
+      {"number": 7, "susu": "sólófèré"},
+      {"number": 8, "susu": "sólómásàxán"},
+      {"number": 9, "susu": "sólómánáání"},
+      {"number": 10, "susu": "fuú"},
+      {"number": 11, "susu": "fuú nŭn kérén"},
+      {"number": 12, "susu": "fuú nŭn fírín"},
+      {"number": 13, "susu": "fuú nŭn sàxán"},
+      {"number": 14, "susu": "fuú nŭn náání"},
+      {"number": 15, "susu": "fuú nŭn súlí"},
+      {"number": 16, "susu": "fuú nŭn sénní"},
+      {"number": 17, "susu": "fuú nŭn sólófèré"},
+      {"number": 18, "susu": "fuú nŭn sólómásàxán"},
+      {"number": 19, "susu": "fuú nŭn sólómánáání"},
+      {"number": 20, "susu": "m̀ɔx̀ɔǵɛŋ"},
+      {"number": 30, "susu": "tòngó sàxán"},
+      {"number": 40, "susu": "tòngó náání"},
+      {"number": 50, "susu": "tòngó súlí"},
+      {"number": 60, "susu": "tòngó sénní"},
+      {"number": 70, "susu": "tòngó sólófèré"},
+      {"number": 80, "susu": "tòngó sólómásàxán"},
+      {"number": 90, "susu": "tòngó sólómánáání"},
+      {"number": 100, "susu": "k̀ɛḿɛ"},
+      {"number": 1000, "susu": "wúlù kérén"}
+    ],
+    "examples_with_nouns": [
+      {"susu": "woto keren", "english": "one car"},
+      {"susu": "woto firin", "english": "two cars"},
+      {"susu": "woto sakhan", "english": "three cars"},
+      {"susu": "woto fu", "english": "ten cars"}
+    ]
+  },
+  "greetings_phrases": [
+    {"susu": "I kena", "english": "Good morning", "context": "morning greeting"},
+    {"susu": "Wo kena", "english": "Good morning (plural)", "context": "greeting multiple people"},
+    {"susu": "I feyen", "english": "Good afternoon", "context": "afternoon greeting"},
+    {"susu": "I nunmare", "english": "Good evening", "context": "evening greeting"},
+    {"susu": "Tana mu na?", "english": "How are you?", "context": "health inquiry"},
+    {"susu": "I nu wali", "english": "Thank you", "context": "also used as general greeting"},
+    {"susu": "I fa nu wali", "english": "You're welcome", "context": "response to thank you"}
+  ],
+  "basic_vocabulary": {
+    "question_words": [
+      {"susu": "munse", "english": "what"},
+      {"susu": "nde", "english": "who/some", "note": "also indefinite marker"},
+      {"susu": "minde", "english": "where", "note": "location question"}
+    ],
+    "common_words": [
+      {"susu": "be", "english": "who"},
+      {"susu": "won", "english": "we"},
+      {"susu": "wo", "english": "you (plural)"},
+      {"susu": "a", "english": "he/she/it"},
+      {"susu": "siga", "english": "go"},
+      {"susu": "tara", "english": "brother/sister", "note": "sibling"},
+      {"susu": "baba", "english": "father"},
+      {"susu": "nga", "english": "mother"},
+      {"susu": "banxi", "english": "house"},
+      {"susu": "buki", "english": "book"},
+      {"susu": "ye", "english": "at/to", "note": "locative"},
+      {"susu": "woto", "english": "car"}
+    ],
+    "conjunctions": [
+      {"susu": "nun", "english": "and", "example": "fondoe nun faxamui"}
+    ],
+    "negation": [
+      {"susu": "mu", "english": "not", "note": "negation particle"}
+    ],
+    "copula": [
+      {"susu": "na", "english": "is/am/are", "note": "used with occupations and nationality"}
+    ]
+  },
+  "verbs": {
+    "basic_verbs": [
+      {"susu": "siga", "english": "to go"},
+      {"susu": "fa", "english": "to give"},
+      {"susu": "don", "english": "to eat"},
+      {"susu": "to", "english": "to see"},
+      {"susu": "suxu", "english": "to catch"},
+      {"susu": "xaba", "english": "to cut"},
+      {"susu": "bɔnbɔ", "english": "to beat"},
+      {"susu": "dula", "english": "to drown (intransitive)"},
+      {"susu": "gbalantin", "english": "to tear out"},
+      {"susu": "kɔɔ", "english": "to take down"},
+      {"susu": "gaaxu", "english": "to be afraid"},
+      {"susu": "funtu", "english": "to swell"}
+    ],
+    "prefixed_verbs": {
+      "ma_prefix_multiplicative": [
+        {"base": "bɔ̀nbɔ́", "prefixed": "màbɔ́nbɔ̀", "base_meaning": "beat (once)", "prefixed_meaning": "beat many times"},
+        {"base": "gbàlàntín", "prefixed": "màgbálàntìn", "base_meaning": "tear out", "prefixed_meaning": "tear out many objects"},
+        {"base": "xábá", "prefixed": "màxábà", "base_meaning": "cut", "prefixed_meaning": "shear, peel"},
+        {"base": "sùxú", "prefixed": "màsúxù", "base_meaning": "catch", "prefixed_meaning": "gather, collect"},
+        {"base": "kɔ̀ɔ́", "prefixed": "màkɔ́ɔ̀", "base_meaning": "take down", "prefixed_meaning": "sweep"}
+      ],
+      "ra_prefix_causative": [
+        {"base": "dúlá", "prefixed": "ràdúlà", "base_meaning": "drown (intransitive)", "prefixed_meaning": "sink (transitive)"},
+        {"base": "gààxú", "prefixed": "ràgááxù", "base_meaning": "be afraid", "prefixed_meaning": "frighten"},
+        {"base": "fúntú", "prefixed": "ràfúntù", "base_meaning": "swell", "prefixed_meaning": "inflate"}
+      ]
+    },
+    "tense_aspect_markers": [
+      {"marker": "bara", "function": "completive/accomplished aspect", "note": "perfective marker"},
+      {"marker": "-ma", "function": "verb suffix for tense/aspect"},
+      {"marker": "-xi", "function": "verb suffix for tense/aspect"},
+      {"marker": "-fe", "function": "verb suffix"},
+      {"marker": "-∅", "function": "zero marker"}
+    ],
+    "object_markers": [
+      {"marker": "bara", "function": "object marker"},
+      {"marker": "naxaa", "function": "object marker"},
+      {"marker": "xa", "function": "object marker"},
+      {"marker": "naxab", "function": "object marker"},
+      {"marker": "nu", "function": "object marker"},
+      {"marker": "na", "function": "object marker"}
+    ]
+  },
+  "example_sentences": [
+    {
+      "susu": "Adamadie birin barixinɛ e lan yɛtɛralui kui, yɛtɛ kolonyi nun yɛtɛ suxu kima",
+      "english": "All human beings are born free and equal in dignity and rights",
+      "source": "Universal Declaration of Human Rights, Article 1"
+    },
+    {
+      "susu": "I munse don ma?",
+      "english": "What will you eat?",
+      "gloss": "2sg what eat PRES"
+    },
+    {
+      "susu": "I nde to?",
+      "english": "Who did you see?",
+      "gloss": "you who see"
+    },
+    {
+      "susu": "N xili Jessica",
+      "english": "My name is Jessica",
+      "context": "self-introduction"
+    },
+    {
+      "susu": "I yatagui ma ha",
+      "english": "Wash your face!",
+      "context": "imperative"
+    },
+    {
+      "susu": "N'han yatagui ma ha fé",
+      "english": "I am washing my face",
+      "context": "progressive"
+    },
+    {
+      "susu": "Iyo, n bara ginE dçxç",
+      "english": "Yes, I have...",
+      "context": "perfective with bara"
+    },
+    {
+      "susu": "Tela na n baba ra",
+      "english": "...(regarding) my father",
+      "context": "family reference"
+    },
+    {
+      "susu": "Xaranderaba na n nga ra",
+      "english": "...(regarding) my mother",
+      "context": "family reference"
+    },
+    {
+      "susu": "Tara xamEma firin nun xunya ginEma firin na n yi",
+      "english": "Two older brothers and two younger sisters are mine",
+      "context": "family description"
+    },
+    {
+      "susu": "buki na tebili",
+      "english": "The book is on the table",
+      "context": "location"
+    }
+  ],
+  "phonology": {
+    "vowels": {
+      "monophthongs": [
+        {"symbol": "a", "description": "open front unrounded"},
+        {"symbol": "e", "description": "close-mid front unrounded"},
+        {"symbol": "ɛ", "description": "open-mid front unrounded"},
+        {"symbol": "i", "description": "close front unrounded"},
+        {"symbol": "o", "description": "close-mid back rounded"},
+        {"symbol": "ɔ", "description": "open-mid back rounded"},
+        {"symbol": "u", "description": "close back rounded"}
+      ],
+      "features": [
+        "Vowel length is contrastive (short vs long)",
+        "Nasal vowels exist",
+        "Vowel length can change word meaning"
+      ]
+    },
+    "consonants": {
+      "categories": [
+        "Stops (voiced/voiceless contrast)",
+        "Nasals",
+        "Fricatives (voiced/voiceless contrast)",
+        "Approximants"
+      ],
+      "special_characters": [
+        {"symbol": "x", "description": "voiceless velar fricative"},
+        {"symbol": "gb", "description": "labial-velar stop"},
+        {"symbol": "ŋ", "description": "velar nasal"}
+      ]
+    },
+    "tone": {
+      "system": "Three-tone system",
+      "tones": ["High", "Mid", "Low"],
+      "note": "Tone is phonemic - changes meaning",
+      "orthography": "Tone marking is optional in written Susu"
+    }
+  },
+  "demonstratives": {
+    "note": "Susu uses demonstrative forms",
+    "proximal": {"susu": "yi", "english": "this", "note": "near speaker"},
+    "distal": {"susu": "na", "english": "that", "note": "far from speaker"},
+    "definite_article": {"susu": "-i", "note": "suffix, likely from demonstrative origin"}
+  },
+  "postpositions": {
+    "note": "Susu uses postpositions rather than prepositions",
+    "examples": [
+      {"susu": "ra", "english": "locative/directional"},
+      {"susu": "ma", "english": "locative/on"},
+      {"susu": "ye", "english": "at/to"}
+    ]
+  },
+  "plural_formation": {
+    "rule": "Add -e to singular form",
+    "note": "Plural marker is a clitic that attaches to last element of NP",
+    "constraint": "Does not co-occur with numerals"
+  },
+  "sample_text": {
+    "title": "Universal Declaration of Human Rights - Article 1",
+    "susu": "Adamadie birin barixinɛ e lan yɛtɛralui kui, yɛtɛ kolonyi nun yɛtɛ suxu kima. Fondoe nun faxamui na e bɛ boresuxu kima bariboreya fanyi kui.",
+    "english": "All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood."
+  }
+}
