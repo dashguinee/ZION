@@ -295,8 +295,8 @@ function findSimilarWords(word, limit = 5) {
   const words = soussouData.lexicon.words || [];
 
   const scored = words.map(w => ({
-    word: w.soussou,
-    score: stringSimilarity(normalized, normalize(w.soussou))
+    word: w.base,
+    score: stringSimilarity(normalized, normalize(w.base))
   }));
 
   return scored
@@ -329,14 +329,14 @@ app.get('/api/soussou/lookup', (req, res) => {
 
   const searchWord = normalize(word);
   const entry = soussouData.lexicon.words?.find(w =>
-    normalize(w.soussou) === searchWord ||
+    normalize(w.base) === searchWord ||
     w.variants?.some(v => normalize(v) === searchWord)
   );
 
   if (entry) {
     res.json({
       found: true,
-      word: entry.soussou,
+      word: entry.base,
       normalized: searchWord,
       english: entry.english,
       french: entry.french,
