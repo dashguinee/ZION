@@ -1,0 +1,429 @@
+{
+  "input_classification": {
+    "greeting": {
+      "markers": ["kena", "suba", "tana", "lafia", "I kena", "I suba", "Tana mu", "kisi yire"],
+      "contexts": ["greeting_morning", "greeting_evening", "greeting_family"],
+      "description": "Greeting expressions"
+    },
+    "location_question": {
+      "markers": ["minde", "mindé", "yire?", "kira minde"],
+      "contexts": ["location_question", "family_location", "directions_question"],
+      "description": "Questions about location or whereabouts"
+    },
+    "price_question": {
+      "markers": ["songo yiri", "songo?", "cheri", "combien"],
+      "contexts": ["shopping_price", "transportation_price", "shopping_vegetables"],
+      "description": "Questions about price or cost"
+    },
+    "time_question": {
+      "markers": ["wakhati yiri", "tuma yiri", "nun di ra", "quand"],
+      "contexts": ["time_question", "time_day", "time_schedule", "family_schedule"],
+      "description": "Questions about time"
+    },
+    "yes_no_question": {
+      "markers": ["?", "eske", "lafia?", "fra?", "bon?", "marche?"],
+      "contexts": ["concern_check", "shopping_quality", "ability_question"],
+      "description": "Yes/No questions requiring affirmation or negation"
+    },
+    "command": {
+      "markers": ["siga", "fa", "dokho", "mmeme", "t'ti", "kelli", "alou", "sonyi", "facta", "mato"],
+      "contexts": ["command_shopping", "command_urgent", "command_communication", "hospitality"],
+      "description": "Imperative commands"
+    },
+    "statement": {
+      "markers": [],
+      "contexts": ["weather_rain", "transportation_problem", "absence_reason", "schedule_statement"],
+      "description": "Declarative statements requiring reaction"
+    },
+    "what_question": {
+      "markers": ["di ra", "khafe mu ra", "go?", "ngo?"],
+      "contexts": ["helping_question", "food_question", "checking_others"],
+      "description": "Questions asking 'what' or 'what about'"
+    },
+    "ability_question": {
+      "markers": ["no'mma", "noma", "ina no'mma"],
+      "contexts": ["ability_question", "ability_genuine"],
+      "description": "Questions about ability or capability"
+    },
+    "quantity_question": {
+      "markers": ["yiri?", "combien", "dimedi yiri"],
+      "contexts": ["family_question", "shopping_quantity"],
+      "description": "Questions about quantity or count"
+    }
+  },
+  "response_rules": [
+    {
+      "id": "rule_001",
+      "if_input_type": "greeting",
+      "if_time_of_day": "morning",
+      "respond_with": "morning_greeting_response",
+      "formality_adjustment": true,
+      "examples": [
+        {"input": "I kena!", "response": "Tanante, Ala xa baraka! I fan?"},
+        {"input": "Tana mu a ra?", "response": "Tana tan. I boke lafia?"}
+      ]
+    },
+    {
+      "id": "rule_002",
+      "if_input_type": "greeting",
+      "if_time_of_day": "evening",
+      "respond_with": "evening_greeting_response",
+      "formality_adjustment": true,
+      "examples": [
+        {"input": "I suba!", "response": "Kisi tan. Barka Ala xa."},
+        {"input": "Kisi yire?", "response": "Kisi tan. I denbaya lafia?"}
+      ]
+    },
+    {
+      "id": "rule_003",
+      "if_input_type": "greeting",
+      "if_context": "family_inquiry",
+      "respond_with": "family_wellness_response",
+      "examples": [
+        {"input": "I denbaya lafia?", "response": "Etan birin lafia, Ala xa baraka!"},
+        {"input": "I boke lafia?", "response": "A lafia, Ala xa baraka! A i sonyi salam."}
+      ]
+    },
+    {
+      "id": "rule_003b",
+      "if_input_type": "greeting",
+      "respond_with": "greeting_response",
+      "formality_adjustment": true,
+      "examples": [
+        {"input": "I kena!", "response": "Tanante, Ala xa baraka! I fan?"},
+        {"input": "Tana mu a ra?", "response": "Tana tan. Ala xa baraka!"},
+        {"input": "I suba!", "response": "Kisi tan. Barka Ala xa."}
+      ]
+    },
+    {
+      "id": "rule_004",
+      "if_input_type": "location_question",
+      "if_input_contains": "minde",
+      "respond_with": "location_response",
+      "examples": [
+        {"input": "Ina minde?", "response": "N'na fafe. Cinq minutes."},
+        {"input": "I baba minde?", "response": "A siga mosquee. A fafe bientot."},
+        {"input": "M'ma na minde?", "response": "A cuisine koui. A dege rafe."}
+      ]
+    },
+    {
+      "id": "rule_005",
+      "if_input_type": "location_question",
+      "if_context": "directions",
+      "respond_with": "directions_response",
+      "examples": [
+        {"input": "Hopital gui kira minde?", "response": "Siga tout droit, kirin kole. A gauche apres."},
+        {"input": "Pharmacie gui pres?", "response": "Awa. Coin droite. Cinq minutes."}
+      ]
+    },
+    {
+      "id": "rule_006",
+      "if_input_type": "price_question",
+      "if_input_contains": "songo",
+      "respond_with": "price_response",
+      "examples": [
+        {"input": "Mangue gui songo yiri?", "response": "Dix mille tan. Frais gbo!"},
+        {"input": "Telephone gui songo yiri?", "response": "Cinq cent mille. Qualite gbo!"},
+        {"input": "Poulet gui songo?", "response": "Quarante mille. Gros gbo!"}
+      ]
+    },
+    {
+      "id": "rule_007",
+      "if_input_type": "time_question",
+      "if_input_contains": "wakhati yiri",
+      "respond_with": "time_response",
+      "examples": [
+        {"input": "Wakhati yiri ra?", "response": "Wulu sakhe firin. Deux heures."},
+        {"input": "Whon' kha meeting commence wakhati yiri?", "response": "Neuf heures. Retard m'ma bon!"}
+      ]
+    },
+    {
+      "id": "rule_008",
+      "if_input_type": "time_question",
+      "if_input_contains": "nun di ra",
+      "respond_with": "day_response",
+      "examples": [
+        {"input": "Nun di ra?", "response": "Araba. Demain jeudi."}
+      ]
+    },
+    {
+      "id": "rule_009",
+      "if_input_type": "time_question",
+      "if_input_contains": "tuma yiri",
+      "respond_with": "when_response",
+      "examples": [
+        {"input": "M'ma soeur fafe tuma yiri?", "response": "A fafe samedi. Avion."},
+        {"input": "Ana malade tuma yiri?", "response": "Hier soir. Fievre gbo."}
+      ]
+    },
+    {
+      "id": "rule_010",
+      "if_input_type": "yes_no_question",
+      "if_expected_answer": "positive",
+      "respond_with": "affirmation",
+      "examples": [
+        {"input": "Poisson gui fra gbo?", "response": "Eh! Nun bi tan whon' a rasa!"},
+        {"input": "Ecole gui bon gbo?", "response": "Bon gbo! Professeur bien forme."},
+        {"input": "I tara lafia?", "response": "Awa, a lafia. Merci."}
+      ]
+    },
+    {
+      "id": "rule_011",
+      "if_input_type": "yes_no_question",
+      "if_expected_answer": "negative",
+      "respond_with": "negation",
+      "examples": [
+        {"input": "Wifi gui marche?", "response": "M'ma marche. Connexion lent gbo!"},
+        {"input": "Ina no'mma fafe maintenant?", "response": "Ntan m'ma no'mma. Demain, d'accord?"}
+      ]
+    },
+    {
+      "id": "rule_012",
+      "if_input_type": "command",
+      "if_context": "urgent",
+      "respond_with": "urgent_acknowledgment",
+      "examples": [
+        {"input": "Fa be vite! Urgent gbo!", "response": "N'na fafe! Khafe mu ra?"},
+        {"input": "T'ti! Whon' sigafe.", "response": "Mmeme! Affaires m'ma pret."}
+      ]
+    },
+    {
+      "id": "rule_013",
+      "if_input_type": "command",
+      "if_context": "shopping",
+      "respond_with": "shopping_acknowledgment",
+      "examples": [
+        {"input": "Siga marche yire. Riz rasa.", "response": "Awa. Kilo yiri n'sa rasa?"}
+      ]
+    },
+    {
+      "id": "rule_014",
+      "if_input_type": "command",
+      "if_context": "communication",
+      "respond_with": "communication_acknowledgment",
+      "examples": [
+        {"input": "N'khili quand ina yitema!", "response": "Awa, n'na i khili. Promis!"},
+        {"input": "N' mato! Gui important.", "response": "Awa, n'na mato. Di ra?"}
+      ]
+    },
+    {
+      "id": "rule_015",
+      "if_input_type": "command",
+      "if_context": "hospitality",
+      "respond_with": "gratitude",
+      "examples": [
+        {"input": "Dokho be. Te min.", "response": "I balake! I genereusefe gbo."}
+      ]
+    },
+    {
+      "id": "rule_016",
+      "if_input_type": "statement",
+      "if_context": "weather",
+      "respond_with": "weather_reaction",
+      "examples": [
+        {"input": "Furu gbo nun bi!", "response": "Awa. Parapluie mu n'bolo."},
+        {"input": "Soleil gbo nun bi. Chaleur!", "response": "Awa! Ye min. Eau min."},
+        {"input": "Vent gbo! Furu fafe.", "response": "Whon' fafe bangui koui vite!"}
+      ]
+    },
+    {
+      "id": "rule_017",
+      "if_input_type": "statement",
+      "if_context": "problem",
+      "respond_with": "problem_response",
+      "examples": [
+        {"input": "M'ma woto m'ma fafe aujourd'hui.", "response": "Khafe mu ra? Taxi tan?"},
+        {"input": "Electricite parti encore!", "response": "Ay! Gui muxundi gbo! Bougie be?"},
+        {"input": "Ntan m'ma comprendfe. Repete!", "response": "D'accord. Lentement gui fois."}
+      ]
+    },
+    {
+      "id": "rule_018",
+      "if_input_type": "statement",
+      "if_context": "absence",
+      "respond_with": "concern_blessing",
+      "examples": [
+        {"input": "Ana m'ma fafe. A malade.", "response": "Ay! Ala xa a kisi! Ana hopital?"}
+      ]
+    },
+    {
+      "id": "rule_019",
+      "if_input_type": "statement",
+      "if_context": "arrival",
+      "respond_with": "arrival_response",
+      "examples": [
+        {"input": "N'tan fafe m'ma woto yite.", "response": "Cool! Mmeme. N'na descendre maintenant."},
+        {"input": "Akha woto fafe. A pres.", "response": "Bon! N'na sortir maintenant."}
+      ]
+    },
+    {
+      "id": "rule_020",
+      "if_input_type": "what_question",
+      "if_input_contains": "khafe mu ra",
+      "respond_with": "explanation_response",
+      "examples": [
+        {"input": "Khafe mu ra?", "response": "Travail gbo! Probleme bureau."}
+      ]
+    },
+    {
+      "id": "rule_021",
+      "if_input_type": "what_question",
+      "if_input_contains": "di ra",
+      "respond_with": "information_response",
+      "examples": [
+        {"input": "Di ra ina dege?", "response": "Riz sauce arachide. Tu veux?"},
+        {"input": "I di ra fen?", "response": "M'ma cle. Tu as vu?"},
+        {"input": "I di ra sigafe demain?", "response": "N'na siga Kindia. Affaires."}
+      ]
+    },
+    {
+      "id": "rule_022",
+      "if_input_type": "what_question",
+      "if_input_contains": ["go", "ngo"],
+      "respond_with": "about_person_response",
+      "examples": [
+        {"input": "N'na fafe, itan go?", "response": "N'tan fafe. Whon' fafe ensemble!"},
+        {"input": "Atan go? A m'ma fafe?", "response": "A fafe. Retard un peu tan."},
+        {"input": "Whon' tan fafe, itan ngo?", "response": "N'tan fafe aussi! Ensemble!"}
+      ]
+    },
+    {
+      "id": "rule_023",
+      "if_input_type": "ability_question",
+      "if_tone": "genuine",
+      "respond_with": "ability_affirmation",
+      "examples": [
+        {"input": "Eske i no'mma guira?", "response": "Ntan no'mma. Difficile m'ma."}
+      ]
+    },
+    {
+      "id": "rule_024",
+      "if_input_type": "quantity_question",
+      "respond_with": "quantity_response",
+      "examples": [
+        {"input": "I dimedi yiri?", "response": "Saxan. Firin xemma, kelen ginema."},
+        {"input": "Kilo yiri n'sa rasa?", "response": "Firin tan. Merci."}
+      ]
+    },
+    {
+      "id": "rule_025",
+      "if_input_type": "statement",
+      "if_context": "gratitude",
+      "respond_with": "humble_response",
+      "examples": [
+        {"input": "I balake gbo! Coeur propre.", "response": "Probleme m'ma. Whon' denbaya."},
+        {"input": "I balake! I genereusefe gbo.", "response": "Bienvenu! Toujours."}
+      ]
+    },
+    {
+      "id": "rule_026",
+      "if_input_type": "statement",
+      "if_context": "farewell",
+      "respond_with": "farewell_blessing",
+      "examples": [
+        {"input": "Ala xa whon' kisi! A demain!", "response": "Amin! Nuit bon. A demain!"},
+        {"input": "Nuit yite. Whon' sa siga bangui.", "response": "Awa. Demain whon' se encore."}
+      ]
+    },
+    {
+      "id": "rule_027",
+      "if_input_type": "statement",
+      "if_context": "empathy",
+      "respond_with": "understanding_response",
+      "examples": [
+        {"input": "Ntan itan khafe comprendfe gbo.", "response": "I balake. Gui muxundi gbo."},
+        {"input": "Eske ina mma situation comprendfe?", "response": "Awa, ntan comprendfe. Khafe gbo."}
+      ]
+    },
+    {
+      "id": "rule_028",
+      "if_input_type": "statement",
+      "if_context": "event",
+      "respond_with": "event_response",
+      "examples": [
+        {"input": "Etan birin fafe mariage.", "response": "Ala xa baraka! Famille complete!"},
+        {"input": "Moukhou m'ma fafe. Travail gbo.", "response": "Dommage! Prochaine fois alors."}
+      ]
+    },
+    {
+      "id": "rule_029",
+      "if_input_type": "statement",
+      "if_context": "admiration",
+      "respond_with": "blessing_response",
+      "examples": [
+        {"input": "A mato! Beau gbo!", "response": "Ala xa baraka! Style gbo."},
+        {"input": "Fele bon gbo! Ala xa baraka.", "response": "Guinea joli gbo! Whon' kha pays."}
+      ]
+    },
+    {
+      "id": "rule_030",
+      "if_input_type": "yes_no_question",
+      "if_context": "distance",
+      "respond_with": "distance_response",
+      "examples": [
+        {"input": "Kira gui longue gbo?", "response": "M'ma longue. Dix minutes tan."},
+        {"input": "A loin gbo?", "response": "Pres tan. Cinq minutes."}
+      ]
+    }
+  ],
+  "response_templates": {
+    "affirmation": {
+      "patterns": ["Awa", "Eh!", "Bon!", "Awa,"],
+      "follow_ups": ["Ala xa baraka", "Merci", "Cool"]
+    },
+    "negation": {
+      "patterns": ["M'ma", "Ntan m'ma", "Probleme m'ma"],
+      "follow_ups": ["Demain", "Prochaine fois"]
+    },
+    "acknowledgment": {
+      "patterns": ["Awa", "D'accord", "Bon", "Ntan kolon"],
+      "follow_ups": ["N'na fafe", "Promis"]
+    },
+    "blessing": {
+      "patterns": ["Ala xa baraka!", "Ala xa a kisi!", "Ala xa whon' kisi!"],
+      "follow_ups": ["Amin", "Merci"]
+    },
+    "gratitude": {
+      "patterns": ["I balake!", "I balake gbo!", "Merci!"],
+      "follow_ups": ["Toujours", "Bienvenu"]
+    },
+    "concern": {
+      "patterns": ["Ay!", "Khafe mu ra?", "I wama?"],
+      "follow_ups": ["Ala xa a kisi", "Courage"]
+    },
+    "movement": {
+      "patterns": ["N'na fafe", "Ntan fafe", "A fafe"],
+      "follow_ups": ["Cinq minutes", "Maintenant", "Bientot"]
+    }
+  },
+  "context_markers": {
+    "formal_indicators": ["Eske", "Ala xa", "Tanante"],
+    "informal_indicators": ["Eh!", "Cool!", "Ay!"],
+    "urgent_indicators": ["vite", "urgent gbo", "maintenant"],
+    "positive_tone": ["bon", "bien", "lafia", "fra", "joli"],
+    "negative_tone": ["m'ma", "mu", "khafe", "probleme", "malade"]
+  },
+  "french_mixing_rules": {
+    "casual": {
+      "allowed_insertions": ["mais", "ok", "cool", "d'accord", "merci", "pardon"],
+      "number_usage": "french_preferred",
+      "description": "Casual speech freely mixes French words"
+    },
+    "formal": {
+      "allowed_insertions": ["Ala xa", "baraka", "lafia"],
+      "number_usage": "soussou_preferred",
+      "description": "Formal speech uses more pure Soussou"
+    }
+  },
+  "intensifier_rules": {
+    "gbo": {
+      "placement": "end",
+      "usage": "Emphasize quality or quantity",
+      "doubling": "gbooo for extra emphasis"
+    },
+    "tan": {
+      "placement": "after word",
+      "usage": "Only/just restriction"
+    }
+  }
+}
