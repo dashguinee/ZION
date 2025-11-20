@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "source": "Web dictionary search - agent_01",
+    "date": "2025-11-20",
+    "total_words": 89,
+    "review_reason": "Words need verification: spelling variants, tone marking unclear, limited context, or source reliability uncertain",
+    "priority": "HIGH - Core vocabulary needing confirmation from authoritative sources"
+  },
+  "needs_verification": {
+    "potential_verbs": [
+      {"susu": "fafe", "english": "unknown - possibly related to doing/making", "french": "inconnu", "reason": "Listed in mission markers but not found in sources", "priority": "HIGH"},
+      {"susu": "kolon", "english": "unknown - possibly know/understand", "french": "inconnu", "reason": "Listed in mission markers but not found in sources", "priority": "HIGH"},
+      {"susu": "comprendfé", "english": "understand (French loan)", "french": "comprendre", "reason": "French loanword mentioned in mission - needs confirmation", "priority": "MEDIUM"},
+      {"susu": "bateau", "english": "boat (French loan)", "french": "bateau", "reason": "French loanword mentioned in mission - needs confirmation", "priority": "MEDIUM"}
+    ],
+    "spelling_variants": [
+      {"variant1": "banxi", "variant2": "bankhi", "english": "house", "reason": "Multiple spellings found - verify standard orthography"},
+      {"variant1": "gine", "variant2": "ginɛ", "english": "woman", "reason": "Tone and vowel quality unclear"},
+      {"variant1": "xeme", "variant2": "xɛmɛ", "variant3": "xame", "english": "man/husband", "reason": "Multiple forms - may be different words or dialects"},
+      {"variant1": "keren", "variant2": "kérén", "english": "one", "reason": "Tone marking variants"},
+      {"variant1": "firin", "variant2": "fírín", "english": "two", "reason": "Tone marking variants"},
+      {"variant1": "moxogen", "variant2": "m̀ɔx̀ɔǵɛŋ", "english": "twenty", "reason": "Complex tone pattern needs verification"},
+      {"variant1": "n tan", "variant2": "ntan", "variant3": "n'tan", "english": "me (emphatic)", "reason": "Spacing/apostrophe variants"},
+      {"variant1": "won", "variant2": "wǒn", "variant3": "whon", "english": "we (inclusive)", "reason": "Spelling variants across sources"}
+    ],
+    "tone_verification_needed": [
+      {"susu": "fuú", "english": "ten", "reason": "High tone on final vowel - verify"},
+      {"susu": "súlí", "english": "five", "reason": "Double high tone pattern - verify"},
+      {"susu": "sólófèré", "english": "seven", "reason": "Complex tone pattern - verify"},
+      {"susu": "tòngó", "english": "take/multiplier", "reason": "Low-high tone pattern - verify"},
+      {"susu": "k̀ɛḿɛ", "english": "hundred", "reason": "Complex tone and vowel - verify"},
+      {"susu": "wúlù", "english": "thousand", "reason": "High-low tone pattern - verify"}
+    ],
+    "limited_context": [
+      {"susu": "be", "english": "who", "reason": "Found in Glosbe but limited usage examples"},
+      {"susu": "kha", "english": "modal particle", "reason": "Appears in examples but function unclear"},
+      {"susu": "lounna", "english": "leave/abandon", "reason": "Single source only"},
+      {"susu": "sukhu", "english": "touch", "reason": "Single source only"},
+      {"susu": "bore", "english": "used in farewell", "reason": "n bore nan yiki - needs full analysis"},
+      {"susu": "yiki", "english": "later/again", "reason": "Appears in farewell - verify meaning"}
+    ],
+    "possible_additional_pronouns": [
+      {"susu": "yi", "english": "him/her (emphatic alternate)", "reason": "Found alongside 'a tan' - relationship unclear"},
+      {"susu": "nae", "english": "them (alternate)", "reason": "Found alongside 'e tan' - relationship unclear"},
+      {"susu": "itan", "english": "you emphatic", "reason": "Matches mission marker - verify exact form"},
+      {"susu": "atan", "english": "he/she emphatic", "reason": "Matches mission marker - verify exact form"},
+      {"susu": "etan", "english": "they emphatic", "reason": "Matches mission marker - verify exact form"}
+    ],
+    "potential_possessives": [
+      {"susu": "m ma", "english": "my (alternate form)", "reason": "May match M'ma marker - verify"},
+      {"susu": "a kha", "english": "his/her (alternate)", "reason": "May match Akha marker - needs verification"},
+      {"susu": "whonma", "english": "our (alternate)", "reason": "Listed in mission markers - not found in sources"},
+      {"susu": "ekha", "english": "their (alternate)", "reason": "Listed in mission markers - not found in sources"}
+    ],
+    "verb_suffixes_to_verify": [
+      {"suffix": "-xi", "function": "possibly past/perfective", "example": "faxamuxi, falaxi, ganaikhi", "reason": "Pattern observed but rule unclear"},
+      {"suffix": "-fe", "function": "possibly infinitive/nominal", "example": "sigafe", "reason": "Single example - needs more data"},
+      {"suffix": "-ma", "function": "possibly present/future", "example": "don ma", "reason": "Appears in questions - verify function"},
+      {"suffix": "-de", "function": "possibly diminutive", "example": "dumedi, temedi", "reason": "Pattern in child/girl terms"}
+    ],
+    "grammatical_elements": [
+      {"susu": "yo", "english": "in response phrases", "reason": "tana yo mu - function unclear"},
+      {"susu": "ra", "english": "verbal prefix", "reason": "Mentioned as productive but examples limited"},
+      {"susu": "nun", "english": "and/with", "reason": "Used in numbers - other uses unclear"},
+      {"susu": "na", "english": "copula/locative", "reason": "Multiple functions - needs clarification"}
+    ],
+    "cultural_terms": [
+      {"susu": "adamadie", "english": "human beings", "reason": "From UDHR - verify common usage"},
+      {"susu": "barixine", "english": "born", "reason": "From UDHR - verify form"},
+      {"susu": "yeteralui", "english": "dignity", "reason": "From UDHR - may be compound/neologism"},
+      {"susu": "kolonyi", "english": "reason/conscience", "reason": "From UDHR - may contain kolon root"},
+      {"susu": "suxu", "english": "spirit/manner", "reason": "From UDHR - verify meaning"}
+    ],
+    "potential_adjectives": [
+      {"susu": "unknown", "english": "big", "french": "grand", "reason": "Not found in sources - essential vocabulary"},
+      {"susu": "unknown", "english": "small", "french": "petit", "reason": "Not found in sources - essential vocabulary"},
+      {"susu": "unknown", "english": "good", "french": "bon", "reason": "Not found in sources - essential vocabulary"},
+      {"susu": "unknown", "english": "bad", "french": "mauvais", "reason": "Not found in sources - essential vocabulary"}
+    ],
+    "missing_basic_vocabulary": [
+      {"english": "water", "french": "eau", "reason": "Mentioned in sources but Susu form not captured"},
+      {"english": "bread", "french": "pain", "reason": "Mentioned in sources but Susu form not captured"},
+      {"english": "rice", "french": "riz", "reason": "Mentioned in sources but Susu form not captured"},
+      {"english": "fish", "french": "poisson", "reason": "Common food - not found"},
+      {"english": "meat", "french": "viande", "reason": "Common food - not found"},
+      {"english": "yes", "french": "oui", "reason": "Basic word - not found in sources"},
+      {"english": "no", "french": "non", "reason": "Basic word - not found in sources"},
+      {"english": "please", "french": "s'il vous plaît", "reason": "Basic politeness - not found"}
+    ],
+    "days_and_time": [
+      {"english": "Monday", "reason": "Days of week mentioned but Susu forms not captured"},
+      {"english": "Tuesday", "reason": "Days of week mentioned but Susu forms not captured"},
+      {"english": "morning", "reason": "Time vocabulary incomplete"},
+      {"english": "night", "reason": "Time vocabulary incomplete"},
+      {"english": "today", "reason": "Time vocabulary incomplete"},
+      {"english": "tomorrow", "reason": "Time vocabulary incomplete"},
+      {"english": "yesterday", "reason": "Time vocabulary incomplete"}
+    ]
+  },
+  "sources_to_verify": [
+    {
+      "source": "Peace Corps Susu Language Course PDF",
+      "url": "https://www.livelingua.com/peace-corps/Susu/susu-language-course.pdf",
+      "priority": "HIGH",
+      "reason": "Comprehensive vocabulary but PDF not directly accessible - would fill many gaps"
+    },
+    {
+      "source": "Peace Corps Susu Manual (Sierra Leone)",
+      "url": "https://www.sierra-leone.org/Books/SusuManual.pdf",
+      "priority": "HIGH",
+      "reason": "Alternative comprehensive source - verify vocabulary consistency"
+    },
+    {
+      "source": "Indiana University CELT Susu Portal",
+      "url": "https://celt.indiana.edu",
+      "priority": "HIGH",
+      "reason": "Academic source with audio - verify pronunciations"
+    },
+    {
+      "source": "Grammaire et dictionnaire français-soussou (Lacan 1942)",
+      "url": "https://www.sudoc.fr/017555167",
+      "priority": "MEDIUM",
+      "reason": "Historical 404-page dictionary - authoritative but may have errors"
+    },
+    {
+      "source": "French Wiktionary Soussou Category",
+      "url": "https://fr.wiktionary.org/wiki/Catégorie:soussou",
+      "priority": "MEDIUM",
+      "reason": "Community-edited but may have additional vocabulary"
+    }
+  ]
+}

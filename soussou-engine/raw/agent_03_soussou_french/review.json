@@ -1,0 +1,320 @@
+{
+  "metadata": {
+    "agent": "agent_03_soussou_french",
+    "target_language": "soussou",
+    "source_language": "french",
+    "collection_date": "2025-11-20",
+    "total_entries": 52,
+    "review_reasons": [
+      "Single source only",
+      "Variant spellings need confirmation",
+      "Unclear or incomplete translation",
+      "Possible regional dialect variation",
+      "Needs native speaker verification"
+    ]
+  },
+  "variant_spellings": {
+    "note": "These words appear with different spellings across sources - need native speaker verification",
+    "entries": [
+      {
+        "variants": ["kiery", "kérén"],
+        "french": "Un",
+        "english": "One",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["firy", "fírín"],
+        "french": "Deux",
+        "english": "Two",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["sara", "sàxán"],
+        "french": "Trois",
+        "english": "Three",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["nani", "náání"],
+        "french": "Quatre",
+        "english": "Four",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["suri", "súlí"],
+        "french": "Cinq",
+        "english": "Five",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["sunni", "sénní"],
+        "french": "Six",
+        "english": "Six",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["solufyri", "sólófèré"],
+        "french": "Sept",
+        "english": "Seven",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["solomasara", "sólómásàxán"],
+        "french": "Huit",
+        "english": "Eight",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["solomanani", "sólómánáání"],
+        "french": "Neuf",
+        "english": "Nine",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["fu", "fuú"],
+        "french": "Dix",
+        "english": "Ten",
+        "issue": "Different orthographic systems"
+      },
+      {
+        "variants": ["kiemé", "k̀ɛḿɛ"],
+        "french": "Cent",
+        "english": "One hundred",
+        "issue": "Different orthographic systems"
+      }
+    ]
+  },
+  "single_source_words": {
+    "note": "These words come from single sources and need additional verification",
+    "entries": [
+      {
+        "soussou": "Arabahidi",
+        "french": "Salutation (sens exact incertain)",
+        "english": "Greeting (exact meaning unclear)",
+        "source": "Forum fria.1fr1.net",
+        "issue": "Single source, meaning uncertain"
+      },
+      {
+        "soussou": "faré",
+        "french": "Danse / rythme",
+        "english": "Dance / rhythm",
+        "source": "Djembefola forum",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "mameti",
+        "french": "S'il vous plaît / prenez-le",
+        "english": "Please / take it",
+        "source": "Djembefola forum",
+        "issue": "Single source, dual meaning"
+      },
+      {
+        "soussou": "uodi",
+        "french": "Bien / agréable",
+        "english": "Nice / good",
+        "source": "Djembefola forum",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "hrife",
+        "french": "Dormir",
+        "english": "To sleep",
+        "source": "Djembefola forum",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "uolide",
+        "french": "Travailler",
+        "english": "To work",
+        "source": "Djembefola forum",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "Sigui",
+        "french": "La musique",
+        "english": "Music",
+        "source": "Forum fria.1fr1.net",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "Bogné",
+        "french": "Cœur",
+        "english": "Heart",
+        "source": "Forum fria.1fr1.net",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "Diyé",
+        "french": "Désolé",
+        "english": "Sorry",
+        "source": "Forum fria.1fr1.net",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "Douniya",
+        "french": "La vie",
+        "english": "Life",
+        "source": "Forum fria.1fr1.net",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "Lépi",
+        "french": "Le boubou",
+        "english": "Traditional garment",
+        "source": "Forum fria.1fr1.net",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "Assoni",
+        "french": "Donne-moi",
+        "english": "Give me",
+        "source": "Forum fria.1fr1.net",
+        "issue": "Single source"
+      },
+      {
+        "soussou": "Loko",
+        "french": "Banane / plat",
+        "english": "Plantain / dish",
+        "source": "Forum fria.1fr1.net",
+        "issue": "Single source, meaning unclear"
+      },
+      {
+        "soussou": "lounna",
+        "french": "Pardonner / lâcher / arrêter",
+        "english": "To forgive / to let go / to stop",
+        "source": "parrainagepaulbert.free.fr",
+        "issue": "Multiple meanings need clarification"
+      }
+    ]
+  },
+  "incomplete_translations": {
+    "note": "These entries have incomplete or unclear translations",
+    "entries": [
+      {
+        "soussou": "ni bonbon mané",
+        "french": "Je vais te frapper",
+        "english": "I'm going to hit you",
+        "issue": "Colloquial phrase - verify exact meaning and context"
+      },
+      {
+        "soussou": "n'bara t'a gant",
+        "french": "Je suis fatigué(e)",
+        "english": "I am tired",
+        "issue": "Verify spelling and grammar structure"
+      },
+      {
+        "soussou": "n'fakhi wôlidé fédénè",
+        "french": "Je suis venu chercher du travail",
+        "english": "I came looking for work",
+        "issue": "Complex phrase - verify word boundaries"
+      },
+      {
+        "soussou": "Atan na ganaikhi",
+        "french": "C'est elle qui a gagné",
+        "english": "She is the one who won",
+        "issue": "Verify word boundaries and grammar"
+      },
+      {
+        "soussou": "Yontan kha ma li",
+        "french": "Nous, on n'a qu'à l'aider",
+        "english": "We just have to help him/her",
+        "issue": "Complex construction - verify"
+      }
+    ]
+  },
+  "possible_french_loanwords": {
+    "note": "These may be French loanwords adapted to Soussou - this is NORMAL for the language",
+    "entries": [
+      {
+        "soussou": "Tênin",
+        "origin": "French 'lundi' via Arabic",
+        "notes": "Day names often borrowed from Arabic/French"
+      },
+      {
+        "soussou": "Talatai",
+        "origin": "Arabic 'al-thalatha'",
+        "notes": "Day names often borrowed from Arabic"
+      },
+      {
+        "soussou": "Alarbai",
+        "origin": "Arabic 'al-arba'a'",
+        "notes": "Day names often borrowed from Arabic"
+      },
+      {
+        "soussou": "Alamisai",
+        "origin": "Arabic 'al-khamis'",
+        "notes": "Day names often borrowed from Arabic"
+      },
+      {
+        "soussou": "Jumai",
+        "origin": "Arabic 'jum'a' (Friday prayer)",
+        "notes": "Day names often borrowed from Arabic"
+      },
+      {
+        "soussou": "Simiti",
+        "origin": "Arabic 'as-sabt'",
+        "notes": "Day names often borrowed from Arabic"
+      }
+    ]
+  },
+  "needs_context": {
+    "note": "These words need more context for proper usage",
+    "entries": [
+      {
+        "soussou": "I tara",
+        "french": "Ton frère / ta sœur",
+        "issue": "Same word for brother and sister - context needed"
+      },
+      {
+        "soussou": "I sogho",
+        "french": "Ton oncle",
+        "issue": "Unclear if paternal or maternal distinction exists"
+      },
+      {
+        "soussou": "N'ha / I'ha / A'ha",
+        "french": "Possessifs",
+        "issue": "Need full paradigm of possessive adjectives"
+      },
+      {
+        "soussou": "Guiné",
+        "french": "Femme",
+        "issue": "Also said to be origin of country name - verify etymology"
+      }
+    ]
+  },
+  "pronunciation_notes_needed": {
+    "note": "These entries need phonetic transcription or audio reference",
+    "entries": [
+      {
+        "soussou": "m̀ɔx̀ɔǵɛŋ",
+        "french": "Vingt",
+        "issue": "Complex diacritics - pronunciation guide needed"
+      },
+      {
+        "soussou": "k̀ɛḿɛ",
+        "french": "Cent",
+        "issue": "Complex diacritics - pronunciation guide needed"
+      },
+      {
+        "soussou": "tòngó",
+        "french": "Base for tens",
+        "issue": "Tone marks need verification"
+      }
+    ]
+  },
+  "vocabulary_gaps_to_fill": {
+    "note": "Important vocabulary categories not yet collected",
+    "categories": [
+      "Body parts (tête, main, pied, oeil, etc.)",
+      "Colors (rouge, bleu, vert, jaune, etc.)",
+      "Animals (chien, chat, vache, mouton, etc.)",
+      "Food items beyond traditional dishes",
+      "Common verbs (manger, boire, voir, entendre, etc.)",
+      "Adjectives (bon, mauvais, chaud, froid, etc.)",
+      "Directions (gauche, droite, nord, sud)",
+      "House/home vocabulary",
+      "Weather terms",
+      "Months of the year"
+    ]
+  }
+}
