@@ -55,7 +55,9 @@ let soussouData = {
 
 try {
   const dataDir = join(__dirname, 'soussou-engine', 'data');
-  soussouData.lexicon = JSON.parse(readFileSync(join(dataDir, 'lexicon.json'), 'utf8'));
+  const lexiconData = JSON.parse(readFileSync(join(dataDir, 'lexicon.json'), 'utf8'));
+  // Handle both array and object formats
+  soussouData.lexicon = Array.isArray(lexiconData) ? { words: lexiconData } : lexiconData;
   soussouData.variantMappings = JSON.parse(readFileSync(join(dataDir, 'variant_mappings.json'), 'utf8'));
   soussouData.morphologyPatterns = JSON.parse(readFileSync(join(dataDir, 'morphology_patterns.json'), 'utf8'));
   soussouData.syntaxPatterns = JSON.parse(readFileSync(join(dataDir, 'syntax_patterns.json'), 'utf8'));
