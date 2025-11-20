@@ -126578,5 +126578,83 @@
     "context": "Grammar - verb formation",
     "grammar_pattern": "Added to noun/French verb to create action verb",
     "notes": "Key pattern: comprend + fé = comprendfé (understanding)"
+  },
+  {
+    "id": "sus_08975",
+    "base": "tinan",
+    "variants": [
+      "tinan",
+      "tinane",
+      "tinnan"
+    ],
+    "english": "tomorrow",
+    "french": "demain",
+    "category": "adverb",
+    "frequency": 0,
+    "sources": [
+      "user_contribution"
+    ],
+    "context": "Time words",
+    "examples": [
+      {
+        "soussou": "Ntan fafe tinan",
+        "english": "I'm coming tomorrow",
+        "french": "Je viens demain"
+      },
+      {
+        "soussou": "Fafe tinan",
+        "english": "Coming tomorrow (casual)",
+        "french": "J'arrive demain"
+      }
+    ],
+    "notes": "Pronoun can be dropped in casual speech: Ntan fafe tinan → Fafe tinan"
+  },
+  {
+    "id": "sus_08976",
+    "base": "xi",
+    "variants": [
+      "xi",
+      "xii"
+    ],
+    "english": "today",
+    "french": "aujourd'hui",
+    "category": "adverb",
+    "frequency": 0,
+    "sources": [
+      "user_contribution"
+    ],
+    "context": "Time words"
+  },
+  {
+    "id": "sus_08977",
+    "base": "kunu",
+    "variants": [
+      "kunu",
+      "kunun"
+    ],
+    "english": "yesterday",
+    "french": "hier",
+    "category": "adverb",
+    "frequency": 0,
+    "sources": [
+      "user_contribution"
+    ],
+    "context": "Time words"
+  },
+  {
+    "id": "sus_08978",
+    "base": "khili",
+    "variants": [
+      "khili",
+      "kili"
+    ],
+    "english": "to call",
+    "french": "appeler",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "user_contribution"
+    ],
+    "context": "Communication verbs"
   }
 ]
