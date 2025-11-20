@@ -55,17 +55,19 @@
     "variants": [
       "M'ma",
       "ma",
-      "mà-"
+      "mà-",
+      "Mma"
     ],
-    "english": "multiplicative verbal prefix; possessive marker; present tense marker; present/future marker; verb prefix",
-    "french": "marqueur possessif; marqueur présent/futur; préfixe verbal",
+    "english": "multiplicative verbal prefix; possessive marker; present tense marker; present/future marker; verb prefix; my; don't / not (negation)",
+    "french": "marqueur possessif; marqueur présent/futur; préfixe verbal; mon / ma; ne pas / pas",
     "category": "particle",
     "frequency": 20810,
     "sources": [
       "01 dictionary pdf",
       "04 vocabulary lists",
       "05 complete lexicon",
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -358,12 +360,13 @@
     "variants": [
       "tan"
     ],
-    "english": "",
-    "french": "",
+    "english": "only / just / also",
+    "french": "seulement / juste / aussi",
     "category": "unknown",
     "frequency": 4746,
     "sources": [
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -415,14 +418,15 @@
     "variants": [
       "fa"
     ],
-    "english": "to give",
-    "french": "donner",
+    "english": "to give; come",
+    "french": "donner; viens / venir",
     "category": "verbs",
     "frequency": 3768,
     "sources": [
       "05 complete lexicon",
       "08 grammar research",
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -692,12 +696,13 @@
     "variants": [
       "yire"
     ],
-    "english": "",
-    "french": "",
+    "english": "there",
+    "french": "là-bas",
     "category": "unknown",
     "frequency": 2098,
     "sources": [
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -882,14 +887,16 @@
     "base": "kolon",
     "variants": [
       "kolon",
-      "kɔlɔn"
+      "kɔlɔn",
+      "kolo"
     ],
-    "english": "",
-    "french": "",
+    "english": "know / understand",
+    "french": "savoir / connaître",
     "category": "unknown",
     "frequency": 1642,
     "sources": [
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -1003,8 +1010,8 @@
     "variants": [
       "siga"
     ],
-    "english": "To go; go; to go",
-    "french": "Aller; aller",
+    "english": "To go; go; to go; go / leave",
+    "french": "Aller; aller; va / pars",
     "category": "verb",
     "frequency": 1532,
     "sources": [
@@ -1015,7 +1022,8 @@
       "05 complete lexicon",
       "06 sil linguistic",
       "08 grammar research",
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -2446,14 +2454,16 @@
     "id": "sus_00164",
     "base": "gbo",
     "variants": [
-      "gbo"
+      "gbo",
+      "gbooo"
     ],
-    "english": "",
-    "french": "",
+    "english": "a lot / very much",
+    "french": "beaucoup / très",
     "category": "unknown",
     "frequency": 572,
     "sources": [
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -3137,12 +3147,13 @@
     "variants": [
       "mato"
     ],
-    "english": "",
-    "french": "",
+    "english": "look",
+    "french": "regarde",
     "category": "unknown",
     "frequency": 410,
     "sources": [
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -3490,12 +3501,13 @@
     "variants": [
       "toma"
     ],
-    "english": "",
-    "french": "",
+    "english": "(homonym - multiple meanings)",
+    "french": "(homonyme)",
     "category": "unknown",
     "frequency": 360,
     "sources": [
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -3925,8 +3937,8 @@
     "variants": [
       "don"
     ],
-    "english": "eat; to eat",
-    "french": "manger",
+    "english": "eat; to eat; already / now",
+    "french": "manger; déjà / maintenant",
     "category": "verb",
     "frequency": 318,
     "sources": [
@@ -3936,7 +3948,8 @@
       "05 complete lexicon",
       "06 sil linguistic",
       "08 grammar research",
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -6486,14 +6499,15 @@
       "Awa",
       "awa"
     ],
-    "english": "OK / Yes; Okay / Alright",
-    "french": "D'accord / Oui",
+    "english": "OK / Yes; Okay / Alright; yes / okay / agreed",
+    "french": "D'accord / Oui; oui / d'accord",
     "category": "word",
     "frequency": 166,
     "sources": [
       "02 susu english",
       "03 soussou french",
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -33332,12 +33346,13 @@
       "ana",
       "anna"
     ],
-    "english": "",
-    "french": "",
+    "english": "he/she is",
+    "french": "il/elle est",
     "category": "pronoun",
     "frequency": 12,
     "sources": [
-      "bible"
+      "bible",
+      "training_context"
     ]
   },
   {
@@ -121475,8 +121490,8 @@
     "variants": [
       "a"
     ],
-    "english": "He/She; he/she; he/she/it; he/she/it (third person singular)",
-    "french": "Il/Elle; il/elle",
+    "english": "He/She; he/she; he/she/it; he/she/it (third person singular); him / her (object pronoun)",
+    "french": "Il/Elle; il/elle; le / la (objet)",
     "category": "pronoun",
     "frequency": 0,
     "sources": [
@@ -121486,7 +121501,8 @@
       "04 vocabulary lists",
       "05 complete lexicon",
       "06 sil linguistic",
-      "08 grammar research"
+      "08 grammar research",
+      "training_context"
     ]
   },
   {
@@ -121579,12 +121595,13 @@
     "variants": [
       "Akha"
     ],
-    "english": "possessive marker",
-    "french": "marqueur possessif",
+    "english": "possessive marker; his / her",
+    "french": "marqueur possessif; son / sa",
     "category": "grammar_notes",
     "frequency": 0,
     "sources": [
-      "05 complete lexicon"
+      "05 complete lexicon",
+      "training_context"
     ]
   },
   {
@@ -121678,12 +121695,13 @@
       "A'tan",
       "Atan"
     ],
-    "english": "He or she; He/She",
-    "french": "Il ou elle; Il/Elle",
+    "english": "He or she; He/She; him / her",
+    "french": "Il ou elle; Il/Elle; lui / elle",
     "category": "pronoun",
     "frequency": 0,
     "sources": [
-      "03 soussou french"
+      "03 soussou french",
+      "training_context"
     ]
   },
   {
@@ -121950,12 +121968,13 @@
     "variants": [
       "Etan"
     ],
-    "english": "They",
-    "french": "Ils ou elles",
+    "english": "They; they / them",
+    "french": "Ils ou elles; ils / elles / eux",
     "category": "pronoun",
     "frequency": 0,
     "sources": [
-      "03 soussou french"
+      "03 soussou french",
+      "training_context"
     ]
   },
   {
@@ -122406,8 +122425,8 @@
       "I",
       "i"
     ],
-    "english": "You (singular); you; you (second person singular); you (singular)",
-    "french": "Tu (singulier); tu",
+    "english": "You (singular); you; you (second person singular); you (singular); you (shortened form)",
+    "french": "Tu (singulier); tu; toi (forme courte)",
     "category": "pronoun",
     "frequency": 0,
     "sources": [
@@ -122417,7 +122436,8 @@
       "04 vocabulary lists",
       "05 complete lexicon",
       "06 sil linguistic",
-      "08 grammar research"
+      "08 grammar research",
+      "training_context"
     ]
   },
   {
@@ -122827,14 +122847,17 @@
     "id": "sus_08741",
     "base": "itan",
     "variants": [
-      "I'tan"
+      "I'tan",
+      "Itan",
+      "I"
     ],
-    "english": "You (singular)",
-    "french": "Tu / Toi",
+    "english": "You (singular); you",
+    "french": "Tu / Toi; toi / tu",
     "category": "pronoun",
     "frequency": 0,
     "sources": [
-      "03 soussou french"
+      "03 soussou french",
+      "training_context"
     ]
   },
   {
@@ -123646,8 +123669,8 @@
       "n",
       "n'"
     ],
-    "english": "I; I (first person singular)",
-    "french": "je",
+    "english": "I; I (first person singular); me (object pronoun)",
+    "french": "je; me / moi (objet)",
     "category": "pronoun",
     "frequency": 0,
     "sources": [
@@ -123656,7 +123679,8 @@
       "04 vocabulary lists",
       "05 complete lexicon",
       "06 sil linguistic",
-      "08 grammar research"
+      "08 grammar research",
+      "training_context"
     ]
   },
   {
@@ -123914,14 +123938,16 @@
     "id": "sus_08814",
     "base": "ntan",
     "variants": [
-      "N'tan"
+      "N'tan",
+      "Ntan"
     ],
-    "english": "I / Me",
-    "french": "Je / Moi",
+    "english": "I / Me; me / I (emphatic)",
+    "french": "Je / Moi; moi",
     "category": "pronoun",
     "frequency": 0,
     "sources": [
-      "03 soussou french"
+      "03 soussou french",
+      "training_context"
     ]
   },
   {
@@ -124708,7 +124734,8 @@
     "sources": [
       "01 dictionary pdf",
       "04 vocabulary lists",
-      "08 grammar research"
+      "08 grammar research",
+      "training_context"
     ]
   },
   {
@@ -124975,5 +125002,1581 @@
     "sources": [
       "03 soussou french"
     ]
+  },
+  {
+    "id": "sus_08883",
+    "base": "Ina mindé",
+    "variants": [
+      "Ina minde",
+      "Ina mindé",
+      "ina mindé"
+    ],
+    "english": "Where are you?",
+    "french": "Tu es où ?",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Friends / informal, asking someone's location",
+    "grammar_pattern": "Question: Pronoun (Ina) + location question word (mindé)",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08884",
+    "base": "N'na fafé",
+    "variants": [
+      "n'a fafe",
+      "Na fafé",
+      "N'na fafé",
+      "n'a fafé",
+      "Nna fafé",
+      "Na fafe"
+    ],
+    "english": "I'm coming / I'm on my way",
+    "french": "J'arrive",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Reply phrase for location questions",
+    "grammar_pattern": "Subject (N'na = I am) + verb (fafé = coming)",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08885",
+    "base": "N'na",
+    "variants": [
+      "n'a",
+      "N'na",
+      "Na"
+    ],
+    "english": "I am / I (action)",
+    "french": "je suis / je",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Subject pronoun for actions",
+    "grammar_pattern": "Subject pronoun used before verbs"
+  },
+  {
+    "id": "sus_08886",
+    "base": "Ina",
+    "variants": [
+      "Ina"
+    ],
+    "english": "you are / are you?",
+    "french": "tu es / es-tu ?",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Subject pronoun - becomes question by tone",
+    "grammar_pattern": "Subject pronoun for 'you' in action, tone determines if question"
+  },
+  {
+    "id": "sus_08887",
+    "base": "Whon'",
+    "variants": [
+      "Whon",
+      "Whon'"
+    ],
+    "english": "we (inclusive - including you)",
+    "french": "nous (inclusif)",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "First person plural inclusive",
+    "grammar_pattern": "Personal pronoun - we including the listener"
+  },
+  {
+    "id": "sus_08888",
+    "base": "Moukhou",
+    "variants": [
+      "Moukhou"
+    ],
+    "english": "we (exclusive - excluding you)",
+    "french": "nous (exclusif)",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "First person plural exclusive",
+    "grammar_pattern": "Personal pronoun - we excluding the listener"
+  },
+  {
+    "id": "sus_08889",
+    "base": "Whonma",
+    "variants": [
+      "Whonma"
+    ],
+    "english": "our",
+    "french": "notre",
+    "category": "possessive",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "First person plural possessive",
+    "grammar_pattern": "Possession marker for first person plural"
+  },
+  {
+    "id": "sus_08890",
+    "base": "Whontan",
+    "variants": [
+      "Whontan"
+    ],
+    "english": "us",
+    "french": "nous (object)",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "First person plural object",
+    "grammar_pattern": "Personal pronoun - object form of 'we'"
+  },
+  {
+    "id": "sus_08891",
+    "base": "Ekha",
+    "variants": [
+      "Etan kha",
+      "Ekha"
+    ],
+    "english": "their",
+    "french": "leur",
+    "category": "possessive",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Third person plural possessive",
+    "grammar_pattern": "Possession marker - contraction of Etan + kha"
+  },
+  {
+    "id": "sus_08892",
+    "base": "kha",
+    "variants": [
+      "kha"
+    ],
+    "english": "ownership marker (his/her/their)",
+    "french": "marqueur de possession",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Grammar particle for possession",
+    "grammar_pattern": "Attached to pronouns to indicate ownership: Akha, Ekha, Itan kha"
+  },
+  {
+    "id": "sus_08893",
+    "base": "fafé",
+    "variants": [
+      "fafé",
+      "fafe"
+    ],
+    "english": "coming",
+    "french": "venir / en train de venir",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Movement verb",
+    "grammar_pattern": "Verb with -fé suffix indicating action"
+  },
+  {
+    "id": "sus_08894",
+    "base": "Fa bé",
+    "variants": [
+      "Fabé",
+      "Fa bé"
+    ],
+    "english": "Come here",
+    "french": "Viens ici",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative command",
+    "grammar_pattern": "Verb (Fa) + location marker (bé = here)",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08895",
+    "base": "bé",
+    "variants": [
+      "bé",
+      "be"
+    ],
+    "english": "here",
+    "french": "ici",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Location marker",
+    "grammar_pattern": "Place marker used after verbs"
+  },
+  {
+    "id": "sus_08896",
+    "base": "khafé",
+    "variants": [
+      "khafé"
+    ],
+    "english": "because of / situation / problem",
+    "french": "à cause de / situation / problème",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Cause marker / noun",
+    "grammar_pattern": "Pronoun + khafé = because of [pronoun]. Also means situation/problem"
+  },
+  {
+    "id": "sus_08897",
+    "base": "Itan khafé",
+    "variants": [
+      "Itan khafé"
+    ],
+    "english": "because of you",
+    "french": "à cause de toi",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Cause expression",
+    "grammar_pattern": "Pronoun + khafé pattern",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08898",
+    "base": "Atan khafé",
+    "variants": [
+      "Atan khafé"
+    ],
+    "english": "because of him/her",
+    "french": "à cause de lui/elle",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Cause expression",
+    "grammar_pattern": "Pronoun + khafé pattern",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08899",
+    "base": "Etan khafé",
+    "variants": [
+      "Etan khafé"
+    ],
+    "english": "because of them",
+    "french": "à cause d'eux",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Cause expression",
+    "grammar_pattern": "Pronoun + khafé pattern",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08900",
+    "base": "Ntan khafé",
+    "variants": [
+      "Ntan khafé"
+    ],
+    "english": "because of me",
+    "french": "à cause de moi",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Cause expression",
+    "grammar_pattern": "Pronoun + khafé pattern",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08901",
+    "base": "Itan ngo",
+    "variants": [
+      "Itan ngo",
+      "Itan go"
+    ],
+    "english": "what about you",
+    "french": "et toi",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Question / checking in",
+    "grammar_pattern": "Pronoun + ngo/go pattern for 'what about'",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08902",
+    "base": "Atan go",
+    "variants": [
+      "Atan go"
+    ],
+    "english": "what about him/her",
+    "french": "et lui/elle",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Question / checking in",
+    "grammar_pattern": "Pronoun + go pattern",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08903",
+    "base": "M'ma woto",
+    "variants": [
+      "Mma woto",
+      "M'ma woto"
+    ],
+    "english": "my car",
+    "french": "ma voiture",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Possession example",
+    "grammar_pattern": "Possessive + noun",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08904",
+    "base": "Akha woto",
+    "variants": [
+      "Akha woto"
+    ],
+    "english": "his/her car",
+    "french": "sa voiture",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Possession example",
+    "grammar_pattern": "Possessive + noun",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08905",
+    "base": "Ekha woto",
+    "variants": [
+      "Etan kha woto",
+      "Ekha woto"
+    ],
+    "english": "their car",
+    "french": "leur voiture",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Possession example",
+    "grammar_pattern": "Possessive + noun",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08906",
+    "base": "Whonma woto",
+    "variants": [
+      "Whonma woto"
+    ],
+    "english": "our car",
+    "french": "notre voiture",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Possession example",
+    "grammar_pattern": "Possessive + noun",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08907",
+    "base": "Whonma bateau",
+    "variants": [
+      "Whonma bateau"
+    ],
+    "english": "our boat",
+    "french": "notre bateau",
+    "category": "noun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Possession example with French noun",
+    "grammar_pattern": "Possessive + French noun (hybrid)",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08908",
+    "base": "Etan kha avion",
+    "variants": [
+      "Etan kha avion",
+      "Ekha avion"
+    ],
+    "english": "their airplane",
+    "french": "leur avion",
+    "category": "noun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Possession example with French noun",
+    "grammar_pattern": "Possessive + French noun (hybrid)",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08909",
+    "base": "Whon' fafé",
+    "variants": [
+      "Whon fafé",
+      "Whon' fafé"
+    ],
+    "english": "we are coming",
+    "french": "nous venons",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Movement statement",
+    "grammar_pattern": "Subject + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08910",
+    "base": "Moukhou fafé",
+    "variants": [
+      "Moukhou fafé"
+    ],
+    "english": "we are coming (exclusive)",
+    "french": "nous venons (sans toi)",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Movement statement - exclusive we",
+    "grammar_pattern": "Subject + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08911",
+    "base": "Ana fafé",
+    "variants": [
+      "Ana fafé"
+    ],
+    "english": "he/she is coming",
+    "french": "il/elle vient",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Movement statement",
+    "grammar_pattern": "Subject + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08912",
+    "base": "Ina fafé",
+    "variants": [
+      "Ina fafé"
+    ],
+    "english": "you are coming",
+    "french": "tu viens",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Movement statement",
+    "grammar_pattern": "Subject + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08913",
+    "base": "Ina fafé?",
+    "variants": [
+      "Ina fafé?",
+      "Ina fafé ?"
+    ],
+    "english": "Are you coming?",
+    "french": "Tu viens ?",
+    "category": "question_word",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Question by tone",
+    "grammar_pattern": "Same structure as statement, question indicated by tone/punctuation",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08914",
+    "base": "Whontan m'ma kolon",
+    "variants": [
+      "Whontan m'ma kolon"
+    ],
+    "english": "us, we don't know",
+    "french": "nous, on ne sait pas",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Negation example",
+    "grammar_pattern": "Emphatic subject + negation + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08915",
+    "base": "Etan m'ma kolon",
+    "variants": [
+      "Etan m'ma kolon",
+      "Etan m'ma kolo"
+    ],
+    "english": "they don't know",
+    "french": "ils ne savent pas",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Negation example",
+    "grammar_pattern": "Subject + negation + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08916",
+    "base": "Ntan fafé",
+    "variants": [
+      "Ntan fafé"
+    ],
+    "english": "me, I am coming (emphatic)",
+    "french": "moi, je viens",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Emphatic movement statement",
+    "grammar_pattern": "Emphatic pronoun + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08917",
+    "base": "comprendfé",
+    "variants": [
+      "comprenfé",
+      "comprendfé"
+    ],
+    "english": "understand / understanding",
+    "french": "comprendre",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Verb - French root + Soussou suffix",
+    "grammar_pattern": "French verb root + fé (action marker)",
+    "notes": "Example of Soussou verb-building: comprend + fé"
+  },
+  {
+    "id": "sus_08918",
+    "base": "no'mma",
+    "variants": [
+      "no'mma"
+    ],
+    "english": "can / able to / capable of",
+    "french": "pouvoir / être capable",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Ability marker",
+    "grammar_pattern": "Pronoun + no'mma + object/action"
+  },
+  {
+    "id": "sus_08919",
+    "base": "Eské",
+    "variants": [
+      "Eské"
+    ],
+    "english": "is it that / do (question marker)",
+    "french": "est-ce que",
+    "category": "question_word",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Question particle from French",
+    "grammar_pattern": "Placed at beginning for genuine questions vs challenging tone without it"
+  },
+  {
+    "id": "sus_08920",
+    "base": "Ngui fala madi sosokhoui",
+    "variants": [
+      "Ngui fala madi sosokhoui"
+    ],
+    "english": "How do I say this in Soussou?",
+    "french": "Comment je dis ça en Soussou ?",
+    "category": "question_word",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Language learning question",
+    "grammar_pattern": "Question phrase for translation",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08921",
+    "base": "Ngui fala madi foulekhoui",
+    "variants": [
+      "Ngui fala madi foulekhoui"
+    ],
+    "english": "How do I say this in Pular?",
+    "french": "Comment je dis ça en Pular ?",
+    "category": "question_word",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Language learning question",
+    "grammar_pattern": "Question phrase for translation",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08922",
+    "base": "sosokhoui",
+    "variants": [
+      "sosokhoui"
+    ],
+    "english": "Soussou (language)",
+    "french": "Soussou (langue)",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Language name",
+    "grammar_pattern": "Noun"
+  },
+  {
+    "id": "sus_08923",
+    "base": "foulekhoui",
+    "variants": [
+      "foulekhoui"
+    ],
+    "english": "Pular (language)",
+    "french": "Pular (langue)",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Language name",
+    "grammar_pattern": "Noun"
+  },
+  {
+    "id": "sus_08924",
+    "base": "guira",
+    "variants": [
+      "guira",
+      "gui"
+    ],
+    "english": "this thing / that thing",
+    "french": "cette chose / ça",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Demonstrative",
+    "grammar_pattern": "Demonstrative pronoun - gui is shortened form"
+  },
+  {
+    "id": "sus_08925",
+    "base": "Ikha ChatGPT no'mma guira?",
+    "variants": [
+      "Ikha ChatGPT no'mma guira ?",
+      "Ikha ChatGPT no'mma guira?"
+    ],
+    "english": "Your ChatGPT can do this?",
+    "french": "Ton ChatGPT peut faire ça ?",
+    "category": "question_word",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Question about ability",
+    "grammar_pattern": "Possessive + subject + no'mma + object",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08926",
+    "base": "I no'mma guira?",
+    "variants": [
+      "I no'mma guira?",
+      "I no'mma guira ?"
+    ],
+    "english": "You can do this? (challenging/teasing)",
+    "french": "Tu peux faire ça ? (défi)",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Challenging question",
+    "grammar_pattern": "Shortened pronoun (I = Itan) + no'mma + object",
+    "notes": "Without Eské, tone is challenging/poking",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08927",
+    "base": "Eské I no'mma guira?",
+    "variants": [
+      "Eské I no'mma guira ?",
+      "Eské I no'mma guira?"
+    ],
+    "english": "Are you able to do this? (genuine)",
+    "french": "Est-ce que tu peux faire ça ?",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Genuine question",
+    "grammar_pattern": "Eské + pronoun + no'mma + object",
+    "notes": "With Eské, tone is genuine/formal",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08928",
+    "base": "Ntan itan situation comprendfé un peu",
+    "variants": [
+      "Ntan itan situation comprendfé un peu"
+    ],
+    "english": "I understand your situation a bit",
+    "french": "Je comprends un peu ta situation",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Empathy / support statement",
+    "grammar_pattern": "SOAM: Subject + Object + Action + Modifier",
+    "notes": "Demonstrates proper word order and French filler 'un peu'",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08929",
+    "base": "Dokho",
+    "variants": [
+      "Dokho"
+    ],
+    "english": "sit",
+    "french": "assieds-toi",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_08930",
+    "base": "Dokho bé",
+    "variants": [
+      "Dokho bé"
+    ],
+    "english": "sit here",
+    "french": "assieds-toi ici",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + location marker",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08931",
+    "base": "T'ti",
+    "variants": [
+      "T'ti"
+    ],
+    "english": "stand",
+    "french": "lève-toi / debout",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_08932",
+    "base": "A mato",
+    "variants": [
+      "A mato"
+    ],
+    "english": "look at him/her",
+    "french": "regarde-le/la",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (A = him/her) + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08933",
+    "base": "I mato",
+    "variants": [
+      "I mato"
+    ],
+    "english": "look at you",
+    "french": "te regarder",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (I = you) + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08934",
+    "base": "Siga yire",
+    "variants": [
+      "Siga yire"
+    ],
+    "english": "go there",
+    "french": "va là-bas",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + location marker",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08935",
+    "base": "Siga A yire",
+    "variants": [
+      "Siga A yire"
+    ],
+    "english": "go to him/her",
+    "french": "va chez lui/elle",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with destination",
+    "grammar_pattern": "Verb + pronoun + location marker",
+    "notes": "A yire = to him/her (destination marker)",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08936",
+    "base": "Fa A yire",
+    "variants": [
+      "Fa A yire"
+    ],
+    "english": "come to him/her",
+    "french": "viens chez lui/elle",
+    "category": "pronoun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with destination",
+    "grammar_pattern": "Verb + pronoun + location marker",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08937",
+    "base": "Sonyi",
+    "variants": [
+      "Sonyi"
+    ],
+    "english": "give",
+    "french": "donne",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_08938",
+    "base": "Gui sonyi",
+    "variants": [
+      "Gui sonyi"
+    ],
+    "english": "give me that",
+    "french": "donne-moi ça",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (gui = that) + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08939",
+    "base": "Facta",
+    "variants": [
+      "Facta"
+    ],
+    "english": "bring",
+    "french": "apporte",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_08940",
+    "base": "Fa guira",
+    "variants": [
+      "Fa guira"
+    ],
+    "english": "bring that / bring this",
+    "french": "apporte ça",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative - bring command",
+    "grammar_pattern": "Literally 'come this/that thing'",
+    "notes": "Soussou uses 'come + object' for 'bring'",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08941",
+    "base": "Kha fa guira?",
+    "variants": [
+      "Kha fa guira?",
+      "Kha fa guira ?"
+    ],
+    "english": "Should I bring this?",
+    "french": "Je dois apporter ça ?",
+    "category": "question_word",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Question about action",
+    "grammar_pattern": "Question structure for 'should I...'",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08942",
+    "base": "Alou",
+    "variants": [
+      "Alou"
+    ],
+    "english": "stop",
+    "french": "arrête",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_08943",
+    "base": "Mmèmé",
+    "variants": [
+      "Mmèmé",
+      "Mmèmè"
+    ],
+    "english": "wait",
+    "french": "attends",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative - command",
+    "grammar_pattern": "Root verb / imperative form"
+  },
+  {
+    "id": "sus_08944",
+    "base": "Mmèmé bé",
+    "variants": [
+      "Mmèmé bé",
+      "Mmèmè bé"
+    ],
+    "english": "wait here",
+    "french": "attends ici",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + location marker",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08945",
+    "base": "Fa fokhora",
+    "variants": [
+      "Fa fokhora"
+    ],
+    "english": "follow me / come after me",
+    "french": "suis-moi / viens après moi",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative - follow command",
+    "grammar_pattern": "Verb (fa = come) + fokhora (after me)",
+    "notes": "Literally 'come after me'",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08946",
+    "base": "fokhora",
+    "variants": [
+      "fokhora",
+      "fokho"
+    ],
+    "english": "after me",
+    "french": "après moi",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Relational phrase",
+    "grammar_pattern": "Used with Fa for 'follow me'"
+  },
+  {
+    "id": "sus_08947",
+    "base": "Kelli bé",
+    "variants": [
+      "Kelli bé"
+    ],
+    "english": "leave here",
+    "french": "pars d'ici",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + location marker",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08948",
+    "base": "N'khili",
+    "variants": [
+      "N'khili"
+    ],
+    "english": "call me",
+    "french": "appelle-moi",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (N' = me) + verb (khili = call)"
+  },
+  {
+    "id": "sus_08949",
+    "base": "khili",
+    "variants": [
+      "khili"
+    ],
+    "english": "call",
+    "french": "appeler",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Verb",
+    "grammar_pattern": "Root verb"
+  },
+  {
+    "id": "sus_08950",
+    "base": "bangui",
+    "variants": [
+      "bangui"
+    ],
+    "english": "house",
+    "french": "maison",
+    "category": "noun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Noun - building",
+    "grammar_pattern": "Common noun"
+  },
+  {
+    "id": "sus_08951",
+    "base": "kouï",
+    "variants": [
+      "kouï"
+    ],
+    "english": "in / inside",
+    "french": "dans / à l'intérieur",
+    "category": "particle",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Location marker - interior",
+    "grammar_pattern": "Postposition for 'inside'"
+  },
+  {
+    "id": "sus_08952",
+    "base": "Fa bangui kouï",
+    "variants": [
+      "Fa bangui kouï"
+    ],
+    "english": "come inside the house",
+    "french": "entre dans la maison",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + noun + interior marker",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08953",
+    "base": "Fa woto kouï",
+    "variants": [
+      "Fa woto kouï"
+    ],
+    "english": "come inside the car",
+    "french": "entre dans la voiture",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with location",
+    "grammar_pattern": "Verb + noun + interior marker",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08954",
+    "base": "Ina m'ma fafé",
+    "variants": [
+      "Ina m'ma fafé"
+    ],
+    "english": "you're not coming",
+    "french": "tu ne viens pas",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Negation statement",
+    "grammar_pattern": "Subject + negation + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08955",
+    "base": "Ana m'ma kolon",
+    "variants": [
+      "Ana m'ma kolon"
+    ],
+    "english": "he/she doesn't know",
+    "french": "il/elle ne sait pas",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Negation statement",
+    "grammar_pattern": "Subject + negation + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08956",
+    "base": "Etan m'ma fafé",
+    "variants": [
+      "Etan m'ma fafé"
+    ],
+    "english": "they're not coming",
+    "french": "ils ne viennent pas",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Negation statement",
+    "grammar_pattern": "Subject + negation + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08957",
+    "base": "Ntan m'ma kolon",
+    "variants": [
+      "Ntan m'ma kolon"
+    ],
+    "english": "I don't know",
+    "french": "je ne sais pas",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Negation statement",
+    "grammar_pattern": "Subject + negation + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08958",
+    "base": "Itan khafé gbo",
+    "variants": [
+      "Itan khafé gbo"
+    ],
+    "english": "you have many problems / how is your situation",
+    "french": "tu as beaucoup de soucis",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Social / checking on someone",
+    "grammar_pattern": "Subject + situation marker + intensifier",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08959",
+    "base": "Eské ina mma situation comprendfé?",
+    "variants": [
+      "Eské ina mma situation comprendfé ?",
+      "Eské ina mma situation comprendfé?"
+    ],
+    "english": "Do you understand my situation?",
+    "french": "Est-ce que tu comprends ma situation ?",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Question - genuine",
+    "grammar_pattern": "Eské + subject + possessive + object + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08960",
+    "base": "kouli",
+    "variants": [
+      "kouli"
+    ],
+    "english": "worm",
+    "french": "ver",
+    "category": "noun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Noun - creature",
+    "grammar_pattern": "Common noun"
+  },
+  {
+    "id": "sus_08961",
+    "base": "whouli",
+    "variants": [
+      "whouli"
+    ],
+    "english": "blood",
+    "french": "sang",
+    "category": "noun",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Noun - body",
+    "grammar_pattern": "Common noun"
+  },
+  {
+    "id": "sus_08962",
+    "base": "sogbè",
+    "variants": [
+      "sogbè",
+      "sogbé"
+    ],
+    "english": "serious",
+    "french": "sérieux",
+    "category": "adjective",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Adjective",
+    "grammar_pattern": "Adjective - gb cluster common in West African languages"
+  },
+  {
+    "id": "sus_08963",
+    "base": "Ina ntan khafé m'ma comprendfé",
+    "variants": [
+      "Ina ntan khafé m'ma comprendfé"
+    ],
+    "english": "You don't understand because of me",
+    "french": "Tu ne comprends pas à cause de moi",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Negation with cause",
+    "grammar_pattern": "Subject + cause marker + negation + verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08964",
+    "base": "Etan itan khafé comprendfé gbo",
+    "variants": [
+      "Etan itan khafé comprendfé gbo"
+    ],
+    "english": "They understand a lot because of you",
+    "french": "Ils comprennent beaucoup à cause de toi",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Statement with cause and modifier",
+    "grammar_pattern": "Subject + cause marker + verb + modifier",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08965",
+    "base": "Ntan sosokhoui kolon un peu",
+    "variants": [
+      "Ntan sosokhoui kolon un peu"
+    ],
+    "english": "I understand Soussou a bit",
+    "french": "Je comprends un peu le Soussou",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Language knowledge statement",
+    "grammar_pattern": "Subject + object + verb + modifier (French filler)",
+    "notes": "Correct Soussou word order: Subject-Object-Verb",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08966",
+    "base": "Ntan no'mma comprendfé itan situation",
+    "variants": [
+      "Ntan no'mma comprendfé itan situation"
+    ],
+    "english": "I can understand your situation",
+    "french": "Je peux comprendre ta situation",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Ability statement",
+    "grammar_pattern": "Subject + ability marker + verb + object",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08967",
+    "base": "A lafia?",
+    "variants": [
+      "A lafia?",
+      "A lafia ?",
+      "A lafia"
+    ],
+    "english": "How are you? / Are you well?",
+    "french": "Ça va ? / Tu vas bien ?",
+    "category": "greeting",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Standard greeting",
+    "grammar_pattern": "Greeting question",
+    "notes": "Common greeting - referenced but not fully explained in context",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08968",
+    "base": "yite",
+    "variants": [
+      "yite"
+    ],
+    "english": "here / arrived / finished",
+    "french": "ici / arrivé / fini",
+    "category": "particle",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Location / completion marker",
+    "grammar_pattern": "Marker for arrival or completion"
+  },
+  {
+    "id": "sus_08969",
+    "base": "Ikha",
+    "variants": [
+      "Ikha"
+    ],
+    "english": "your",
+    "french": "ton / ta",
+    "category": "possessive",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Second person possessive",
+    "grammar_pattern": "Contraction of Itan + kha"
+  },
+  {
+    "id": "sus_08970",
+    "base": "i balakè",
+    "variants": [
+      "i balakè"
+    ],
+    "english": "thank you",
+    "french": "merci",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Gratitude expression",
+    "grammar_pattern": "Polite phrase",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08971",
+    "base": "Account n'ma yitima na",
+    "variants": [
+      "Account n'ma yitima na",
+      "Compte n'ma yitima na"
+    ],
+    "english": "Your account is almost finished",
+    "french": "Ton compte est presque fini",
+    "category": "phrase",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "IPTV / subscription warning",
+    "grammar_pattern": "French noun + Soussou grammar hybrid",
+    "is_phrase": true
+  },
+  {
+    "id": "sus_08972",
+    "base": "mindé",
+    "variants": [
+      "mindé",
+      "minde"
+    ],
+    "english": "where",
+    "french": "où",
+    "category": "question_word",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Question word",
+    "grammar_pattern": "Interrogative for location"
+  },
+  {
+    "id": "sus_08973",
+    "base": "N'mato",
+    "variants": [
+      "N'mato",
+      "N' mato"
+    ],
+    "english": "look at me",
+    "french": "regarde-moi",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Imperative with object",
+    "grammar_pattern": "Object (N' = me) + verb"
+  },
+  {
+    "id": "sus_08974",
+    "base": "fé",
+    "variants": [
+      "fè",
+      "fé"
+    ],
+    "english": "action verb suffix",
+    "french": "suffixe verbal d'action",
+    "category": "verb",
+    "frequency": 0,
+    "sources": [
+      "training_context"
+    ],
+    "context": "Grammar - verb formation",
+    "grammar_pattern": "Added to noun/French verb to create action verb",
+    "notes": "Key pattern: comprend + fé = comprendfé (understanding)"
   }
 ]
