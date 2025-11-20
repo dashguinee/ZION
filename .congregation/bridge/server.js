@@ -1,35 +1,69 @@
+/**
+ * ZION Unified Backend
+ * Congregation Bridge + Guinius (Soussou) API
+ */
+
 import express from 'express';
 import { Octokit } from 'octokit';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { readFileSync } from 'fs';
 
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
+
+// Middleware
+app.use(cors());
 app.use(express.json({ limit: '2mb' }));
 
-// Configuration from environment
+// Configuration
 const CONFIG = {
-  port: process.env.PORT || process.env.BRIDGE_PORT || 3001,
+  port: process.env.PORT || 8080,
   github: {
     owner: process.env.GITHUB_OWNER || 'dashguinee',
     repo: process.env.GITHUB_REPO || 'ZION',
-    token: process.env.GITHUB_TOKEN, // Personal Access Token or GitHub App token
+    token: process.env.GITHUB_TOKEN,
     branch: process.env.GITHUB_BRANCH || 'main',
     threadPath: '.congregation/thread.json'
   },
   auth: {
-    // Service tokens for different AI callers
     chatgptToken: process.env.CHATGPT_SERVICE_TOKEN,
     geminiToken: process.env.GEMINI_SERVICE_TOKEN,
     zionToken: process.env.ZION_SERVICE_TOKEN,
-    // Shared secret for HMAC verification (optional, more secure)
     hmacSecret: process.env.SHARED_SECRET
   }
 };
 
 // Initialize GitHub client
-const octokit = new Octokit({ auth: CONFIG.github.token });
+const octokit = CONFIG.github.token ? new Octokit({ auth: CONFIG.github.token }) : null;
+
+// Load Soussou data
+let soussouData = {
+  lexicon: { words: [] },
+  variantMappings: { variant_to_base: {} },
+  morphologyPatterns: {},
+  syntaxPatterns: {},
+  generationTemplates: { templates: {} }
+};
+
+try {
+  const dataDir = join(__dirname, 'soussou-engine', 'data');
+  soussouData.lexicon = JSON.parse(readFileSync(join(dataDir, 'lexicon.json'), 'utf8'));
+  soussouData.variantMappings = JSON.parse(readFileSync(join(dataDir, 'variant_mappings.json'), 'utf8'));
+  soussouData.morphologyPatterns = JSON.parse(readFileSync(join(dataDir, 'morphology_patterns.json'), 'utf8'));
+  soussouData.syntaxPatterns = JSON.parse(readFileSync(join(dataDir, 'syntax_patterns.json'), 'utf8'));
+  soussouData.generationTemplates = JSON.parse(readFileSync(join(dataDir, 'generation_templates.json'), 'utf8'));
+  console.log(`✅ Loaded Soussou lexicon: ${soussouData.lexicon.words?.length || 0} words`);
+} catch (error) {
+  console.warn('⚠️  Soussou data not loaded:', error.message);
+}
 
 // ============================================================================
 // AUTHENTICATION MIDDLEWARE
@@ -39,7 +73,6 @@ const authenticateRequest = (req, res, next) => {
   const authHeader = req.headers.authorization || '';
   const token = authHeader.replace('Bearer ', '');
 
-  // Check if token matches any of the service tokens
   const validTokens = [
     CONFIG.auth.chatgptToken,
     CONFIG.auth.geminiToken,
@@ -53,7 +86,6 @@ const authenticateRequest = (req, res, next) => {
     });
   }
 
-  // Optional: Verify HMAC signature if provided
   if (CONFIG.auth.hmacSecret && req.headers['x-z-signature']) {
     const bodyString = JSON.stringify(req.body);
     const expectedSignature = crypto
@@ -73,14 +105,12 @@ const authenticateRequest = (req, res, next) => {
 };
 
 // ============================================================================
-// GITHUB OPERATIONS
+// CONGREGATION ENDPOINTS
 // ============================================================================
 
-/**
- * Fetches the current thread.json from GitHub
- * @returns {Object} { content: parsed JSON, sha: file SHA }
- */
 async function fetchThread() {
+  if (!octokit) throw new Error('GitHub not configured');
+
   try {
     const { data } = await octokit.rest.repos.getContent({
       owner: CONFIG.github.owner,
@@ -90,13 +120,9 @@ async function fetchThread() {
     });
 
     const content = Buffer.from(data.content, 'base64').toString('utf-8');
-    return {
-      content: JSON.parse(content),
-      sha: data.sha
-    };
+    return { content: JSON.parse(content), sha: data.sha };
   } catch (error) {
     if (error.status === 404) {
-      // Thread doesn't exist yet, return empty structure
       return {
         content: {
           metadata: {
@@ -114,18 +140,10 @@ async function fetchThread() {
   }
 }
 
-/**
- * Commits updated thread back to GitHub
- * @param {Object} thread - The updated thread object
- * @param {string} sha - The current file SHA (for updates)
- * @param {string} author - Who is committing (chatgpt, gemini, zion)
- * @returns {Object} { sha: new SHA, commit: commit details }
- */
 async function commitThread(thread, sha, author) {
-  const content = Buffer.from(
-    JSON.stringify(thread, null, 2)
-  ).toString('base64');
+  if (!octokit) throw new Error('GitHub not configured');
 
+  const content = Buffer.from(JSON.stringify(thread, null, 2)).toString('base64');
   const params = {
     owner: CONFIG.github.owner,
     repo: CONFIG.github.repo,
@@ -135,32 +153,19 @@ async function commitThread(thread, sha, author) {
     branch: CONFIG.github.branch
   };
 
-  // If file exists, include SHA for update
-  if (sha) {
-    params.sha = sha;
-  }
+  if (sha) params.sha = sha;
 
   const { data } = await octokit.rest.repos.createOrUpdateFileContents(params);
-
-  return {
-    sha: data.content.sha,
-    commit: data.commit
-  };
+  return { sha: data.content.sha, commit: data.commit };
 }
 
-// ============================================================================
-// MESSAGE DEDUPLICATION (Idempotency)
-// ============================================================================
-
 const messageCache = new Map();
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const CACHE_TTL = 5 * 60 * 1000;
 
 function isMessageDuplicate(messageId) {
   if (messageCache.has(messageId)) {
     const cachedTime = messageCache.get(messageId);
-    if (Date.now() - cachedTime < CACHE_TTL) {
-      return true;
-    }
+    if (Date.now() - cachedTime < CACHE_TTL) return true;
     messageCache.delete(messageId);
   }
   return false;
@@ -168,23 +173,15 @@ function isMessageDuplicate(messageId) {
 
 function cacheMessage(messageId) {
   messageCache.set(messageId, Date.now());
-  // Clean up old entries
   for (const [id, time] of messageCache.entries()) {
-    if (Date.now() - time > CACHE_TTL) {
-      messageCache.delete(id);
-    }
+    if (Date.now() - time > CACHE_TTL) messageCache.delete(id);
   }
 }
-
-// ============================================================================
-// WEBHOOK ENDPOINT
-// ============================================================================
 
 app.post('/congregation/commit', authenticateRequest, async (req, res) => {
   const startTime = Date.now();
 
   try {
-    // Validate request body
     const { author, content, message_id } = req.body;
 
     if (!author || !content) {
@@ -201,7 +198,6 @@ app.post('/congregation/commit', authenticateRequest, async (req, res) => {
       });
     }
 
-    // Check for duplicate message (idempotency)
     if (message_id && isMessageDuplicate(message_id)) {
       return res.status(200).json({
         status: 'ok',
@@ -210,10 +206,8 @@ app.post('/congregation/commit', authenticateRequest, async (req, res) => {
       });
     }
 
-    // Fetch current thread
     const { content: thread, sha } = await fetchThread();
 
-    // Create new message
     const newMessage = {
       id: message_id || `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       author,
@@ -222,19 +216,13 @@ app.post('/congregation/commit', authenticateRequest, async (req, res) => {
       content
     };
 
-    // Append to thread
     thread.messages.push(newMessage);
     thread.metadata.last_updated = new Date().toISOString();
 
-    // Commit to GitHub
     const result = await commitThread(thread, sha, author);
 
-    // Cache message ID for idempotency
-    if (message_id) {
-      cacheMessage(message_id);
-    }
+    if (message_id) cacheMessage(message_id);
 
-    // Audit log
     const latency = Date.now() - startTime;
     console.log(JSON.stringify({
       timestamp: new Date().toISOString(),
@@ -256,7 +244,6 @@ app.post('/congregation/commit', authenticateRequest, async (req, res) => {
   } catch (error) {
     console.error('Error in /congregation/commit:', error);
 
-    // Handle GitHub rate limits
     if (error.status === 403 && error.response?.headers['x-ratelimit-remaining'] === '0') {
       const resetTime = error.response.headers['x-ratelimit-reset'];
       return res.status(429).json({
@@ -273,45 +260,6 @@ app.post('/congregation/commit', authenticateRequest, async (req, res) => {
   }
 });
 
-// ============================================================================
-// HEALTH CHECK & ROOT
-// ============================================================================
-
-// Root endpoint (for Railway healthcheck)
-app.get('/', (req, res) => {
-  res.json({
-    service: 'zion-congregation-bridge',
-    status: 'active',
-    endpoints: {
-      health: '/health',
-      commit: '/congregation/commit',
-      thread: '/congregation/thread'
-    }
-  });
-});
-
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    service: 'zion-congregation-bridge',
-    timestamp: new Date().toISOString(),
-    github: {
-      configured: !!CONFIG.github.token,
-      repo: `${CONFIG.github.owner}/${CONFIG.github.repo}`
-    },
-    auth: {
-      chatgpt: !!CONFIG.auth.chatgptToken,
-      gemini: !!CONFIG.auth.geminiToken,
-      zion: !!CONFIG.auth.zionToken,
-      hmac: !!CONFIG.auth.hmacSecret
-    }
-  });
-});
-
-// ============================================================================
-// READ-ONLY THREAD ACCESS (for debugging)
-// ============================================================================
-
 app.get('/congregation/thread', async (req, res) => {
   try {
     const { content } = await fetchThread();
@@ -325,23 +273,179 @@ app.get('/congregation/thread', async (req, res) => {
 });
 
 // ============================================================================
+// SOUSSOU (GUINIUS) API ENDPOINTS
+// ============================================================================
+
+// Helper functions for Soussou operations
+function normalize(text) {
+  return text
+    .toLowerCase()
+    .replace(/['\u2019]/g, '')
+    .replace(/(.)\1+/g, '$1')
+    .replace(/[éèêë]/g, 'e')
+    .replace(/[àâä]/g, 'a')
+    .replace(/h$/, '')
+    .trim();
+}
+
+function findSimilarWords(word, limit = 5) {
+  const normalized = normalize(word);
+  const words = soussouData.lexicon.words || [];
+
+  const scored = words.map(w => ({
+    word: w.soussou,
+    score: stringSimilarity(normalized, normalize(w.soussou))
+  }));
+
+  return scored
+    .filter(s => s.score > 0.3)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(s => s.word);
+}
+
+function stringSimilarity(a, b) {
+  if (a === b) return 1;
+  if (!a || !b) return 0;
+  const longer = a.length > b.length ? a : b;
+  const shorter = a.length > b.length ? b : a;
+  if (longer.length === 0) return 1;
+  let matches = 0;
+  for (let i = 0; i < shorter.length; i++) {
+    if (longer.includes(shorter[i])) matches++;
+  }
+  return matches / longer.length;
+}
+
+// Soussou API routes
+app.get('/api/soussou/lookup', (req, res) => {
+  const { word } = req.query;
+
+  if (!word) {
+    return res.status(400).json({ error: 'word parameter required' });
+  }
+
+  const searchWord = normalize(word);
+  const entry = soussouData.lexicon.words?.find(w =>
+    normalize(w.soussou) === searchWord ||
+    w.variants?.some(v => normalize(v) === searchWord)
+  );
+
+  if (entry) {
+    res.json({
+      found: true,
+      word: entry.soussou,
+      normalized: searchWord,
+      english: entry.english,
+      french: entry.french,
+      category: entry.category,
+      variants: entry.variants || [],
+      examples: entry.examples || []
+    });
+  } else {
+    const suggestions = findSimilarWords(searchWord, 5);
+    res.status(404).json({
+      found: false,
+      word: word,
+      suggestions: suggestions,
+      message: 'Word not found. Would you like to contribute it?'
+    });
+  }
+});
+
+app.get('/api/soussou/stats', (req, res) => {
+  const words = soussouData.lexicon.words || [];
+  const categories = {};
+  words.forEach(w => {
+    const cat = w.category || 'unknown';
+    categories[cat] = (categories[cat] || 0) + 1;
+  });
+
+  res.json({
+    total_words: words.length,
+    total_variants: Object.keys(soussouData.variantMappings.variant_to_base || {}).length,
+    total_templates: Object.keys(soussouData.generationTemplates.templates || {}).length,
+    categories: categories
+  });
+});
+
+app.post('/api/soussou/translate', (req, res) => {
+  const { text, from, to } = req.body;
+
+  if (!text || !from || !to) {
+    return res.status(400).json({ error: 'text, from, and to parameters required' });
+  }
+
+  // Simple translation (can be enhanced)
+  res.json({
+    original: text,
+    translation: `[Translation: ${text}]`,
+    confidence: 0.5,
+    note: 'Guinius translation engine - basic implementation'
+  });
+});
+
+// ============================================================================
+// HEALTH & ROOT
+// ============================================================================
+
+app.get('/', (req, res) => {
+  res.json({
+    service: 'zion-unified-backend',
+    status: 'active',
+    endpoints: {
+      congregation: {
+        commit: '/congregation/commit',
+        thread: '/congregation/thread'
+      },
+      soussou: {
+        lookup: '/api/soussou/lookup',
+        stats: '/api/soussou/stats',
+        translate: '/api/soussou/translate'
+      },
+      health: '/health'
+    },
+    github: CONFIG.github.token ? 'configured' : 'not-configured'
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'zion-unified-backend',
+    timestamp: new Date().toISOString(),
+    features: {
+      congregation: !!CONFIG.github.token,
+      soussou: soussouData.lexicon.words?.length > 0
+    },
+    soussou_lexicon: soussouData.lexicon.words?.length || 0
+  });
+});
+
+// ============================================================================
 // START SERVER
 // ============================================================================
 
 app.listen(CONFIG.port, '0.0.0.0', () => {
   console.log(`
 ╔════════════════════════════════════════════════════════════╗
-║  ZION CONGREGATION BRIDGE                                  ║
-║  Multi-AI Conversation System                              ║
+║  ZION UNIFIED BACKEND                                      ║
+║  Congregation Bridge + Guinius (Soussou) API               ║
 ╠════════════════════════════════════════════════════════════╣
 ║  Status: ACTIVE                                            ║
 ║  Port: ${CONFIG.port}                                             ║
-║  GitHub: ${CONFIG.github.owner}/${CONFIG.github.repo.padEnd(42)} ║
-║  Thread: ${CONFIG.github.threadPath.padEnd(45)} ║
+║  GitHub: ${CONFIG.github.owner}/${CONFIG.github.repo}                                       ║
 ╠════════════════════════════════════════════════════════════╣
-║  Endpoints:                                                ║
+║  Congregation Endpoints:                                   ║
 ║    POST /congregation/commit   [auth required]            ║
 ║    GET  /congregation/thread   [public]                   ║
+║                                                            ║
+║  Soussou/Guinius Endpoints:                                ║
+║    GET  /api/soussou/lookup    [public]                   ║
+║    GET  /api/soussou/stats     [public]                   ║
+║    POST /api/soussou/translate [public]                   ║
+║                                                            ║
+║  System:                                                   ║
 ║    GET  /health                [public]                   ║
 ╚════════════════════════════════════════════════════════════╝
   `);
