@@ -18,6 +18,10 @@ const path = require('path');
 // Load modules
 const variantNormalizer = require('./src/variant_normalizer');
 const { normalize, normalizePhrase } = require('./src/normalize');
+const ResponseSelector = require('./src/response_selector');
+
+// Initialize response selector
+const responseSelector = new ResponseSelector();
 
 // Load training examples for response matching
 const trainingPath = path.join(__dirname, 'data', 'training_examples.json');
@@ -113,8 +117,24 @@ function analyzeInput(input) {
   // Detect type
   const sentenceType = detectSentenceType(input);
 
-  // Find matching example
+  // Find matching example from training data
   const example = findMatchingExample(input);
+
+  // If no exact match, use response selector with fallbacks
+  let response = example?.response || null;
+  let context = example?.context || 'unknown';
+
+  if (!response) {
+    const selectorResult = responseSelector.selectResponse(input);
+    if (selectorResult && selectorResult.response) {
+      response = {
+        soussou: selectorResult.response,
+        english: selectorResult.english || '',
+        french: selectorResult.french || ''
+      };
+      context = selectorResult.classification?.type || 'unknown';
+    }
+  }
 
   return {
     original: input,
@@ -122,8 +142,8 @@ function analyzeInput(input) {
     sentenceType,
     matches,
     example,
-    response: example?.response || null,
-    context: example?.context || 'unknown'
+    response,
+    context
   };
 }
 

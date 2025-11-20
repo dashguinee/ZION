@@ -432,12 +432,63 @@ class ResponseSelector {
     let candidates = this.getCandidates(responseType);
 
     if (candidates.length === 0) {
-      // Fallback to generic response
+      // Type-specific fallbacks
+      const fallbacks = {
+        'greeting': {
+          response: "Tanante, Ala xa baraka! I fan?",
+          english: "Fine, God bless! And you?",
+          french: "Bien, que Dieu bénisse! Et toi?"
+        },
+        'location_question': {
+          response: "N'na fafe. Cinq minutes.",
+          english: "I'm coming. Five minutes.",
+          french: "J'arrive. Cinq minutes."
+        },
+        'command': {
+          response: "Awa, n'na fafe!",
+          english: "Yes, I'm coming!",
+          french: "Oui, j'arrive!"
+        },
+        'price_question': {
+          response: "Dix mille tan.",
+          english: "Just ten thousand.",
+          french: "Dix mille seulement."
+        },
+        'yes_no_question': {
+          response: "Awa, a lafia.",
+          english: "Yes, it's fine.",
+          french: "Oui, ça va."
+        },
+        'time_question': {
+          response: "Wakhati firin.",
+          english: "Two o'clock.",
+          french: "Deux heures."
+        },
+        'what_question': {
+          response: "Feen mu a ra.",
+          english: "It's nothing.",
+          french: "Ce n'est rien."
+        },
+        'ability_question': {
+          response: "Awa, ntan no'mma.",
+          english: "Yes, I can.",
+          french: "Oui, je peux."
+        },
+        'statement': {
+          response: "Awa, ntan comprendfe.",
+          english: "Yes, I understand.",
+          french: "Oui, je comprends."
+        }
+      };
+
+      const fallback = fallbacks[classification.type] || fallbacks['statement'];
+
       return {
-        response: "Awa, ntan comprendfe.",
-        english: "Yes, I understand.",
-        confidence: 0.5,
-        responseType: 'fallback',
+        response: fallback.response,
+        english: fallback.english,
+        french: fallback.french,
+        confidence: 0.6,
+        responseType: 'fallback_' + classification.type,
         classification: classification,
         candidates: []
       };
