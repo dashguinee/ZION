@@ -104,10 +104,11 @@ try {
   console.warn('⚠️  Generation templates not loaded');
 }
 
-// Initialize Soussou-AI participant with cultural intelligence
-const soussouAI = createSoussouAI(soussouData.lexicon);
+// Initialize Soussou-AI participant with cultural intelligence + sentence generation
+const soussouDataPath = join(__dirname, 'soussou-engine', 'data');
+const soussouAI = createSoussouAI(soussouData.lexicon, soussouDataPath);
 setSoussouAI(soussouAI);
-console.log('🇬🇳 Soussou-AI initialized with cultural intelligence');
+console.log('🇬🇳 Soussou-AI initialized with sentence generator (328 verified words)');
 
 // ============== HELPER FUNCTIONS ==============
 
