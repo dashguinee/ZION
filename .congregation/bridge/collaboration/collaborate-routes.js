@@ -14,6 +14,16 @@ const router = Router();
 const sessionManager = new SessionManager();
 const stateAnalyzer = new StateAnalyzer();
 
+// Soussou-AI will be initialized with lexicon from parent server
+let soussouAI = null;
+
+export function setSoussouAI(soussouAIInstance) {
+  soussouAI = soussouAIInstance;
+}
+
+// Valid AI participants
+const VALID_PARTICIPANTS = ['zion-online', 'zion-cli', 'gemini', 'soussou-ai'];
+
 // ============== START COLLABORATION ==============
 
 /**
@@ -49,6 +59,15 @@ router.post('/start', async (req, res) => {
           task: 'Optimize the normalize function',
           goal: 'Improve performance by 2x'
         }
+      });
+    }
+
+    // Validate participants
+    const invalidParticipants = participants.filter(p => !VALID_PARTICIPANTS.includes(p));
+    if (invalidParticipants.length > 0) {
+      return res.status(400).json({
+        error: `Invalid participants: ${invalidParticipants.join(', ')}`,
+        valid_participants: VALID_PARTICIPANTS
       });
     }
 
@@ -185,6 +204,69 @@ router.post('/message', async (req, res) => {
 
     // Continue - determine next participant
     const next_participant = turn.to || getNextParticipant(session, from);
+
+    // Auto-respond for Soussou-AI if it's next and available
+    if (next_participant === 'soussou-ai' && soussouAI) {
+      try {
+        const soussouResponse = await soussouAI.generateResponse({
+          task: session.task,
+          goal: session.goal,
+          current_state: session.current_state,
+          recent_turns: session.turns.slice(-3), // Last 3 turns for context
+          session_id: session.id
+        });
+
+        // Add Soussou-AI's turn immediately
+        const soussouTurn = {
+          turn_number: session.turns.length + 1,
+          from: 'soussou-ai',
+          to: soussouResponse.pass_to || getNextParticipant(session, 'soussou-ai'),
+          message: soussouResponse.message,
+          state_analysis: soussouResponse.state_analysis,
+          artifacts: soussouResponse.cultural_insights ? [{
+            type: 'cultural_insights',
+            description: 'Guinea cultural context',
+            content: JSON.stringify(soussouResponse.cultural_insights)
+          }] : [],
+          timestamp: new Date().toISOString(),
+          request_stop: soussouResponse.request_stop || false
+        };
+
+        session.turns.push(soussouTurn);
+        session.last_activity = Date.now();
+
+        // Update state if provided
+        if (soussouResponse.state_analysis?.current_state) {
+          session.current_state = stateAnalyzer.mergeStates(
+            session.current_state,
+            soussouResponse.state_analysis.current_state
+          );
+        }
+
+        // Update progress
+        if (soussouResponse.state_analysis?.gap_to_goal?.current_progress !== undefined) {
+          session.progress = soussouResponse.state_analysis.gap_to_goal.current_progress;
+        }
+
+        // Return response with Soussou-AI's turn included
+        return res.json({
+          conversation_id: session.id,
+          turn_recorded: true,
+          turn_number: turn.turn_number,
+          status: 'active',
+          next_turn: soussouTurn.to,
+          should_continue: true,
+          progress: session.progress,
+          turns_remaining: session.max_turns - session.turns.length,
+          soussou_ai_responded: true,
+          soussou_message: soussouResponse.message,
+          url: `/api/collaborate/session/${session.id}`
+        });
+      } catch (error) {
+        console.error('Soussou-AI auto-response failed:', error);
+        // Continue without Soussou-AI response
+      }
+    }
 
     res.json({
       conversation_id: session.id,

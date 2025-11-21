@@ -18,9 +18,10 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
-// Import collaboration routes
-import collaborateRoutes from './collaboration/collaborate-routes.js';
+// Import collaboration routes and AI clients
+import collaborateRoutes, { setSoussouAI } from './collaboration/collaborate-routes.js';
 import { GeminiClient } from './collaboration/gemini-client.js';
+import { createSoussouAI } from './collaboration/soussou-client.js';
 
 dotenv.config();
 
@@ -102,6 +103,11 @@ try {
 } catch (error) {
   console.warn('⚠️  Generation templates not loaded');
 }
+
+// Initialize Soussou-AI participant with cultural intelligence
+const soussouAI = createSoussouAI(soussouData.lexicon);
+setSoussouAI(soussouAI);
+console.log('🇬🇳 Soussou-AI initialized with cultural intelligence');
 
 // ============== HELPER FUNCTIONS ==============
 
