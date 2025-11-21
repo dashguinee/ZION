@@ -26,7 +26,9 @@
         }
       ],
       "pattern": "{POSSESSIVE} {NOUN} fan {ADJECTIVE}",
-      "notes": "Acts as intensifier. Might be related to 'tofan' (pretty)"
+      "variants": ["fan", "fàn", "fân", "fann"],
+      "notes": "Acts as intensifier. Might be related to 'tofan' (pretty)",
+      "phonetic_note": "Simple word with accent variations"
     },
     {
       "base": "tofan",
@@ -48,7 +50,9 @@
         }
       ],
       "pattern": "{NOUN} tofan",
-      "notes": "Possibly compound: 'to' + 'fan' = very good/pretty? Needs verification"
+      "variants": ["tofan", "to-fan", "tôfan", "toufan", "toffan"],
+      "notes": "Possibly compound: 'to' + 'fan' = very good/pretty? Needs verification",
+      "phonetic_note": "Could be compound word, variants include hyphenated form"
     },
     {
       "base": "ka",
@@ -70,7 +74,9 @@
         }
       ],
       "pattern": "{STATEMENT} ka?",
-      "notes": "Creates confirmation/tag question. Similar to English 'right?' or French 'n'est-ce pas?'"
+      "variants": ["ka", "kà", "kâ", "ca", "qa"],
+      "notes": "Creates confirmation/tag question. Similar to English 'right?' or French 'n'est-ce pas?'",
+      "phonetic_note": "Short word with k/c/q variations common in Soussou"
     }
   ],
 
@@ -94,9 +100,10 @@
           "french": "Ma voiture est aussi rapide"
         }
       ],
-      "variants": ["mafoura"],
+      "variants": ["mafoura", "mafura", "mafoora", "maf-oura"],
       "frequency": 0,
-      "source": "Z-Core examples 2025-11-21"
+      "source": "Z-Core examples 2025-11-21",
+      "phonetic_note": "Phonetic variants capture different spellings of same sound"
     },
     {
       "base": "gui",
@@ -117,10 +124,11 @@
           "french": "Cette voiture est jolie"
         }
       ],
-      "variants": ["gui"],
+      "variants": ["gui", "gi", "ghi", "ghui", "guy"],
       "frequency": 0,
       "source": "Z-Core examples 2025-11-21",
-      "notes": "Demonstrative pronoun. Used at start of sentence to indicate 'this'"
+      "notes": "Demonstrative pronoun. Used at start of sentence to indicate 'this'",
+      "phonetic_note": "Multiple spellings for same sound: Gui/Gi/Ghi all sound like 'ghee'"
     },
     {
       "base": "eske",
@@ -141,10 +149,11 @@
           "french": "Est-ce que mon bateau est joli?"
         }
       ],
-      "variants": ["eske"],
+      "variants": ["eske", "eské", "èske", "estceque", "est-ce-que", "est ce que"],
       "frequency": 0,
       "source": "Z-Core examples 2025-11-21",
-      "notes": "French loan 'est-ce que'. Formal question marker. Note: 'fan' drops when using 'eske'"
+      "notes": "French loan 'est-ce que'. Formal question marker. Note: 'fan' drops when using 'eske'",
+      "phonetic_note": "French loan with multiple spelling variants, all representing same pronunciation"
     }
   ],
 

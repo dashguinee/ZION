@@ -558,32 +558,14 @@
     "id": "sus_00036",
     "base": "fan",
     "variants": [
-      "fan",
-      "fàn",
-      "fân",
-      "fann"
+      "fan"
     ],
-    "english": "also; is also",
-    "french": "aussi; est aussi",
-    "category": "particle",
+    "english": "",
+    "french": "",
+    "category": "unknown",
     "frequency": 2830,
     "sources": [
       "bible"
-    ],
-    "verified_by": "Z-Core crowdsourced learning 2025-11-21",
-    "phonetic_note": "Simple word with accent variations",
-    "usage_pattern": "{POSSESSIVE} {NOUN} fan {ADJECTIVE}",
-    "examples": [
-      {
-        "soussou": "Ma woto fan mafoura",
-        "english": "My car is also fast",
-        "french": "Ma voiture est aussi rapide"
-      },
-      {
-        "soussou": "Ma bateau fan tofan",
-        "english": "My boat is also pretty",
-        "french": "Mon bateau est aussi joli"
-      }
     ]
   },
   {
@@ -10745,33 +10727,14 @@
     "id": "sus_00749",
     "base": "ka",
     "variants": [
-      "ka",
-      "kà",
-      "kâ",
-      "ca",
-      "qa"
+      "ka"
     ],
-    "english": "right?; isn't it?",
-    "french": "n'est-ce pas?; hein?",
-    "category": "particle",
+    "english": "",
+    "french": "",
+    "category": "unknown",
     "frequency": 81,
     "sources": [
       "bible"
-    ],
-    "verified_by": "Z-Core crowdsourced learning 2025-11-21",
-    "phonetic_note": "Short word with k/c/q variations common in Soussou",
-    "usage_pattern": "{STATEMENT} ka?",
-    "examples": [
-      {
-        "soussou": "Ma woto fan mafoura ka?",
-        "english": "My car is also fast, right?",
-        "french": "Ma voiture est aussi rapide, n'est-ce pas?"
-      },
-      {
-        "soussou": "Ma bateau fan tofan ka?",
-        "english": "My boat is also pretty, right?",
-        "french": "Mon bateau est aussi joli, hein?"
-      }
     ]
   },
   {
@@ -12336,33 +12299,14 @@
     "id": "sus_00861",
     "base": "tofan",
     "variants": [
-      "tofan",
-      "to-fan",
-      "tôfan",
-      "toufan",
-      "toffan"
+      "tofan"
     ],
-    "english": "pretty; beautiful",
-    "french": "joli; beau",
-    "category": "adjective",
+    "english": "",
+    "french": "",
+    "category": "unknown",
     "frequency": 68,
     "sources": [
       "bible"
-    ],
-    "verified_by": "Z-Core crowdsourced learning 2025-11-21",
-    "phonetic_note": "Could be compound word, variants include hyphenated form",
-    "usage_pattern": "{NOUN} tofan",
-    "examples": [
-      {
-        "soussou": "Gui woto tofan",
-        "english": "This car is pretty",
-        "french": "Cette voiture est jolie"
-      },
-      {
-        "soussou": "Ma bateau tofan",
-        "english": "My boat is pretty",
-        "french": "Mon bateau est joli"
-      }
     ]
   },
   {
@@ -125768,36 +125712,17 @@
     "base": "guira",
     "variants": [
       "guira",
-      "gui",
-      "gi",
-      "ghi",
-      "ghui",
-      "guy"
+      "gui"
     ],
-    "english": "this; it; this thing / that thing",
-    "french": "ce; ça; cette; cette chose",
+    "english": "this thing / that thing",
+    "french": "cette chose / ça",
     "category": "pronoun",
     "frequency": 0,
     "sources": [
-      "training_context",
-      "Z-Core crowdsourced learning 2025-11-21"
+      "training_context"
     ],
     "context": "Demonstrative",
-    "grammar_pattern": "Demonstrative pronoun - gui is shortened form",
-    "verified_by": "Z-Core crowdsourced learning 2025-11-21",
-    "phonetic_note": "Multiple spellings for same sound: Gui/Gi/Ghi all sound like 'ghee'",
-    "examples": [
-      {
-        "soussou": "Gui fan",
-        "english": "This is good",
-        "french": "C'est bon"
-      },
-      {
-        "soussou": "Gui woto tofan",
-        "english": "This car is pretty",
-        "french": "Cette voiture est jolie"
-      }
-    ]
+    "grammar_pattern": "Demonstrative pronoun - gui is shortened form"
   },
   {
     "id": "sus_08925",
@@ -126731,72 +126656,5 @@
       "user_contribution"
     ],
     "context": "Communication verbs"
-  },
-  {
-    "id": "sus_08979",
-    "base": "mafoura",
-    "variants": [
-      "mafoura",
-      "mafura",
-      "mafoora",
-      "maf-oura"
-    ],
-    "english": "fast; quick",
-    "french": "rapide; vite",
-    "category": "adjective",
-    "frequency": 0,
-    "sources": [
-      "Z-Core examples 2025-11-21"
-    ],
-    "verified_by": "Z-Core crowdsourced learning 2025-11-21",
-    "phonetic_note": "Phonetic variants capture different spellings of same sound",
-    "usage": "describes speed",
-    "examples": [
-      {
-        "soussou": "Ma woto mafoura",
-        "english": "My car is fast",
-        "french": "Ma voiture est rapide"
-      },
-      {
-        "soussou": "Ma woto fan mafoura",
-        "english": "My car is also fast",
-        "french": "Ma voiture est aussi rapide"
-      }
-    ]
-  },
-  {
-    "id": "sus_08980",
-    "base": "eske",
-    "variants": [
-      "eske",
-      "eské",
-      "èske",
-      "estceque",
-      "est-ce-que",
-      "est ce que"
-    ],
-    "english": "question marker (is; do; does)",
-    "french": "est-ce que",
-    "category": "particle",
-    "frequency": 0,
-    "sources": [
-      "Z-Core examples 2025-11-21"
-    ],
-    "verified_by": "Z-Core crowdsourced learning 2025-11-21",
-    "phonetic_note": "French loan with multiple spelling variants, all representing same pronunciation",
-    "usage": "formal question formation - prefix to convert statement to question",
-    "examples": [
-      {
-        "soussou": "Eske ma woto tofan?",
-        "english": "Is my car pretty?",
-        "french": "Est-ce que ma voiture est jolie?"
-      },
-      {
-        "soussou": "Eske ma bateau tofan?",
-        "english": "Is my boat pretty?",
-        "french": "Est-ce que mon bateau est joli?"
-      }
-    ],
-    "notes": "French loan 'est-ce que'. Formal question marker. Note: 'fan' drops when using 'eske'"
   }
 ]

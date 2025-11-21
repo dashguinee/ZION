@@ -529,6 +529,68 @@
       "examples": ["Midi. Dege wakhati.", "Nuit yite. Whon' sa siga bangui."],
       "context": "time_announcement",
       "french_equivalent": "[periode]. [consequence]"
+    },
+    "intensifier_with_fan": {
+      "pattern": "{POSSESSIVE} {NOUN} fan {ADJECTIVE}",
+      "slots": {
+        "POSSESSIVE": ["Ma", "M'ma", "Akha", "Ikha", "Whonma", "Ekha"],
+        "NOUN": ["woto", "bateau", "telephone", "avion", "maison", "moto"],
+        "ADJECTIVE": ["mafoura", "tofan", "koui", "gbo", "bon", "fra"]
+      },
+      "examples": ["Ma woto fan mafoura", "Ma bateau fan tofan", "Ikha telephone fan koui"],
+      "context": "intensifier_also",
+      "french_equivalent": "Mon [nom] est aussi [adjectif]",
+      "notes": "Z-Core discovery: 'fan' between noun and adjective = 'is also' / intensifier",
+      "verified_by": "Z-Core crowdsourced learning 2025-11-21"
+    },
+    "formal_question_eske": {
+      "pattern": "Eske {STATEMENT}?",
+      "slots": {
+        "STATEMENT": [
+          "ma woto tofan",
+          "ma bateau tofan",
+          "gui fan",
+          "i baba lafia",
+          "i na lafia",
+          "wakhati yite",
+          "ina fafe"
+        ]
+      },
+      "examples": ["Eske ma woto tofan?", "Eske ma bateau tofan?", "Eske i baba lafia?"],
+      "context": "formal_question",
+      "french_equivalent": "Est-ce que [affirmation]?",
+      "notes": "Z-Core discovery: French loan 'est-ce que' for formal questions. Note: drop 'fan' when using 'eske'",
+      "verified_by": "Z-Core crowdsourced learning 2025-11-21"
+    },
+    "confirmation_tag_ka": {
+      "pattern": "{STATEMENT} ka?",
+      "slots": {
+        "STATEMENT": [
+          "Ma woto fan mafoura",
+          "Ma bateau fan tofan",
+          "Gui fan",
+          "I baba lafia",
+          "Ina fafe",
+          "A koui"
+        ]
+      },
+      "examples": ["Ma woto fan mafoura ka?", "Ma bateau fan tofan ka?", "Gui fan ka?"],
+      "context": "confirmation_question",
+      "french_equivalent": "[affirmation], n'est-ce pas? / hein?",
+      "notes": "Z-Core discovery: 'ka' at end = confirmation tag like English 'right?' or French 'n'est-ce pas?'",
+      "verified_by": "Z-Core crowdsourced learning 2025-11-21"
+    },
+    "simple_adjective_statement": {
+      "pattern": "{SUBJECT} {ADJECTIVE}",
+      "slots": {
+        "SUBJECT": ["Ma woto", "Ma bateau", "Gui woto", "Gui", "Ikha telephone", "M'ma maison"],
+        "ADJECTIVE": ["mafoura", "tofan", "koui", "gbo", "bon", "fra"]
+      },
+      "examples": ["Ma woto mafoura", "Ma bateau tofan", "Gui woto tofan", "Gui fan"],
+      "context": "simple_description",
+      "french_equivalent": "[sujet] est [adjectif]",
+      "notes": "Z-Core discovery: No copula 'is' - direct subject + adjective",
+      "verified_by": "Z-Core crowdsourced learning 2025-11-21"
     }
   },
 
@@ -561,8 +623,8 @@
 
   "sentence_type_mapping": {
     "greeting": ["greeting_morning", "greeting_evening", "greeting_response", "family_wellness", "wellness_response"],
-    "question": ["location_question", "price_question", "quality_question", "time_question", "when_question", "what_question", "what_about", "ability_question", "directions_question", "directions_nearby", "understanding_question", "reason_question", "language_question", "children_question", "schedule_question"],
-    "statement": ["movement_statement", "movement_with_time", "negation_know", "negation_come", "negation_ability", "possession_state", "weather_statement", "weather_cold", "weather_rain_coming", "understanding_statement", "not_understand", "situation_response", "inside_location", "time_statement", "language_response", "children_response"],
+    "question": ["location_question", "price_question", "quality_question", "time_question", "when_question", "what_question", "what_about", "ability_question", "directions_question", "directions_nearby", "understanding_question", "reason_question", "language_question", "children_question", "schedule_question", "formal_question_eske", "confirmation_tag_ka"],
+    "statement": ["movement_statement", "movement_with_time", "negation_know", "negation_come", "negation_ability", "possession_state", "weather_statement", "weather_cold", "weather_rain_coming", "understanding_statement", "not_understand", "situation_response", "inside_location", "time_statement", "language_response", "children_response", "intensifier_with_fan", "simple_adjective_statement"],
     "command": ["imperative_simple", "imperative_location", "imperative_urgent", "imperative_object", "imperative_destination", "imperative_follow", "waiting_instruction", "call_instruction", "hospitality"],
     "response": ["greeting_response", "wellness_response", "price_response", "agreement", "apology", "thanks"],
     "blessing": ["blessing", "farewell"],
@@ -570,9 +632,12 @@
   },
 
   "metadata": {
-    "total_templates": 52,
-    "slot_types": ["SUBJECT", "POSSESSIVE", "NOUN", "VERB", "LOCATION", "TIME", "INTENSITY", "QUALITY", "AMOUNT", "FAMILY_MEMBER", "PLACE", "DIRECTION", "BLESSING", "REASON", "ACTION"],
+    "total_templates": 56,
+    "slot_types": ["SUBJECT", "POSSESSIVE", "NOUN", "VERB", "LOCATION", "TIME", "INTENSITY", "QUALITY", "AMOUNT", "FAMILY_MEMBER", "PLACE", "DIRECTION", "BLESSING", "REASON", "ACTION", "ADJECTIVE", "STATEMENT"],
     "based_on_examples": 100,
-    "language_pair": "Soussou-French"
+    "language_pair": "Soussou-French",
+    "crowdsourced_patterns": 4,
+    "last_updated": "2025-11-21",
+    "verified_by": "Z-Core crowdsourced learning"
   }
 }
