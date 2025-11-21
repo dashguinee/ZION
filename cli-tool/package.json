@@ -1,0 +1,19 @@
+{
+  "name": "zion-cli",
+  "version": "1.0.0",
+  "description": "ZION CLI - Fast Soussou contribution tool",
+  "type": "module",
+  "bin": {
+    "zion": "./bin/zion.js"
+  },
+  "scripts": {
+    "link": "npm link",
+    "test": "node bin/zion.js stats"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.12",
+    "chalk": "^5.3.0",
+    "ora": "^7.0.1"
+  }
+}
