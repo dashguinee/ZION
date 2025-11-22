@@ -117,19 +117,32 @@ class PatternDiscoveryEngine {
   findInLexicon(word) {
     // Normalize the word first
     const normalized = VariantNormalizer.normalize(word);
+    console.log(`🔍 [LOOKUP] Word: "${word}" → Normalized: "${normalized}"`);
 
-    // Try exact match with normalization
+    // Try exact match with normalization first
     let match = this.lexicon.find(entry =>
       VariantNormalizer.normalize(entry.base) === normalized
     );
 
-    // If no match, try fuzzy matching
-    if (!match) {
-      const matches = VariantNormalizer.findMatches(word, this.lexicon);
-      match = matches.length > 0 ? matches[0] : null;
+    if (match) {
+      console.log(`✅ [LOOKUP] Exact match found: "${match.base}" → ${match.category}`);
+      return match;
     }
 
-    return match;
+    // If no exact match, try substring matching (for partial matches)
+    console.log(`🔍 [LOOKUP] No exact match, trying substring...`);
+    match = this.lexicon.find(entry => {
+      const entryNormalized = VariantNormalizer.normalize(entry.base);
+      return entryNormalized.includes(normalized) || normalized.includes(entryNormalized);
+    });
+
+    if (match) {
+      console.log(`✅ [LOOKUP] Substring match found: "${match.base}" → ${match.category}`);
+      return match;
+    }
+
+    console.log(`❌ [LOOKUP] No match found for "${word}" (normalized: "${normalized}")`);
+    return null;
   }
 
   /**
