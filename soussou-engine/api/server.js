@@ -29,11 +29,15 @@ const generationTemplates = JSON.parse(fs.readFileSync(path.join(dataDir, 'gener
 const VariantNormalizer = require('../src/variant_normalizer');
 const SentenceGenerator = require('../src/sentence_generator');
 const ResponseSelector = require('../src/response_selector');
+const LearningBridge = require('./learning_bridge');
 
 // Initialize engines
-const normalizer = new VariantNormalizer(variantMappings);
+const normalizer = VariantNormalizer; // Object with functions, not a class
 const generator = new SentenceGenerator(generationTemplates, lexicon);
 const responseSelector = new ResponseSelector(lexicon, generationTemplates);
+
+// Initialize learning layer (Phase 3 → Phase 4 bridge)
+const learningBridge = new LearningBridge(dataDir, lexicon);
 
 // In-memory stores for contributions/feedback (would be database in production)
 const contributions = [];
@@ -191,6 +195,15 @@ app.post('/api/translate', (req, res) => {
     });
   }
 
+  // Hook: Learning Bridge (non-blocking)
+  learningBridge.onTranslation({
+    original: text,
+    translation: translation,
+    confidence: confidence,
+    from: from,
+    to: to
+  });
+
   res.json({
     original: text,
     translation: translation,
@@ -300,6 +313,9 @@ app.post('/api/contribute', (req, res) => {
 
   contributions.push(contribution);
 
+  // Hook: Learning Bridge (non-blocking)
+  learningBridge.onContribution(contribution);
+
   res.status(201).json({
     id: contribution.id,
     status: contribution.status,
@@ -334,12 +350,44 @@ app.post('/api/feedback', (req, res) => {
     fb.pattern_updated = true;
   }
 
+  // Hook: Learning Bridge (non-blocking)
+  learningBridge.onFeedback(fb);
+
   res.status(201).json({
     id: fb.id,
     status: 'recorded',
     message: 'Feedback recorded. This helps Guinius learn!',
     pattern_updated: fb.pattern_updated
   });
+});
+
+// ============== LEARNING ENDPOINTS (Phase 4 Bridge) ==============
+
+// GET /api/learning/metrics - Get learning system metrics
+app.get('/api/learning/metrics', (req, res) => {
+  res.json(learningBridge.getMetrics());
+});
+
+// POST /api/learning/discover - Manually trigger pattern discovery
+app.post('/api/learning/discover', async (req, res) => {
+  try {
+    const patterns = await learningBridge.triggerDiscovery();
+    res.json({
+      patterns_discovered: patterns.length,
+      patterns: patterns,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Pattern discovery failed',
+      message: error.message
+    });
+  }
+});
+
+// GET /api/corpus/stats - Get sentence corpus statistics
+app.get('/api/corpus/stats', (req, res) => {
+  res.json(learningBridge.corpus.getStats());
 });
 
 // ============== HELPER FUNCTIONS ==============
