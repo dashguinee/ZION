@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "zion-learning-web",
   "buildCommand": "npm install && npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
@@ -10,15 +9,6 @@
     {
       "source": "/(.*)",
       "destination": "/index.html"
-    }
-  ],
-  "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ]
 }

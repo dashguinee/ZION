@@ -60,7 +60,7 @@
     ],
     "english": "multiplicative verbal prefix; possessive marker; present tense marker; present/future marker; verb prefix; my; don't / not (negation)",
     "french": "marqueur possessif; marqueur présent/futur; préfixe verbal; mon / ma; ne pas / pas",
-    "category": "particle",
+    "category": "possessive",
     "frequency": 20810,
     "sources": [
       "01 dictionary pdf",
@@ -258,7 +258,7 @@
     ],
     "english": "",
     "french": "",
-    "category": "unknown",
+    "category": "adjective",
     "frequency": 6689,
     "sources": [
       "bible"
@@ -565,7 +565,7 @@
     ],
     "english": "also; is also",
     "french": "aussi; est aussi",
-    "category": "particle",
+    "category": "intensifier",
     "frequency": 2830,
     "sources": [
       "bible"
