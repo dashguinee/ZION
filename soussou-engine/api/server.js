@@ -390,6 +390,180 @@ app.get('/api/corpus/stats', (req, res) => {
   res.json(learningBridge.corpus.getStats());
 });
 
+// ============== WEB APP ENDPOINTS (Frontend Integration) ==============
+
+// POST /api/corpus/add-sentence - Add sentence to learning corpus
+app.post('/api/corpus/add-sentence', (req, res) => {
+  try {
+    const { soussou, english, french, source, verified_by } = req.body;
+
+    if (!soussou) {
+      return res.status(400).json({ error: 'Soussou text is required' });
+    }
+
+    const sentenceId = learningBridge.corpus.addSentence({
+      soussou,
+      english: english || null,
+      french: french || null,
+      source: source || 'web_app',
+      verified: false,
+      contributed_by: verified_by || 'anonymous'
+    });
+
+    res.json({
+      success: true,
+      sentence_id: sentenceId,
+      message: 'Sentence added to corpus'
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to add sentence',
+      message: error.message
+    });
+  }
+});
+
+// POST /api/pattern/detect - Detect pattern in sentence
+app.post('/api/pattern/detect', async (req, res) => {
+  try {
+    const { sentence } = req.body;
+
+    if (!sentence) {
+      return res.status(400).json({ error: 'Sentence is required' });
+    }
+
+    // Trigger pattern discovery
+    const patterns = await learningBridge.triggerDiscovery();
+
+    // Return detected patterns that might match
+    res.json({
+      sentence,
+      patterns_detected: patterns.length,
+      patterns: patterns,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Pattern detection failed',
+      message: error.message
+    });
+  }
+});
+
+// GET /api/corpus/pending-verification - Get sentences needing verification
+app.get('/api/corpus/pending-verification', (req, res) => {
+  try {
+    const pendingSentences = learningBridge.corpus.sentences
+      .filter(s => !s.verified)
+      .map(s => ({
+        id: s.id,
+        soussou: s.soussou,
+        english: s.english,
+        french: s.french,
+        source: s.source,
+        contributed_by: s.contributed_by,
+        confidence_score: s.confidence_score,
+        created_at: s.created_at
+      }));
+
+    res.json({
+      total: pendingSentences.length,
+      sentences: pendingSentences
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to fetch pending sentences',
+      message: error.message
+    });
+  }
+});
+
+// POST /api/corpus/verify - Verify a sentence
+app.post('/api/corpus/verify', (req, res) => {
+  try {
+    const { sentence_id, verdict, correction, verified_by } = req.body;
+
+    if (!sentence_id) {
+      return res.status(400).json({ error: 'sentence_id is required' });
+    }
+
+    // Find the sentence
+    const sentence = learningBridge.corpus.sentences.find(s => s.id === sentence_id);
+
+    if (!sentence) {
+      return res.status(404).json({ error: 'Sentence not found' });
+    }
+
+    // Update verification status
+    sentence.verified = verdict === 'approve';
+    sentence.verified_by = verified_by || 'anonymous';
+    sentence.verified_at = new Date().toISOString();
+
+    // If correction provided, update the sentence
+    if (correction) {
+      sentence.soussou = correction;
+    }
+
+    // Update metadata
+    if (sentence.verified) {
+      learningBridge.corpus.metadata.verified_sentences++;
+    }
+
+    // Save corpus
+    const path = require('path');
+    const corpusPath = path.join(learningBridge.dataDir, 'sentence_corpus.json');
+    learningBridge.saveCorpus(learningBridge.corpus, corpusPath);
+
+    res.json({
+      success: true,
+      sentence_id: sentence_id,
+      verified: sentence.verified,
+      message: 'Sentence verification updated'
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Verification failed',
+      message: error.message
+    });
+  }
+});
+
+// GET /api/corpus/search - Search corpus by query
+app.get('/api/corpus/search', (req, res) => {
+  try {
+    const { query } = req.query;
+
+    if (!query) {
+      return res.status(400).json({ error: 'Query parameter is required' });
+    }
+
+    const queryLower = query.toLowerCase();
+    const results = learningBridge.corpus.sentences.filter(s =>
+      s.soussou?.toLowerCase().includes(queryLower) ||
+      s.english?.toLowerCase().includes(queryLower) ||
+      s.french?.toLowerCase().includes(queryLower)
+    );
+
+    res.json({
+      query,
+      total: results.length,
+      results: results.map(s => ({
+        id: s.id,
+        soussou: s.soussou,
+        english: s.english,
+        french: s.french,
+        verified: s.verified,
+        source: s.source
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Search failed',
+      message: error.message
+    });
+  }
+});
+
 // ============== HELPER FUNCTIONS ==============
 
 function findSimilarWords(word, limit = 5) {
