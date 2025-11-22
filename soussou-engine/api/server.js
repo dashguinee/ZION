@@ -141,7 +141,7 @@ app.get('/api/patterns', (req, res) => {
 
 // GET /api/stats - Get lexicon statistics
 app.get('/api/stats', (req, res) => {
-  const words = lexicon.words || [];
+  const words = Array.isArray(lexicon) ? lexicon : (lexicon.words || []);
 
   // Count by category
   const categories = {};

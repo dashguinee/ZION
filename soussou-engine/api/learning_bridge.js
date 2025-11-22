@@ -67,7 +67,7 @@ class LearningBridge {
 
       this.patternEngine = new PatternDiscoveryEngine(
         verifiedSentences,
-        this.lexicon.words || []
+        this.lexicon || []
       );
 
       console.log(`📊 Loaded ${this.corpus.metadata.total_sentences} sentences (${this.corpus.metadata.verified_sentences} verified)`);
@@ -266,8 +266,8 @@ class LearningBridge {
 
     // Check against lexicon
     words.forEach(word => {
-      const inLexicon = (this.lexicon.words || []).some(entry =>
-        entry.soussou && entry.soussou.toLowerCase().includes(word)
+      const inLexicon = (this.lexicon || []).some(entry =>
+        entry.base && entry.base.toLowerCase().includes(word)
       );
       if (inLexicon) soussouWords++;
     });
