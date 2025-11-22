@@ -5,6 +5,8 @@
  * Reduces reliance on manual pattern teaching
  */
 
+const VariantNormalizer = require('./variant_normalizer');
+
 class PatternDiscoveryEngine {
   constructor(sentenceCorpus, lexicon) {
     this.corpus = sentenceCorpus; // All verified sentences
@@ -22,22 +24,38 @@ class PatternDiscoveryEngine {
   discoverPatterns() {
     const patterns = [];
 
+    console.log(`🔍 [DEBUG] Starting pattern discovery on ${this.corpus.length} sentences`);
+
     // Step 1: Part-of-speech tagging
     const taggedSentences = this.corpus.map(s => this.tagPOS(s));
+
+    console.log(`🔍 [DEBUG] Tagged sentences:`, taggedSentences.map(tagged =>
+      tagged.map(t => `${t.word}[${t.category}]`).join(' ')
+    ));
 
     // Step 2: Find repeating sequences
     const sequences = this.findRepeatingSequences(taggedSentences);
 
+    console.log(`🔍 [DEBUG] Found ${sequences.length} unique sequences:`,
+      sequences.map(s => `${s.template} (freq: ${s.frequency})`));
+
     // Step 3: Abstract to pattern templates
+    // Dynamic threshold: For small corpora (< 10 sentences), use lower threshold
+    const threshold = this.corpus.length < 10 ? 2 : 3;
+
     sequences.forEach(seq => {
-      if (seq.frequency >= 3) { // Appears 3+ times
+      if (seq.frequency >= threshold) {
         patterns.push({
           pattern: seq.template,
           confidence: seq.frequency / this.corpus.length,
+          frequency: seq.frequency,
           examples: seq.examples,
           discovered_at: new Date().toISOString(),
           discovered_by: 'automated_analysis'
         });
+        console.log(`✅ [DEBUG] Pattern discovered: ${seq.template} (${seq.frequency} times)`);
+      } else {
+        console.log(`❌ [DEBUG] Pattern rejected (frequency ${seq.frequency} < ${threshold}): ${seq.template}`);
       }
     });
 
@@ -94,12 +112,24 @@ class PatternDiscoveryEngine {
 
   /**
    * Find word in lexicon with phonetic matching
+   * Uses variant normalizer to handle spelling variations (Gui→Gi, fan→phan, etc.)
    */
   findInLexicon(word) {
-    return this.lexicon.find(entry =>
-      entry.base === word ||
-      entry.variants?.includes(word)
+    // Normalize the word first
+    const normalized = VariantNormalizer.normalize(word);
+
+    // Try exact match with normalization
+    let match = this.lexicon.find(entry =>
+      VariantNormalizer.normalize(entry.base) === normalized
     );
+
+    // If no match, try fuzzy matching
+    if (!match) {
+      const matches = VariantNormalizer.findMatches(word, this.lexicon);
+      match = matches.length > 0 ? matches[0] : null;
+    }
+
+    return match;
   }
 
   /**
