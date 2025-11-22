@@ -587,6 +587,58 @@
     ]
   },
   {
+    "id": "sus_00036_adj",
+    "base": "fan",
+    "variants": [
+      "fan",
+      "fàn",
+      "fân",
+      "fann"
+    ],
+    "english": "good",
+    "french": "bon",
+    "category": "adjective",
+    "frequency": 2830,
+    "sources": [
+      "Z-Core teaching"
+    ],
+    "verified_by": "Z-Core 2025-11-22",
+    "phonetic_note": "Same phonetic as intensifier 'fan' but different meaning",
+    "usage_pattern": "A fan (it's good)",
+    "examples": [
+      {
+        "soussou": "Ma telephone fan fan",
+        "english": "My phone is also good",
+        "french": "Mon téléphone est aussi bon"
+      }
+    ]
+  },
+  {
+    "id": "sus_telephone",
+    "base": "telephone",
+    "variants": [
+      "telephone",
+      "téléphone",
+      "telefone"
+    ],
+    "english": "phone; telephone",
+    "french": "téléphone",
+    "category": "noun",
+    "frequency": 100,
+    "sources": [
+      "french_loanword"
+    ],
+    "verified_by": "Z-Core 2025-11-22",
+    "phonetic_note": "French loanword with phonetic variations",
+    "examples": [
+      {
+        "soussou": "Ma telephone fan fan",
+        "english": "My phone is also good",
+        "french": "Mon téléphone est aussi bon"
+      }
+    ]
+  },
+  {
     "id": "sus_00037",
     "base": "won",
     "variants": [

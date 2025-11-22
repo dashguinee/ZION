@@ -8,17 +8,30 @@
         {
           "soussou": "Ntan sosokhoui kolon un peu",
           "english": "I understand Soussou a bit",
-          "breakdown": ["Ntan (S)", "sosokhoui (O)", "kolon (V)", "un peu (M)"]
+          "breakdown": [
+            "Ntan (S)",
+            "sosokhoui (O)",
+            "kolon (V)",
+            "un peu (M)"
+          ]
         },
         {
           "soussou": "N'na fafe",
           "english": "I am coming",
-          "breakdown": ["N'na (S)", "fafe (V)"]
+          "breakdown": [
+            "N'na (S)",
+            "fafe (V)"
+          ]
         },
         {
           "soussou": "Ntan itan situation comprendfe gbo",
           "english": "I understand your situation a lot",
-          "breakdown": ["Ntan (S)", "itan situation (O)", "comprendfe (V)", "gbo (M)"]
+          "breakdown": [
+            "Ntan (S)",
+            "itan situation (O)",
+            "comprendfe (V)",
+            "gbo (M)"
+          ]
         }
       ]
     },
@@ -30,17 +43,30 @@
         {
           "soussou": "Ina m'ma fafe",
           "english": "You're not coming",
-          "breakdown": ["Ina (S)", "m'ma (NEG)", "fafe (V)"]
+          "breakdown": [
+            "Ina (S)",
+            "m'ma (NEG)",
+            "fafe (V)"
+          ]
         },
         {
           "soussou": "Ntan m'ma kolon",
           "english": "I don't know",
-          "breakdown": ["Ntan (S)", "m'ma (NEG)", "kolon (V)"]
+          "breakdown": [
+            "Ntan (S)",
+            "m'ma (NEG)",
+            "kolon (V)"
+          ]
         },
         {
           "soussou": "Etan m'ma kolon gui yire",
           "english": "They don't know that place",
-          "breakdown": ["Etan (S)", "m'ma (NEG)", "kolon (V)", "gui yire (O)"]
+          "breakdown": [
+            "Etan (S)",
+            "m'ma (NEG)",
+            "kolon (V)",
+            "gui yire (O)"
+          ]
         }
       ]
     },
@@ -52,17 +78,26 @@
         {
           "soussou": "Ina minde?",
           "english": "Where are you?",
-          "breakdown": ["Ina (S)", "minde (Q-where)"]
+          "breakdown": [
+            "Ina (S)",
+            "minde (Q-where)"
+          ]
         },
         {
           "soussou": "I baba minde?",
           "english": "Where is your father?",
-          "breakdown": ["I baba (S)", "minde (Q-where)"]
+          "breakdown": [
+            "I baba (S)",
+            "minde (Q-where)"
+          ]
         },
         {
           "soussou": "Hopital gui kira minde?",
           "english": "Where is the road to this hospital?",
-          "breakdown": ["Hopital gui kira (S)", "minde (Q-where)"]
+          "breakdown": [
+            "Hopital gui kira (S)",
+            "minde (Q-where)"
+          ]
         }
       ]
     },
@@ -74,12 +109,18 @@
         {
           "soussou": "Mangue gui songo yiri?",
           "english": "How much are these mangoes?",
-          "breakdown": ["Mangue gui (S)", "songo yiri (Q-how much)"]
+          "breakdown": [
+            "Mangue gui (S)",
+            "songo yiri (Q-how much)"
+          ]
         },
         {
           "soussou": "Telephone gui songo yiri?",
           "english": "How much is this phone?",
-          "breakdown": ["Telephone gui (S)", "songo yiri (Q-how much)"]
+          "breakdown": [
+            "Telephone gui (S)",
+            "songo yiri (Q-how much)"
+          ]
         }
       ]
     },
@@ -91,12 +132,20 @@
         {
           "soussou": "Wakhati yiri ra?",
           "english": "What time is it?",
-          "breakdown": ["Wakhati (time)", "yiri (which)", "ra (LOC)"]
+          "breakdown": [
+            "Wakhati (time)",
+            "yiri (which)",
+            "ra (LOC)"
+          ]
         },
         {
           "soussou": "Whon' kha meeting commence wakhati yiri?",
           "english": "What time does our meeting start?",
-          "breakdown": ["Whon' kha meeting (S)", "commence (V)", "wakhati yiri (Q-time)"]
+          "breakdown": [
+            "Whon' kha meeting (S)",
+            "commence (V)",
+            "wakhati yiri (Q-time)"
+          ]
         }
       ]
     },
@@ -108,12 +157,20 @@
         {
           "soussou": "Di ra ina dege?",
           "english": "What are you eating?",
-          "breakdown": ["Di ra (Q-what)", "ina (S)", "dege (V)"]
+          "breakdown": [
+            "Di ra (Q-what)",
+            "ina (S)",
+            "dege (V)"
+          ]
         },
         {
           "soussou": "I di ra fen?",
           "english": "What are you looking for?",
-          "breakdown": ["I (S)", "di ra (Q-what)", "fen (V)"]
+          "breakdown": [
+            "I (S)",
+            "di ra (Q-what)",
+            "fen (V)"
+          ]
         }
       ]
     },
@@ -125,7 +182,11 @@
         {
           "soussou": "Khafe mu ra?",
           "english": "Why? / What's the problem?",
-          "breakdown": ["Khafe (problem/cause)", "mu (NEG)", "ra (LOC)"]
+          "breakdown": [
+            "Khafe (problem/cause)",
+            "mu (NEG)",
+            "ra (LOC)"
+          ]
         }
       ]
     },
@@ -137,12 +198,21 @@
         {
           "soussou": "Ina fafe?",
           "english": "Are you coming?",
-          "breakdown": ["Ina (S)", "fafe (V)", "? (rising tone)"]
+          "breakdown": [
+            "Ina (S)",
+            "fafe (V)",
+            "? (rising tone)"
+          ]
         },
         {
           "soussou": "Poisson gui fra gbo?",
           "english": "Is this fish fresh?",
-          "breakdown": ["Poisson gui (S)", "fra (ADJ)", "gbo (INT)", "? (rising tone)"]
+          "breakdown": [
+            "Poisson gui (S)",
+            "fra (ADJ)",
+            "gbo (INT)",
+            "? (rising tone)"
+          ]
         }
       ]
     },
@@ -154,12 +224,22 @@
         {
           "soussou": "Eske ina mma situation comprendfe?",
           "english": "Do you understand my situation?",
-          "breakdown": ["Eske (Q-marker)", "ina (S)", "mma situation (O)", "comprendfe (V)"]
+          "breakdown": [
+            "Eske (Q-marker)",
+            "ina (S)",
+            "mma situation (O)",
+            "comprendfe (V)"
+          ]
         },
         {
           "soussou": "Eske I no'mma guira?",
           "english": "Are you able to do this? (genuine)",
-          "breakdown": ["Eske (Q-marker)", "I (S)", "no'mma (able)", "guira (O)"]
+          "breakdown": [
+            "Eske (Q-marker)",
+            "I (S)",
+            "no'mma (able)",
+            "guira (O)"
+          ]
         }
       ],
       "notes": "Without 'Eske', the question has a challenging/teasing tone"
@@ -172,12 +252,21 @@
         {
           "soussou": "I no'mma guira?",
           "english": "You can do this? (challenging)",
-          "breakdown": ["I (S)", "no'mma (able)", "guira (O)"]
+          "breakdown": [
+            "I (S)",
+            "no'mma (able)",
+            "guira (O)"
+          ]
         },
         {
           "soussou": "Ina no'mma fafe maintenant?",
           "english": "Can you come now?",
-          "breakdown": ["Ina (S)", "no'mma (able)", "fafe (V)", "maintenant (ADV)"]
+          "breakdown": [
+            "Ina (S)",
+            "no'mma (able)",
+            "fafe (V)",
+            "maintenant (ADV)"
+          ]
         }
       ]
     },
@@ -189,12 +278,18 @@
         {
           "soussou": "Itan ngo?",
           "english": "What about you?",
-          "breakdown": ["Itan (PRO)", "ngo (Q-what about)"]
+          "breakdown": [
+            "Itan (PRO)",
+            "ngo (Q-what about)"
+          ]
         },
         {
           "soussou": "Atan go?",
           "english": "What about him/her?",
-          "breakdown": ["Atan (PRO)", "go (Q-what about)"]
+          "breakdown": [
+            "Atan (PRO)",
+            "go (Q-what about)"
+          ]
         }
       ]
     },
@@ -206,12 +301,20 @@
         {
           "soussou": "M'ma soeur fafe tuma yiri?",
           "english": "When is my sister coming?",
-          "breakdown": ["M'ma soeur (S)", "fafe (V)", "tuma yiri (Q-when)"]
+          "breakdown": [
+            "M'ma soeur (S)",
+            "fafe (V)",
+            "tuma yiri (Q-when)"
+          ]
         },
         {
           "soussou": "Ana malade tuma yiri?",
           "english": "When did he/she get sick?",
-          "breakdown": ["Ana (S)", "malade (ADJ)", "tuma yiri (Q-when)"]
+          "breakdown": [
+            "Ana (S)",
+            "malade (ADJ)",
+            "tuma yiri (Q-when)"
+          ]
         }
       ]
     },
@@ -223,22 +326,30 @@
         {
           "soussou": "Fa",
           "english": "Come",
-          "breakdown": ["Fa (V-imperative)"]
+          "breakdown": [
+            "Fa (V-imperative)"
+          ]
         },
         {
           "soussou": "Siga",
           "english": "Go",
-          "breakdown": ["Siga (V-imperative)"]
+          "breakdown": [
+            "Siga (V-imperative)"
+          ]
         },
         {
           "soussou": "Dokho",
           "english": "Sit",
-          "breakdown": ["Dokho (V-imperative)"]
+          "breakdown": [
+            "Dokho (V-imperative)"
+          ]
         },
         {
           "soussou": "Alou",
           "english": "Stop",
-          "breakdown": ["Alou (V-imperative)"]
+          "breakdown": [
+            "Alou (V-imperative)"
+          ]
         }
       ]
     },
@@ -250,22 +361,35 @@
         {
           "soussou": "Fa be",
           "english": "Come here",
-          "breakdown": ["Fa (V)", "be (LOC-here)"]
+          "breakdown": [
+            "Fa (V)",
+            "be (LOC-here)"
+          ]
         },
         {
           "soussou": "Siga yire",
           "english": "Go there",
-          "breakdown": ["Siga (V)", "yire (LOC-there)"]
+          "breakdown": [
+            "Siga (V)",
+            "yire (LOC-there)"
+          ]
         },
         {
           "soussou": "Fa bangui koui",
           "english": "Come inside the house",
-          "breakdown": ["Fa (V)", "bangui (N-house)", "koui (LOC-inside)"]
+          "breakdown": [
+            "Fa (V)",
+            "bangui (N-house)",
+            "koui (LOC-inside)"
+          ]
         },
         {
           "soussou": "Mmeme be",
           "english": "Wait here",
-          "breakdown": ["Mmeme (V)", "be (LOC-here)"]
+          "breakdown": [
+            "Mmeme (V)",
+            "be (LOC-here)"
+          ]
         }
       ]
     },
@@ -277,22 +401,34 @@
         {
           "soussou": "Gui sonyi",
           "english": "Give me that",
-          "breakdown": ["Gui (O-that)", "sonyi (V-give)"]
+          "breakdown": [
+            "Gui (O-that)",
+            "sonyi (V-give)"
+          ]
         },
         {
           "soussou": "A mato",
           "english": "Look at him/her",
-          "breakdown": ["A (O-him/her)", "mato (V-look)"]
+          "breakdown": [
+            "A (O-him/her)",
+            "mato (V-look)"
+          ]
         },
         {
           "soussou": "N'khili",
           "english": "Call me",
-          "breakdown": ["N' (O-me)", "khili (V-call)"]
+          "breakdown": [
+            "N' (O-me)",
+            "khili (V-call)"
+          ]
         },
         {
           "soussou": "N'mato",
           "english": "Look at me",
-          "breakdown": ["N' (O-me)", "mato (V-look)"]
+          "breakdown": [
+            "N' (O-me)",
+            "mato (V-look)"
+          ]
         }
       ]
     },
@@ -304,12 +440,20 @@
         {
           "soussou": "Siga A yire",
           "english": "Go to him/her",
-          "breakdown": ["Siga (V)", "A (PRO-him/her)", "yire (LOC-there/to)"]
+          "breakdown": [
+            "Siga (V)",
+            "A (PRO-him/her)",
+            "yire (LOC-there/to)"
+          ]
         },
         {
           "soussou": "Fa A yire",
           "english": "Come to him/her",
-          "breakdown": ["Fa (V)", "A (PRO)", "yire (LOC)"]
+          "breakdown": [
+            "Fa (V)",
+            "A (PRO)",
+            "yire (LOC)"
+          ]
         }
       ]
     },
@@ -321,7 +465,10 @@
         {
           "soussou": "Fa fokhora",
           "english": "Follow me",
-          "breakdown": ["Fa (V-come)", "fokhora (after me)"]
+          "breakdown": [
+            "Fa (V-come)",
+            "fokhora (after me)"
+          ]
         }
       ]
     },
@@ -333,17 +480,31 @@
         {
           "soussou": "A naxa a fala",
           "english": "He said",
-          "breakdown": ["A (S)", "naxa (PAST)", "a (O)", "fala (V)"]
+          "breakdown": [
+            "A (S)",
+            "naxa (PAST)",
+            "a (O)",
+            "fala (V)"
+          ]
         },
         {
           "soussou": "Ala naxa se birin da",
           "english": "God created everything",
-          "breakdown": ["Ala (S)", "naxa (PAST)", "se birin (O)", "da (V)"]
+          "breakdown": [
+            "Ala (S)",
+            "naxa (PAST)",
+            "se birin (O)",
+            "da (V)"
+          ]
         },
         {
           "soussou": "E naxa siga",
           "english": "They went",
-          "breakdown": ["E (S)", "naxa (PAST)", "siga (V)"]
+          "breakdown": [
+            "E (S)",
+            "naxa (PAST)",
+            "siga (V)"
+          ]
         }
       ],
       "register": "formal/literary"
@@ -356,12 +517,22 @@
         {
           "soussou": "Xa fahaamui mu na mixi nde yi ra",
           "english": "If understanding is not there in someone",
-          "breakdown": ["Xa (COND-if)", "fahaamui (understanding)", "mu (NEG)", "na (exists)"]
+          "breakdown": [
+            "Xa (COND-if)",
+            "fahaamui (understanding)",
+            "mu (NEG)",
+            "na (exists)"
+          ]
         },
         {
           "soussou": "Xa na mu a ra",
           "english": "If not that / Otherwise",
-          "breakdown": ["Xa (COND)", "na (that)", "mu (NEG)", "a ra (it in)"]
+          "breakdown": [
+            "Xa (COND)",
+            "na (that)",
+            "mu (NEG)",
+            "a ra (it in)"
+          ]
         }
       ]
     },
@@ -373,12 +544,22 @@
         {
           "soussou": "mixi naxan won xanuxi",
           "english": "the person who loves us",
-          "breakdown": ["mixi (N-person)", "naxan (REL-who)", "won (O)", "xanuxi (V-loved)"]
+          "breakdown": [
+            "mixi (N-person)",
+            "naxan (REL-who)",
+            "won (O)",
+            "xanuxi (V-loved)"
+          ]
         },
         {
           "soussou": "fe naxan fama rabade",
           "english": "thing that will be done",
-          "breakdown": ["fe (N-thing)", "naxan (REL)", "fama (will)", "rabade (be done)"]
+          "breakdown": [
+            "fe (N-thing)",
+            "naxan (REL)",
+            "fama (will)",
+            "rabade (be done)"
+          ]
         }
       ]
     },
@@ -390,12 +571,24 @@
         {
           "soussou": "a rabaxi alako e xa rawali",
           "english": "done so that they work",
-          "breakdown": ["a rabaxi (it was done)", "alako (PURP)", "e (they)", "xa (should)", "rawali (work)"]
+          "breakdown": [
+            "a rabaxi (it was done)",
+            "alako (PURP)",
+            "e (they)",
+            "xa (should)",
+            "rawali (work)"
+          ]
         },
         {
           "soussou": "alako a naxa a bonsoe rayaagi",
           "english": "so that he wouldn't disgrace his family",
-          "breakdown": ["alako (PURP)", "a (he)", "naxa (NEG-subjunctive)", "a bonsoe (his family)", "rayaagi (disgrace)"]
+          "breakdown": [
+            "alako (PURP)",
+            "a (he)",
+            "naxa (NEG-subjunctive)",
+            "a bonsoe (his family)",
+            "rayaagi (disgrace)"
+          ]
         }
       ]
     },
@@ -407,12 +600,20 @@
         {
           "soussou": "a noma se donde, barima a seniyen",
           "english": "he can eat it, because it's clean",
-          "breakdown": ["a noma se donde (main)", "barima (because)", "a seniyen (reason)"]
+          "breakdown": [
+            "a noma se donde (main)",
+            "barima (because)",
+            "a seniyen (reason)"
+          ]
         },
         {
           "soussou": "wo xa sewa barima wo a kolon",
           "english": "you should rejoice because you know",
-          "breakdown": ["wo xa sewa (you should rejoice)", "barima (because)", "wo a kolon (you know)"]
+          "breakdown": [
+            "wo xa sewa (you should rejoice)",
+            "barima (because)",
+            "wo a kolon (you know)"
+          ]
         }
       ]
     },
@@ -424,12 +625,20 @@
         {
           "soussou": "Ala xa Mixi Sugandixi",
           "english": "God's Chosen One",
-          "breakdown": ["Ala (possessor)", "xa (POSS)", "Mixi Sugandixi (possessed)"]
+          "breakdown": [
+            "Ala (possessor)",
+            "xa (POSS)",
+            "Mixi Sugandixi (possessed)"
+          ]
         },
         {
           "soussou": "Dawuda xa di",
           "english": "David's child",
-          "breakdown": ["Dawuda (possessor)", "xa (POSS)", "di (child)"]
+          "breakdown": [
+            "Dawuda (possessor)",
+            "xa (POSS)",
+            "di (child)"
+          ]
         }
       ],
       "notes": "This is different from contracted possessive pronouns like M'ma, Akha, Ikha"
@@ -442,12 +651,21 @@
         {
           "soussou": "Hinnɛ na i bɛ",
           "english": "Mercy is with you",
-          "breakdown": ["Hinnɛ (mercy)", "na (exists)", "i (you)", "bɛ (at/for)"]
+          "breakdown": [
+            "Hinnɛ (mercy)",
+            "na (exists)",
+            "i (you)",
+            "bɛ (at/for)"
+          ]
         },
         {
           "soussou": "Restaurant gui pres?",
           "english": "Is there a restaurant nearby?",
-          "breakdown": ["Restaurant gui (this restaurant)", "pres (near)", "? (implied 'na')"]
+          "breakdown": [
+            "Restaurant gui (this restaurant)",
+            "pres (near)",
+            "? (implied 'na')"
+          ]
         }
       ]
     },
@@ -459,12 +677,21 @@
         {
           "soussou": "Ala xa baraka!",
           "english": "God bless!",
-          "breakdown": ["Ala (God)", "xa (may/should)", "baraka (bless)"]
+          "breakdown": [
+            "Ala (God)",
+            "xa (may/should)",
+            "baraka (bless)"
+          ]
         },
         {
           "soussou": "Ala xa whon' kisi!",
           "english": "May God protect us!",
-          "breakdown": ["Ala (God)", "xa (may)", "whon' (us)", "kisi (protect)"]
+          "breakdown": [
+            "Ala (God)",
+            "xa (may)",
+            "whon' (us)",
+            "kisi (protect)"
+          ]
         }
       ]
     },
@@ -476,12 +703,22 @@
         {
           "soussou": "Whon' sa etan fala",
           "english": "We should tell them",
-          "breakdown": ["Whon' (we)", "sa (should)", "etan (them)", "fala (tell)"]
+          "breakdown": [
+            "Whon' (we)",
+            "sa (should)",
+            "etan (them)",
+            "fala (tell)"
+          ]
         },
         {
           "soussou": "Nuit yite. Whon' sa siga bangui",
           "english": "Night has come. We should go home",
-          "breakdown": ["Whon' (we)", "sa (should)", "siga (go)", "bangui (house)"]
+          "breakdown": [
+            "Whon' (we)",
+            "sa (should)",
+            "siga (go)",
+            "bangui (house)"
+          ]
         }
       ]
     }
@@ -491,113 +728,254 @@
       "pattern": "Pronoun + fafe",
       "description": "Movement expressions with 'coming'",
       "examples": [
-        {"soussou": "N'na fafe", "english": "I'm coming"},
-        {"soussou": "Ina fafe", "english": "You're coming"},
-        {"soussou": "Ana fafe", "english": "He/she's coming"},
-        {"soussou": "Whon' fafe", "english": "We're coming"},
-        {"soussou": "Etan fafe", "english": "They're coming"},
-        {"soussou": "Moukhou fafe", "english": "We (exclusive) are coming"}
+        {
+          "soussou": "N'na fafe",
+          "english": "I'm coming"
+        },
+        {
+          "soussou": "Ina fafe",
+          "english": "You're coming"
+        },
+        {
+          "soussou": "Ana fafe",
+          "english": "He/she's coming"
+        },
+        {
+          "soussou": "Whon' fafe",
+          "english": "We're coming"
+        },
+        {
+          "soussou": "Etan fafe",
+          "english": "They're coming"
+        },
+        {
+          "soussou": "Moukhou fafe",
+          "english": "We (exclusive) are coming"
+        }
       ]
     },
     {
       "pattern": "Pronoun + khafe",
       "description": "Cause/blame expressions",
       "examples": [
-        {"soussou": "Ntan khafe", "english": "Because of me"},
-        {"soussou": "Itan khafe", "english": "Because of you"},
-        {"soussou": "Atan khafe", "english": "Because of him/her"},
-        {"soussou": "Etan khafe", "english": "Because of them"},
-        {"soussou": "Itan khafe gbo", "english": "You have a lot going on"}
+        {
+          "soussou": "Ntan khafe",
+          "english": "Because of me"
+        },
+        {
+          "soussou": "Itan khafe",
+          "english": "Because of you"
+        },
+        {
+          "soussou": "Atan khafe",
+          "english": "Because of him/her"
+        },
+        {
+          "soussou": "Etan khafe",
+          "english": "Because of them"
+        },
+        {
+          "soussou": "Itan khafe gbo",
+          "english": "You have a lot going on"
+        }
       ]
     },
     {
       "pattern": "Possessive + woto",
       "description": "Car possession expressions",
       "examples": [
-        {"soussou": "M'ma woto", "english": "My car"},
-        {"soussou": "Akha woto", "english": "His/her car"},
-        {"soussou": "Ekha woto", "english": "Their car"},
-        {"soussou": "Whonma woto", "english": "Our car"}
+        {
+          "soussou": "M'ma woto",
+          "english": "My car"
+        },
+        {
+          "soussou": "Akha woto",
+          "english": "His/her car"
+        },
+        {
+          "soussou": "Ekha woto",
+          "english": "Their car"
+        },
+        {
+          "soussou": "Whonma woto",
+          "english": "Our car"
+        }
       ]
     },
     {
       "pattern": "Verb + be",
       "description": "Actions with 'here' location",
       "examples": [
-        {"soussou": "Fa be", "english": "Come here"},
-        {"soussou": "Dokho be", "english": "Sit here"},
-        {"soussou": "Mmeme be", "english": "Wait here"},
-        {"soussou": "Kelli be", "english": "Leave here"}
+        {
+          "soussou": "Fa be",
+          "english": "Come here"
+        },
+        {
+          "soussou": "Dokho be",
+          "english": "Sit here"
+        },
+        {
+          "soussou": "Mmeme be",
+          "english": "Wait here"
+        },
+        {
+          "soussou": "Kelli be",
+          "english": "Leave here"
+        }
       ]
     },
     {
       "pattern": "Verb + yire",
       "description": "Actions with 'there' location",
       "examples": [
-        {"soussou": "Siga yire", "english": "Go there"},
-        {"soussou": "Fa A yire", "english": "Come to him/her"},
-        {"soussou": "Siga A yire", "english": "Go to him/her"},
-        {"soussou": "Kisi yire?", "english": "Peace there?"}
+        {
+          "soussou": "Siga yire",
+          "english": "Go there"
+        },
+        {
+          "soussou": "Fa A yire",
+          "english": "Come to him/her"
+        },
+        {
+          "soussou": "Siga A yire",
+          "english": "Go to him/her"
+        },
+        {
+          "soussou": "Kisi yire?",
+          "english": "Peace there?"
+        }
       ]
     },
     {
       "pattern": "Noun + koui",
       "description": "Interior/inside expressions",
       "examples": [
-        {"soussou": "Bangui koui", "english": "Inside the house"},
-        {"soussou": "Woto koui", "english": "Inside the car"},
-        {"soussou": "Cuisine koui", "english": "In the kitchen"}
+        {
+          "soussou": "Bangui koui",
+          "english": "Inside the house"
+        },
+        {
+          "soussou": "Woto koui",
+          "english": "Inside the car"
+        },
+        {
+          "soussou": "Cuisine koui",
+          "english": "In the kitchen"
+        }
       ]
     },
     {
       "pattern": "Pronoun + m'ma + kolon",
       "description": "Knowledge negation expressions",
       "examples": [
-        {"soussou": "Ntan m'ma kolon", "english": "I don't know"},
-        {"soussou": "Etan m'ma kolon", "english": "They don't know"},
-        {"soussou": "Ana m'ma kolon", "english": "He/she doesn't know"},
-        {"soussou": "Whontan m'ma kolon", "english": "We don't know"}
+        {
+          "soussou": "Ntan m'ma kolon",
+          "english": "I don't know"
+        },
+        {
+          "soussou": "Etan m'ma kolon",
+          "english": "They don't know"
+        },
+        {
+          "soussou": "Ana m'ma kolon",
+          "english": "He/she doesn't know"
+        },
+        {
+          "soussou": "Whontan m'ma kolon",
+          "english": "We don't know"
+        }
       ]
     },
     {
       "pattern": "[Quality] + gbo",
       "description": "Intensified qualities/states",
       "examples": [
-        {"soussou": "Fra gbo", "english": "Very fresh"},
-        {"soussou": "Ten gbo", "english": "Very hot/spicy"},
-        {"soussou": "Bon gbo", "english": "Very good"},
-        {"soussou": "Urgent gbo", "english": "Very urgent"},
-        {"soussou": "Khafe gbo", "english": "A lot of problems"},
-        {"soussou": "Travail gbo", "english": "A lot of work"}
+        {
+          "soussou": "Fra gbo",
+          "english": "Very fresh"
+        },
+        {
+          "soussou": "Ten gbo",
+          "english": "Very hot/spicy"
+        },
+        {
+          "soussou": "Bon gbo",
+          "english": "Very good"
+        },
+        {
+          "soussou": "Urgent gbo",
+          "english": "Very urgent"
+        },
+        {
+          "soussou": "Khafe gbo",
+          "english": "A lot of problems"
+        },
+        {
+          "soussou": "Travail gbo",
+          "english": "A lot of work"
+        }
       ]
     },
     {
       "pattern": "gui/guira (demonstrative)",
       "description": "Demonstrative in fixed positions",
       "examples": [
-        {"soussou": "Gui sonyi", "english": "Give me that"},
-        {"soussou": "Fa guira", "english": "Bring that"},
-        {"soussou": "Kha fa guira?", "english": "Should I bring this?"},
-        {"soussou": "Telephone gui", "english": "This phone"}
+        {
+          "soussou": "Gui sonyi",
+          "english": "Give me that"
+        },
+        {
+          "soussou": "Fa guira",
+          "english": "Bring that"
+        },
+        {
+          "soussou": "Kha fa guira?",
+          "english": "Should I bring this?"
+        },
+        {
+          "soussou": "Telephone gui",
+          "english": "This phone"
+        }
       ]
     },
     {
       "pattern": "lafia expressions",
       "description": "Wellness/greeting expressions",
       "examples": [
-        {"soussou": "A lafia?", "english": "Is he/she well?"},
-        {"soussou": "I tara lafia?", "english": "Is your husband well?"},
-        {"soussou": "I denbaya lafia?", "english": "Is your family well?"},
-        {"soussou": "Etan birin lafia", "english": "They're all well"}
+        {
+          "soussou": "A lafia?",
+          "english": "Is he/she well?"
+        },
+        {
+          "soussou": "I tara lafia?",
+          "english": "Is your husband well?"
+        },
+        {
+          "soussou": "I denbaya lafia?",
+          "english": "Is your family well?"
+        },
+        {
+          "soussou": "Etan birin lafia",
+          "english": "They're all well"
+        }
       ]
     },
     {
       "pattern": "Ala xa expressions",
       "description": "Religious/blessing phrases",
       "examples": [
-        {"soussou": "Ala xa baraka!", "english": "God bless!"},
-        {"soussou": "Ala xa a kisi!", "english": "May God heal him/her!"},
-        {"soussou": "Ala xa whon' kisi!", "english": "May God protect us!"}
+        {
+          "soussou": "Ala xa baraka!",
+          "english": "God bless!"
+        },
+        {
+          "soussou": "Ala xa a kisi!",
+          "english": "May God heal him/her!"
+        },
+        {
+          "soussou": "Ala xa whon' kisi!",
+          "english": "May God protect us!"
+        }
       ]
     }
   ],
@@ -607,9 +985,18 @@
       "function": "conjunction",
       "meaning": "and",
       "examples": [
-        {"soussou": "xeema nun gbeti", "english": "gold and silver"},
-        {"soussou": "xeme nun gine", "english": "men and women"},
-        {"soussou": "Furu gbo nun bi!", "english": "It's raining a lot today!"}
+        {
+          "soussou": "xeema nun gbeti",
+          "english": "gold and silver"
+        },
+        {
+          "soussou": "xeme nun gine",
+          "english": "men and women"
+        },
+        {
+          "soussou": "Furu gbo nun bi!",
+          "english": "It's raining a lot today!"
+        }
       ],
       "position": "between coordinated elements"
     },
@@ -618,8 +1005,14 @@
       "function": "subordinating",
       "meaning": "because",
       "examples": [
-        {"soussou": "A lafia, barima Ala bara a mali", "english": "He's well, because God helped him"},
-        {"soussou": "wo xa sewa barima wo a kolon", "english": "you should rejoice because you know"}
+        {
+          "soussou": "A lafia, barima Ala bara a mali",
+          "english": "He's well, because God helped him"
+        },
+        {
+          "soussou": "wo xa sewa barima wo a kolon",
+          "english": "you should rejoice because you know"
+        }
       ],
       "position": "introduces causal clause"
     },
@@ -628,8 +1021,14 @@
       "function": "subordinating",
       "meaning": "so that / in order to",
       "examples": [
-        {"soussou": "alako e xa rawali", "english": "so that they work"},
-        {"soussou": "alako wo xa danxaniya xa tilin", "english": "so that your faith may grow"}
+        {
+          "soussou": "alako e xa rawali",
+          "english": "so that they work"
+        },
+        {
+          "soussou": "alako wo xa danxaniya xa tilin",
+          "english": "so that your faith may grow"
+        }
       ],
       "position": "introduces purpose clause"
     },
@@ -638,8 +1037,14 @@
       "function": "adversative",
       "meaning": "but",
       "examples": [
-        {"soussou": "A luma ne alako mixi naxan..., kono a mu na fala", "english": "It remained like that..., but he didn't say"},
-        {"soussou": "Ntan m'ma no'mma. Demain, kono?", "english": "I can't. Tomorrow, but?"}
+        {
+          "soussou": "A luma ne alako mixi naxan..., kono a mu na fala",
+          "english": "It remained like that..., but he didn't say"
+        },
+        {
+          "soussou": "Ntan m'ma no'mma. Demain, kono?",
+          "english": "I can't. Tomorrow, but?"
+        }
       ],
       "position": "introduces contrasting clause"
     },
@@ -648,8 +1053,14 @@
       "function": "exceptive",
       "meaning": "except / unless / only",
       "examples": [
-        {"soussou": "fo a xa mixi kende nde", "english": "except his healthy person"},
-        {"soussou": "fo nonon keme firin njondon", "english": "only about two hundred meters"}
+        {
+          "soussou": "fo a xa mixi kende nde",
+          "english": "except his healthy person"
+        },
+        {
+          "soussou": "fo nonon keme firin njondon",
+          "english": "only about two hundred meters"
+        }
       ],
       "position": "introduces exception"
     },
@@ -658,7 +1069,10 @@
       "function": "adversative",
       "meaning": "if not that / otherwise",
       "examples": [
-        {"soussou": "xa na mu a ra a de xabee seeti maxaba", "english": "if not his beard's side to shave"}
+        {
+          "soussou": "xa na mu a ra a de xabee seeti maxaba",
+          "english": "if not his beard's side to shave"
+        }
       ],
       "position": "introduces alternative"
     },
@@ -667,8 +1081,14 @@
       "function": "adversative",
       "meaning": "but (French loan)",
       "examples": [
-        {"soussou": "Eh, travail gbo! Mais ca va.", "english": "Yeah, lots of work! But it's okay."},
-        {"soussou": "Ina negocie! Mais cinquante mille", "english": "You can negotiate! But fifty thousand"}
+        {
+          "soussou": "Eh, travail gbo! Mais ca va.",
+          "english": "Yeah, lots of work! But it's okay."
+        },
+        {
+          "soussou": "Ina negocie! Mais cinquante mille",
+          "english": "You can negotiate! But fifty thousand"
+        }
       ],
       "position": "introduces contrast (colloquial)",
       "notes": "French loanword used in casual speech"
@@ -678,8 +1098,14 @@
       "function": "sequential",
       "meaning": "then / after (French loan)",
       "examples": [
-        {"soussou": "Siga droite, apres gauche", "english": "Go right, then left"},
-        {"soussou": "A gauche apres", "english": "Then left"}
+        {
+          "soussou": "Siga droite, apres gauche",
+          "english": "Go right, then left"
+        },
+        {
+          "soussou": "A gauche apres",
+          "english": "Then left"
+        }
       ],
       "position": "introduces sequence",
       "notes": "French loanword for temporal sequence"
@@ -690,93 +1116,174 @@
       "rule": "Basic SOV/SOAM",
       "description": "Subject - Object - Verb - Modifier is the default word order",
       "examples": [
-        {"soussou": "Ntan sosokhoui kolon", "breakdown": "S-O-V"},
-        {"soussou": "Etan itan khafe comprendfe gbo", "breakdown": "S-O-V-M"}
+        {
+          "soussou": "Ntan sosokhoui kolon",
+          "breakdown": "S-O-V"
+        },
+        {
+          "soussou": "Etan itan khafe comprendfe gbo",
+          "breakdown": "S-O-V-M"
+        }
       ]
     },
     {
       "rule": "Negation before Verb",
       "description": "Negation marker m'ma comes directly before the verb",
       "examples": [
-        {"soussou": "Ina m'ma fafe", "breakdown": "S-NEG-V"},
-        {"soussou": "Ntan m'ma kolon", "breakdown": "S-NEG-V"}
+        {
+          "soussou": "Ina m'ma fafe",
+          "breakdown": "S-NEG-V"
+        },
+        {
+          "soussou": "Ntan m'ma kolon",
+          "breakdown": "S-NEG-V"
+        }
       ]
     },
     {
       "rule": "Question words final/near-final",
       "description": "Question words typically come at or near the end",
       "examples": [
-        {"soussou": "Ina minde?", "breakdown": "S-Q"},
-        {"soussou": "Telephone gui songo yiri?", "breakdown": "S-Q"},
-        {"soussou": "Di ra ina dege?", "breakdown": "Q-S-V"}
+        {
+          "soussou": "Ina minde?",
+          "breakdown": "S-Q"
+        },
+        {
+          "soussou": "Telephone gui songo yiri?",
+          "breakdown": "S-Q"
+        },
+        {
+          "soussou": "Di ra ina dege?",
+          "breakdown": "Q-S-V"
+        }
       ]
     },
     {
       "rule": "Imperative OV",
       "description": "In imperatives with objects, object precedes verb",
       "examples": [
-        {"soussou": "Gui sonyi", "breakdown": "O-V"},
-        {"soussou": "A mato", "breakdown": "O-V"},
-        {"soussou": "N'khili", "breakdown": "O-V"}
+        {
+          "soussou": "Gui sonyi",
+          "breakdown": "O-V"
+        },
+        {
+          "soussou": "A mato",
+          "breakdown": "O-V"
+        },
+        {
+          "soussou": "N'khili",
+          "breakdown": "O-V"
+        }
       ]
     },
     {
       "rule": "Location markers postpositional",
       "description": "Location markers (be, yire, koui) come after the noun/verb they modify",
       "examples": [
-        {"soussou": "Fa be", "breakdown": "V-LOC"},
-        {"soussou": "bangui koui", "breakdown": "N-LOC"},
-        {"soussou": "Siga A yire", "breakdown": "V-PRO-LOC"}
+        {
+          "soussou": "Fa be",
+          "breakdown": "V-LOC"
+        },
+        {
+          "soussou": "bangui koui",
+          "breakdown": "N-LOC"
+        },
+        {
+          "soussou": "Siga A yire",
+          "breakdown": "V-PRO-LOC"
+        }
       ]
     },
     {
       "rule": "Intensifier final",
       "description": "Intensifier 'gbo' comes at the end of the phrase",
       "examples": [
-        {"soussou": "Urgent gbo", "breakdown": "ADJ-INT"},
-        {"soussou": "Itan khafe gbo", "breakdown": "S-N-INT"},
-        {"soussou": "comprendfe gbo", "breakdown": "V-INT"}
+        {
+          "soussou": "Urgent gbo",
+          "breakdown": "ADJ-INT"
+        },
+        {
+          "soussou": "Itan khafe gbo",
+          "breakdown": "S-N-INT"
+        },
+        {
+          "soussou": "comprendfe gbo",
+          "breakdown": "V-INT"
+        }
       ]
     },
     {
       "rule": "Possessive xa after possessor",
       "description": "Possessive marker xa comes between possessor and possessed",
       "examples": [
-        {"soussou": "Ala xa masenyi", "breakdown": "N-POSS-N"},
-        {"soussou": "Dawuda xa di", "breakdown": "N-POSS-N"}
+        {
+          "soussou": "Ala xa masenyi",
+          "breakdown": "N-POSS-N"
+        },
+        {
+          "soussou": "Dawuda xa di",
+          "breakdown": "N-POSS-N"
+        }
       ]
     },
     {
       "rule": "Contracted possessives before noun",
       "description": "Contracted possessive pronouns precede the noun directly",
       "examples": [
-        {"soussou": "M'ma woto", "breakdown": "POSS-N"},
-        {"soussou": "Akha woto", "breakdown": "POSS-N"},
-        {"soussou": "Ikha ChatGPT", "breakdown": "POSS-N"}
+        {
+          "soussou": "M'ma woto",
+          "breakdown": "POSS-N"
+        },
+        {
+          "soussou": "Akha woto",
+          "breakdown": "POSS-N"
+        },
+        {
+          "soussou": "Ikha ChatGPT",
+          "breakdown": "POSS-N"
+        }
       ]
     },
     {
       "rule": "Emphatic pronoun fronting",
       "description": "Emphatic pronouns (-tan forms) can front for emphasis",
       "examples": [
-        {"soussou": "Ntan fafe", "breakdown": "EMPH-S-V (Me, I'm coming)"},
-        {"soussou": "Ntan itan situation comprendfe", "breakdown": "EMPH-S-O-V"}
+        {
+          "soussou": "Ntan fafe",
+          "breakdown": "EMPH-S-V (Me, I'm coming)"
+        },
+        {
+          "soussou": "Ntan itan situation comprendfe",
+          "breakdown": "EMPH-S-O-V"
+        }
       ]
     },
     {
       "rule": "Relative clause follows noun",
       "description": "Relative clauses with naxan follow the noun they modify",
       "examples": [
-        {"soussou": "mixi naxan won xanuxi", "breakdown": "N-REL-clause"},
-        {"soussou": "fe naxan fama rabade", "breakdown": "N-REL-clause"}
+        {
+          "soussou": "mixi naxan won xanuxi",
+          "breakdown": "N-REL-clause"
+        },
+        {
+          "soussou": "fe naxan fama rabade",
+          "breakdown": "N-REL-clause"
+        }
       ]
     },
     {
       "rule": "Temporal modifiers flexible",
       "description": "Time expressions can appear at start or end of sentence",
       "examples": [
-        {"soussou": "Nun bi froid gbo", "breakdown": "TIME-ADJ-INT (Today is very cold)"},
-        {"soussou": "A fafe demain", "breakdown": "S-V-TIME (He's coming tomorrow)"}
+        {
+          "soussou": "Nun bi froid gbo",
+          "breakdown": "TIME-ADJ-INT (Today is very cold)"
+        },
+        {
+          "soussou": "A fafe demain",
+          "breakdown": "S-V-TIME (He's coming tomorrow)"
+        }
       ]
     }
   ],
@@ -786,9 +1293,18 @@
       "function": "negation",
       "placement": "before verb (usually with m'ma compound)",
       "examples": [
-        {"soussou": "A mu lan", "english": "It's not fitting/allowed"},
-        {"soussou": "Ina m'ma fafe", "english": "You're not coming"},
-        {"soussou": "a mu noma", "english": "he can't"}
+        {
+          "soussou": "A mu lan",
+          "english": "It's not fitting/allowed"
+        },
+        {
+          "soussou": "Ina m'ma fafe",
+          "english": "You're not coming"
+        },
+        {
+          "soussou": "a mu noma",
+          "english": "he can't"
+        }
       ],
       "notes": "Often combined with ma as m'ma"
     },
@@ -797,8 +1313,14 @@
       "function": "possessive/dative",
       "placement": "after pronoun to form possessive, or after verb for dative",
       "examples": [
-        {"soussou": "n ma", "english": "my/mine"},
-        {"soussou": "fima Ala ma", "english": "give to God"}
+        {
+          "soussou": "n ma",
+          "english": "my/mine"
+        },
+        {
+          "soussou": "fima Ala ma",
+          "english": "give to God"
+        }
       ]
     },
     {
@@ -806,9 +1328,18 @@
       "function": "instrumental/locative",
       "placement": "after noun/pronoun",
       "examples": [
-        {"soussou": "a wuli saabui ra", "english": "by his blood"},
-        {"soussou": "yire seniyen xi ra", "english": "in the holy place"},
-        {"soussou": "Wakhati yiri ra?", "english": "What time is it?"}
+        {
+          "soussou": "a wuli saabui ra",
+          "english": "by his blood"
+        },
+        {
+          "soussou": "yire seniyen xi ra",
+          "english": "in the holy place"
+        },
+        {
+          "soussou": "Wakhati yiri ra?",
+          "english": "What time is it?"
+        }
       ]
     },
     {
@@ -816,9 +1347,18 @@
       "function": "possessive/conditional/subjunctive",
       "placement": "between possessor and possessed, or at start of conditional",
       "examples": [
-        {"soussou": "Ala xa masenyi", "english": "God's word (possessive)"},
-        {"soussou": "xa fahaamui mu na", "english": "if understanding is not there (conditional)"},
-        {"soussou": "e xa rawali", "english": "they should work (subjunctive)"}
+        {
+          "soussou": "Ala xa masenyi",
+          "english": "God's word (possessive)"
+        },
+        {
+          "soussou": "xa fahaamui mu na",
+          "english": "if understanding is not there (conditional)"
+        },
+        {
+          "soussou": "e xa rawali",
+          "english": "they should work (subjunctive)"
+        }
       ],
       "notes": "Context determines which function"
     },
@@ -827,9 +1367,18 @@
       "function": "existential/locative",
       "placement": "after subject/complement",
       "examples": [
-        {"soussou": "Hinnɛ na i bɛ", "english": "Mercy is with you"},
-        {"soussou": "A na yire", "english": "He is there"},
-        {"soussou": "Account n'ma yitima na", "english": "Your account is finishing"}
+        {
+          "soussou": "Hinnɛ na i bɛ",
+          "english": "Mercy is with you"
+        },
+        {
+          "soussou": "A na yire",
+          "english": "He is there"
+        },
+        {
+          "soussou": "Account n'ma yitima na",
+          "english": "Your account is finishing"
+        }
       ]
     },
     {
@@ -837,9 +1386,18 @@
       "function": "location (here)",
       "placement": "after verb",
       "examples": [
-        {"soussou": "Fa be", "english": "Come here"},
-        {"soussou": "Dokho be", "english": "Sit here"},
-        {"soussou": "Mmeme be", "english": "Wait here"}
+        {
+          "soussou": "Fa be",
+          "english": "Come here"
+        },
+        {
+          "soussou": "Dokho be",
+          "english": "Sit here"
+        },
+        {
+          "soussou": "Mmeme be",
+          "english": "Wait here"
+        }
       ]
     },
     {
@@ -847,9 +1405,18 @@
       "function": "emphasis/only",
       "placement": "after word being emphasized",
       "examples": [
-        {"soussou": "Dix mille tan", "english": "Just ten thousand"},
-        {"soussou": "Taxi tan", "english": "Just taxi"},
-        {"soussou": "Kisi tan", "english": "Just peace"}
+        {
+          "soussou": "Dix mille tan",
+          "english": "Just ten thousand"
+        },
+        {
+          "soussou": "Taxi tan",
+          "english": "Just taxi"
+        },
+        {
+          "soussou": "Kisi tan",
+          "english": "Just peace"
+        }
       ]
     },
     {
@@ -857,9 +1424,18 @@
       "function": "intensifier",
       "placement": "after adjective/noun/verb (sentence-final)",
       "examples": [
-        {"soussou": "Fra gbo", "english": "Very fresh"},
-        {"soussou": "Urgent gbo", "english": "Very urgent"},
-        {"soussou": "Itan khafe gbo", "english": "You have a lot going on"}
+        {
+          "soussou": "Fra gbo",
+          "english": "Very fresh"
+        },
+        {
+          "soussou": "Urgent gbo",
+          "english": "Very urgent"
+        },
+        {
+          "soussou": "Itan khafe gbo",
+          "english": "You have a lot going on"
+        }
       ],
       "notes": "Can be extended as 'gbooo' for extra emphasis"
     },
@@ -868,8 +1444,14 @@
       "function": "temporal (already/now)",
       "placement": "after verb/adjective",
       "examples": [
-        {"soussou": "A yite don", "english": "It's already here/finished"},
-        {"soussou": "A fafe don", "english": "He's coming now"}
+        {
+          "soussou": "A yite don",
+          "english": "It's already here/finished"
+        },
+        {
+          "soussou": "A fafe don",
+          "english": "He's coming now"
+        }
       ]
     },
     {
@@ -877,9 +1459,18 @@
       "function": "completion/arrival",
       "placement": "sentence-final",
       "examples": [
-        {"soussou": "Account n'ma yitima na", "english": "Your account is almost finished"},
-        {"soussou": "I woto yite?", "english": "Is your car here?"},
-        {"soussou": "Nuit yite", "english": "Night has come"}
+        {
+          "soussou": "Account n'ma yitima na",
+          "english": "Your account is almost finished"
+        },
+        {
+          "soussou": "I woto yite?",
+          "english": "Is your car here?"
+        },
+        {
+          "soussou": "Nuit yite",
+          "english": "Night has come"
+        }
       ]
     },
     {
@@ -887,9 +1478,18 @@
       "function": "dative (to/for)",
       "placement": "after indirect object",
       "examples": [
-        {"soussou": "a fala Haruna be", "english": "tell Haruna"},
-        {"soussou": "fima Ala ma... be", "english": "give to God at..."},
-        {"soussou": "Isirayilaka birin be", "english": "to all Israelites"}
+        {
+          "soussou": "a fala Haruna be",
+          "english": "tell Haruna"
+        },
+        {
+          "soussou": "fima Ala ma... be",
+          "english": "give to God at..."
+        },
+        {
+          "soussou": "Isirayilaka birin be",
+          "english": "to all Israelites"
+        }
       ],
       "notes": "Different tone/spelling from 'be' (here)"
     },
@@ -898,8 +1498,14 @@
       "function": "narrative past",
       "placement": "between subject and verb",
       "examples": [
-        {"soussou": "A naxa a fala", "english": "He said"},
-        {"soussou": "E naxa siga", "english": "They went"}
+        {
+          "soussou": "A naxa a fala",
+          "english": "He said"
+        },
+        {
+          "soussou": "E naxa siga",
+          "english": "They went"
+        }
       ],
       "register": "formal/literary"
     },
@@ -908,9 +1514,18 @@
       "function": "possessive marker",
       "placement": "attached to pronouns",
       "examples": [
-        {"soussou": "Itan kha", "english": "your (full form)"},
-        {"soussou": "Atan kha", "english": "his/her (gives Akha)"},
-        {"soussou": "Etan kha", "english": "their (gives Ekha)"}
+        {
+          "soussou": "Itan kha",
+          "english": "your (full form)"
+        },
+        {
+          "soussou": "Atan kha",
+          "english": "his/her (gives Akha)"
+        },
+        {
+          "soussou": "Etan kha",
+          "english": "their (gives Ekha)"
+        }
       ]
     },
     {
@@ -918,9 +1533,18 @@
       "function": "verb-forming suffix",
       "placement": "attached to root to form action verb",
       "examples": [
-        {"soussou": "fa + fe = fafe", "english": "come -> coming"},
-        {"soussou": "comprend + fe = comprendfe", "english": "understand -> understanding"},
-        {"soussou": "siga + fe = sigafe", "english": "go -> going"}
+        {
+          "soussou": "fa + fe = fafe",
+          "english": "come -> coming"
+        },
+        {
+          "soussou": "comprend + fe = comprendfe",
+          "english": "understand -> understanding"
+        },
+        {
+          "soussou": "siga + fe = sigafe",
+          "english": "go -> going"
+        }
       ],
       "notes": "Key pattern for verb formation"
     }
@@ -972,5 +1596,20 @@
       }
     ],
     "notes": "This is a critical feature - many questions are only distinguished by tone, not word order"
-  }
+  },
+  "discovered_patterns": [
+    {
+      "pattern": "{POSSESSIVE} {NOUN} {INTENSIFIER} {ADJECTIVE}",
+      "confidence": 0.5,
+      "frequency": 2,
+      "examples": [
+        "Ma woto fan mafoura",
+        "Ma telephone fan fan"
+      ],
+      "discovered_at": "2025-11-22T08:04:05.860Z",
+      "discovered_by": "automated_analysis",
+      "persisted_at": "2025-11-22T08:04:05.861Z",
+      "source": "automated_discovery"
+    }
+  ]
 }

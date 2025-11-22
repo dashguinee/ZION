@@ -64,14 +64,24 @@ class PatternDiscoveryEngine {
 
   /**
    * Tag parts of speech using lexicon
+   * Includes context-aware tagging for homonyms like "fan fan"
    */
   tagPOS(sentence) {
     const words = sentence.split(' ');
-    return words.map(word => {
+    return words.map((word, index) => {
       const entry = this.findInLexicon(word);
+      let category = entry?.category || 'unknown';
+
+      // CONTEXT-AWARE TAGGING: Handle homonyms
+      // "fan fan" pattern: first fan = intensifier (also), second fan = adjective (good)
+      if (word.toLowerCase() === 'fan' && index > 0 && words[index - 1].toLowerCase() === 'fan') {
+        category = 'adjective';  // Second "fan" means "good"
+        console.log(`🔀 [CONTEXT] Detected "fan fan" pattern - tagging second "fan" as adjective`);
+      }
+
       return {
         word: word,
-        category: entry?.category || 'unknown',
+        category: category,
         base: entry?.base || word
       };
     });

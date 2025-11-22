@@ -50,7 +50,7 @@ async function runDashTest() {
         category: 'phrase'
       },
       {
-        word: 'Ma telephone fan koui',
+        word: 'Ma telephone fan fan',
         english: 'My phone is also good',
         french: 'Mon téléphone est aussi bon',
         category: 'phrase'

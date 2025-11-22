@@ -375,8 +375,10 @@ class LearningBridge {
       // Discover patterns
       const patterns = this.patternEngine.discoverPatterns();
 
-      // Filter for high confidence (3+ occurrences)
-      const highConfidence = patterns.filter(p => p.frequency >= 3);
+      // Filter for high confidence
+      // Dynamic threshold: For small corpora (< 10 sentences), use 2. Otherwise use 3.
+      const threshold = verifiedSentences.length < 10 ? 2 : 3;
+      const highConfidence = patterns.filter(p => p.frequency >= threshold);
 
       this.metrics.patterns_discovered += highConfidence.length;
       this.metrics.last_discovery_run = Date.now();
