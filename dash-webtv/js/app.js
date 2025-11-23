@@ -542,9 +542,9 @@ class DashApp {
       // Use actual container extension from API
       streamUrl = this.client.buildVODUrl(id, extension)
     } else if (type === 'live') {
-      // Live TV streams use .m3u8 format (HLS - HTTP Live Streaming)
-      // This is what Video.js and browsers expect for live streams
-      streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
+      // Live TV streams use .ts format (MPEG Transport Stream)
+      // Account only supports 'ts' format per allowed_output_formats
+      streamUrl = this.client.buildLiveStreamUrl(id, 'ts')
     }
 
     console.log('Stream URL:', streamUrl)
@@ -559,11 +559,22 @@ class DashApp {
     const format = streamUrl.split('.').pop().split('?')[0]
     console.log('📹 Format:', format)
 
+    // Set proper MIME type for HLS streams
+    let mimeType
+    if (format === 'm3u8') {
+      mimeType = 'application/x-mpegURL'  // HLS streams
+    } else if (format === 'ts') {
+      mimeType = 'video/mp2t'  // MPEG Transport Stream
+    } else {
+      mimeType = `video/${format}`  // Standard video formats (mp4, mkv, etc)
+    }
+    console.log('📹 MIME Type:', mimeType)
+
     const playerHTML = `
       <div class="video-player-container">
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
         <video id="dashPlayer" class="video-js vjs-big-play-centered" controls autoplay preload="auto" width="100%" height="100%">
-          <source src="${streamUrl}" type="video/${format === 'ts' ? 'mp2t' : format}">
+          <source src="${streamUrl}" type="${mimeType}">
         </video>
       </div>
     `
