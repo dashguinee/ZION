@@ -542,8 +542,9 @@ class DashApp {
       // Use actual container extension from API
       streamUrl = this.client.buildVODUrl(id, extension)
     } else if (type === 'live') {
-      // Live TV streams use .ts format (MPEG Transport Stream)
-      streamUrl = this.client.buildLiveStreamUrl(id, 'ts')
+      // Live TV streams use .m3u8 format (HLS - HTTP Live Streaming)
+      // This is what Video.js and browsers expect for live streams
+      streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
     }
 
     console.log('Stream URL:', streamUrl)
