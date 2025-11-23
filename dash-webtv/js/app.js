@@ -549,9 +549,10 @@ class DashApp {
     if (type === 'movie') {
       // Check if format is browser-compatible
       if (unsupportedFormats.includes(extension.toLowerCase())) {
-        // Server does NOT transcode - show immediate error
-        alert(`⚠️ This movie format (${extension.toUpperCase()}) is not supported.\n\nThe server cannot convert it to MP4.\n\nPlease try a different movie.`)
-        return
+        console.warn(`⚠️ Format ${extension} not browser-compatible. Trying mp4 (some may work)...`)
+        finalExtension = 'mp4'
+        // Note: Server may or may not transcode - we try anyway
+        // If it fails, error handler will show user-friendly message
       }
       streamUrl = this.client.buildVODUrl(id, finalExtension)
     } else if (type === 'live') {
