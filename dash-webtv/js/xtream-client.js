@@ -176,14 +176,16 @@ class XtreamClient {
   /**
    * Build playable URL for Live TV stream
    * @param {string} streamId - Live stream ID
-   * @param {string} extension - Stream format (ts, m3u8)
+   * @param {string} extension - IGNORED for live streams (server handles format)
    */
-  buildLiveStreamUrl(streamId, extension = 'ts') {
-    // Use HTTPS to avoid mixed content blocking
+  buildLiveStreamUrl(streamId, extension = null) {
+    // Live streams use a redirect-based system (no extension needed)
+    // Server redirects to actual stream server with token
     const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'AzizTest1'
     const streamPassword = 'Test1'
-    return `${streamBaseUrl}/live/${streamUsername}/${streamPassword}/${streamId}.${extension}`
+    // NO EXTENSION - server generates token and redirects to real stream
+    return `${streamBaseUrl}/${streamUsername}/${streamPassword}/${streamId}`
   }
 
   // ============================================
