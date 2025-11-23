@@ -50,17 +50,19 @@ class DashApp {
     // Setup event listeners
     this.setupEventListeners()
 
-    // Test connection
-    const connectionTest = await this.client.testConnection()
-    if (!connectionTest.success) {
-      this.showError('Failed to connect to streaming server')
-      return
-    }
+    // Test connection in background (non-blocking)
+    this.client.testConnection().then(result => {
+      if (result.success) {
+        console.log('✅ Connected to streaming server')
+        console.log('📊 Account info:', result.info)
+      } else {
+        console.warn('⚠️ Connection test failed (might be cold start):', result.error)
+      }
+    }).catch(err => {
+      console.warn('⚠️ Connection test error:', err)
+    })
 
-    console.log('✅ Connected to streaming server')
-    console.log('📊 Account info:', connectionTest.info)
-
-    // Load initial data
+    // Load initial data (don't wait for connection test)
     await this.loadCategories()
 
     // Render home page
