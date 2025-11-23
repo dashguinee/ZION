@@ -536,11 +536,20 @@ class DashApp {
   playContent(id, type, extension = 'mp4') {
     console.log(`Playing ${type}:`, id, `Format: ${extension}`)
 
+    // Browser-supported formats
+    const supportedFormats = ['mp4', 'webm', 'ogg', 'm3u8', 'ts']
+    const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv']
+
     let streamUrl = ''
+    let finalExtension = extension
 
     if (type === 'movie') {
-      // Use actual container extension from API
-      streamUrl = this.client.buildVODUrl(id, extension)
+      // Check if format is browser-compatible
+      if (unsupportedFormats.includes(extension.toLowerCase())) {
+        console.warn(`⚠️ Format ${extension} not browser-compatible. Trying mp4 (server may transcode)...`)
+        finalExtension = 'mp4'
+      }
+      streamUrl = this.client.buildVODUrl(id, finalExtension)
     } else if (type === 'live') {
       // Live TV streams use .ts format (MPEG Transport Stream)
       // Account only supports 'ts' format per allowed_output_formats
@@ -549,15 +558,20 @@ class DashApp {
 
     console.log('Stream URL:', streamUrl)
     this.closeModal()
-    this.showVideoPlayer(streamUrl)
+    this.showVideoPlayer(streamUrl, type, extension !== finalExtension ? extension : null)
   }
 
-  showVideoPlayer(streamUrl) {
+  showVideoPlayer(streamUrl, type = 'movie', originalFormat = null) {
     console.log('🎬 Playing stream:', streamUrl)
 
     // Detect file format
     const format = streamUrl.split('.').pop().split('?')[0]
     console.log('📹 Format:', format)
+
+    // Show warning if we had to convert format
+    if (originalFormat) {
+      console.warn(`⚠️ Original format (${originalFormat}) converted to ${format} for browser compatibility`)
+    }
 
     // Set proper MIME type for HLS streams
     let mimeType
@@ -608,7 +622,7 @@ class DashApp {
         })
       })
 
-      player.on('error', function(e) {
+      player.on('error', (e) => {
         const error = player.error()
         console.error('❌ Player error:', error)
         console.error('Error code:', error?.code)
@@ -616,9 +630,16 @@ class DashApp {
         console.error('Format:', format)
 
         // Show user-friendly error
-        if (format === 'mkv') {
-          alert('⚠️ This video format (MKV) may not be supported. Try another movie.')
+        let errorMessage = '⚠️ Unable to play this video.'
+        if (originalFormat) {
+          errorMessage = `⚠️ This video format (${originalFormat.toUpperCase()}) may not be supported.\n\nWe tried converting to MP4 but the server couldn't transcode it.\n\nTry another ${type === 'movie' ? 'movie' : 'video'}.`
+        } else if (format === 'mkv' || format === 'avi') {
+          errorMessage = `⚠️ This video format (${format.toUpperCase()}) is not supported by browsers.\n\nTry another ${type === 'movie' ? 'movie' : 'video'}.`
+        } else if (error && error.code === 4) {
+          errorMessage = '⚠️ Video format not supported by your browser.\n\nTry a different video.'
         }
+
+        alert(errorMessage)
       })
     } else {
       console.error('❌ Video.js not loaded!')
