@@ -549,14 +549,15 @@ class DashApp {
     if (type === 'movie') {
       // Check if format is browser-compatible
       if (unsupportedFormats.includes(extension.toLowerCase())) {
-        console.warn(`⚠️ Format ${extension} not browser-compatible. Trying mp4 (server may transcode)...`)
-        finalExtension = 'mp4'
+        // Server does NOT transcode - show immediate error
+        alert(`⚠️ This movie format (${extension.toUpperCase()}) is not supported.\n\nThe server cannot convert it to MP4.\n\nPlease try a different movie.`)
+        return
       }
       streamUrl = this.client.buildVODUrl(id, finalExtension)
     } else if (type === 'live') {
-      // Live TV streams use .m3u8 format (HLS playlist)
-      // MUST use HTTPS to avoid mixed content blocking (app is HTTPS)
-      streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
+      // Live TV streams use .ts format (MPEG Transport Stream)
+      // Account only supports 'ts' format per M3U playlist
+      streamUrl = this.client.buildLiveStreamUrl(id, 'ts')
     }
 
     console.log('Stream URL:', streamUrl)

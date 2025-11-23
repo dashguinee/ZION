@@ -151,11 +151,12 @@ class XtreamClient {
    * @param {string} extension - File extension (mp4, mkv, avi, etc.)
    */
   buildVODUrl(vodId, extension = 'mp4') {
-    // Use HTTPS to avoid mixed content blocking (app is HTTPS, streams must be too)
+    // Use HTTPS to avoid mixed content blocking
+    // Username must NOT be URL-encoded (server expects literal spaces)
     const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'Aziz - Test 1'
     const streamPassword = 'Test1'
-    return `${streamBaseUrl}/movie/${encodeURIComponent(streamUsername)}/${streamPassword}/${vodId}.${extension}`
+    return `${streamBaseUrl}/movie/${streamUsername}/${streamPassword}/${vodId}.${extension}`
   }
 
   /**
@@ -167,10 +168,11 @@ class XtreamClient {
    */
   buildSeriesUrl(seriesId, season, episode, extension = 'mp4') {
     // Use HTTPS to avoid mixed content blocking
+    // Username must NOT be URL-encoded (server expects literal spaces)
     const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'Aziz - Test 1'
     const streamPassword = 'Test1'
-    return `${streamBaseUrl}/series/${encodeURIComponent(streamUsername)}/${streamPassword}/${seriesId}/${season}/${episode}.${extension}`
+    return `${streamBaseUrl}/series/${streamUsername}/${streamPassword}/${seriesId}/${season}/${episode}.${extension}`
   }
 
   /**
@@ -178,12 +180,13 @@ class XtreamClient {
    * @param {string} streamId - Live stream ID
    * @param {string} extension - Stream format (ts, m3u8)
    */
-  buildLiveStreamUrl(streamId, extension = 'm3u8') {
-    // Use HTTPS to avoid mixed content blocking (app is HTTPS, streams must be too)
+  buildLiveStreamUrl(streamId, extension = 'ts') {
+    // Use HTTPS to avoid mixed content blocking
+    // IMPORTANT: Username must NOT be URL-encoded for live streams (per M3U playlist format)
     const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'Aziz - Test 1'
     const streamPassword = 'Test1'
-    return `${streamBaseUrl}/live/${encodeURIComponent(streamUsername)}/${streamPassword}/${streamId}.${extension}`
+    return `${streamBaseUrl}/live/${streamUsername}/${streamPassword}/${streamId}.${extension}`
   }
 
   // ============================================
