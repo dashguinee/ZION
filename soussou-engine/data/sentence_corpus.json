@@ -3188,18 +3188,94 @@
       "tags": [],
       "confidence_score": 0.5,
       "created_at": "2025-11-22T16:35:03.961Z"
+    },
+    {
+      "id": "sent_210",
+      "soussou": "Test",
+      "french": "Test",
+      "english": "Test",
+      "pattern": null,
+      "template_used": null,
+      "verified": false,
+      "verified_by": null,
+      "verified_at": null,
+      "source": "web_app",
+      "contributed_by": "anonymous",
+      "times_used": 0,
+      "last_used": null,
+      "context": null,
+      "tags": [],
+      "confidence_score": 0.5,
+      "created_at": "2025-11-23T04:35:23.105Z"
+    },
+    {
+      "id": "sent_211",
+      "soussou": "Tana moukhi?",
+      "french": "Comment vas-tu ce matin ?",
+      "english": "How are you this morning?",
+      "pattern": null,
+      "template_used": null,
+      "verified": false,
+      "verified_by": null,
+      "verified_at": null,
+      "source": "web_app",
+      "contributed_by": "anonymous",
+      "times_used": 0,
+      "last_used": null,
+      "context": null,
+      "tags": [],
+      "confidence_score": 0.5,
+      "created_at": "2025-11-23T04:50:32.707Z"
+    },
+    {
+      "id": "sent_212",
+      "soussou": "M'ma foura",
+      "french": "Je suis rapide",
+      "english": "I am fast",
+      "pattern": null,
+      "template_used": null,
+      "verified": false,
+      "verified_by": null,
+      "verified_at": null,
+      "source": "web_app",
+      "contributed_by": "anonymous",
+      "times_used": 0,
+      "last_used": null,
+      "context": null,
+      "tags": [],
+      "confidence_score": 0.5,
+      "created_at": "2025-11-23T05:09:34.552Z"
+    },
+    {
+      "id": "sent_213",
+      "soussou": "Pattern: M'ma + [adjective]",
+      "french": "Règle grammaticale : 'M'ma' + [adjectif] exprime un état personnel (Je suis...)",
+      "english": "Grammar rule: 'M'ma' + [adjective] expresses a personal state (I am...)",
+      "pattern": null,
+      "template_used": null,
+      "verified": false,
+      "verified_by": null,
+      "verified_at": null,
+      "source": "web_app",
+      "contributed_by": "anonymous",
+      "times_used": 0,
+      "last_used": null,
+      "context": null,
+      "tags": [],
+      "confidence_score": 0.5,
+      "created_at": "2025-11-23T05:11:23.305Z"
     }
   ],
   "metadata": {
-    "total_sentences": 209,
+    "total_sentences": 213,
     "verified_sentences": 4,
     "contributors": {
       "Z-Core (Training Data)": 200
     },
-    "last_updated": "2025-11-22T16:35:03.961Z",
+    "last_updated": "2025-11-23T05:11:23.305Z",
     "sources": {
       "user_contributed": 7,
-      "web_app": 2
+      "web_app": 6
     }
   }
 }
