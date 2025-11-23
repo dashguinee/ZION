@@ -567,3 +567,84 @@
     margin-bottom: var(--spacing-lg);
   }
 }
+
+/* ============================================
+   SERIES EPISODES
+   ============================================ */
+
+.series-episodes {
+  margin-top: var(--spacing-lg);
+}
+
+.season-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.season-section h3 {
+  color: var(--primary);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.25rem;
+}
+
+.episode-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.episode-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.episode-card:hover {
+  border-color: var(--primary);
+  background: var(--bg-hover);
+  transform: translateX(4px);
+}
+
+.episode-number {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.episode-info {
+  flex: 1;
+}
+
+.episode-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.episode-meta {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.episode-play {
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.episode-card:hover .episode-play {
+  opacity: 1;
+}

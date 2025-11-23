@@ -494,7 +494,52 @@ class DashApp {
     }
 
     // Store container extension for playback
-    const extension = details.info?.container_extension || details.movie_data?.container_extension || 'mp4'
+    const extension = details.info?.container_extension || details.movie_data?.container_extension || details.episodes?.[0]?.[0]?.container_extension || 'mp4'
+
+    // Generate modal content based on type
+    let modalContent = ''
+
+    if (type === 'movie') {
+      // Movie: Show simple Play button
+      modalContent = `
+        <div class="modal-actions">
+          <button class="btn btn-primary" onclick="dashApp.playContent('${id}', 'movie', '${extension}')">
+            ▶️ Play Now
+          </button>
+          <button class="btn btn-outline" onclick="dashApp.addToFavorites('${id}', 'movie')">
+            ❤️ Add to Favorites
+          </button>
+        </div>
+      `
+    } else if (type === 'series' && details.episodes) {
+      // Series: Show episodes by season
+      const seasons = Object.keys(details.episodes).sort((a, b) => parseInt(a) - parseInt(b))
+
+      modalContent = `
+        <div class="series-episodes">
+          ${seasons.map(seasonNum => {
+            const episodes = details.episodes[seasonNum]
+            return `
+              <div class="season-section">
+                <h3>Season ${seasonNum}</h3>
+                <div class="episode-list">
+                  ${episodes.map(ep => `
+                    <div class="episode-card" onclick="dashApp.playContent('${id}', 'series', '${ep.container_extension || 'mp4'}', '${seasonNum}', '${ep.episode_num}')">
+                      <div class="episode-number">E${ep.episode_num}</div>
+                      <div class="episode-info">
+                        <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`}</div>
+                        <div class="episode-meta">${ep.duration || ''}</div>
+                      </div>
+                      <div class="episode-play">▶️</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `
+          }).join('')}
+        </div>
+      `
+    }
 
     const modalHTML = `
       <div class="modal-overlay">
@@ -509,6 +554,7 @@ class DashApp {
               <div class="modal-meta">
                 ${details.info?.releaseDate ? `<span>📅 ${details.info.releaseDate}</span>` : ''}
                 ${details.info?.rating ? `<span>⭐ ${details.info.rating}</span>` : ''}
+                ${type === 'series' ? `<span>📺 ${Object.keys(details.episodes || {}).length} Seasons</span>` : ''}
                 ${details.info?.duration ? `<span>⏱️ ${details.info.duration}</span>` : ''}
               </div>
             </div>
@@ -516,15 +562,7 @@ class DashApp {
 
           <div class="modal-body">
             <p class="modal-description">${details.info?.plot || 'No description available.'}</p>
-
-            <div class="modal-actions">
-              <button class="btn btn-primary" onclick="dashApp.playContent('${id}', '${type}', '${extension}')">
-                ▶️ Play Now
-              </button>
-              <button class="btn btn-outline" onclick="dashApp.addToFavorites('${id}', '${type}')">
-                ❤️ Add to Favorites
-              </button>
-            </div>
+            ${modalContent}
           </div>
         </div>
       </div>
@@ -537,8 +575,8 @@ class DashApp {
     this.elements.modalContainer.innerHTML = ''
   }
 
-  playContent(id, type, extension = 'mp4') {
-    console.log(`Playing ${type}:`, id, `Format: ${extension}`)
+  playContent(id, type, extension = 'mp4', season = null, episode = null) {
+    console.log(`Playing ${type}:`, id, `Format: ${extension}`, season ? `S${season}E${episode}` : '')
 
     // Browser-supported formats
     const supportedFormats = ['mp4', 'webm', 'ogg', 'm3u8', 'ts']
@@ -556,6 +594,19 @@ class DashApp {
         // If it fails, error handler will show user-friendly message
       }
       streamUrl = this.client.buildVODUrl(id, finalExtension)
+    } else if (type === 'series') {
+      // Series playback requires season and episode
+      if (!season || !episode) {
+        console.error('❌ Series playback requires season and episode numbers')
+        alert('Please select an episode to play')
+        return
+      }
+      // Check if format is browser-compatible
+      if (unsupportedFormats.includes(extension.toLowerCase())) {
+        console.warn(`⚠️ Format ${extension} not browser-compatible. Trying mp4 (some may work)...`)
+        finalExtension = 'mp4'
+      }
+      streamUrl = this.client.buildSeriesUrl(id, season, episode, finalExtension)
     } else if (type === 'live') {
       // Live TV streams use .ts format (MPEG Transport Stream)
       // Account only supports 'ts' format per M3U playlist
