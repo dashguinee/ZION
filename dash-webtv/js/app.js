@@ -41,6 +41,9 @@ class DashApp {
       videoPlayerContainer: document.getElementById('videoPlayerContainer')
     }
 
+    // Video player instance (for proper cleanup)
+    this.currentPlayer = null
+
     this.init()
   }
 
@@ -595,9 +598,14 @@ class DashApp {
 
     this.elements.videoPlayerContainer.innerHTML = playerHTML
 
+    // Dispose of previous player if exists
+    if (this.currentPlayer) {
+      this.currentPlayer.dispose()
+    }
+
     // Initialize Video.js player with better options
     if (typeof videojs !== 'undefined') {
-      const player = videojs('dashPlayer', {
+      this.currentPlayer = videojs('dashPlayer', {
         fluid: true,
         responsive: true,
         controls: true,
@@ -613,7 +621,7 @@ class DashApp {
         }
       })
 
-      player.ready(function() {
+      this.currentPlayer.ready(function() {
         console.log('✅ Video player ready!')
         this.play().catch(err => {
           console.error('❌ Playback error:', err)
@@ -622,8 +630,8 @@ class DashApp {
         })
       })
 
-      player.on('error', (e) => {
-        const error = player.error()
+      this.currentPlayer.on('error', (e) => {
+        const error = this.currentPlayer.error()
         console.error('❌ Player error:', error)
         console.error('Error code:', error?.code)
         console.error('Error message:', error?.message)
@@ -647,6 +655,17 @@ class DashApp {
   }
 
   closeVideoPlayer() {
+    // Properly dispose of Video.js player to stop playback
+    if (this.currentPlayer) {
+      console.log('🛑 Stopping and disposing video player...')
+      try {
+        this.currentPlayer.pause()
+        this.currentPlayer.dispose()
+        this.currentPlayer = null
+      } catch (error) {
+        console.error('Error disposing player:', error)
+      }
+    }
     this.elements.videoPlayerContainer.innerHTML = ''
   }
 
