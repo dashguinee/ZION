@@ -558,9 +558,10 @@
 }
 
 @media (min-width: 1024px) {
-  .bottom-nav {
+  /* Keep bottom nav visible on desktop for consistent UX */
+  /* .bottom-nav {
     display: none;
-  }
+  } */
 
   .page-container {
     margin-bottom: var(--spacing-lg);
