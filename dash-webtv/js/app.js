@@ -433,10 +433,15 @@ class DashApp {
       const title = item.name || 'Untitled'
       const id = item.stream_id || item.series_id
 
+      // Live TV should play directly, movies/series show details first
+      const clickHandler = type === 'live'
+        ? `dashApp.playContent('${id}', 'live')`
+        : `dashApp.showDetails('${id}', '${type}')`;
+
       return `
-        <div class="content-card" onclick="dashApp.showDetails('${id}', '${type}')">
+        <div class="content-card" onclick="${clickHandler}">
           <img src="${poster}" alt="${title}" class="content-card-poster" loading="lazy"
-               onerror="this.src='/assets/placeholder.jpg'">
+               onerror="this.src='https://via.placeholder.com/300x450/1a1a2e/9d4edd?text=DASH+TV'">
           <div class="content-card-overlay">
             <div class="content-card-title">${title}</div>
             <div class="content-card-meta">
@@ -537,7 +542,8 @@ class DashApp {
       // Use actual container extension from API
       streamUrl = this.client.buildVODUrl(id, extension)
     } else if (type === 'live') {
-      streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
+      // Live TV streams use .ts format (MPEG Transport Stream)
+      streamUrl = this.client.buildLiveStreamUrl(id, 'ts')
     }
 
     console.log('Stream URL:', streamUrl)
