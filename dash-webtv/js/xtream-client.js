@@ -6,7 +6,7 @@
 class XtreamClient {
   constructor(config) {
     this.baseUrl = config.baseUrl || 'http://starshare.cx:80'
-    this.username = config.username || 'Aziz - Test 1'
+    this.username = config.username || 'AzizTest1'
     this.password = config.password || 'Test1'
   }
 
@@ -152,9 +152,8 @@ class XtreamClient {
    */
   buildVODUrl(vodId, extension = 'mp4') {
     // Use HTTPS to avoid mixed content blocking
-    // Username must NOT be URL-encoded (server expects literal spaces)
     const streamBaseUrl = 'https://starshare.cx'
-    const streamUsername = 'Aziz - Test 1'
+    const streamUsername = 'AzizTest1'
     const streamPassword = 'Test1'
     return `${streamBaseUrl}/movie/${streamUsername}/${streamPassword}/${vodId}.${extension}`
   }
@@ -168,9 +167,8 @@ class XtreamClient {
    */
   buildSeriesUrl(seriesId, season, episode, extension = 'mp4') {
     // Use HTTPS to avoid mixed content blocking
-    // Username must NOT be URL-encoded (server expects literal spaces)
     const streamBaseUrl = 'https://starshare.cx'
-    const streamUsername = 'Aziz - Test 1'
+    const streamUsername = 'AzizTest1'
     const streamPassword = 'Test1'
     return `${streamBaseUrl}/series/${streamUsername}/${streamPassword}/${seriesId}/${season}/${episode}.${extension}`
   }
@@ -182,9 +180,8 @@ class XtreamClient {
    */
   buildLiveStreamUrl(streamId, extension = 'ts') {
     // Use HTTPS to avoid mixed content blocking
-    // IMPORTANT: Username must NOT be URL-encoded for live streams (per M3U playlist format)
     const streamBaseUrl = 'https://starshare.cx'
-    const streamUsername = 'Aziz - Test 1'
+    const streamUsername = 'AzizTest1'
     const streamPassword = 'Test1'
     return `${streamBaseUrl}/live/${streamUsername}/${streamPassword}/${streamId}.${extension}`
   }

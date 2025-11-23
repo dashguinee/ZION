@@ -7,7 +7,7 @@ class DashApp {
     // Initialize Xtream Client
     this.client = new XtreamClient({
       baseUrl: 'http://starshare.cx:80',
-      username: 'Aziz - Test 1',
+      username: 'AzizTest1',
       password: 'Test1'
     })
 
@@ -109,6 +109,7 @@ class DashApp {
     try {
       console.log('📂 Loading categories...')
 
+      // Load all categories (Focus on VOD, Live TV secondary)
       const [vodCats, seriesCats, liveCats] = await Promise.all([
         this.client.getVODCategories(),
         this.client.getSeriesCategories(),
@@ -121,7 +122,7 @@ class DashApp {
 
       console.log(`✅ Loaded ${vodCats.length} movie categories`)
       console.log(`✅ Loaded ${seriesCats.length} series categories`)
-      console.log(`✅ Loaded ${liveCats.length} live TV categories`)
+      console.log(`✅ Loaded ${liveCats.length} live TV categories (secondary)`)
 
     } catch (error) {
       console.error('❌ Failed to load categories:', error)

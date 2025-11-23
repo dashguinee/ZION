@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
     // Xtream API credentials (hardcoded for now)
     const baseUrl = 'http://starshare.cx:80'
-    const username = 'Aziz - Test 1'
+    const username = 'AzizTest1'
     const password = 'Test1'
 
     // Build API URL
