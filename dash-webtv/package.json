@@ -1,0 +1,12 @@
+{
+  "name": "dash-webtv",
+  "version": "1.0.0",
+  "description": "DASH WebTV - The African Super Hub",
+  "scripts": {
+    "start": "npx http-server -p 8000",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod"
+  },
+  "keywords": ["pwa", "iptv", "streaming", "webtv"],
+  "author": "DASH Entertainment"
+}
