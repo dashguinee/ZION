@@ -484,6 +484,9 @@ class DashApp {
       return
     }
 
+    // Store container extension for playback
+    const extension = details.info?.container_extension || details.movie_data?.container_extension || 'mp4'
+
     const modalHTML = `
       <div class="modal-overlay">
         <div class="modal">
@@ -506,7 +509,7 @@ class DashApp {
             <p class="modal-description">${details.info?.plot || 'No description available.'}</p>
 
             <div class="modal-actions">
-              <button class="btn btn-primary" onclick="dashApp.playContent('${id}', '${type}')">
+              <button class="btn btn-primary" onclick="dashApp.playContent('${id}', '${type}', '${extension}')">
                 ▶️ Play Now
               </button>
               <button class="btn btn-outline" onclick="dashApp.addToFavorites('${id}', '${type}')">
@@ -525,17 +528,19 @@ class DashApp {
     this.elements.modalContainer.innerHTML = ''
   }
 
-  playContent(id, type) {
-    console.log(`Playing ${type}:`, id)
+  playContent(id, type, extension = 'mp4') {
+    console.log(`Playing ${type}:`, id, `Format: ${extension}`)
 
     let streamUrl = ''
 
     if (type === 'movie') {
-      streamUrl = this.client.buildVODUrl(id, 'mp4')
+      // Use actual container extension from API
+      streamUrl = this.client.buildVODUrl(id, extension)
     } else if (type === 'live') {
       streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
     }
 
+    console.log('Stream URL:', streamUrl)
     this.closeModal()
     this.showVideoPlayer(streamUrl)
   }
@@ -543,11 +548,15 @@ class DashApp {
   showVideoPlayer(streamUrl) {
     console.log('🎬 Playing stream:', streamUrl)
 
+    // Detect file format
+    const format = streamUrl.split('.').pop().split('?')[0]
+    console.log('📹 Format:', format)
+
     const playerHTML = `
       <div class="video-player-container">
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
         <video id="dashPlayer" class="video-js vjs-big-play-centered" controls autoplay preload="auto" width="100%" height="100%">
-          <source src="${streamUrl}">
+          <source src="${streamUrl}" type="video/${format === 'ts' ? 'mp2t' : format}">
         </video>
       </div>
     `
@@ -576,11 +585,22 @@ class DashApp {
         console.log('✅ Video player ready!')
         this.play().catch(err => {
           console.error('❌ Playback error:', err)
+          console.error('Format attempted:', format)
+          console.error('Stream URL:', streamUrl)
         })
       })
 
       player.on('error', function(e) {
-        console.error('❌ Player error:', player.error())
+        const error = player.error()
+        console.error('❌ Player error:', error)
+        console.error('Error code:', error?.code)
+        console.error('Error message:', error?.message)
+        console.error('Format:', format)
+
+        // Show user-friendly error
+        if (format === 'mkv') {
+          alert('⚠️ This video format (MKV) may not be supported. Try another movie.')
+        }
       })
     } else {
       console.error('❌ Video.js not loaded!')
