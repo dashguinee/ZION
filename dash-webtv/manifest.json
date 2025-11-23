@@ -1,0 +1,65 @@
+{
+  "name": "DASH - The African Super Hub",
+  "short_name": "DASH",
+  "description": "57,000+ Movies, 14,324 Series, Live TV - Better than Netflix + Prime + HBO Max combined",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#9D4EDD",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["entertainment", "video", "movies", "tv"],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "DASH Home Screen"
+    },
+    {
+      "src": "/screenshots/player.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Video Player"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Movies",
+      "short_name": "Movies",
+      "description": "Browse 57,000+ movies",
+      "url": "/?page=movies",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Series",
+      "short_name": "Series",
+      "description": "Browse 14,000+ series",
+      "url": "/?page=series",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Live TV",
+      "short_name": "Live TV",
+      "description": "Watch live TV channels",
+      "url": "/?page=live",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Primary Meta Tags -->
+    <title>DASH⚡ - The African Super Hub</title>
+    <meta name="title" content="DASH⚡ - The African Super Hub">
+    <meta name="description" content="57,000+ Movies | 14,000+ Series | Live TV | Netflix + Prime + HBO Max and more">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="DASH⚡ - The African Super Hub">
+    <meta property="og:description" content="57,000+ Movies | 14,000+ Series | Live TV">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#9D4EDD">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DASH">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/icons/logo.svg">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/theme.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+    <!-- Cosmic Background Effect -->
+    <div class="cosmic-bg"></div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-logo" id="logo">DASH⚡</div>
+
+        <div class="navbar-search">
+            <input
+                type="text"
+                class="search-input"
+                placeholder="Search movies, series, or live TV..."
+                id="searchInput"
+            >
+        </div>
+
+        <div class="navbar-actions">
+            <button class="btn btn-primary" id="installBtn" style="display: none;">
+                📱 Install App
+            </button>
+            <button class="btn btn-icon btn-outline" id="accountBtn">
+                👤
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="page-container" id="pageContainer">
+        <!-- Content will be dynamically loaded here -->
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading DASH...</div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" data-page="home">
+            <div class="nav-item-icon">🏠</div>
+            <div class="nav-item-label">Home</div>
+        </div>
+        <div class="nav-item" data-page="movies">
+            <div class="nav-item-icon">🎬</div>
+            <div class="nav-item-label">Movies</div>
+        </div>
+        <div class="nav-item" data-page="series">
+            <div class="nav-item-icon">📺</div>
+            <div class="nav-item-label">Series</div>
+        </div>
+        <div class="nav-item" data-page="live">
+            <div class="nav-item-icon">📡</div>
+            <div class="nav-item-label">Live TV</div>
+        </div>
+        <div class="nav-item" data-page="account">
+            <div class="nav-item-icon">👤</div>
+            <div class="nav-item-label">Account</div>
+        </div>
+    </nav>
+
+    <!-- Modal Container (for content details) -->
+    <div id="modalContainer"></div>
+
+    <!-- Video Player Container -->
+    <div id="videoPlayerContainer"></div>
+
+    <!-- Scripts -->
+    <script src="/js/xtream-client.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/pwa.js"></script>
+
+    <!-- Video.js for HLS playback (loaded from CDN) -->
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+</body>
+</html>
