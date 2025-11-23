@@ -426,7 +426,8 @@ class DashApp {
     }
 
     return items.map(item => {
-      const poster = item.stream_icon || item.cover || '/assets/placeholder.jpg'
+      // Fallback to placeholder if no poster available
+      const poster = item.stream_icon || item.cover || 'https://via.placeholder.com/300x450/1a1a2e/9d4edd?text=DASH+TV'
       const title = item.name || 'Untitled'
       const id = item.stream_id || item.series_id
 
@@ -487,7 +488,7 @@ class DashApp {
           <button class="modal-close" onclick="dashApp.closeModal()">×</button>
 
           <div class="modal-header">
-            <img src="${details.info?.cover || '/assets/placeholder.jpg'}" alt="${details.info?.name}"
+            <img src="${details.info?.cover || 'https://via.placeholder.com/300x450/1a1a2e/9d4edd?text=DASH+TV'}" alt="${details.info?.name}"
                  class="modal-header-bg">
             <div class="modal-header-overlay">
               <h1 class="modal-title">${details.info?.name || 'Untitled'}</h1>
@@ -538,21 +539,49 @@ class DashApp {
   }
 
   showVideoPlayer(streamUrl) {
+    console.log('🎬 Playing stream:', streamUrl)
+
     const playerHTML = `
       <div class="video-player-container">
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
-        <video id="dashPlayer" class="video-js video-player" controls autoplay>
-          <source src="${streamUrl}" type="application/x-mpegURL">
+        <video id="dashPlayer" class="video-js vjs-big-play-centered" controls autoplay preload="auto" width="100%" height="100%">
+          <source src="${streamUrl}">
         </video>
       </div>
     `
 
     this.elements.videoPlayerContainer.innerHTML = playerHTML
 
-    // Initialize Video.js player
+    // Initialize Video.js player with better options
     if (typeof videojs !== 'undefined') {
-      const player = videojs('dashPlayer')
-      player.play()
+      const player = videojs('dashPlayer', {
+        fluid: true,
+        responsive: true,
+        controls: true,
+        autoplay: true,
+        preload: 'auto',
+        html5: {
+          vhs: {
+            overrideNative: true
+          },
+          nativeVideoTracks: false,
+          nativeAudioTracks: false,
+          nativeTextTracks: false
+        }
+      })
+
+      player.ready(function() {
+        console.log('✅ Video player ready!')
+        this.play().catch(err => {
+          console.error('❌ Playback error:', err)
+        })
+      })
+
+      player.on('error', function(e) {
+        console.error('❌ Player error:', player.error())
+      })
+    } else {
+      console.error('❌ Video.js not loaded!')
     }
   }
 
