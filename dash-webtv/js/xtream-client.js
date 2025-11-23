@@ -151,9 +151,8 @@ class XtreamClient {
    * @param {string} extension - File extension (mp4, mkv, avi, etc.)
    */
   buildVODUrl(vodId, extension = 'mp4') {
-    // IMPORTANT: Stream URLs must be DIRECT, not through proxy
-    // Use actual credentials and base URL
-    const streamBaseUrl = 'http://starshare.cx:80'
+    // Use HTTPS to avoid mixed content blocking (app is HTTPS, streams must be too)
+    const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'Aziz - Test 1'
     const streamPassword = 'Test1'
     return `${streamBaseUrl}/movie/${encodeURIComponent(streamUsername)}/${streamPassword}/${vodId}.${extension}`
@@ -167,7 +166,8 @@ class XtreamClient {
    * @param {string} extension - File extension
    */
   buildSeriesUrl(seriesId, season, episode, extension = 'mp4') {
-    const streamBaseUrl = 'http://starshare.cx:80'
+    // Use HTTPS to avoid mixed content blocking
+    const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'Aziz - Test 1'
     const streamPassword = 'Test1'
     return `${streamBaseUrl}/series/${encodeURIComponent(streamUsername)}/${streamPassword}/${seriesId}/${season}/${episode}.${extension}`
@@ -178,8 +178,9 @@ class XtreamClient {
    * @param {string} streamId - Live stream ID
    * @param {string} extension - Stream format (ts, m3u8)
    */
-  buildLiveStreamUrl(streamId, extension = 'ts') {
-    const streamBaseUrl = 'http://starshare.cx:80'
+  buildLiveStreamUrl(streamId, extension = 'm3u8') {
+    // Use HTTPS to avoid mixed content blocking (app is HTTPS, streams must be too)
+    const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'Aziz - Test 1'
     const streamPassword = 'Test1'
     return `${streamBaseUrl}/live/${encodeURIComponent(streamUsername)}/${streamPassword}/${streamId}.${extension}`

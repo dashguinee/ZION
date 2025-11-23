@@ -554,9 +554,9 @@ class DashApp {
       }
       streamUrl = this.client.buildVODUrl(id, finalExtension)
     } else if (type === 'live') {
-      // Live TV streams use .ts format (MPEG Transport Stream)
-      // Account only supports 'ts' format per allowed_output_formats
-      streamUrl = this.client.buildLiveStreamUrl(id, 'ts')
+      // Live TV streams use .m3u8 format (HLS playlist)
+      // MUST use HTTPS to avoid mixed content blocking (app is HTTPS)
+      streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
     }
 
     console.log('Stream URL:', streamUrl)
