@@ -12,12 +12,13 @@ class XtreamClient {
 
   /**
    * Build player API URL with authentication
+   * Uses Vercel proxy to bypass CORS
    */
   buildPlayerApiUrl(action, params = {}) {
-    const url = new URL(`${this.baseUrl}/player_api.php`)
-    url.searchParams.set('username', this.username)
-    url.searchParams.set('password', this.password)
-    url.searchParams.set('action', action)
+    // Use Vercel serverless proxy instead of direct API call
+    const url = new URL('/api/proxy', window.location.origin)
+
+    if (action) url.searchParams.set('action', action)
 
     // Add additional parameters
     Object.keys(params).forEach(key => {
