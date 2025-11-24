@@ -6,7 +6,7 @@ class DashApp {
   constructor() {
     // Initialize Xtream Client
     this.client = new XtreamClient({
-      baseUrl: 'http://starshare.cx:80',
+      baseUrl: 'https://starshare.cx',
       username: 'AzizTest1',
       password: 'Test1'
     })

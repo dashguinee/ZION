@@ -5,7 +5,7 @@
 
 class XtreamClient {
   constructor(config) {
-    this.baseUrl = config.baseUrl || 'http://starshare.cx:80'
+    this.baseUrl = config.baseUrl || 'https://starshare.cx'
     this.username = config.username || 'AzizTest1'
     this.password = config.password || 'Test1'
     this.backendUrl = 'https://zion-production-39d8.up.railway.app'
