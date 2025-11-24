@@ -175,16 +175,16 @@ class XtreamClient {
   }
 
   /**
-   * Build playable URL for Live TV stream (uses backend to resolve redirects)
+   * Build playable URL for Live TV stream (uses backend HLS proxy)
    * @param {string} streamId - Live stream ID
    * @param {string} extension - IGNORED for live streams (server handles format)
-   * @returns {Promise<string>} Resolved stream URL with token
+   * @returns {Promise<string>} HLS manifest URL proxied through backend
    */
   async buildLiveStreamUrl(streamId, extension = null) {
-    // Use Railway backend to proxy the stream directly
-    // This handles authentication and CORS
-    console.log(`🔴 Proxying Live TV via Railway backend: ${streamId}`)
-    return `${this.backendUrl}/api/live/${streamId}/direct`
+    // Use Railway backend HLS proxy with full manifest rewriting
+    // This handles authentication, CORS, and proxies all segments
+    console.log(`🔴 Using HLS proxy for Live TV: ${streamId}`)
+    return `${this.backendUrl}/api/live/${streamId}/proxy`
   }
 
   // ============================================

@@ -631,11 +631,11 @@ class DashApp {
     let format
     let mimeType
 
-    // Special handling for Live TV streams (proxied through Railway backend)
+    // Special handling for Live TV streams (proxied through Railway backend HLS proxy)
     if (type === 'live' || streamUrl.includes('/api/live/') || streamUrl.includes('zion-production')) {
-      console.log('🔴 Live TV stream detected (Railway proxy)')
-      format = 'ts'  // Backend proxies as MPEG-TS
-      mimeType = 'video/mp2t'  // MPEG Transport Stream
+      console.log('🔴 Live TV HLS stream detected (Railway proxy with manifest rewriting)')
+      format = 'm3u8'  // Backend serves HLS manifest with rewritten URLs
+      mimeType = 'application/x-mpegURL'  // HLS format
     } else if (streamUrl.includes('.m3u8')) {
       // HLS streams
       format = 'm3u8'
