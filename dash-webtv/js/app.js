@@ -588,10 +588,10 @@ class DashApp {
     if (type === 'movie') {
       // Check if format is browser-compatible
       if (unsupportedFormats.includes(extension.toLowerCase())) {
-        console.warn(`⚠️ Format ${extension} not browser-compatible. Trying mp4 (some may work)...`)
-        finalExtension = 'mp4'
-        // Note: Server may or may not transcode - we try anyway
-        // If it fails, error handler will show user-friendly message
+        console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode for browser compatibility...`)
+        finalExtension = 'm3u8'
+        // Request HLS transcoding: Server converts MKV/AVI/FLV -> HLS on-the-fly
+        // This is standard Xtream Codes feature - works reliably!
       }
       streamUrl = this.client.buildVODUrl(id, finalExtension)
     } else if (type === 'series') {
@@ -603,13 +603,14 @@ class DashApp {
       }
       // Check if format is browser-compatible
       if (unsupportedFormats.includes(extension.toLowerCase())) {
-        console.warn(`⚠️ Format ${extension} not browser-compatible. Trying mp4 (some may work)...`)
-        finalExtension = 'mp4'
+        console.log(`🔄 ${extension.toUpperCase()} episode detected - requesting HLS transcode for browser compatibility...`)
+        finalExtension = 'm3u8'
+        // Request HLS transcoding: Server converts MKV/AVI/FLV -> HLS on-the-fly
       }
       streamUrl = this.client.buildSeriesUrl(id, season, episode, finalExtension)
     } else if (type === 'live') {
-      // Live TV streams - DIRECT connection (same as VOD!)
-      console.log('🔴 Building DIRECT Live TV stream URL...')
+      // Live TV streams - HLS via Cloudflare Worker proxy
+      console.log('🔴 Building Live TV HLS stream URL (via Cloudflare proxy)...')
       streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
     }
 
@@ -625,10 +626,10 @@ class DashApp {
     let format
     let mimeType
 
-    // Special handling for Live TV streams (proxied through Railway backend HLS proxy)
-    if (type === 'live' || streamUrl.includes('/api/live/') || streamUrl.includes('zion-production')) {
-      console.log('🔴 Live TV HLS stream detected (Railway proxy with manifest rewriting)')
-      format = 'm3u8'  // Backend serves HLS manifest with rewritten URLs
+    // Special handling for Live TV streams (proxied through Cloudflare Worker)
+    if (type === 'live' || streamUrl.includes('/api/live/') || streamUrl.includes('dash-webtv-proxy')) {
+      console.log('🔴 Live TV HLS stream detected (Cloudflare Worker proxy)')
+      format = 'm3u8'  // HLS manifest with rewritten URLs
       mimeType = 'application/x-mpegURL'  // HLS format
     } else if (streamUrl.includes('.m3u8')) {
       // HLS streams
