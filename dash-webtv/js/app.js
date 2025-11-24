@@ -575,7 +575,7 @@ class DashApp {
     this.elements.modalContainer.innerHTML = ''
   }
 
-  playContent(id, type, extension = 'mp4', season = null, episode = null) {
+  async playContent(id, type, extension = 'mp4', season = null, episode = null) {
     console.log(`Playing ${type}:`, id, `Format: ${extension}`, season ? `S${season}E${episode}` : '')
 
     // Browser-supported formats
@@ -608,9 +608,15 @@ class DashApp {
       }
       streamUrl = this.client.buildSeriesUrl(id, season, episode, finalExtension)
     } else if (type === 'live') {
-      // Live TV streams use .ts format (MPEG Transport Stream)
-      // Account only supports 'ts' format per M3U playlist
-      streamUrl = this.client.buildLiveStreamUrl(id, 'ts')
+      // Live TV streams - use backend to resolve redirect and get token
+      console.log('🔴 Fetching Live TV stream URL from backend...')
+      try {
+        streamUrl = await this.client.buildLiveStreamUrl(id, 'ts')
+      } catch (error) {
+        console.error('❌ Failed to get Live TV stream:', error)
+        alert('Failed to load Live TV stream. Please try again.')
+        return
+      }
     }
 
     console.log('Stream URL:', streamUrl)

@@ -8,6 +8,7 @@ class XtreamClient {
     this.baseUrl = config.baseUrl || 'http://starshare.cx:80'
     this.username = config.username || 'AzizTest1'
     this.password = config.password || 'Test1'
+    this.backendUrl = 'https://zion-production-39d8.up.railway.app'
   }
 
   /**
@@ -174,18 +175,29 @@ class XtreamClient {
   }
 
   /**
-   * Build playable URL for Live TV stream
+   * Build playable URL for Live TV stream (uses backend to resolve redirects)
    * @param {string} streamId - Live stream ID
    * @param {string} extension - IGNORED for live streams (server handles format)
+   * @returns {Promise<string>} Resolved stream URL with token
    */
-  buildLiveStreamUrl(streamId, extension = null) {
-    // Live streams use a redirect-based system (no extension needed)
-    // Server redirects to actual stream server with token
-    const streamBaseUrl = 'https://starshare.cx'
-    const streamUsername = 'AzizTest1'
-    const streamPassword = 'Test1'
-    // NO EXTENSION - server generates token and redirects to real stream
-    return `${streamBaseUrl}/${streamUsername}/${streamPassword}/${streamId}`
+  async buildLiveStreamUrl(streamId, extension = null) {
+    // Use backend to resolve Live TV redirect and get token
+    console.log(`🔴 Resolving Live TV stream ${streamId} via backend...`)
+
+    try {
+      const response = await fetch(`${this.backendUrl}/api/live/${streamId}`)
+      const data = await response.json()
+
+      if (data.success) {
+        console.log(`✅ Live TV resolved: ${data.url}`)
+        return data.url
+      } else {
+        throw new Error('Failed to resolve live stream')
+      }
+    } catch (error) {
+      console.error('❌ Live TV resolution failed:', error)
+      throw error
+    }
   }
 
   // ============================================
