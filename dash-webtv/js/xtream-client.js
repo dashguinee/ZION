@@ -9,6 +9,8 @@ class XtreamClient {
     this.username = config.username || 'AzizTest1'
     this.password = config.password || 'Test1'
     this.backendUrl = 'https://zion-production-39d8.up.railway.app'
+    // Cloudflare Worker URL - Deployed and active!
+    this.cloudflareWorkerUrl = 'https://dash-webtv-proxy.dash-webtv.workers.dev'
   }
 
   /**
@@ -175,16 +177,27 @@ class XtreamClient {
   }
 
   /**
-   * Build playable URL for Live TV stream (uses backend HLS proxy)
+   * Build playable URL for Live TV stream (uses Cloudflare Worker proxy)
    * @param {string} streamId - Live stream ID
-   * @param {string} extension - IGNORED for live streams (server handles format)
-   * @returns {Promise<string>} HLS manifest URL proxied through backend
+   * @param {string} extension - Extension (default: 'm3u8' for HLS)
+   * @returns {Promise<string>} HLS manifest URL proxied through Cloudflare Worker
    */
-  async buildLiveStreamUrl(streamId, extension = null) {
-    // Use Railway backend HLS proxy with full manifest rewriting
-    // This handles authentication, CORS, and proxies all segments
-    console.log(`🔴 Using HLS proxy for Live TV: ${streamId}`)
-    return `${this.backendUrl}/api/live/${streamId}/proxy`
+  async buildLiveStreamUrl(streamId, extension = 'm3u8') {
+    console.log(`🔴 Building Live TV URL for stream: ${streamId}`)
+
+    // Build the direct ostv.info stream URL (Xtream Codes format)
+    const streamUsername = 'AzizTest1'
+    const streamPassword = 'Test1'
+    const streamBaseUrl = 'https://starshare.cx'
+
+    const directStreamUrl = `${streamBaseUrl}/live/${streamUsername}/${streamPassword}/${streamId}.${extension}`
+    console.log(`📡 Direct stream URL: ${directStreamUrl}`)
+
+    // Route through Cloudflare Worker to bypass IP blocks
+    const proxiedUrl = `${this.cloudflareWorkerUrl}/?url=${encodeURIComponent(directStreamUrl)}`
+    console.log(`🌐 Cloudflare Worker URL: ${proxiedUrl}`)
+
+    return proxiedUrl
   }
 
   // ============================================
