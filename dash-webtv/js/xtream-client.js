@@ -181,23 +181,11 @@ class XtreamClient {
    * @returns {Promise<string>} Resolved stream URL with token
    */
   async buildLiveStreamUrl(streamId, extension = null) {
-    // Use backend to resolve Live TV redirect and get token
-    console.log(`🔴 Resolving Live TV stream ${streamId} via backend...`)
+    // Use backend proxy to bypass 401 Unauthorized errors
+    console.log(`🔴 Proxying Live TV stream ${streamId} via backend...`)
 
-    try {
-      const response = await fetch(`${this.backendUrl}/api/live/${streamId}`)
-      const data = await response.json()
-
-      if (data.success) {
-        console.log(`✅ Live TV resolved: ${data.url}`)
-        return data.url
-      } else {
-        throw new Error('Failed to resolve live stream')
-      }
-    } catch (error) {
-      console.error('❌ Live TV resolution failed:', error)
-      throw error
-    }
+    // Backend /direct endpoint proxies the stream with proper authentication
+    return `${this.backendUrl}/api/live/${streamId}/direct`
   }
 
   // ============================================
