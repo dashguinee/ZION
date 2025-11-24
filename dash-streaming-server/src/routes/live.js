@@ -66,15 +66,15 @@ router.get('/:streamId/proxy', async (req, res) => {
 
     logger.info(`[HLS Proxy] Fetching manifest: ${hlsUrl.substring(0, 100)}...`);
 
-    // Fetch the content with browser-like headers
+    // Fetch the content with mobile app-like headers (mimics Starshare APK)
     const response = await axios.get(hlsUrl, {
       responseType: 'text',
-      timeout: 30000,
+      timeout: 10000, // Reduced timeout - fail fast
+      maxRedirects: 5,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'User-Agent': 'Lavf/58.76.100', // FFmpeg/ExoPlayer User-Agent (used by Android IPTV apps)
         'Accept': '*/*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://dash-webtv.vercel.app/'
+        'Connection': 'keep-alive'
       }
     });
 
@@ -149,12 +149,12 @@ router.get('/:streamId/proxy/*', async (req, res) => {
 
     const response = await axios.get(targetUrl, {
       responseType: 'arraybuffer',
-      timeout: 30000,
+      timeout: 10000, // Reduced timeout - fail fast
+      maxRedirects: 5,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'User-Agent': 'Lavf/58.76.100', // FFmpeg/ExoPlayer User-Agent (Android IPTV apps)
         'Accept': '*/*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://dash-webtv.vercel.app/'
+        'Connection': 'keep-alive'
       }
     });
 
