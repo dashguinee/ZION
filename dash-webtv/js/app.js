@@ -628,24 +628,35 @@ class DashApp {
     console.log('🎬 Playing stream:', streamUrl)
 
     // Detect file format
-    const format = streamUrl.split('.').pop().split('?')[0]
+    let format
+    let mimeType
+
+    // Special handling for Live TV streams (no file extension)
+    if (type === 'live' || streamUrl.includes('live6.ostv.info')) {
+      console.log('🔴 Live TV stream detected')
+      format = 'ts'  // Live TV streams are MPEG-TS format
+      mimeType = 'video/mp2t'  // MPEG Transport Stream
+    } else {
+      // Regular VOD/Series - extract format from URL
+      format = streamUrl.split('.').pop().split('?')[0]
+
+      // Set proper MIME type
+      if (format === 'm3u8') {
+        mimeType = 'application/x-mpegURL'  // HLS streams
+      } else if (format === 'ts') {
+        mimeType = 'video/mp2t'  // MPEG Transport Stream
+      } else {
+        mimeType = `video/${format}`  // Standard video formats (mp4, mkv, etc)
+      }
+    }
+
     console.log('📹 Format:', format)
+    console.log('📹 MIME Type:', mimeType)
 
     // Show warning if we had to convert format
     if (originalFormat) {
       console.warn(`⚠️ Original format (${originalFormat}) converted to ${format} for browser compatibility`)
     }
-
-    // Set proper MIME type for HLS streams
-    let mimeType
-    if (format === 'm3u8') {
-      mimeType = 'application/x-mpegURL'  // HLS streams
-    } else if (format === 'ts') {
-      mimeType = 'video/mp2t'  // MPEG Transport Stream
-    } else {
-      mimeType = `video/${format}`  // Standard video formats (mp4, mkv, etc)
-    }
-    console.log('📹 MIME Type:', mimeType)
 
     const playerHTML = `
       <div class="video-player-container">
