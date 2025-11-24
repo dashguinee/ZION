@@ -608,10 +608,10 @@ class DashApp {
       }
       streamUrl = this.client.buildSeriesUrl(id, season, episode, finalExtension)
     } else if (type === 'live') {
-      // Live TV streams - use backend to resolve redirect and get token
-      console.log('🔴 Fetching Live TV stream URL from backend...')
+      // Live TV streams - use Cloudflare Worker proxy
+      console.log('🔴 Fetching Live TV stream URL from Cloudflare Worker...')
       try {
-        streamUrl = await this.client.buildLiveStreamUrl(id, 'ts')
+        streamUrl = await this.client.buildLiveStreamUrl(id, 'm3u8')
       } catch (error) {
         console.error('❌ Failed to get Live TV stream:', error)
         alert('Failed to load Live TV stream. Please try again.')
