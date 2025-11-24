@@ -181,11 +181,28 @@ class XtreamClient {
    * @returns {Promise<string>} Resolved stream URL with token
    */
   async buildLiveStreamUrl(streamId, extension = null) {
-    // Use backend proxy to bypass 401 Unauthorized errors
-    console.log(`🔴 Proxying Live TV stream ${streamId} via backend...`)
+    // Get stream URL from backend
+    console.log(`🔴 Resolving Live TV stream ${streamId} via backend...`)
 
-    // Backend /direct endpoint proxies the stream with proper authentication
-    return `${this.backendUrl}/api/live/${streamId}/direct`
+    try {
+      const response = await fetch(`${this.backendUrl}/api/live/${streamId}`)
+      const data = await response.json()
+
+      if (data.success) {
+        console.log(`✅ Live TV resolved: ${data.url}`)
+
+        // Proxy through Vercel Edge to avoid 401/CORS issues
+        const proxyUrl = `/api/proxy-hls?url=${encodeURIComponent(data.url)}`
+        console.log(`🔄 Proxying through Edge: ${proxyUrl}`)
+
+        return proxyUrl
+      } else {
+        throw new Error('Failed to resolve live stream')
+      }
+    } catch (error) {
+      console.error('❌ Live TV resolution failed:', error)
+      throw error
+    }
   }
 
   // ============================================
