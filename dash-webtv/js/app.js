@@ -631,11 +631,11 @@ class DashApp {
     let format
     let mimeType
 
-    // Special handling for Live TV streams (no file extension)
-    if (type === 'live' || streamUrl.includes('live6.ostv.info')) {
+    // Special handling for Live TV streams
+    if (type === 'live' || streamUrl.includes('live6.ostv.info') || streamUrl.includes('live2.ostv.info') || streamUrl.includes('.m3u8')) {
       console.log('🔴 Live TV stream detected')
-      format = 'ts'  // Live TV streams are MPEG-TS format
-      mimeType = 'video/mp2t'  // MPEG Transport Stream
+      format = 'm3u8'  // Live TV streams are HLS format
+      mimeType = 'application/x-mpegURL'  // HLS playlist
     } else {
       // Regular VOD/Series - extract format from URL
       format = streamUrl.split('.').pop().split('?')[0]
