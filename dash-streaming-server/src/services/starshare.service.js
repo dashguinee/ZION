@@ -63,13 +63,10 @@ class StarshareService {
 
       logger.info(`Live TV resolved: ${streamId} → ${finalUrl.substring(0, 100)}...`);
 
-      // Append .m3u8 extension for HLS playback (browsers need HLS, not raw TS)
-      const hlsUrl = finalUrl.includes('.m3u8') ? finalUrl : `${finalUrl}.m3u8`;
-      logger.info(`Live TV HLS URL: ${hlsUrl.substring(0, 100)}...`);
-
       // Cache for 5 minutes (tokens expire)
+      // Use raw URL for backend proxying (no .m3u8 appenditure)
       const result = {
-        url: hlsUrl,
+        url: finalUrl,
         streamId,
         cached: false,
         timestamp: Date.now()

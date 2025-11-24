@@ -181,28 +181,10 @@ class XtreamClient {
    * @returns {Promise<string>} Resolved stream URL with token
    */
   async buildLiveStreamUrl(streamId, extension = null) {
-    // Get stream URL from backend
-    console.log(`🔴 Resolving Live TV stream ${streamId} via backend...`)
-
-    try {
-      const response = await fetch(`${this.backendUrl}/api/live/${streamId}`)
-      const data = await response.json()
-
-      if (data.success) {
-        console.log(`✅ Live TV resolved: ${data.url}`)
-
-        // Proxy through Vercel Edge to avoid 401/CORS issues
-        const proxyUrl = `/api/proxy-hls?url=${encodeURIComponent(data.url)}`
-        console.log(`🔄 Proxying through Edge: ${proxyUrl}`)
-
-        return proxyUrl
-      } else {
-        throw new Error('Failed to resolve live stream')
-      }
-    } catch (error) {
-      console.error('❌ Live TV resolution failed:', error)
-      throw error
-    }
+    // Use Railway backend to proxy the stream directly
+    // This handles authentication and CORS
+    console.log(`🔴 Proxying Live TV via Railway backend: ${streamId}`)
+    return `${this.backendUrl}/api/live/${streamId}/direct`
   }
 
   // ============================================

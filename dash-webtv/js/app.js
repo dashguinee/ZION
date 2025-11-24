@@ -631,11 +631,15 @@ class DashApp {
     let format
     let mimeType
 
-    // Special handling for Live TV streams
-    if (type === 'live' || streamUrl.includes('live6.ostv.info') || streamUrl.includes('live2.ostv.info') || streamUrl.includes('.m3u8')) {
-      console.log('🔴 Live TV stream detected')
-      format = 'm3u8'  // Live TV streams are HLS format
-      mimeType = 'application/x-mpegURL'  // HLS playlist
+    // Special handling for Live TV streams (proxied through Railway backend)
+    if (type === 'live' || streamUrl.includes('/api/live/') || streamUrl.includes('zion-production')) {
+      console.log('🔴 Live TV stream detected (Railway proxy)')
+      format = 'ts'  // Backend proxies as MPEG-TS
+      mimeType = 'video/mp2t'  // MPEG Transport Stream
+    } else if (streamUrl.includes('.m3u8')) {
+      // HLS streams
+      format = 'm3u8'
+      mimeType = 'application/x-mpegURL'
     } else {
       // Regular VOD/Series - extract format from URL
       format = streamUrl.split('.').pop().split('?')[0]
