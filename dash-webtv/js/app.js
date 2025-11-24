@@ -608,15 +608,9 @@ class DashApp {
       }
       streamUrl = this.client.buildSeriesUrl(id, season, episode, finalExtension)
     } else if (type === 'live') {
-      // Live TV streams - use Cloudflare Worker proxy
-      console.log('🔴 Fetching Live TV stream URL from Cloudflare Worker...')
-      try {
-        streamUrl = await this.client.buildLiveStreamUrl(id, 'm3u8')
-      } catch (error) {
-        console.error('❌ Failed to get Live TV stream:', error)
-        alert('Failed to load Live TV stream. Please try again.')
-        return
-      }
+      // Live TV streams - DIRECT connection (same as VOD!)
+      console.log('🔴 Building DIRECT Live TV stream URL...')
+      streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
     }
 
     console.log('Stream URL:', streamUrl)

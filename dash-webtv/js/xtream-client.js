@@ -177,27 +177,21 @@ class XtreamClient {
   }
 
   /**
-   * Build playable URL for Live TV stream (uses Cloudflare Worker proxy)
+   * Build playable URL for Live TV stream (DIRECT - no proxy)
    * @param {string} streamId - Live stream ID
    * @param {string} extension - Extension (default: 'm3u8' for HLS)
-   * @returns {Promise<string>} HLS manifest URL proxied through Cloudflare Worker
+   * @returns {string} Direct HLS manifest URL (same as VOD - no proxy!)
    */
-  async buildLiveStreamUrl(streamId, extension = 'm3u8') {
-    console.log(`🔴 Building Live TV URL for stream: ${streamId}`)
-
-    // Build the direct ostv.info stream URL (Xtream Codes format)
+  buildLiveStreamUrl(streamId, extension = 'm3u8') {
+    // Use HTTPS to avoid mixed content blocking
+    const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'AzizTest1'
     const streamPassword = 'Test1'
-    const streamBaseUrl = 'https://starshare.cx'
 
-    const directStreamUrl = `${streamBaseUrl}/live/${streamUsername}/${streamPassword}/${streamId}.${extension}`
-    console.log(`📡 Direct stream URL: ${directStreamUrl}`)
+    const directUrl = `${streamBaseUrl}/live/${streamUsername}/${streamPassword}/${streamId}.${extension}`
+    console.log(`🔴 DIRECT Live TV URL (no proxy): ${directUrl}`)
 
-    // Route through Cloudflare Worker to bypass IP blocks
-    const proxiedUrl = `${this.cloudflareWorkerUrl}/?url=${encodeURIComponent(directStreamUrl)}`
-    console.log(`🌐 Cloudflare Worker URL: ${proxiedUrl}`)
-
-    return proxiedUrl
+    return directUrl
   }
 
   // ============================================
