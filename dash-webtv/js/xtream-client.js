@@ -183,19 +183,15 @@ class XtreamClient {
    * @returns {string} Direct HLS manifest URL (same as VOD - no proxy!)
    */
   buildLiveStreamUrl(streamId, extension = 'm3u8') {
-    // Live TV needs proxy - direct URLs timeout!
+    // Direct URL - no proxy
     const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'AzizTest1'
     const streamPassword = 'Test1'
 
     const directUrl = `${streamBaseUrl}/live/${streamUsername}/${streamPassword}/${streamId}.${extension}`
-    console.log(`📡 Original URL: ${directUrl}`)
+    console.log(`📡 Live TV URL: ${directUrl}`)
 
-    // Route through Cloudflare Worker (REQUIRED for Live TV!)
-    const proxiedUrl = `${this.cloudflareWorkerUrl}/?url=${encodeURIComponent(directUrl)}`
-    console.log(`🌐 Cloudflare Proxy URL: ${proxiedUrl}`)
-
-    return proxiedUrl
+    return directUrl
   }
 
   // ============================================
