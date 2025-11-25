@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Direct Stream Test</title>
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; padding: 20px; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #333; }
+        .status { padding: 10px; margin: 10px 0; }
+        .success { background: #0a3; }
+        .error { background: #a00; }
+        video { width: 100%; max-width: 640px; }
+    </style>
+</head>
+<body>
+    <h1>DASH WebTV - Direct Stream Test</h1>
+    <p>Testing if streams work WITHOUT Cloudflare proxy...</p>
+
+    <!-- Test 1: MP4 Movie (should work) -->
+    <div class="test">
+        <h3>Test 1: MP4 Movie (Direct)</h3>
+        <p>URL: https://starshare.cx:443/movie/AzizTest1/Test1/1862.mp4</p>
+        <video id="test1" controls>
+            <source src="https://starshare.cx:443/movie/AzizTest1/Test1/1862.mp4" type="video/mp4">
+        </video>
+        <div id="status1" class="status">Loading...</div>
+    </div>
+
+    <!-- Test 2: Live TV HLS (Direct - no proxy) -->
+    <div class="test">
+        <h3>Test 2: Live TV HLS (Direct - NO proxy)</h3>
+        <p>URL: https://starshare.cx:443/live/AzizTest1/Test1/8.m3u8</p>
+        <video-js id="test2" class="vjs-default-skin" controls preload="auto" width="640" height="360">
+        </video-js>
+        <div id="status2" class="status">Loading...</div>
+    </div>
+
+    <!-- Test 3: Live TV HLS (Through Cloudflare proxy) -->
+    <div class="test">
+        <h3>Test 3: Live TV HLS (Through Cloudflare Worker)</h3>
+        <p>URL: via dash-webtv-proxy.dash-webtv.workers.dev</p>
+        <video-js id="test3" class="vjs-default-skin" controls preload="auto" width="640" height="360">
+        </video-js>
+        <div id="status3" class="status">Loading...</div>
+    </div>
+
+    <!-- Test 4: MKV as M3U8 (Server transcoding) -->
+    <div class="test">
+        <h3>Test 4: MKV Movie as HLS (Server Transcode)</h3>
+        <p>Original: .mkv → Requesting: .m3u8</p>
+        <p>URL: https://starshare.cx:443/movie/AzizTest1/Test1/1906.m3u8</p>
+        <video-js id="test4" class="vjs-default-skin" controls preload="auto" width="640" height="360">
+        </video-js>
+        <div id="status4" class="status">Loading...</div>
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+    <script>
+        // Test 1: Simple MP4
+        const v1 = document.getElementById('test1');
+        v1.onloadeddata = () => { document.getElementById('status1').className = 'status success'; document.getElementById('status1').textContent = '✅ MP4 WORKS!'; };
+        v1.onerror = (e) => { document.getElementById('status1').className = 'status error'; document.getElementById('status1').textContent = '❌ FAILED: ' + (v1.error?.message || 'Unknown error'); };
+
+        // Test 2: Direct HLS (no proxy)
+        const player2 = videojs('test2', {
+            sources: [{ src: 'https://starshare.cx:443/live/AzizTest1/Test1/8.m3u8', type: 'application/x-mpegURL' }]
+        });
+        player2.on('loadeddata', () => { document.getElementById('status2').className = 'status success'; document.getElementById('status2').textContent = '✅ DIRECT HLS WORKS! No proxy needed!'; });
+        player2.on('error', (e) => { document.getElementById('status2').className = 'status error'; document.getElementById('status2').textContent = '❌ FAILED (CORS?): ' + player2.error()?.message; });
+
+        // Test 3: HLS through Cloudflare proxy
+        const proxyUrl = 'https://dash-webtv-proxy.dash-webtv.workers.dev/?url=' + encodeURIComponent('https://starshare.cx:443/live/AzizTest1/Test1/8.m3u8');
+        const player3 = videojs('test3', {
+            sources: [{ src: proxyUrl, type: 'application/x-mpegURL' }]
+        });
+        player3.on('loadeddata', () => { document.getElementById('status3').className = 'status success'; document.getElementById('status3').textContent = '✅ PROXIED HLS WORKS!'; });
+        player3.on('error', (e) => { document.getElementById('status3').className = 'status error'; document.getElementById('status3').textContent = '❌ FAILED: ' + player3.error()?.message; });
+
+        // Test 4: MKV as HLS (server transcode)
+        const player4 = videojs('test4', {
+            sources: [{ src: 'https://starshare.cx:443/movie/AzizTest1/Test1/1906.m3u8', type: 'application/x-mpegURL' }]
+        });
+        player4.on('loadeddata', () => { document.getElementById('status4').className = 'status success'; document.getElementById('status4').textContent = '✅ MKV→HLS TRANSCODE WORKS!'; });
+        player4.on('error', (e) => { document.getElementById('status4').className = 'status error'; document.getElementById('status4').textContent = '❌ FAILED: ' + player4.error()?.message; });
+
+        // Timeout check
+        setTimeout(() => {
+            ['status1', 'status2', 'status3', 'status4'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el.textContent === 'Loading...') {
+                    el.className = 'status error';
+                    el.textContent = '⏱️ TIMEOUT - No response after 30s';
+                }
+            });
+        }, 30000);
+    </script>
+</body>
+</html>
