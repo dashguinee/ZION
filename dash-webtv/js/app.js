@@ -433,7 +433,7 @@ class DashApp {
 
     return items.map(item => {
       // Fallback to placeholder if no poster available
-      const poster = item.stream_icon || item.cover || 'https://via.placeholder.com/300x450/1a1a2e/9d4edd?text=DASH+TV'
+      const poster = item.stream_icon || item.cover || '/assets/placeholder.svg'
       const title = item.name || 'Untitled'
       const id = item.stream_id || item.series_id
 
@@ -445,7 +445,7 @@ class DashApp {
       return `
         <div class="content-card" onclick="${clickHandler}">
           <img src="${poster}" alt="${title}" class="content-card-poster" loading="lazy"
-               onerror="this.src='https://via.placeholder.com/300x450/1a1a2e/9d4edd?text=DASH+TV'">
+               onerror="this.onerror=null;this.src='/assets/placeholder.svg'">
           <div class="content-card-overlay">
             <div class="content-card-title">${title}</div>
             <div class="content-card-meta">
