@@ -524,7 +524,7 @@ class DashApp {
                 <h3>Season ${seasonNum}</h3>
                 <div class="episode-list">
                   ${episodes.map(ep => `
-                    <div class="episode-card" onclick="dashApp.playContent('${id}', 'series', '${ep.container_extension || 'mp4'}', '${seasonNum}', '${ep.episode_num}')">
+                    <div class="episode-card" onclick="dashApp.playEpisode('${ep.id}', '${ep.container_extension || 'mp4'}')">
                       <div class="episode-number">E${ep.episode_num}</div>
                       <div class="episode-info">
                         <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`}</div>
@@ -575,42 +575,23 @@ class DashApp {
     this.elements.modalContainer.innerHTML = ''
   }
 
-  async playContent(id, type, extension = 'mp4', season = null, episode = null) {
-    console.log(`Playing ${type}:`, id, `Format: ${extension}`, season ? `S${season}E${episode}` : '')
+  async playContent(id, type, extension = 'mp4') {
+    console.log(`Playing ${type}:`, id, `Format: ${extension}`)
 
-    // Browser-supported formats
-    const supportedFormats = ['mp4', 'webm', 'ogg', 'm3u8', 'ts']
     const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv']
-
     let streamUrl = ''
     let finalExtension = extension
 
     if (type === 'movie') {
       // Check if format is browser-compatible
       if (unsupportedFormats.includes(extension.toLowerCase())) {
-        console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode for browser compatibility...`)
+        console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode...`)
         finalExtension = 'm3u8'
-        // Request HLS transcoding: Server converts MKV/AVI/FLV -> HLS on-the-fly
-        // This is standard Xtream Codes feature - works reliably!
       }
       streamUrl = this.client.buildVODUrl(id, finalExtension)
-    } else if (type === 'series') {
-      // Series playback requires season and episode
-      if (!season || !episode) {
-        console.error('❌ Series playback requires season and episode numbers')
-        alert('Please select an episode to play')
-        return
-      }
-      // Check if format is browser-compatible
-      if (unsupportedFormats.includes(extension.toLowerCase())) {
-        console.log(`🔄 ${extension.toUpperCase()} episode detected - requesting HLS transcode for browser compatibility...`)
-        finalExtension = 'm3u8'
-        // Request HLS transcoding: Server converts MKV/AVI/FLV -> HLS on-the-fly
-      }
-      streamUrl = this.client.buildSeriesUrl(id, season, episode, finalExtension)
     } else if (type === 'live') {
-      // Live TV streams - HLS via Cloudflare Worker proxy
-      console.log('🔴 Building Live TV HLS stream URL (via Cloudflare proxy)...')
+      // Live TV streams - direct HLS
+      console.log('🔴 Building Live TV HLS stream URL...')
       streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
     }
 
@@ -737,6 +718,29 @@ class DashApp {
       }
     }
     this.elements.videoPlayerContainer.innerHTML = ''
+  }
+
+  /**
+   * Play a series episode directly by episode ID
+   */
+  playEpisode(episodeId, extension = 'mp4') {
+    console.log(`📺 Playing episode: ${episodeId}, format: ${extension}`)
+
+    // Browser-supported formats
+    const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv']
+    let finalExtension = extension
+
+    // Convert unsupported formats to HLS for browser playback
+    if (unsupportedFormats.includes(extension.toLowerCase())) {
+      console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode...`)
+      finalExtension = 'm3u8'
+    }
+
+    const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
+    console.log('Stream URL:', streamUrl)
+
+    this.closeModal()
+    this.showVideoPlayer(streamUrl, 'series', extension !== finalExtension ? extension : null)
   }
 
   async filterByCategory(categoryId, type) {

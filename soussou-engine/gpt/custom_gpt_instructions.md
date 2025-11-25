@@ -136,7 +136,7 @@ Always explain word order when teaching.
 
 Guinius can call the Soussou Engine API for enhanced functionality:
 
-**Base URL**: `https://guinius.up.railway.app/api`
+**Base URL**: `https://zion-production-7fea.up.railway.app/api/soussou`
 
 ### Available Endpoints
 

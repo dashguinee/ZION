@@ -1,0 +1,263 @@
+openapi: 3.1.0
+info:
+  title: Guinius Soussou API
+  description: Production API for Soussou language learning, pattern detection, and corpus management
+  version: 1.0.0
+servers:
+  - url: https://zion-production-7fea.up.railway.app
+    description: Production CAGI unified backend
+
+paths:
+  /api/soussou/lookup:
+    get:
+      operationId: lookupSoussouWord
+      summary: Look up a Soussou word in the lexicon
+      description: Search for a Soussou word and get its meaning, variants, frequency, and examples
+      parameters:
+        - name: word
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The Soussou word to look up (will be normalized automatically)
+      responses:
+        '200':
+          description: Word found successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  found:
+                    type: boolean
+                  word:
+                    type: string
+                  normalized:
+                    type: string
+                  english:
+                    type: string
+                  french:
+                    type: string
+                  category:
+                    type: string
+                  variants:
+                    type: array
+                    items:
+                      type: string
+                  frequency:
+                    type: integer
+                  examples:
+                    type: array
+                    items:
+                      type: string
+
+  /api/soussou/stats:
+    get:
+      operationId: getCorpusStats
+      summary: Get Soussou corpus statistics
+      description: Returns current corpus size, word count, variants, and template count
+      responses:
+        '200':
+          description: Statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_words:
+                    type: integer
+                  total_variants:
+                    type: integer
+                  total_templates:
+                    type: integer
+                  categories:
+                    type: object
+
+  /api/pattern/detect:
+    post:
+      operationId: detectSoussouPattern
+      summary: Analyze Soussou sentence grammar pattern
+      description: Real-time grammatical analysis of Soussou sentences, returns discovered patterns
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sentence:
+                  type: string
+                  description: Soussou sentence to analyze
+              required:
+                - sentence
+      responses:
+        '200':
+          description: Pattern analysis complete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sentence:
+                    type: string
+                  patterns:
+                    type: array
+                    items:
+                      type: object
+                  confidence:
+                    type: number
+
+  /api/corpus/search:
+    get:
+      operationId: searchSoussouCorpus
+      summary: Search Soussou sentence corpus
+      description: Find sentences containing a specific word or phrase
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Word or phrase to search for
+      responses:
+        '200':
+          description: Search results retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                  count:
+                    type: integer
+
+  /api/corpus/add-sentence:
+    post:
+      operationId: addSoussouSentence
+      summary: Add new Soussou sentence to corpus
+      description: User contribution of new Soussou sentence with translations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                soussou:
+                  type: string
+                  description: Soussou sentence
+                french:
+                  type: string
+                  description: French translation
+                english:
+                  type: string
+                  description: English translation
+                verified:
+                  type: boolean
+                  description: Whether this sentence is verified by native speaker
+                  default: false
+              required:
+                - soussou
+      responses:
+        '200':
+          description: Sentence added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  sentence_id:
+                    type: string
+
+  /api/soussou/translate:
+    post:
+      operationId: translateSoussou
+      summary: Translate between Soussou, French, and English
+      description: Multi-directional translation using learned patterns
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Text to translate
+                from:
+                  type: string
+                  enum: [soussou, french, english]
+                  description: Source language
+                to:
+                  type: string
+                  enum: [soussou, french, english]
+                  description: Target language
+              required:
+                - text
+                - from
+                - to
+      responses:
+        '200':
+          description: Translation completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  translation:
+                    type: string
+                  confidence:
+                    type: string
+                    enum: [high, medium, low]
+                  notes:
+                    type: array
+                    items:
+                      type: string
+
+  /api/collaborate/message:
+    post:
+      operationId: sendCAGIMessage
+      summary: Send message to CAGI collaboration session
+      description: Post flagged activities, pattern discoveries, or coordination messages to CAGI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conversation_id:
+                  type: string
+                  description: CAGI session ID
+                from:
+                  type: string
+                  description: Sender identifier (use 'guinius')
+                message:
+                  type: string
+                  description: Message content
+                pass_to:
+                  type: string
+                  description: Next participant (zion-cli, gemini, or all)
+              required:
+                - conversation_id
+                - from
+                - message
+      responses:
+        '200':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversation_id:
+                    type: string
+                  turn_recorded:
+                    type: boolean
+                  next_turn:
+                    type: string

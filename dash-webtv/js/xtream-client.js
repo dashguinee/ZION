@@ -163,17 +163,16 @@ class XtreamClient {
 
   /**
    * Build playable URL for Series episode
-   * @param {string} seriesId - Series ID
-   * @param {string} season - Season number
-   * @param {string} episode - Episode number
+   * @param {string} episodeId - Episode ID (direct from API)
    * @param {string} extension - File extension
    */
-  buildSeriesUrl(seriesId, season, episode, extension = 'mp4') {
+  buildSeriesUrl(episodeId, extension = 'mp4') {
     // Use HTTPS to avoid mixed content blocking
+    // Series episodes use direct episode ID, same as movies
     const streamBaseUrl = 'https://starshare.cx'
     const streamUsername = 'AzizTest1'
     const streamPassword = 'Test1'
-    return `${streamBaseUrl}/series/${streamUsername}/${streamPassword}/${seriesId}/${season}/${episode}.${extension}`
+    return `${streamBaseUrl}/series/${streamUsername}/${streamPassword}/${episodeId}.${extension}`
   }
 
   /**
