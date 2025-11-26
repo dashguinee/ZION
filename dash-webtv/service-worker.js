@@ -3,10 +3,10 @@
  * Handles caching and offline functionality
  */
 
-const CACHE_NAME = 'dash-webtv-v2'
+const CACHE_NAME = 'dash-webtv-v3'
 const OFFLINE_URL = '/offline.html'
 
-// Files to cache on install
+// Files to cache on install - only essential ones
 const STATIC_CACHE_URLS = [
   '/',
   '/index.html',
@@ -15,10 +15,7 @@ const STATIC_CACHE_URLS = [
   '/js/app.js',
   '/js/xtream-client.js',
   '/js/pwa.js',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/assets/placeholder.jpg'
+  '/manifest.json'
 ]
 
 // Install event - cache static assets
@@ -26,9 +23,16 @@ self.addEventListener('install', (event) => {
   console.log('[Service Worker] Installing...')
 
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
+    caches.open(CACHE_NAME).then(async (cache) => {
       console.log('[Service Worker] Caching static assets')
-      return cache.addAll(STATIC_CACHE_URLS)
+      // Cache each file individually, skip failures
+      for (const url of STATIC_CACHE_URLS) {
+        try {
+          await cache.add(url)
+        } catch (e) {
+          console.warn('[Service Worker] Failed to cache:', url, e)
+        }
+      }
     })
   )
 

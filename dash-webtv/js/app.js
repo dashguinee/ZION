@@ -719,8 +719,10 @@ class DashApp {
   showVideoPlayer(streamUrl, type = 'movie') {
     console.log('🎬 Playing stream:', streamUrl)
 
-    const isHLS = streamUrl.includes('.m3u8') || type === 'live'
-    console.log('📹 Stream type:', isHLS ? 'HLS' : 'Direct', '| URL:', streamUrl)
+    // Detect stream type
+    const isMpegTS = streamUrl.includes('.ts') || type === 'live'
+    const isHLS = streamUrl.includes('.m3u8')
+    console.log('📹 Stream type:', isMpegTS ? 'MPEG-TS' : (isHLS ? 'HLS' : 'Direct'), '| URL:', streamUrl)
 
     // Clean up any existing player
     this.closeVideoPlayer()
@@ -750,10 +752,6 @@ class DashApp {
     video.addEventListener('waiting', () => {
       if (loadingEl) loadingEl.style.display = 'flex'
     })
-
-    // Detect stream type
-    const isMpegTS = streamUrl.includes('.ts') || type === 'live'
-    const isHLS = streamUrl.includes('.m3u8')
 
     if (isMpegTS) {
       this.playMpegTS(video, streamUrl, loadingEl)
