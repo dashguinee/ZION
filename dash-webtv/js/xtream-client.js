@@ -29,10 +29,12 @@ class XtreamClient {
 
   /**
    * Authenticate user against Starshare API
+   * Uses proxy to bypass CORS restrictions
    */
   async login(username, password) {
-    const url = `${this.baseUrl}/player_api.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
-    console.log('🔄 Authenticating...')
+    // Use our proxy to bypass CORS on login
+    const url = `/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    console.log('🔄 Authenticating via proxy...')
 
     try {
       const response = await fetch(url)
