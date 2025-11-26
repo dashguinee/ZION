@@ -634,18 +634,15 @@ class DashApp {
   }
 
   async playContent(id, type, extension = 'mp4') {
-    console.log(`Playing ${type}:`, id, `Format: ${extension}`)
+    console.log(`Playing ${type}:`, id, `Original format: ${extension}`)
 
-    const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv']
     let streamUrl = ''
-    let finalExtension = extension
 
+    // ALWAYS use HLS (.m3u8) for cross-browser compatibility
+    // Server will transcode on-demand if needed
     if (type === 'movie') {
-      if (unsupportedFormats.includes(extension.toLowerCase())) {
-        console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode...`)
-        finalExtension = 'm3u8'
-      }
-      streamUrl = this.client.buildVODUrl(id, finalExtension)
+      console.log('🎬 Using HLS stream for movie (universal browser support)')
+      streamUrl = this.client.buildVODUrl(id, 'm3u8')
     } else if (type === 'live') {
       console.log('🔴 Building Live TV HLS stream URL...')
       streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
@@ -653,83 +650,120 @@ class DashApp {
 
     console.log('Stream URL:', streamUrl)
     this.closeModal()
-    this.showVideoPlayer(streamUrl, type, extension !== finalExtension ? extension : null)
+    this.showVideoPlayer(streamUrl, type)
   }
 
   playEpisode(episodeId, extension = 'mp4') {
-    console.log(`📺 Playing episode: ${episodeId}, format: ${extension}`)
+    console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv']
-    let finalExtension = extension
-
-    if (unsupportedFormats.includes(extension.toLowerCase())) {
-      console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode...`)
-      finalExtension = 'm3u8'
-    }
-
-    const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
+    // ALWAYS use HLS (.m3u8) for cross-browser compatibility
+    console.log('📺 Using HLS stream for episode (universal browser support)')
+    const streamUrl = this.client.buildSeriesUrl(episodeId, 'm3u8')
     console.log('Stream URL:', streamUrl)
 
     this.closeModal()
-    this.showVideoPlayer(streamUrl, 'series', extension !== finalExtension ? extension : null)
+    this.showVideoPlayer(streamUrl, 'series')
   }
 
   showVideoPlayer(streamUrl, type = 'movie', originalFormat = null) {
     console.log('🎬 Playing stream:', streamUrl)
 
-    let format
-    let mimeType
+    const isHLS = streamUrl.includes('.m3u8') || type === 'live'
 
-    if (type === 'live' || streamUrl.includes('.m3u8')) {
-      format = 'm3u8'
-      mimeType = 'application/x-mpegURL'
-    } else {
-      format = streamUrl.split('.').pop().split('?')[0]
-      mimeType = format === 'm3u8' ? 'application/x-mpegURL' : `video/${format}`
-    }
-
-    console.log('📹 Format:', format, '| MIME:', mimeType)
+    console.log('📹 Stream type:', isHLS ? 'HLS' : 'Direct', '| URL:', streamUrl)
 
     const playerHTML = `
       <div class="video-player-container">
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
-        <video id="dashPlayer" class="video-js vjs-big-play-centered" controls autoplay preload="auto" width="100%" height="100%">
-          <source src="${streamUrl}" type="${mimeType}">
+        <video id="dashPlayer" class="video-js vjs-big-play-centered vjs-default-skin" controls autoplay playsinline width="100%" height="100%">
         </video>
       </div>
     `
 
     this.elements.videoPlayerContainer.innerHTML = playerHTML
 
+    // Dispose previous player if exists
     if (this.currentPlayer) {
-      this.currentPlayer.dispose()
+      try {
+        this.currentPlayer.dispose()
+      } catch (e) {
+        console.warn('Player dispose warning:', e)
+      }
+      this.currentPlayer = null
     }
 
+    const videoEl = document.getElementById('dashPlayer')
+
     if (typeof videojs !== 'undefined') {
+      // Initialize Video.js with cross-browser settings
       this.currentPlayer = videojs('dashPlayer', {
         fluid: true,
         responsive: true,
         controls: true,
         autoplay: true,
         preload: 'auto',
+        techOrder: ['html5'],
         html5: {
-          vhs: { overrideNative: true },
-          nativeVideoTracks: false,
-          nativeAudioTracks: false,
-          nativeTextTracks: false
-        }
+          vhs: {
+            overrideNative: !videojs.browser.IS_SAFARI,
+            enableLowInitialPlaylist: true,
+            smoothQualityChange: true,
+            handlePartialData: true
+          },
+          nativeVideoTracks: videojs.browser.IS_SAFARI,
+          nativeAudioTracks: videojs.browser.IS_SAFARI,
+          nativeTextTracks: videojs.browser.IS_SAFARI
+        },
+        sources: [{
+          src: streamUrl,
+          type: isHLS ? 'application/x-mpegURL' : 'video/mp4'
+        }]
       })
 
-      this.currentPlayer.ready(function() {
-        console.log('✅ Video player ready!')
-        this.play().catch(err => console.error('❌ Playback error:', err))
+      this.currentPlayer.ready(() => {
+        console.log('✅ Video.js player ready!')
+        this.currentPlayer.play().catch(err => {
+          console.warn('⚠️ Autoplay blocked:', err.message)
+        })
       })
 
+      // Error handling with fallback
       this.currentPlayer.on('error', () => {
         const error = this.currentPlayer.error()
         console.error('❌ Player error:', error)
-        alert('⚠️ Unable to play this video. Try another one.')
+
+        // Try fallback: native HTML5 video
+        if (error && !isHLS) {
+          console.log('🔄 Trying native HTML5 fallback...')
+          this.tryNativePlayer(streamUrl)
+        } else {
+          alert('⚠️ Unable to play this video. The stream may be unavailable.')
+        }
       })
+    } else {
+      // Fallback: pure HTML5 video
+      this.tryNativePlayer(streamUrl)
+    }
+  }
+
+  tryNativePlayer(streamUrl) {
+    console.log('🎬 Using native HTML5 player for:', streamUrl)
+
+    const playerHTML = `
+      <div class="video-player-container">
+        <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
+        <video id="nativePlayer" controls autoplay playsinline style="width:100%;height:100%;background:#000;">
+          <source src="${streamUrl}" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+    `
+    this.elements.videoPlayerContainer.innerHTML = playerHTML
+
+    const video = document.getElementById('nativePlayer')
+    video.onerror = () => {
+      console.error('❌ Native player also failed')
+      alert('⚠️ Unable to play this video. Try a different title.')
     }
   }
 
