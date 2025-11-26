@@ -1,29 +1,79 @@
 /**
  * DASH⚡ Xtream Codes API Client
- * Handles all communication with Xtream Codes IPTV API
+ * Dynamic credentials - no hardcoding!
  */
 
 class XtreamClient {
-  constructor(config) {
-    this.baseUrl = config.baseUrl || 'https://starshare.cx'
-    this.username = config.username || 'AzizTest1'
-    this.password = config.password || 'Test1'
+  constructor() {
+    this.baseUrl = 'https://starshare.cx'
+    this.username = null
+    this.password = null
     this.backendUrl = 'https://zion-production-39d8.up.railway.app'
-    // Cloudflare Worker URL - Deployed and active!
-    this.cloudflareWorkerUrl = 'https://dash-webtv-proxy.dash-webtv.workers.dev'
+  }
+
+  /**
+   * Set credentials dynamically after login
+   */
+  setCredentials(username, password) {
+    this.username = username
+    this.password = password
+    console.log(`⚡ Credentials loaded for: ${this.username}`)
+  }
+
+  /**
+   * Check if user is authenticated
+   */
+  get isAuthenticated() {
+    return !!(this.username && this.password)
+  }
+
+  /**
+   * Authenticate user against Starshare API
+   */
+  async login(username, password) {
+    const url = `${this.baseUrl}/player_api.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    console.log('🔄 Authenticating...')
+
+    try {
+      const response = await fetch(url)
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`)
+      }
+
+      const data = await response.json()
+
+      if (data.user_info && data.user_info.auth === 1) {
+        this.setCredentials(username, password)
+        console.log('✅ Login successful:', data.user_info.username)
+        return { success: true, info: data }
+      } else {
+        console.warn('❌ Auth failed:', data)
+        return { success: false, error: 'Invalid credentials' }
+      }
+    } catch (error) {
+      console.error('Auth error:', error)
+      return { success: false, error: error.message }
+    }
   }
 
   /**
    * Build player API URL with authentication
-   * Uses Vercel proxy to bypass CORS
+   * Uses Vercel proxy to bypass CORS for metadata
    */
   buildPlayerApiUrl(action, params = {}) {
-    // Use Vercel serverless proxy instead of direct API call
+    if (!this.isAuthenticated) {
+      console.warn('⚠️ Not authenticated!')
+      return null
+    }
+
+    // Use Vercel serverless proxy for API metadata calls
     const url = new URL('/api/proxy', window.location.origin)
+    url.searchParams.set('username', this.username)
+    url.searchParams.set('password', this.password)
 
     if (action) url.searchParams.set('action', action)
 
-    // Add additional parameters
     Object.keys(params).forEach(key => {
       url.searchParams.set(key, params[key])
     })
@@ -35,6 +85,8 @@ class XtreamClient {
    * Generic fetch method with error handling
    */
   async fetch(url) {
+    if (!url) throw new Error('Authentication required')
+
     try {
       const response = await fetch(url)
       if (!response.ok) {
@@ -51,25 +103,16 @@ class XtreamClient {
   // CATEGORIES
   // ============================================
 
-  /**
-   * Get all VOD (Movies) categories
-   */
   async getVODCategories() {
     const url = this.buildPlayerApiUrl('get_vod_categories')
     return this.fetch(url)
   }
 
-  /**
-   * Get all Series categories
-   */
   async getSeriesCategories() {
     const url = this.buildPlayerApiUrl('get_series_categories')
     return this.fetch(url)
   }
 
-  /**
-   * Get all Live TV categories
-   */
   async getLiveCategories() {
     const url = this.buildPlayerApiUrl('get_live_categories')
     return this.fetch(url)
@@ -79,30 +122,18 @@ class XtreamClient {
   // STREAMS
   // ============================================
 
-  /**
-   * Get VOD streams (all or by category)
-   * @param {string|null} categoryId - Optional category filter
-   */
   async getVODStreams(categoryId = null) {
     const params = categoryId ? { category_id: categoryId } : {}
     const url = this.buildPlayerApiUrl('get_vod_streams', params)
     return this.fetch(url)
   }
 
-  /**
-   * Get Series (all or by category)
-   * @param {string|null} categoryId - Optional category filter
-   */
   async getSeries(categoryId = null) {
     const params = categoryId ? { category_id: categoryId } : {}
     const url = this.buildPlayerApiUrl('get_series', params)
     return this.fetch(url)
   }
 
-  /**
-   * Get Live TV streams (all or by category)
-   * @param {string|null} categoryId - Optional category filter
-   */
   async getLiveStreams(categoryId = null) {
     const params = categoryId ? { category_id: categoryId } : {}
     const url = this.buildPlayerApiUrl('get_live_streams', params)
@@ -113,29 +144,16 @@ class XtreamClient {
   // DETAILED INFO
   // ============================================
 
-  /**
-   * Get detailed info for a specific VOD item
-   * @param {string} vodId - VOD stream ID
-   */
   async getVODInfo(vodId) {
     const url = this.buildPlayerApiUrl('get_vod_info', { vod_id: vodId })
     return this.fetch(url)
   }
 
-  /**
-   * Get detailed info for a specific Series
-   * @param {string} seriesId - Series ID
-   */
   async getSeriesInfo(seriesId) {
     const url = this.buildPlayerApiUrl('get_series_info', { series_id: seriesId })
     return this.fetch(url)
   }
 
-  /**
-   * Get short EPG for a live stream
-   * @param {string} streamId - Live stream ID
-   * @param {number} limit - Number of EPG entries to return
-   */
   async getShortEPG(streamId, limit = 10) {
     const url = this.buildPlayerApiUrl('get_short_epg', {
       stream_id: streamId,
@@ -145,90 +163,56 @@ class XtreamClient {
   }
 
   // ============================================
-  // PLAYBACK URLs
+  // PLAYBACK URLs - DYNAMIC with user credentials
   // ============================================
 
   /**
    * Build playable URL for VOD content
-   * @param {string} vodId - VOD stream ID
-   * @param {string} extension - File extension (mp4, mkv, avi, etc.)
    */
   buildVODUrl(vodId, extension = 'mp4') {
-    // Use HTTPS to avoid mixed content blocking
-    const streamBaseUrl = 'https://starshare.cx'
-    const streamUsername = 'AzizTest1'
-    const streamPassword = 'Test1'
-    return `${streamBaseUrl}/movie/${streamUsername}/${streamPassword}/${vodId}.${extension}`
+    if (!this.isAuthenticated) return ''
+    return `${this.baseUrl}/movie/${this.username}/${this.password}/${vodId}.${extension}`
   }
 
   /**
    * Build playable URL for Series episode
-   * @param {string} episodeId - Episode ID (direct from API)
-   * @param {string} extension - File extension
    */
   buildSeriesUrl(episodeId, extension = 'mp4') {
-    // Use HTTPS to avoid mixed content blocking
-    // Series episodes use direct episode ID, same as movies
-    const streamBaseUrl = 'https://starshare.cx'
-    const streamUsername = 'AzizTest1'
-    const streamPassword = 'Test1'
-    return `${streamBaseUrl}/series/${streamUsername}/${streamPassword}/${episodeId}.${extension}`
+    if (!this.isAuthenticated) return ''
+    return `${this.baseUrl}/series/${this.username}/${this.password}/${episodeId}.${extension}`
   }
 
   /**
-   * Build playable URL for Live TV stream (DIRECT - no proxy)
-   * @param {string} streamId - Live stream ID
-   * @param {string} extension - Extension (default: 'm3u8' for HLS)
-   * @returns {string} Direct HLS manifest URL (same as VOD - no proxy!)
+   * Build playable URL for Live TV stream
    */
   buildLiveStreamUrl(streamId, extension = 'm3u8') {
-    // Direct URL - no proxy
-    const streamBaseUrl = 'https://starshare.cx'
-    const streamUsername = 'AzizTest1'
-    const streamPassword = 'Test1'
-
-    const directUrl = `${streamBaseUrl}/live/${streamUsername}/${streamPassword}/${streamId}.${extension}`
-    console.log(`📡 Live TV URL: ${directUrl}`)
-
-    return directUrl
+    if (!this.isAuthenticated) return ''
+    const url = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.${extension}`
+    console.log(`📡 Live TV URL: ${url}`)
+    return url
   }
 
   // ============================================
   // UTILITY METHODS
   // ============================================
 
-  /**
-   * Get server info and account details
-   */
   async getAccountInfo() {
+    if (!this.isAuthenticated) return null
     const url = `${this.baseUrl}/player_api.php?username=${this.username}&password=${this.password}`
     return this.fetch(url)
   }
 
-  /**
-   * Test connection to the server
-   */
   async testConnection() {
     try {
       const info = await this.getAccountInfo()
-      return {
-        success: true,
-        info: info
-      }
+      return { success: true, info }
     } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      }
+      return { success: false, error: error.message }
     }
   }
 
-  /**
-   * Build M3U playlist URL
-   * @param {string} type - Playlist type (m3u, m3u_plus)
-   * @param {string} output - Output format (ts, m3u8, hls)
-   */
   buildM3UUrl(type = 'm3u_plus', output = 'ts') {
+    if (!this.isAuthenticated) return ''
     return `${this.baseUrl}/get.php?username=${this.username}&password=${this.password}&type=${type}&output=${output}`
   }
 }

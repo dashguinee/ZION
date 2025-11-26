@@ -1,19 +1,17 @@
 /**
- * DASH⚡ WebTV - Main Application
+ * DASH WebTV - Main Application
+ * With Login System for Dynamic Credentials
  */
 
 class DashApp {
   constructor() {
-    // Initialize Xtream Client
-    this.client = new XtreamClient({
-      baseUrl: 'https://starshare.cx',
-      username: 'AzizTest1',
-      password: 'Test1'
-    })
+    // Initialize Xtream Client (no credentials until login)
+    this.client = new XtreamClient()
 
     // App State
     this.state = {
       currentPage: 'home',
+      isAuthenticated: false,
       categories: {
         vod: [],
         series: [],
@@ -32,8 +30,12 @@ class DashApp {
 
     // DOM Elements
     this.elements = {
+      loginOverlay: document.getElementById('login-overlay'),
+      appContainer: document.getElementById('app-container'),
+      loginError: document.getElementById('login-error'),
+      loginBtn: document.getElementById('login-btn'),
       pageContainer: document.getElementById('pageContainer'),
-      navItems: document.querySelectorAll('.nav-item'),
+      navItems: document.querySelectorAll('.nav-item[data-page]'),
       searchInput: document.getElementById('searchInput'),
       logo: document.getElementById('logo'),
       accountBtn: document.getElementById('accountBtn'),
@@ -47,25 +49,99 @@ class DashApp {
     this.init()
   }
 
+  // ============================================
+  // INITIALIZATION & SESSION MANAGEMENT
+  // ============================================
+
   async init() {
     console.log('🚀 DASH WebTV initializing...')
 
-    // Setup event listeners
+    // Check for saved session
+    const savedUser = localStorage.getItem('dash_user')
+    const savedPass = localStorage.getItem('dash_pass')
+
+    if (savedUser && savedPass) {
+      console.log('🔄 Found saved session, auto-logging in...')
+      await this.attemptLogin(savedUser, savedPass, true)
+    } else {
+      console.log('🔒 No saved session, showing login')
+      this.showLoginUI()
+    }
+  }
+
+  showLoginUI() {
+    this.elements.loginOverlay.style.display = 'flex'
+    this.elements.appContainer.style.display = 'none'
+  }
+
+  showAppUI() {
+    this.elements.loginOverlay.style.display = 'none'
+    this.elements.appContainer.style.display = 'block'
+    this.state.isAuthenticated = true
+
+    // Setup event listeners once app is shown
     this.setupEventListeners()
 
-    // Test connection in background (non-blocking)
-    this.client.testConnection().then(result => {
-      if (result.success) {
-        console.log('✅ Connected to streaming server')
-        console.log('📊 Account info:', result.info)
-      } else {
-        console.warn('⚠️ Connection test failed (might be cold start):', result.error)
-      }
-    }).catch(err => {
-      console.warn('⚠️ Connection test error:', err)
-    })
+    // Load content
+    this.loadAppContent()
+  }
 
-    // Load initial data (don't wait for connection test)
+  async handleLogin() {
+    const username = document.getElementById('login-username').value
+    const password = document.getElementById('login-password').value
+    const btn = this.elements.loginBtn
+    const errorEl = this.elements.loginError
+
+    // Clear previous error
+    errorEl.textContent = ''
+
+    // Show loading state
+    btn.textContent = 'CONNECTING...'
+    btn.disabled = true
+
+    await this.attemptLogin(username, password, false)
+
+    // Reset button
+    btn.textContent = 'ENTER UNIVERSE'
+    btn.disabled = false
+  }
+
+  async attemptLogin(username, password, isAutoLogin) {
+    const result = await this.client.login(username, password)
+
+    if (result.success) {
+      // Save credentials for session persistence
+      localStorage.setItem('dash_user', username)
+      localStorage.setItem('dash_pass', password)
+
+      console.log('✅ Login successful!')
+      this.showAppUI()
+    } else {
+      if (!isAutoLogin) {
+        // Show error to user
+        this.elements.loginError.textContent = result.error || 'Invalid credentials'
+      } else {
+        // Auto-login failed, show login screen
+        console.warn('⚠️ Auto-login failed, showing login screen')
+        localStorage.removeItem('dash_user')
+        localStorage.removeItem('dash_pass')
+        this.showLoginUI()
+      }
+    }
+  }
+
+  logout() {
+    if (confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('dash_user')
+      localStorage.removeItem('dash_pass')
+      location.reload()
+    }
+  }
+
+  async loadAppContent() {
+    console.log('📂 Loading app content...')
+
+    // Load categories
     await this.loadCategories()
 
     // Render home page
@@ -77,25 +153,31 @@ class DashApp {
     this.elements.navItems.forEach(item => {
       item.addEventListener('click', () => {
         const page = item.dataset.page
-        this.navigate(page)
+        if (page) this.navigate(page)
       })
     })
 
     // Logo click
-    this.elements.logo.addEventListener('click', () => {
-      this.navigate('home')
-    })
+    if (this.elements.logo) {
+      this.elements.logo.addEventListener('click', () => {
+        this.navigate('home')
+      })
+    }
 
     // Account button
-    this.elements.accountBtn.addEventListener('click', () => {
-      this.navigate('account')
-    })
+    if (this.elements.accountBtn) {
+      this.elements.accountBtn.addEventListener('click', () => {
+        this.navigate('account')
+      })
+    }
 
     // Search
-    this.elements.searchInput.addEventListener('input', (e) => {
-      this.state.searchQuery = e.target.value
-      this.handleSearch()
-    })
+    if (this.elements.searchInput) {
+      this.elements.searchInput.addEventListener('input', (e) => {
+        this.state.searchQuery = e.target.value
+        this.handleSearch()
+      })
+    }
 
     // Close modal on overlay click
     document.addEventListener('click', (e) => {
@@ -105,24 +187,27 @@ class DashApp {
     })
   }
 
+  // ============================================
+  // CATEGORIES & NAVIGATION
+  // ============================================
+
   async loadCategories() {
     try {
       console.log('📂 Loading categories...')
 
-      // Load all categories (Focus on VOD, Live TV secondary)
       const [vodCats, seriesCats, liveCats] = await Promise.all([
         this.client.getVODCategories(),
         this.client.getSeriesCategories(),
         this.client.getLiveCategories()
       ])
 
-      this.state.categories.vod = vodCats
-      this.state.categories.series = seriesCats
-      this.state.categories.live = liveCats
+      this.state.categories.vod = vodCats || []
+      this.state.categories.series = seriesCats || []
+      this.state.categories.live = liveCats || []
 
-      console.log(`✅ Loaded ${vodCats.length} movie categories`)
-      console.log(`✅ Loaded ${seriesCats.length} series categories`)
-      console.log(`✅ Loaded ${liveCats.length} live TV categories (secondary)`)
+      console.log(`✅ Loaded ${this.state.categories.vod.length} movie categories`)
+      console.log(`✅ Loaded ${this.state.categories.series.length} series categories`)
+      console.log(`✅ Loaded ${this.state.categories.live.length} live TV categories`)
 
     } catch (error) {
       console.error('❌ Failed to load categories:', error)
@@ -131,7 +216,6 @@ class DashApp {
   }
 
   navigate(page) {
-    // Update state
     this.state.currentPage = page
 
     // Update active nav item
@@ -143,7 +227,6 @@ class DashApp {
       }
     })
 
-    // Render page
     this.renderPage(page)
   }
 
@@ -175,8 +258,11 @@ class DashApp {
     this.elements.pageContainer.innerHTML = content
   }
 
+  // ============================================
+  // PAGE RENDERERS
+  // ============================================
+
   async renderHomePage() {
-    // Load featured content (first 20 movies and series)
     let featuredMovies = []
     let featuredSeries = []
 
@@ -186,11 +272,13 @@ class DashApp {
         this.client.getSeries()
       ])
 
-      featuredMovies = movies.slice(0, 20)
-      featuredSeries = series.slice(0, 20)
+      featuredMovies = (movies || []).slice(0, 20)
+      featuredSeries = (series || []).slice(0, 20)
     } catch (error) {
       console.error('Failed to load featured content:', error)
     }
+
+    const username = localStorage.getItem('dash_user') || 'User'
 
     return `
       <div class="fade-in">
@@ -198,10 +286,9 @@ class DashApp {
         <div class="hero-banner">
           <div class="hero-banner-overlay"></div>
           <div class="hero-banner-content">
-            <h1 class="hero-banner-title">Welcome to DASH⚡</h1>
+            <h1 class="hero-banner-title">Welcome, ${username}!</h1>
             <p class="hero-banner-description">
               The African Super Hub - 57,000+ Movies, 14,000+ Series, and Live TV all in one place.
-              Better than Netflix + Prime + HBO Max combined.
             </p>
             <div class="hero-banner-actions">
               <button class="btn btn-primary" onclick="dashApp.navigate('movies')">
@@ -235,30 +322,6 @@ class DashApp {
             ${this.renderContentGrid(featuredSeries, 'series')}
           </div>
         </div>
-
-        <!-- Stats Section -->
-        <div class="section">
-          <div class="card card-glass p-lg text-center">
-            <h2 style="margin-bottom: 1rem;">📊 The Numbers</h2>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem;">
-              <div>
-                <div style="font-size: 3rem; font-weight: bold; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">57,000+</div>
-                <div style="color: var(--text-secondary);">Movies</div>
-              </div>
-              <div>
-                <div style="font-size: 3rem; font-weight: bold; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">14,324</div>
-                <div style="color: var(--text-secondary);">Series</div>
-              </div>
-              <div>
-                <div style="font-size: 3rem; font-weight: bold; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Live TV</div>
-                <div style="color: var(--text-secondary);">Channels</div>
-              </div>
-            </div>
-            <button class="btn btn-primary mt-lg" style="font-size: 1.2rem;">
-              🎁 Get Free Trial - 85 Leones/month
-            </button>
-          </div>
-        </div>
       </div>
     `
   }
@@ -266,7 +329,6 @@ class DashApp {
   async renderMoviesPage() {
     const categories = this.state.categories.vod
 
-    // Load movies for selected category or all
     let movies = []
     try {
       movies = await this.client.getVODStreams(this.state.selectedCategory)
@@ -297,10 +359,10 @@ class DashApp {
 
         <!-- Movies Grid -->
         <div class="content-grid">
-          ${this.renderContentGrid(movies.slice(0, 100), 'movie')}
+          ${this.renderContentGrid((movies || []).slice(0, 100), 'movie')}
         </div>
 
-        ${movies.length > 100 ? `
+        ${(movies || []).length > 100 ? `
           <div class="text-center mt-lg">
             <button class="btn btn-outline" onclick="dashApp.loadMore()">
               Load More
@@ -344,7 +406,7 @@ class DashApp {
 
         <!-- Series Grid -->
         <div class="content-grid">
-          ${this.renderContentGrid(series.slice(0, 100), 'series')}
+          ${this.renderContentGrid((series || []).slice(0, 100), 'series')}
         </div>
       </div>
     `
@@ -383,43 +445,43 @@ class DashApp {
 
         <!-- Channels Grid -->
         <div class="content-grid">
-          ${this.renderContentGrid(channels.slice(0, 100), 'live')}
+          ${this.renderContentGrid((channels || []).slice(0, 100), 'live')}
         </div>
       </div>
     `
   }
 
   renderAccountPage() {
+    const username = localStorage.getItem('dash_user') || 'User'
+
     return `
       <div class="fade-in">
         <h1>👤 Account</h1>
 
         <div class="card p-lg mt-md">
+          <h3>Logged in as</h3>
+          <p style="color: var(--primary-purple); font-size: 1.5rem; font-weight: bold;">${username}</p>
+        </div>
+
+        <div class="card p-lg mt-md">
           <h3>Subscription Status</h3>
-          <p style="color: var(--text-secondary);">DASH Light - Active</p>
-          <div class="badge badge-new mt-sm">Trial Active</div>
+          <p style="color: var(--text-secondary);">Active</p>
+          <div class="badge badge-new mt-sm">Premium Access</div>
         </div>
 
         <div class="card p-lg mt-md">
-          <h3>Pricing</h3>
-          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
-            Enjoy unlimited access for just 85 Leones/month
-          </p>
-          <button class="btn btn-primary">Upgrade Now</button>
-        </div>
-
-        <div class="card p-lg mt-md">
-          <h3>About DASH</h3>
-          <p style="color: var(--text-secondary);">
-            DASH⚡ - The African Super Hub<br>
-            Sierra Leone's premier streaming platform<br><br>
-            📧 Contact: support@dash.sl<br>
-            📱 WhatsApp: +232 XX XXX XXXX
-          </p>
+          <h3>Session</h3>
+          <button class="btn btn-outline" onclick="dashApp.logout()" style="margin-top: 1rem;">
+            🚪 Logout
+          </button>
         </div>
       </div>
     `
   }
+
+  // ============================================
+  // CONTENT RENDERING
+  // ============================================
 
   renderContentGrid(items, type) {
     if (!items || items.length === 0) {
@@ -432,15 +494,13 @@ class DashApp {
     }
 
     return items.map(item => {
-      // Fallback to placeholder if no poster available
       const poster = item.stream_icon || item.cover || '/assets/placeholder.svg'
       const title = item.name || 'Untitled'
       const id = item.stream_id || item.series_id
 
-      // Live TV should play directly, movies/series show details first
       const clickHandler = type === 'live'
         ? `dashApp.playContent('${id}', 'live')`
-        : `dashApp.showDetails('${id}', '${type}')`;
+        : `dashApp.showDetails('${id}', '${type}')`
 
       return `
         <div class="content-card" onclick="${clickHandler}">
@@ -459,8 +519,6 @@ class DashApp {
 
   renderBadges(item) {
     let badges = ''
-
-    // Check category name for platform badges
     const categoryName = (item.category_name || '').toLowerCase()
 
     if (categoryName.includes('netflix')) {
@@ -475,6 +533,10 @@ class DashApp {
 
     return badges
   }
+
+  // ============================================
+  // CONTENT DETAILS & PLAYBACK
+  // ============================================
 
   async showDetails(id, type) {
     console.log(`Showing details for ${type}:`, id)
@@ -493,14 +555,11 @@ class DashApp {
       return
     }
 
-    // Store container extension for playback
-    const extension = details.info?.container_extension || details.movie_data?.container_extension || details.episodes?.[0]?.[0]?.container_extension || 'mp4'
+    const extension = details?.info?.container_extension || details?.movie_data?.container_extension || 'mp4'
 
-    // Generate modal content based on type
     let modalContent = ''
 
     if (type === 'movie') {
-      // Movie: Show simple Play button
       modalContent = `
         <div class="modal-actions">
           <button class="btn btn-primary" onclick="dashApp.playContent('${id}', 'movie', '${extension}')">
@@ -511,8 +570,7 @@ class DashApp {
           </button>
         </div>
       `
-    } else if (type === 'series' && details.episodes) {
-      // Series: Show episodes by season
+    } else if (type === 'series' && details?.episodes) {
       const seasons = Object.keys(details.episodes).sort((a, b) => parseInt(a) - parseInt(b))
 
       modalContent = `
@@ -547,21 +605,21 @@ class DashApp {
           <button class="modal-close" onclick="dashApp.closeModal()">×</button>
 
           <div class="modal-header">
-            <img src="${details.info?.cover || 'https://via.placeholder.com/300x450/1a1a2e/9d4edd?text=DASH+TV'}" alt="${details.info?.name}"
-                 class="modal-header-bg">
+            <img src="${details?.info?.cover || '/assets/placeholder.svg'}" alt="${details?.info?.name}"
+                 class="modal-header-bg" onerror="this.onerror=null;this.src='/assets/placeholder.svg'">
             <div class="modal-header-overlay">
-              <h1 class="modal-title">${details.info?.name || 'Untitled'}</h1>
+              <h1 class="modal-title">${details?.info?.name || 'Untitled'}</h1>
               <div class="modal-meta">
-                ${details.info?.releaseDate ? `<span>📅 ${details.info.releaseDate}</span>` : ''}
-                ${details.info?.rating ? `<span>⭐ ${details.info.rating}</span>` : ''}
-                ${type === 'series' ? `<span>📺 ${Object.keys(details.episodes || {}).length} Seasons</span>` : ''}
-                ${details.info?.duration ? `<span>⏱️ ${details.info.duration}</span>` : ''}
+                ${details?.info?.releaseDate ? `<span>📅 ${details.info.releaseDate}</span>` : ''}
+                ${details?.info?.rating ? `<span>⭐ ${details.info.rating}</span>` : ''}
+                ${type === 'series' ? `<span>📺 ${Object.keys(details?.episodes || {}).length} Seasons</span>` : ''}
+                ${details?.info?.duration ? `<span>⏱️ ${details.info.duration}</span>` : ''}
               </div>
             </div>
           </div>
 
           <div class="modal-body">
-            <p class="modal-description">${details.info?.plot || 'No description available.'}</p>
+            <p class="modal-description">${details?.info?.plot || 'No description available.'}</p>
             ${modalContent}
           </div>
         </div>
@@ -583,14 +641,12 @@ class DashApp {
     let finalExtension = extension
 
     if (type === 'movie') {
-      // Check if format is browser-compatible
       if (unsupportedFormats.includes(extension.toLowerCase())) {
         console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode...`)
         finalExtension = 'm3u8'
       }
       streamUrl = this.client.buildVODUrl(id, finalExtension)
     } else if (type === 'live') {
-      // Live TV streams - direct HLS
       console.log('🔴 Building Live TV HLS stream URL...')
       streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
     }
@@ -600,137 +656,12 @@ class DashApp {
     this.showVideoPlayer(streamUrl, type, extension !== finalExtension ? extension : null)
   }
 
-  showVideoPlayer(streamUrl, type = 'movie', originalFormat = null) {
-    console.log('🎬 Playing stream:', streamUrl)
-
-    // Detect file format
-    let format
-    let mimeType
-
-    // Special handling for Live TV streams (proxied through Cloudflare Worker)
-    if (type === 'live' || streamUrl.includes('/api/live/') || streamUrl.includes('dash-webtv-proxy')) {
-      console.log('🔴 Live TV HLS stream detected (Cloudflare Worker proxy)')
-      format = 'm3u8'  // HLS manifest with rewritten URLs
-      mimeType = 'application/x-mpegURL'  // HLS format
-    } else if (streamUrl.includes('.m3u8')) {
-      // HLS streams
-      format = 'm3u8'
-      mimeType = 'application/x-mpegURL'
-    } else {
-      // Regular VOD/Series - extract format from URL
-      format = streamUrl.split('.').pop().split('?')[0]
-
-      // Set proper MIME type
-      if (format === 'm3u8') {
-        mimeType = 'application/x-mpegURL'  // HLS streams
-      } else if (format === 'ts') {
-        mimeType = 'video/mp2t'  // MPEG Transport Stream
-      } else {
-        mimeType = `video/${format}`  // Standard video formats (mp4, mkv, etc)
-      }
-    }
-
-    console.log('📹 Format:', format)
-    console.log('📹 MIME Type:', mimeType)
-
-    // Show warning if we had to convert format
-    if (originalFormat) {
-      console.warn(`⚠️ Original format (${originalFormat}) converted to ${format} for browser compatibility`)
-    }
-
-    const playerHTML = `
-      <div class="video-player-container">
-        <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
-        <video id="dashPlayer" class="video-js vjs-big-play-centered" controls autoplay preload="auto" width="100%" height="100%">
-          <source src="${streamUrl}" type="${mimeType}">
-        </video>
-      </div>
-    `
-
-    this.elements.videoPlayerContainer.innerHTML = playerHTML
-
-    // Dispose of previous player if exists
-    if (this.currentPlayer) {
-      this.currentPlayer.dispose()
-    }
-
-    // Initialize Video.js player with better options
-    if (typeof videojs !== 'undefined') {
-      this.currentPlayer = videojs('dashPlayer', {
-        fluid: true,
-        responsive: true,
-        controls: true,
-        autoplay: true,
-        preload: 'auto',
-        html5: {
-          vhs: {
-            overrideNative: true
-          },
-          nativeVideoTracks: false,
-          nativeAudioTracks: false,
-          nativeTextTracks: false
-        }
-      })
-
-      this.currentPlayer.ready(function() {
-        console.log('✅ Video player ready!')
-        this.play().catch(err => {
-          console.error('❌ Playback error:', err)
-          console.error('Format attempted:', format)
-          console.error('Stream URL:', streamUrl)
-        })
-      })
-
-      this.currentPlayer.on('error', (e) => {
-        const error = this.currentPlayer.error()
-        console.error('❌ Player error:', error)
-        console.error('Error code:', error?.code)
-        console.error('Error message:', error?.message)
-        console.error('Format:', format)
-
-        // Show user-friendly error
-        let errorMessage = '⚠️ Unable to play this video.'
-        if (originalFormat) {
-          errorMessage = `⚠️ This video format (${originalFormat.toUpperCase()}) may not be supported.\n\nWe tried converting to MP4 but the server couldn't transcode it.\n\nTry another ${type === 'movie' ? 'movie' : 'video'}.`
-        } else if (format === 'mkv' || format === 'avi') {
-          errorMessage = `⚠️ This video format (${format.toUpperCase()}) is not supported by browsers.\n\nTry another ${type === 'movie' ? 'movie' : 'video'}.`
-        } else if (error && error.code === 4) {
-          errorMessage = '⚠️ Video format not supported by your browser.\n\nTry a different video.'
-        }
-
-        alert(errorMessage)
-      })
-    } else {
-      console.error('❌ Video.js not loaded!')
-    }
-  }
-
-  closeVideoPlayer() {
-    // Properly dispose of Video.js player to stop playback
-    if (this.currentPlayer) {
-      console.log('🛑 Stopping and disposing video player...')
-      try {
-        this.currentPlayer.pause()
-        this.currentPlayer.dispose()
-        this.currentPlayer = null
-      } catch (error) {
-        console.error('Error disposing player:', error)
-      }
-    }
-    this.elements.videoPlayerContainer.innerHTML = ''
-  }
-
-  /**
-   * Play a series episode directly by episode ID
-   */
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, format: ${extension}`)
 
-    // Browser-supported formats
     const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv']
     let finalExtension = extension
 
-    // Convert unsupported formats to HLS for browser playback
     if (unsupportedFormats.includes(extension.toLowerCase())) {
       console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode...`)
       finalExtension = 'm3u8'
@@ -743,19 +674,93 @@ class DashApp {
     this.showVideoPlayer(streamUrl, 'series', extension !== finalExtension ? extension : null)
   }
 
+  showVideoPlayer(streamUrl, type = 'movie', originalFormat = null) {
+    console.log('🎬 Playing stream:', streamUrl)
+
+    let format
+    let mimeType
+
+    if (type === 'live' || streamUrl.includes('.m3u8')) {
+      format = 'm3u8'
+      mimeType = 'application/x-mpegURL'
+    } else {
+      format = streamUrl.split('.').pop().split('?')[0]
+      mimeType = format === 'm3u8' ? 'application/x-mpegURL' : `video/${format}`
+    }
+
+    console.log('📹 Format:', format, '| MIME:', mimeType)
+
+    const playerHTML = `
+      <div class="video-player-container">
+        <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
+        <video id="dashPlayer" class="video-js vjs-big-play-centered" controls autoplay preload="auto" width="100%" height="100%">
+          <source src="${streamUrl}" type="${mimeType}">
+        </video>
+      </div>
+    `
+
+    this.elements.videoPlayerContainer.innerHTML = playerHTML
+
+    if (this.currentPlayer) {
+      this.currentPlayer.dispose()
+    }
+
+    if (typeof videojs !== 'undefined') {
+      this.currentPlayer = videojs('dashPlayer', {
+        fluid: true,
+        responsive: true,
+        controls: true,
+        autoplay: true,
+        preload: 'auto',
+        html5: {
+          vhs: { overrideNative: true },
+          nativeVideoTracks: false,
+          nativeAudioTracks: false,
+          nativeTextTracks: false
+        }
+      })
+
+      this.currentPlayer.ready(function() {
+        console.log('✅ Video player ready!')
+        this.play().catch(err => console.error('❌ Playback error:', err))
+      })
+
+      this.currentPlayer.on('error', () => {
+        const error = this.currentPlayer.error()
+        console.error('❌ Player error:', error)
+        alert('⚠️ Unable to play this video. Try another one.')
+      })
+    }
+  }
+
+  closeVideoPlayer() {
+    if (this.currentPlayer) {
+      try {
+        this.currentPlayer.pause()
+        this.currentPlayer.dispose()
+        this.currentPlayer = null
+      } catch (error) {
+        console.error('Error disposing player:', error)
+      }
+    }
+    this.elements.videoPlayerContainer.innerHTML = ''
+  }
+
+  // ============================================
+  // UTILITY METHODS
+  // ============================================
+
   async filterByCategory(categoryId, type) {
     this.state.selectedCategory = categoryId
     this.renderPage(this.state.currentPage)
   }
 
   handleSearch() {
-    // TODO: Implement search functionality
     console.log('Search query:', this.state.searchQuery)
   }
 
   addToFavorites(id, type) {
     console.log('Added to favorites:', id, type)
-    // TODO: Implement favorites
   }
 
   loadFavorites() {
@@ -792,5 +797,5 @@ class DashApp {
 let dashApp
 document.addEventListener('DOMContentLoaded', () => {
   dashApp = new DashApp()
-  window.dashApp = dashApp // Make available globally for onclick handlers
+  window.dashApp = dashApp
 })
