@@ -28,8 +28,14 @@ class PWAInstaller {
   async registerServiceWorker() {
     if ('serviceWorker' in navigator) {
       try {
-        const registration = await navigator.serviceWorker.register('/service-worker.js')
+        // Force update check on every load
+        const registration = await navigator.serviceWorker.register('/service-worker.js', {
+          updateViaCache: 'none'
+        })
         console.log('✅ Service Worker registered:', registration)
+
+        // Immediately check for updates
+        registration.update()
 
         // Check for updates
         registration.addEventListener('updatefound', () => {
@@ -37,9 +43,14 @@ class PWAInstaller {
           console.log('🔄 Service Worker update found')
 
           newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // New version available
-              this.showUpdateNotification()
+            if (newWorker.state === 'installed') {
+              if (navigator.serviceWorker.controller) {
+                // New version available - auto-activate it
+                console.log('🔄 New service worker ready, activating...')
+                newWorker.postMessage({ type: 'SKIP_WAITING' })
+                // Reload to use new version
+                window.location.reload()
+              }
             }
           })
         })

@@ -53,8 +53,25 @@ class DashApp {
   // INITIALIZATION & SESSION MANAGEMENT
   // ============================================
 
+  async ensureLatestServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      try {
+        const registrations = await navigator.serviceWorker.getRegistrations()
+        for (const registration of registrations) {
+          await registration.update()
+        }
+        console.log('✅ Service worker check complete')
+      } catch (e) {
+        console.log('Service worker update check failed:', e)
+      }
+    }
+  }
+
   async init() {
     console.log('🚀 DASH WebTV initializing...')
+
+    // Force service worker update if needed
+    await this.ensureLatestServiceWorker()
 
     // Check for saved session
     const savedUser = localStorage.getItem('dash_user')
