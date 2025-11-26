@@ -665,118 +665,155 @@ class DashApp {
     this.showVideoPlayer(streamUrl, 'series')
   }
 
-  showVideoPlayer(streamUrl, type = 'movie', originalFormat = null) {
+  showVideoPlayer(streamUrl, type = 'movie') {
     console.log('🎬 Playing stream:', streamUrl)
 
     const isHLS = streamUrl.includes('.m3u8') || type === 'live'
-
     console.log('📹 Stream type:', isHLS ? 'HLS' : 'Direct', '| URL:', streamUrl)
 
+    // Clean up any existing player
+    this.closeVideoPlayer()
+
+    // Create player HTML
     const playerHTML = `
       <div class="video-player-container">
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
-        <video id="dashPlayer" class="video-js vjs-big-play-centered vjs-default-skin" controls autoplay playsinline width="100%" height="100%">
-        </video>
+        <div class="video-loading">
+          <div class="spinner"></div>
+          <div>Loading stream...</div>
+        </div>
+        <video id="dashPlayer" controls autoplay playsinline style="width:100%;height:100%;background:#000;"></video>
       </div>
     `
-
     this.elements.videoPlayerContainer.innerHTML = playerHTML
 
-    // Dispose previous player if exists
-    if (this.currentPlayer) {
-      try {
-        this.currentPlayer.dispose()
-      } catch (e) {
-        console.warn('Player dispose warning:', e)
-      }
-      this.currentPlayer = null
+    const video = document.getElementById('dashPlayer')
+    const loadingEl = this.elements.videoPlayerContainer.querySelector('.video-loading')
+
+    // Hide loading when video starts playing
+    video.addEventListener('playing', () => {
+      if (loadingEl) loadingEl.style.display = 'none'
+    })
+
+    // Show loading on waiting/buffering
+    video.addEventListener('waiting', () => {
+      if (loadingEl) loadingEl.style.display = 'flex'
+    })
+
+    if (isHLS) {
+      this.playHLS(video, streamUrl, loadingEl)
+    } else {
+      this.playDirect(video, streamUrl, loadingEl)
     }
+  }
 
-    const videoEl = document.getElementById('dashPlayer')
+  playHLS(video, streamUrl, loadingEl) {
+    console.log('🔴 Using HLS.js for:', streamUrl)
 
-    if (typeof videojs !== 'undefined') {
-      // Initialize Video.js with cross-browser settings
-      this.currentPlayer = videojs('dashPlayer', {
-        fluid: true,
-        responsive: true,
-        controls: true,
-        autoplay: true,
-        preload: 'auto',
-        techOrder: ['html5'],
-        html5: {
-          vhs: {
-            overrideNative: !videojs.browser.IS_SAFARI,
-            enableLowInitialPlaylist: true,
-            smoothQualityChange: true,
-            handlePartialData: true
-          },
-          nativeVideoTracks: videojs.browser.IS_SAFARI,
-          nativeAudioTracks: videojs.browser.IS_SAFARI,
-          nativeTextTracks: videojs.browser.IS_SAFARI
-        },
-        sources: [{
-          src: streamUrl,
-          type: isHLS ? 'application/x-mpegURL' : 'video/mp4'
-        }]
+    // Check if HLS.js is supported (most browsers except Safari)
+    if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+      console.log('✅ HLS.js supported - using it')
+
+      this.hlsInstance = new Hls({
+        debug: false,
+        enableWorker: true,
+        lowLatencyMode: false,
+        backBufferLength: 90,
+        maxBufferLength: 30,
+        maxMaxBufferLength: 600,
+        startLevel: -1, // Auto quality
+        xhrSetup: (xhr, url) => {
+          xhr.withCredentials = false
+        }
       })
 
-      this.currentPlayer.ready(() => {
-        console.log('✅ Video.js player ready!')
-        this.currentPlayer.play().catch(err => {
+      this.hlsInstance.loadSource(streamUrl)
+      this.hlsInstance.attachMedia(video)
+
+      this.hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+        console.log('✅ HLS manifest loaded, starting playback')
+        video.play().catch(err => {
           console.warn('⚠️ Autoplay blocked:', err.message)
+          if (loadingEl) loadingEl.innerHTML = '<div>Click to play</div>'
         })
       })
 
-      // Error handling with fallback
-      this.currentPlayer.on('error', () => {
-        const error = this.currentPlayer.error()
-        console.error('❌ Player error:', error)
+      this.hlsInstance.on(Hls.Events.ERROR, (event, data) => {
+        console.error('❌ HLS Error:', data.type, data.details)
 
-        // Try fallback: native HTML5 video
-        if (error && !isHLS) {
-          console.log('🔄 Trying native HTML5 fallback...')
-          this.tryNativePlayer(streamUrl)
-        } else {
-          alert('⚠️ Unable to play this video. The stream may be unavailable.')
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              console.log('🔄 Network error, trying to recover...')
+              this.hlsInstance.startLoad()
+              break
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              console.log('🔄 Media error, trying to recover...')
+              this.hlsInstance.recoverMediaError()
+              break
+            default:
+              console.error('❌ Fatal error, cannot recover')
+              this.hlsInstance.destroy()
+              if (loadingEl) loadingEl.innerHTML = '<div>Stream unavailable. Try another title.</div>'
+              break
+          }
         }
       })
+
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // Safari has native HLS support
+      console.log('🍎 Using Safari native HLS')
+      video.src = streamUrl
+      video.addEventListener('loadedmetadata', () => {
+        video.play().catch(err => console.warn('Autoplay blocked:', err))
+      })
     } else {
-      // Fallback: pure HTML5 video
-      this.tryNativePlayer(streamUrl)
+      console.error('❌ HLS not supported in this browser')
+      if (loadingEl) loadingEl.innerHTML = '<div>HLS not supported in this browser</div>'
     }
   }
 
-  tryNativePlayer(streamUrl) {
-    console.log('🎬 Using native HTML5 player for:', streamUrl)
+  playDirect(video, streamUrl, loadingEl) {
+    console.log('📺 Using direct playback for:', streamUrl)
 
-    const playerHTML = `
-      <div class="video-player-container">
-        <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
-        <video id="nativePlayer" controls autoplay playsinline style="width:100%;height:100%;background:#000;">
-          <source src="${streamUrl}" type="video/mp4">
-          Your browser does not support video playback.
-        </video>
-      </div>
-    `
-    this.elements.videoPlayerContainer.innerHTML = playerHTML
+    video.src = streamUrl
 
-    const video = document.getElementById('nativePlayer')
-    video.onerror = () => {
-      console.error('❌ Native player also failed')
-      alert('⚠️ Unable to play this video. Try a different title.')
-    }
+    video.addEventListener('loadedmetadata', () => {
+      console.log('✅ Video metadata loaded')
+      video.play().catch(err => {
+        console.warn('⚠️ Autoplay blocked:', err.message)
+        if (loadingEl) loadingEl.innerHTML = '<div>Click to play</div>'
+      })
+    })
+
+    video.addEventListener('error', (e) => {
+      console.error('❌ Video error:', video.error)
+      if (loadingEl) loadingEl.innerHTML = '<div>Unable to play. Try another title.</div>'
+    })
   }
 
   closeVideoPlayer() {
-    if (this.currentPlayer) {
+    // Destroy HLS instance if exists
+    if (this.hlsInstance) {
       try {
-        this.currentPlayer.pause()
-        this.currentPlayer.dispose()
-        this.currentPlayer = null
-      } catch (error) {
-        console.error('Error disposing player:', error)
+        this.hlsInstance.destroy()
+        this.hlsInstance = null
+      } catch (e) {
+        console.warn('HLS cleanup warning:', e)
       }
     }
+
+    // Destroy Video.js instance if exists
+    if (this.currentPlayer) {
+      try {
+        this.currentPlayer.dispose()
+        this.currentPlayer = null
+      } catch (e) {
+        console.warn('Video.js cleanup warning:', e)
+      }
+    }
+
+    // Clear container
     this.elements.videoPlayerContainer.innerHTML = ''
   }
 
