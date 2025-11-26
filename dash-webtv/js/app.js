@@ -639,20 +639,14 @@ class DashApp {
     let streamUrl = ''
 
     if (type === 'movie') {
-      // Movies: Use MP4 (has CORS headers on redirect)
-      // MKV files need HLS transcoding
-      const unsupported = ['mkv', 'avi', 'flv', 'wmv']
-      if (unsupported.includes(extension.toLowerCase())) {
-        console.log('🎬 MKV detected - using HLS transcode')
-        streamUrl = this.client.buildVODUrl(id, 'm3u8')
-      } else {
-        console.log('🎬 Using MP4 direct stream')
-        streamUrl = this.client.buildVODUrl(id, 'mp4')
-      }
+      // Movies: Always use MP4 - server handles format conversion
+      // Server redirects with CORS headers and serves the content
+      console.log('🎬 Using MP4 stream (server handles conversion)')
+      streamUrl = this.client.buildVODUrl(id, 'mp4')
     } else if (type === 'live') {
-      // Live TV: Must use HLS
-      console.log('🔴 Building Live TV HLS stream URL...')
-      streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
+      // Live TV: Use MPEG-TS (.ts) format with mpegts.js
+      console.log('🔴 Building Live TV MPEG-TS stream URL...')
+      streamUrl = this.client.buildLiveStreamUrl(id, 'ts')
     }
 
     console.log('Stream URL:', streamUrl)
@@ -663,18 +657,11 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    let streamUrl = ''
-    const unsupported = ['mkv', 'avi', 'flv', 'wmv']
+    // Always request as MP4 - server handles format conversion
+    // The server redirects with CORS headers and serves the content
+    const streamUrl = this.client.buildSeriesUrl(episodeId, 'mp4')
+    console.log('📺 Using MP4 stream (server handles conversion):', streamUrl)
 
-    if (unsupported.includes(extension.toLowerCase())) {
-      console.log('📺 MKV detected - using HLS transcode')
-      streamUrl = this.client.buildSeriesUrl(episodeId, 'm3u8')
-    } else {
-      console.log('📺 Using MP4 direct stream')
-      streamUrl = this.client.buildSeriesUrl(episodeId, 'mp4')
-    }
-
-    console.log('Stream URL:', streamUrl)
     this.closeModal()
     this.showVideoPlayer(streamUrl, 'series')
   }
