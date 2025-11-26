@@ -3,7 +3,7 @@
  * Handles caching and offline functionality
  */
 
-const CACHE_NAME = 'dash-webtv-v1'
+const CACHE_NAME = 'dash-webtv-v2'
 const OFFLINE_URL = '/offline.html'
 
 // Files to cache on install
@@ -68,9 +68,8 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Skip API calls - always fetch fresh
-  if (url.pathname.includes('/player_api.php') || url.pathname.includes('/get.php')) {
-    event.respondWith(fetch(request))
-    return
+  if (url.pathname.startsWith('/api/') || url.pathname.includes('/player_api.php') || url.pathname.includes('/get.php')) {
+    return // Let the browser handle it normally
   }
 
   // For video streams, don't cache
