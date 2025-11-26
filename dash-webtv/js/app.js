@@ -714,10 +714,59 @@ class DashApp {
       if (loadingEl) loadingEl.style.display = 'flex'
     })
 
-    if (isHLS) {
+    // Detect stream type
+    const isMpegTS = streamUrl.includes('.ts') || type === 'live'
+    const isHLS = streamUrl.includes('.m3u8')
+
+    if (isMpegTS) {
+      this.playMpegTS(video, streamUrl, loadingEl)
+    } else if (isHLS) {
       this.playHLS(video, streamUrl, loadingEl)
     } else {
       this.playDirect(video, streamUrl, loadingEl)
+    }
+  }
+
+  playMpegTS(video, streamUrl, loadingEl) {
+    console.log('📡 Using mpegts.js for MPEG-TS stream:', streamUrl)
+
+    // Check if mpegts.js is available and supported
+    if (typeof mpegts !== 'undefined' && mpegts.getFeatureList().mseLivePlayback) {
+      console.log('✅ mpegts.js supported - using it')
+
+      this.mpegtsPlayer = mpegts.createPlayer({
+        type: 'mse',
+        isLive: true,
+        url: streamUrl,
+        enableWorker: true,
+        lazyLoadMaxDuration: 3 * 60,
+        seekType: 'range'
+      })
+
+      this.mpegtsPlayer.attachMediaElement(video)
+      this.mpegtsPlayer.load()
+
+      this.mpegtsPlayer.on(mpegts.Events.LOADING_COMPLETE, () => {
+        console.log('✅ MPEG-TS stream loaded')
+        video.play().catch(err => {
+          console.warn('⚠️ Autoplay blocked:', err.message)
+          if (loadingEl) loadingEl.innerHTML = '<div>Click video to play</div>'
+        })
+      })
+
+      this.mpegtsPlayer.on(mpegts.Events.ERROR, (errorType, errorDetail, errorInfo) => {
+        console.error('❌ MPEG-TS Error:', errorType, errorDetail, errorInfo)
+        if (loadingEl) loadingEl.innerHTML = '<div>Stream error. Try another channel.</div>'
+      })
+
+      // Start playback immediately
+      video.play().catch(err => {
+        console.warn('⚠️ Initial autoplay blocked:', err.message)
+      })
+
+    } else {
+      console.error('❌ mpegts.js not supported in this browser')
+      if (loadingEl) loadingEl.innerHTML = '<div>Live TV not supported in this browser</div>'
     }
   }
 
@@ -807,6 +856,19 @@ class DashApp {
   }
 
   closeVideoPlayer() {
+    // Destroy mpegts instance if exists
+    if (this.mpegtsPlayer) {
+      try {
+        this.mpegtsPlayer.pause()
+        this.mpegtsPlayer.unload()
+        this.mpegtsPlayer.detachMediaElement()
+        this.mpegtsPlayer.destroy()
+        this.mpegtsPlayer = null
+      } catch (e) {
+        console.warn('MPEG-TS cleanup warning:', e)
+      }
+    }
+
     // Destroy HLS instance if exists
     if (this.hlsInstance) {
       try {

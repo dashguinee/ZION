@@ -184,15 +184,17 @@ class XtreamClient {
 
   /**
    * Build playable URL for Live TV stream
-   * Uses proxy to add CORS headers for HLS streams
+   * Uses MPEG-TS (.ts) format - works better than HLS for this provider
+   * Proxied for CORS headers
    */
-  buildLiveStreamUrl(streamId, extension = 'm3u8') {
+  buildLiveStreamUrl(streamId, extension = 'ts') {
     if (!this.isAuthenticated) return ''
-    const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.${extension}`
+    // Use .ts format (MPEG-TS) - confirmed working with mpegts.js
+    const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.ts`
 
-    // Use proxy to add CORS headers for HLS
+    // Use proxy to add CORS headers
     const proxyUrl = `/api/stream?url=${encodeURIComponent(directUrl)}`
-    console.log(`📡 Live TV URL (proxied): ${proxyUrl}`)
+    console.log(`📡 Live TV URL (MPEG-TS proxied): ${proxyUrl}`)
     return proxyUrl
   }
 
