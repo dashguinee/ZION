@@ -140,8 +140,15 @@ class DashApp {
 
   async attemptLogin(username, password, isAutoLogin) {
     console.log('🔄 attemptLogin called, isAuto:', isAutoLogin)
-    const result = await this.client.login(username, password)
-    console.log('📨 Login result:', JSON.stringify(result))
+
+    let result
+    try {
+      result = await this.client.login(username, password)
+      console.log('📨 Login result:', JSON.stringify(result))
+    } catch (error) {
+      console.error('❌ Login fetch error:', error)
+      result = { success: false, error: 'Network error: ' + error.message }
+    }
 
     if (result.success) {
       // Save credentials for session persistence
@@ -151,9 +158,18 @@ class DashApp {
       console.log('✅ Login successful!')
       this.showAppUI()
     } else {
+      const errorMsg = result.error || 'Invalid username or password'
+      console.error('❌ Login failed:', errorMsg)
+
       if (!isAutoLogin) {
-        // Show error to user
-        this.elements.loginError.textContent = result.error || 'Invalid credentials'
+        // Show error to user with styling
+        this.elements.loginError.textContent = errorMsg
+        this.elements.loginError.style.display = 'block'
+        this.elements.loginError.style.color = '#ff6b6b'
+        this.elements.loginError.style.padding = '10px'
+        this.elements.loginError.style.marginTop = '10px'
+        this.elements.loginError.style.background = 'rgba(255,0,0,0.1)'
+        this.elements.loginError.style.borderRadius = '8px'
       } else {
         // Auto-login failed, show login screen
         console.warn('⚠️ Auto-login failed, showing login screen')
