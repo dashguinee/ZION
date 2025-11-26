@@ -638,12 +638,19 @@ class DashApp {
 
     let streamUrl = ''
 
-    // ALWAYS use HLS (.m3u8) for cross-browser compatibility
-    // Server will transcode on-demand if needed
     if (type === 'movie') {
-      console.log('🎬 Using HLS stream for movie (universal browser support)')
-      streamUrl = this.client.buildVODUrl(id, 'm3u8')
+      // Movies: Use MP4 (has CORS headers on redirect)
+      // MKV files need HLS transcoding
+      const unsupported = ['mkv', 'avi', 'flv', 'wmv']
+      if (unsupported.includes(extension.toLowerCase())) {
+        console.log('🎬 MKV detected - using HLS transcode')
+        streamUrl = this.client.buildVODUrl(id, 'm3u8')
+      } else {
+        console.log('🎬 Using MP4 direct stream')
+        streamUrl = this.client.buildVODUrl(id, 'mp4')
+      }
     } else if (type === 'live') {
+      // Live TV: Must use HLS
       console.log('🔴 Building Live TV HLS stream URL...')
       streamUrl = this.client.buildLiveStreamUrl(id, 'm3u8')
     }
@@ -656,11 +663,18 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    // ALWAYS use HLS (.m3u8) for cross-browser compatibility
-    console.log('📺 Using HLS stream for episode (universal browser support)')
-    const streamUrl = this.client.buildSeriesUrl(episodeId, 'm3u8')
-    console.log('Stream URL:', streamUrl)
+    let streamUrl = ''
+    const unsupported = ['mkv', 'avi', 'flv', 'wmv']
 
+    if (unsupported.includes(extension.toLowerCase())) {
+      console.log('📺 MKV detected - using HLS transcode')
+      streamUrl = this.client.buildSeriesUrl(episodeId, 'm3u8')
+    } else {
+      console.log('📺 Using MP4 direct stream')
+      streamUrl = this.client.buildSeriesUrl(episodeId, 'mp4')
+    }
+
+    console.log('Stream URL:', streamUrl)
     this.closeModal()
     this.showVideoPlayer(streamUrl, 'series')
   }
