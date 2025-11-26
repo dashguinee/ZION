@@ -28,35 +28,21 @@ class XtreamClient {
   }
 
   /**
-   * Authenticate user against Starshare API
-   * Uses proxy to bypass CORS restrictions
+   * Login - just store credentials, no API validation needed
+   * Credentials will be validated when user tries to play content
    */
   async login(username, password) {
-    // Use our proxy to bypass CORS on login
-    const url = `/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
-    console.log('🔄 Authenticating via proxy...')
+    console.log('🔄 Storing credentials...')
 
-    try {
-      const response = await fetch(url)
-
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`)
-      }
-
-      const data = await response.json()
-
-      if (data.user_info && data.user_info.auth === 1) {
-        this.setCredentials(username, password)
-        console.log('✅ Login successful:', data.user_info.username)
-        return { success: true, info: data }
-      } else {
-        console.warn('❌ Auth failed:', data)
-        return { success: false, error: 'Invalid credentials' }
-      }
-    } catch (error) {
-      console.error('Auth error:', error)
-      return { success: false, error: error.message }
+    if (!username || !password) {
+      return { success: false, error: 'Username and password required' }
     }
+
+    // Just store the credentials - they'll be used in stream URLs
+    this.setCredentials(username, password)
+    console.log('✅ Credentials saved for:', username)
+
+    return { success: true, info: { username } }
   }
 
   /**
