@@ -87,19 +87,34 @@ class DashApp {
   }
 
   async handleLogin() {
+    console.log('🔐 handleLogin called')
     const username = document.getElementById('login-username').value
     const password = document.getElementById('login-password').value
     const btn = this.elements.loginBtn
     const errorEl = this.elements.loginError
 
+    console.log('📝 Username:', username ? `${username.substring(0,3)}***` : 'EMPTY')
+    console.log('📝 Password:', password ? '***SET***' : 'EMPTY')
+
     // Clear previous error
     errorEl.textContent = ''
+
+    // Validate inputs
+    if (!username || !password) {
+      errorEl.textContent = 'Please enter username and password'
+      return
+    }
 
     // Show loading state
     btn.textContent = 'CONNECTING...'
     btn.disabled = true
 
-    await this.attemptLogin(username, password, false)
+    try {
+      await this.attemptLogin(username, password, false)
+    } catch (error) {
+      console.error('❌ Login error:', error)
+      errorEl.textContent = 'Connection error: ' + error.message
+    }
 
     // Reset button
     btn.textContent = 'ENTER UNIVERSE'
@@ -107,7 +122,9 @@ class DashApp {
   }
 
   async attemptLogin(username, password, isAutoLogin) {
+    console.log('🔄 attemptLogin called, isAuto:', isAutoLogin)
     const result = await this.client.login(username, password)
+    console.log('📨 Login result:', JSON.stringify(result))
 
     if (result.success) {
       // Save credentials for session persistence
