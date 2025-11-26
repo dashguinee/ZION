@@ -94,13 +94,25 @@ Switched proxy to **Vercel Edge Runtime**:
 ---
 
 ## Phase 4: Alternative Proxy (Cloudflare Workers)
-**Status:** PENDING
+**Status:** DEPLOYED - TESTING
 
-Hypothesis: Cloudflare edge network faster than Vercel
+Hypothesis: Cloudflare edge network faster than Vercel (Starshare uses Cloudflare)
 
-- [ ] Create Cloudflare Worker for stream proxy
+- [x] Create Cloudflare Worker for stream proxy
+- [x] Deploy to: https://dash-webtv-proxy.dash-webtv.workers.dev
+- [x] Update app to use Cloudflare proxy
 - [ ] Compare latency/buffering vs Vercel
 - [ ] Measure time-to-first-byte
+
+### Why This Should Be Faster:
+```
+Before (Vercel):
+Starshare (Cloudflare) → Internet → Vercel Edge → Internet → Browser
+
+After (Cloudflare Worker):
+Starshare (Cloudflare) → Cloudflare internal → Browser
+```
+Same network = less hops = faster
 
 ---
 

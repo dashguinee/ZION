@@ -9,6 +9,8 @@ class XtreamClient {
     this.username = null
     this.password = null
     this.backendUrl = 'https://zion-production-39d8.up.railway.app'
+    // Cloudflare Worker proxy - same network as Starshare = faster
+    this.streamProxy = 'https://dash-webtv-proxy.dash-webtv.workers.dev'
   }
 
   /**
@@ -173,16 +175,16 @@ class XtreamClient {
   /**
    * Build playable URL for Live TV stream
    * Uses MPEG-TS (.ts) format - works better than HLS for this provider
-   * Proxied for CORS headers
+   * Proxied via Cloudflare Worker (same network as Starshare = fast)
    */
   buildLiveStreamUrl(streamId, extension = 'ts') {
     if (!this.isAuthenticated) return ''
     // Use .ts format (MPEG-TS) - confirmed working with mpegts.js
     const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.ts`
 
-    // Use proxy to add CORS headers
-    const proxyUrl = `/api/stream?url=${encodeURIComponent(directUrl)}`
-    console.log(`📡 Live TV URL (MPEG-TS proxied): ${proxyUrl}`)
+    // Use Cloudflare Worker proxy (same network as Starshare)
+    const proxyUrl = `${this.streamProxy}/?url=${encodeURIComponent(directUrl)}`
+    console.log(`📡 Live TV URL (Cloudflare proxied): ${proxyUrl}`)
     return proxyUrl
   }
 
