@@ -772,10 +772,19 @@ class DashApp {
       this.mpegtsPlayer = mpegts.createPlayer({
         type: 'mse',
         isLive: true,
-        url: streamUrl,
+        url: streamUrl
+      }, {
+        // Optimization: reduce buffering for faster start
         enableWorker: true,
-        lazyLoadMaxDuration: 3 * 60,
-        seekType: 'range'
+        enableStashBuffer: false,
+        stashInitialSize: 128,          // Smaller initial buffer (128KB)
+        lazyLoad: true,
+        lazyLoadMaxDuration: 30,        // Only 30 sec buffer (was 3 min!)
+        lazyLoadRecoverDuration: 10,
+        seekType: 'range',
+        liveBufferLatencyChasing: true, // Chase live edge
+        liveBufferLatencyMaxLatency: 1.5,
+        liveBufferLatencyMinRemain: 0.3
       })
 
       this.mpegtsPlayer.attachMediaElement(video)

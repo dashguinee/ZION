@@ -25,7 +25,6 @@ export default async function handler(req, res) {
 
     // Decode the URL
     const streamUrl = decodeURIComponent(url)
-    console.log('Proxying stream:', streamUrl)
 
     // Fetch the stream
     const response = await fetch(streamUrl, {
@@ -76,7 +75,6 @@ export default async function handler(req, res) {
     }
 
   } catch (error) {
-    console.error('Stream proxy error:', error)
     res.status(500).json({
       error: 'Stream proxy failed',
       message: error.message
