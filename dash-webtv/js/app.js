@@ -765,6 +765,18 @@ class DashApp {
   playMpegTS(video, streamUrl, loadingEl) {
     console.log('📡 Using mpegts.js for MPEG-TS stream:', streamUrl)
 
+    // ============================================
+    // PERFORMANCE METRICS
+    // ============================================
+    const metrics = {
+      startTime: performance.now(),
+      firstByteTime: null,
+      firstFrameTime: null,
+      bufferEvents: 0,
+      bytesReceived: 0,
+      lastBufferStart: null
+    }
+
     // Check if mpegts.js is available and supported
     if (typeof mpegts !== 'undefined' && mpegts.getFeatureList().mseLivePlayback) {
       console.log('✅ mpegts.js supported - using it')
@@ -790,18 +802,61 @@ class DashApp {
       this.mpegtsPlayer.attachMediaElement(video)
       this.mpegtsPlayer.load()
 
+      // METRIC: First byte received
       this.mpegtsPlayer.on(mpegts.Events.LOADING_COMPLETE, () => {
-        console.log('✅ MPEG-TS stream loaded')
+        if (!metrics.firstByteTime) {
+          metrics.firstByteTime = performance.now()
+          console.log(`📊 METRIC: First byte in ${(metrics.firstByteTime - metrics.startTime).toFixed(0)}ms`)
+        }
         video.play().catch(err => {
           console.warn('⚠️ Autoplay blocked:', err.message)
           if (loadingEl) loadingEl.innerHTML = '<div>Click video to play</div>'
         })
       })
 
+      // METRIC: Track statistics
+      this.mpegtsPlayer.on(mpegts.Events.STATISTICS_INFO, (stats) => {
+        metrics.bytesReceived = stats.totalBytes || 0
+        const speedKbps = stats.speed ? (stats.speed / 1024).toFixed(1) : 0
+        // Update UI with live stats (optional debug)
+        if (window.DASH_DEBUG) {
+          console.log(`📊 Speed: ${speedKbps} KB/s | Buffered: ${stats.videoRange?.end || 0}s`)
+        }
+      })
+
       this.mpegtsPlayer.on(mpegts.Events.ERROR, (errorType, errorDetail, errorInfo) => {
         console.error('❌ MPEG-TS Error:', errorType, errorDetail, errorInfo)
         if (loadingEl) loadingEl.innerHTML = '<div>Stream error. Try another channel.</div>'
       })
+
+      // METRIC: First frame rendered
+      video.addEventListener('playing', () => {
+        if (!metrics.firstFrameTime) {
+          metrics.firstFrameTime = performance.now()
+          const ttff = (metrics.firstFrameTime - metrics.startTime).toFixed(0)
+          console.log(`📊 METRIC: First frame in ${ttff}ms`)
+          console.log(`📊 METRIC: Time to first byte: ${(metrics.firstByteTime - metrics.startTime).toFixed(0)}ms`)
+          console.log(`📊 METRIC: Decode time: ${(metrics.firstFrameTime - metrics.firstByteTime).toFixed(0)}ms`)
+        }
+      }, { once: true })
+
+      // METRIC: Buffer events (stalls)
+      video.addEventListener('waiting', () => {
+        metrics.bufferEvents++
+        metrics.lastBufferStart = performance.now()
+        console.log(`📊 METRIC: Buffer stall #${metrics.bufferEvents}`)
+      })
+
+      video.addEventListener('playing', () => {
+        if (metrics.lastBufferStart) {
+          const stallDuration = (performance.now() - metrics.lastBufferStart).toFixed(0)
+          console.log(`📊 METRIC: Stall duration: ${stallDuration}ms`)
+          metrics.lastBufferStart = null
+        }
+      })
+
+      // Store metrics for external access
+      this.currentMetrics = metrics
 
       // Start playback immediately
       video.play().catch(err => {

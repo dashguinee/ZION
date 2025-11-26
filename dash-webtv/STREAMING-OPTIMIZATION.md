@@ -159,9 +159,27 @@ Hypothesis: HLS might work better than raw MPEG-TS
 
 ---
 
-## Metrics to Track
-- Time to first frame
-- Buffer events count
-- Playback smoothness
-- Memory usage
+## Metrics Now Being Tracked
+
+Console will show these on every stream:
+```
+📊 METRIC: First byte in XXXms      (network latency)
+📊 METRIC: First frame in XXXms     (total time to video)
+📊 METRIC: Decode time: XXXms       (mpegts.js processing)
+📊 METRIC: Buffer stall #N          (each time video stops)
+📊 METRIC: Stall duration: XXXms    (how long each stall)
+```
+
+### Target Performance (2mbps connection):
+| Metric | Current | Target | Notes |
+|--------|---------|--------|-------|
+| First frame | TBD | <3000ms | User sees video in 3 sec |
+| Buffer stalls | TBD | <2/min | Max 2 stalls per minute |
+| Stall duration | TBD | <500ms | Each stall under 0.5 sec |
+
+### How to Test 2mbps:
+Chrome DevTools → Network → Throttling → Add custom profile:
+- Download: 2000 kbps (256 KB/s)
+- Upload: 500 kbps
+- Latency: 100ms
 
