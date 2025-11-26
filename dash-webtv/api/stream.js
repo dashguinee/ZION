@@ -1,89 +1,64 @@
 /**
- * DASH WebTV - Stream Proxy
- * Proxies HLS streams to add CORS headers
+ * DASH WebTV - Stream Proxy (Optimized)
+ * Fast passthrough with minimal overhead
  */
-
-export default async function handler(req, res) {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Range')
-  res.setHeader('Access-Control-Expose-Headers', 'Content-Length, Content-Range')
-
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    res.status(200).end()
-    return
-  }
-
-  try {
-    const { url } = req.query
-
-    if (!url) {
-      return res.status(400).json({ error: 'Missing URL parameter' })
-    }
-
-    // Decode the URL
-    const streamUrl = decodeURIComponent(url)
-
-    // Fetch the stream
-    const response = await fetch(streamUrl, {
-      headers: {
-        'User-Agent': 'DASH-WebTV/1.0',
-        'Accept': '*/*',
-        ...(req.headers.range ? { 'Range': req.headers.range } : {})
-      },
-      redirect: 'follow'
-    })
-
-    // Forward status and headers
-    res.status(response.status)
-
-    const contentType = response.headers.get('content-type')
-    if (contentType) {
-      res.setHeader('Content-Type', contentType)
-    }
-
-    const contentLength = response.headers.get('content-length')
-    if (contentLength) {
-      res.setHeader('Content-Length', contentLength)
-    }
-
-    const contentRange = response.headers.get('content-range')
-    if (contentRange) {
-      res.setHeader('Content-Range', contentRange)
-    }
-
-    // Stream the response body
-    if (response.body) {
-      const reader = response.body.getReader()
-
-      const pump = async () => {
-        while (true) {
-          const { done, value } = await reader.read()
-          if (done) break
-          res.write(Buffer.from(value))
-        }
-        res.end()
-      }
-
-      await pump()
-    } else {
-      // Fallback for environments without streaming
-      const buffer = await response.arrayBuffer()
-      res.send(Buffer.from(buffer))
-    }
-
-  } catch (error) {
-    res.status(500).json({
-      error: 'Stream proxy failed',
-      message: error.message
-    })
-  }
-}
 
 export const config = {
   api: {
     responseLimit: false,
+    bodyParser: false,  // Don't parse body - stream it
   },
+  runtime: 'edge',  // Use Edge Runtime for lower latency
+}
+
+export default async function handler(req) {
+  const url = new URL(req.url)
+  const streamUrl = url.searchParams.get('url')
+
+  // Handle preflight
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Range',
+        'Access-Control-Expose-Headers': 'Content-Length, Content-Range',
+      }
+    })
+  }
+
+  if (!streamUrl) {
+    return new Response(JSON.stringify({ error: 'Missing URL' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
+  try {
+    // Passthrough fetch - stream directly
+    const response = await fetch(decodeURIComponent(streamUrl), {
+      headers: {
+        'User-Agent': 'DASH-WebTV/1.0',
+        ...(req.headers.get('range') ? { 'Range': req.headers.get('range') } : {})
+      }
+    })
+
+    // Create response with CORS headers
+    const headers = new Headers(response.headers)
+    headers.set('Access-Control-Allow-Origin', '*')
+    headers.set('Access-Control-Expose-Headers', 'Content-Length, Content-Range')
+
+    // Stream body directly - no buffering
+    return new Response(response.body, {
+      status: response.status,
+      headers
+    })
+
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Stream failed' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
 }

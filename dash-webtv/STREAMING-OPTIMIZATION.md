@@ -67,14 +67,29 @@ Test variations:
 ---
 
 ## Phase 3: Test Without Proxy (Direct Connection)
-**Status:** PENDING
+**Status:** COMPLETE - PROXY REQUIRED
 
 Hypothesis: Proxy adds latency
 
 Test:
-- [ ] Try direct .ts URL (will fail CORS but let's confirm)
-- [ ] Check if starshare has CORS on any endpoints
-- [ ] Measure latency difference
+- [x] Try direct .ts URL - **NO CORS headers, proxy required**
+- [x] Check if starshare has CORS - **NO, but they use Cloudflare**
+- [x] Measure latency difference - **N/A, can't test direct**
+
+### Finding:
+Direct stream returns:
+```
+HTTP/2 200
+content-type: video/mp2t
+server: cloudflare
+```
+No `Access-Control-Allow-Origin` - browser blocks it. Proxy is mandatory.
+
+### Action Taken:
+Switched proxy to **Vercel Edge Runtime**:
+- Direct body passthrough (no manual chunk pumping)
+- Global edge network (lower latency)
+- No cold starts (always warm)
 
 ---
 
@@ -107,6 +122,9 @@ Hypothesis: HLS might work better than raw MPEG-TS
 | Nov 26, 14:30 | 1 | 3 min buffer was causing slow start | HIGH |
 | Nov 26, 14:30 | 1 | Proxy console.log on every chunk | LOW |
 | Nov 26, 14:30 | 1 | Service worker OK - not intercepting | NONE |
+| Nov 26, 15:35 | 3 | No CORS on direct stream - proxy required | BLOCKER |
+| Nov 26, 15:35 | 3 | Starshare uses Cloudflare CDN | INFO |
+| Nov 26, 15:35 | 3 | Switched to Edge Runtime - should be faster | HIGH |
 
 ---
 
