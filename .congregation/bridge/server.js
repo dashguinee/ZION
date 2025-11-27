@@ -328,6 +328,155 @@ app.post('/api/soussou/translate', (req, res) => {
   }
 });
 
+// POST /api/soussou/contribute - Add new word to lexicon
+app.post('/api/soussou/contribute', (req, res) => {
+  try {
+    const { word, variants, english, french, category, example_sentence, notes } = req.body;
+
+    if (!word || !english) {
+      return res.status(400).json({ error: 'word and english parameters required' });
+    }
+
+    const contribution = {
+      id: `contrib_${Date.now().toString(36)}${Math.random().toString(36).substr(2, 5)}`,
+      timestamp: new Date().toISOString(),
+      status: 'pending_review',
+      word: word,
+      variants: variants || [],
+      english: english,
+      french: french || '',
+      category: category || 'unknown',
+      example_sentence: example_sentence || '',
+      notes: notes || ''
+    };
+
+    // Add to lexicon in memory (will persist until server restart)
+    if (!soussouData.contributions) {
+      soussouData.contributions = [];
+    }
+    soussouData.contributions.push(contribution);
+
+    // Also add to lexicon words for immediate availability
+    soussouData.lexicon.words.push({
+      soussou: word,
+      english: english,
+      french: french || '',
+      category: category || 'unknown',
+      variants: variants || [],
+      frequency: 1,
+      examples: example_sentence ? [example_sentence] : []
+    });
+
+    console.log(`📝 New contribution: "${word}" = "${english}"`);
+
+    res.status(201).json({
+      id: contribution.id,
+      status: contribution.status,
+      message: 'Thank you! Your contribution has been added.',
+      word: word
+    });
+  } catch (error) {
+    console.error('Error adding contribution:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /api/corpus/add-sentence - Add new sentence to corpus
+app.post('/api/corpus/add-sentence', (req, res) => {
+  try {
+    const { soussou, french, english, verified } = req.body;
+
+    if (!soussou) {
+      return res.status(400).json({ error: 'soussou parameter required' });
+    }
+
+    const sentence = {
+      id: `sent_${Date.now().toString(36)}${Math.random().toString(36).substr(2, 5)}`,
+      timestamp: new Date().toISOString(),
+      soussou: soussou,
+      french: french || '',
+      english: english || '',
+      verified: verified || false
+    };
+
+    // Add to corpus in memory
+    if (!soussouData.corpus) {
+      soussouData.corpus = [];
+    }
+    soussouData.corpus.push(sentence);
+
+    console.log(`📝 New sentence: "${soussou}"`);
+
+    res.status(201).json({
+      success: true,
+      sentence_id: sentence.id,
+      message: 'Sentence added to corpus!'
+    });
+  } catch (error) {
+    console.error('Error adding sentence:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/corpus/search - Search corpus
+app.get('/api/corpus/search', (req, res) => {
+  try {
+    const { query } = req.query;
+
+    if (!query) {
+      return res.status(400).json({ error: 'query parameter required' });
+    }
+
+    const corpus = soussouData.corpus || [];
+    const results = corpus.filter(s =>
+      s.soussou?.toLowerCase().includes(query.toLowerCase()) ||
+      s.french?.toLowerCase().includes(query.toLowerCase()) ||
+      s.english?.toLowerCase().includes(query.toLowerCase())
+    );
+
+    res.json({
+      results: results,
+      count: results.length
+    });
+  } catch (error) {
+    console.error('Error searching corpus:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /api/pattern/detect - Detect grammar patterns
+app.post('/api/pattern/detect', (req, res) => {
+  try {
+    const { sentence } = req.body;
+
+    if (!sentence) {
+      return res.status(400).json({ error: 'sentence parameter required' });
+    }
+
+    // Simple pattern detection
+    const words = sentence.split(/\s+/);
+    const patterns = words.map(word => {
+      const entry = soussouData.lexicon.words?.find(w =>
+        w.soussou?.toLowerCase() === word.toLowerCase()
+      );
+      return {
+        word: word,
+        category: entry?.category || 'unknown',
+        found: !!entry
+      };
+    });
+
+    res.json({
+      sentence: sentence,
+      patterns: patterns,
+      confidence: patterns.filter(p => p.found).length / patterns.length
+    });
+  } catch (error) {
+    console.error('Error detecting pattern:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // ============== COLLABORATION API ROUTES ==============
 
 app.use('/api/collaborate', collaborateRoutes);
