@@ -687,12 +687,22 @@ class DashApp {
     console.log(`Playing ${type}:`, id, `Original format: ${extension}`)
 
     let streamUrl = ''
+    let finalExtension = extension
+
+    // Formats that browsers can't play natively
+    const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
 
     if (type === 'movie') {
-      // Movies: Always use MP4 - server handles format conversion
-      // Server redirects with CORS headers and serves the content
-      console.log('🎬 Using MP4 stream (server handles conversion)')
-      streamUrl = this.client.buildVODUrl(id, 'mp4')
+      // Check if format needs HLS transcoding
+      if (unsupportedFormats.includes(extension.toLowerCase())) {
+        console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode...`)
+        finalExtension = 'm3u8'
+        // Xtream Codes servers transcode MKV/AVI/FLV -> HLS on-the-fly
+      } else {
+        console.log('🎬 Using direct stream (MP4 compatible)')
+        finalExtension = 'mp4'
+      }
+      streamUrl = this.client.buildVODUrl(id, finalExtension)
     } else if (type === 'live') {
       // Live TV: Use MPEG-TS (.ts) format with mpegts.js
       console.log('🔴 Building Live TV MPEG-TS stream URL...')
@@ -707,10 +717,22 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    // Always request as MP4 - server handles format conversion
-    // The server redirects with CORS headers and serves the content
-    const streamUrl = this.client.buildSeriesUrl(episodeId, 'mp4')
-    console.log('📺 Using MP4 stream (server handles conversion):', streamUrl)
+    // Formats that browsers can't play natively
+    const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
+    let finalExtension = extension
+
+    // Check if format needs HLS transcoding
+    if (unsupportedFormats.includes(extension.toLowerCase())) {
+      console.log(`🔄 ${extension.toUpperCase()} episode - requesting HLS transcode...`)
+      finalExtension = 'm3u8'
+      // Xtream Codes servers transcode MKV/AVI/FLV -> HLS on-the-fly
+    } else {
+      console.log('📺 Using direct stream (MP4 compatible)')
+      finalExtension = 'mp4'
+    }
+
+    const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
+    console.log('📺 Stream URL:', streamUrl)
 
     this.closeModal()
     this.showVideoPlayer(streamUrl, 'series')
@@ -786,17 +808,33 @@ class DashApp {
         isLive: true,
         url: streamUrl
       }, {
-        // Optimization: reduce buffering for faster start
+        // Worker for better performance
         enableWorker: true,
-        enableStashBuffer: false,
-        stashInitialSize: 128,          // Smaller initial buffer (128KB)
+        workerForMSE: true,
+
+        // Buffer settings - balanced for stability + responsiveness
+        enableStashBuffer: true,
+        stashInitialSize: 384 * 1024,   // 384KB initial stash
+        autoCleanupSourceBuffer: true,
+        autoCleanupMaxBackwardDuration: 30,
+        autoCleanupMinBackwardDuration: 15,
+
+        // Lazy loading - moderate buffer
         lazyLoad: true,
-        lazyLoadMaxDuration: 30,        // Only 30 sec buffer (was 3 min!)
-        lazyLoadRecoverDuration: 10,
+        lazyLoadMaxDuration: 45,        // 45 sec buffer (good balance)
+        lazyLoadRecoverDuration: 15,
+
+        // Live stream optimization
+        liveBufferLatencyChasing: true,
+        liveBufferLatencyMaxLatency: 2.0,   // Allow 2 sec behind live
+        liveBufferLatencyMinRemain: 0.5,    // Keep 0.5 sec buffer min
+        liveSync: true,
+        liveSyncMaxLatency: 3,
+
+        // Seek type for live
         seekType: 'range',
-        liveBufferLatencyChasing: true, // Chase live edge
-        liveBufferLatencyMaxLatency: 1.5,
-        liveBufferLatencyMinRemain: 0.3
+        fixAudioTimestampGap: true,
+        accurateSeek: false,
       })
 
       this.mpegtsPlayer.attachMediaElement(video)
