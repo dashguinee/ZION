@@ -1609,28 +1609,29 @@ class DashApp {
 
         // Enable stash buffer for smooth decoding
         enableStashBuffer: true,
-        stashInitialSize: 512 * 1024,       // 512KB - bigger buffer for stability
+        stashInitialSize: 1024 * 1024,       // 1MB IO buffer - handles network jitter better
 
         // Auto cleanup to prevent memory buildup
         autoCleanupSourceBuffer: true,
-        autoCleanupMaxBackwardDuration: 30,  // Keep 30s for brief rewind
-        autoCleanupMinBackwardDuration: 10,
+        autoCleanupMaxBackwardDuration: 60,  // Keep 60s for rewind capability
+        autoCleanupMinBackwardDuration: 30,  // Clean when >30s behind
 
         // CRITICAL: lazyLoad must be FALSE for live streams!
         // "Abort connection if enough data" = BAD for live!
         // Live streams need CONTINUOUS data flow
         lazyLoad: false,
 
-        // Allow larger buffer for stability (5-10s behind live is fine)
+        // LATENCY CHASING - Only trigger when really necessary
+        // High minRemain was causing premature stalls!
         liveBufferLatencyChasing: true,
-        liveBufferLatencyMaxLatency: 10.0,   // Allow 10s behind live
-        liveBufferLatencyMinRemain: 3.0,     // Keep 3s min buffer (prevents stalls!)
+        liveBufferLatencyMaxLatency: 30.0,   // Allow up to 30s behind (very relaxed)
+        liveBufferLatencyMinRemain: 0.5,     // Only chase when buffer < 0.5s (default!)
 
-        // Gentle sync - don't speed up aggressively
+        // Gentle sync - prioritize smoothness over low latency
         liveSync: true,
-        liveSyncMaxLatency: 15.0,            // Only catch up if >15s behind
-        liveSyncTargetLatency: 5.0,          // Target 5s delay (smooth!)
-        liveSyncPlaybackRate: 1.05,          // Gentle 5% speedup
+        liveSyncMaxLatency: 45.0,            // Only catch up if >45s behind
+        liveSyncTargetLatency: 10.0,         // Target 10s delay (very smooth!)
+        liveSyncPlaybackRate: 1.02,          // Very gentle 2% speedup (was 5%)
 
         // Other settings
         seekType: 'range',
@@ -1647,7 +1648,10 @@ class DashApp {
       // This prevents the choppy "buffering in sequence" issue
       // ============================================
       let hasStartedPlaying = false
-      const MIN_BUFFER_SECONDS = 8  // Wait for 8 seconds of buffer before playing
+      let isRebuffering = false
+      const MIN_BUFFER_SECONDS = 10   // Wait for 10s buffer before initial play
+      const REBUFFER_THRESHOLD = 2    // If buffer drops below 2s, pause and rebuffer
+      const REBUFFER_TARGET = 6       // Rebuffer until we have 6s again
 
       const checkBufferAndPlay = () => {
         if (hasStartedPlaying) return
@@ -1742,17 +1746,58 @@ class DashApp {
         }
       }, { once: true })
 
-      // METRIC: Buffer events (stalls)
+      // ============================================
+      // SMART REBUFFERING: Pause and rebuild buffer on stalls
+      // Instead of choppy play/pause, we pause once and rebuild
+      // ============================================
       video.addEventListener('waiting', () => {
         metrics.bufferEvents++
         metrics.lastBufferStart = performance.now()
-        console.log(`📊 METRIC: Buffer stall #${metrics.bufferEvents}`)
+        console.log(`📊 Buffer stall #${metrics.bufferEvents}`)
+
+        // Check current buffer level
+        const buffered = video.buffered
+        if (buffered.length > 0) {
+          const bufferAhead = buffered.end(buffered.length - 1) - video.currentTime
+          console.log(`📊 Buffer at stall: ${bufferAhead.toFixed(1)}s`)
+
+          // If buffer is critically low, enter rebuffer mode
+          if (bufferAhead < REBUFFER_THRESHOLD && !isRebuffering) {
+            isRebuffering = true
+            video.pause()
+            console.log(`🔄 Entering rebuffer mode (need ${REBUFFER_TARGET}s)`)
+            if (loadingEl) {
+              loadingEl.style.display = 'flex'
+              loadingEl.innerHTML = `<div class="spinner"></div><div>Rebuffering... ${bufferAhead.toFixed(1)}s</div>`
+            }
+
+            // Check buffer until we have enough
+            const rebufferCheck = setInterval(() => {
+              const nowBuffered = video.buffered
+              if (nowBuffered.length > 0) {
+                const nowAhead = nowBuffered.end(nowBuffered.length - 1) - video.currentTime
+                if (loadingEl) {
+                  loadingEl.innerHTML = `<div class="spinner"></div><div>Rebuffering... ${nowAhead.toFixed(1)}s</div>`
+                }
+                console.log(`📊 Rebuffering: ${nowAhead.toFixed(1)}s / ${REBUFFER_TARGET}s`)
+
+                if (nowAhead >= REBUFFER_TARGET) {
+                  clearInterval(rebufferCheck)
+                  isRebuffering = false
+                  if (loadingEl) loadingEl.style.display = 'none'
+                  console.log(`✅ Rebuffer complete - resuming playback`)
+                  video.play().catch(() => {})
+                }
+              }
+            }, 500)
+          }
+        }
       })
 
       video.addEventListener('playing', () => {
         if (metrics.lastBufferStart) {
           const stallDuration = (performance.now() - metrics.lastBufferStart).toFixed(0)
-          console.log(`📊 METRIC: Stall duration: ${stallDuration}ms`)
+          console.log(`📊 Stall duration: ${stallDuration}ms`)
           metrics.lastBufferStart = null
         }
       })
