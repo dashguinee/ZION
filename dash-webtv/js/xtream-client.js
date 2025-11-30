@@ -179,19 +179,52 @@ class XtreamClient {
   }
 
   /**
+   * Detect if browser has native HLS support (no CORS issues!)
+   * - Safari macOS/iOS: Native HLS
+   * - ALL iOS browsers: Use WebKit engine = Native HLS
+   * - Android/Windows/Linux: No native HLS (need proxy)
+   */
+  hasNativeHLS() {
+    const ua = navigator.userAgent
+
+    // iOS detection - ALL iOS browsers use WebKit with native HLS!
+    const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+
+    // Safari on macOS (but not Chrome pretending to be Safari)
+    const isSafariMac = /Safari/.test(ua) && !/Chrome/.test(ua) && !/Chromium/.test(ua) && /Mac/.test(ua)
+
+    if (isIOS) {
+      console.log('📱 iOS detected - ALL browsers have native HLS!')
+      return true
+    }
+    if (isSafariMac) {
+      console.log('🍎 Safari macOS detected - native HLS!')
+      return true
+    }
+    return false
+  }
+
+  /**
    * Build playable URL for Live TV stream
-   * Uses MPEG-TS (.ts) format - works better than HLS for this provider
-   * Proxied via Cloudflare Worker (same network as Starshare = fast)
+   * HYBRID APPROACH:
+   * - iOS (all browsers) + Safari macOS: Direct HLS (.m3u8) - native support, no CORS needed!
+   * - Android/Windows/Linux: Proxied MPEG-TS (.ts) via Cloudflare
    */
   buildLiveStreamUrl(streamId, extension = 'ts') {
     if (!this.isAuthenticated) return ''
-    // Use .ts format (MPEG-TS) - confirmed working with mpegts.js
-    const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.ts`
 
-    // Use Cloudflare Worker proxy (same network as Starshare)
+    // iOS/Safari has native HLS support - can play .m3u8 directly without CORS!
+    if (this.hasNativeHLS()) {
+      const hlsUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.m3u8`
+      console.log(`🍎 Live TV URL (native HLS - no proxy!): ${hlsUrl}`)
+      return { url: hlsUrl, type: 'hls-native' }
+    }
+
+    // Android/Windows/Linux: Use MPEG-TS with Cloudflare proxy
+    const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.ts`
     const proxyUrl = `${this.streamProxy}/?url=${encodeURIComponent(directUrl)}`
-    console.log(`📡 Live TV URL (Cloudflare proxied): ${proxyUrl}`)
-    return proxyUrl
+    console.log(`📡 Live TV URL (Cloudflare proxied TS for non-Apple): ${proxyUrl}`)
+    return { url: proxyUrl, type: 'mpegts' }
   }
 
   // ============================================

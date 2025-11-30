@@ -1447,9 +1447,15 @@ class DashApp {
       }
       streamUrl = this.client.buildVODUrl(playableId, finalExtension)
     } else if (type === 'live') {
-      // Live TV: Use MPEG-TS (.ts) format with mpegts.js
-      console.log('🔴 Building Live TV MPEG-TS stream URL...')
-      streamUrl = this.client.buildLiveStreamUrl(id, 'ts')
+      // Live TV: Hybrid approach - Safari uses HLS, others use MPEG-TS
+      console.log('🔴 Building Live TV stream URL...')
+      const liveStream = this.client.buildLiveStreamUrl(id, 'ts')
+      streamUrl = liveStream.url
+      // Pass the stream type to player (hls-native or mpegts)
+      console.log(`📡 Live stream type: ${liveStream.type}`)
+      this.closeModal()
+      this.showVideoPlayer(streamUrl, type, liveStream.type)
+      return
     }
 
     console.log('Stream URL:', streamUrl)
@@ -1473,13 +1479,27 @@ class DashApp {
     this.showVideoPlayer(streamUrl, 'series')
   }
 
-  showVideoPlayer(streamUrl, type = 'movie') {
+  showVideoPlayer(streamUrl, type = 'movie', streamType = null) {
     console.log('🎬 Playing stream:', streamUrl)
 
-    // Detect stream type
-    const isMpegTS = streamUrl.includes('.ts') || type === 'live'
-    const isHLS = streamUrl.includes('.m3u8')
-    console.log('📹 Stream type:', isMpegTS ? 'MPEG-TS' : (isHLS ? 'HLS' : 'Direct'), '| URL:', streamUrl)
+    // Detect stream type - streamType overrides URL detection for live
+    let isMpegTS = false
+    let isHLS = false
+    let isSafariNativeHLS = false
+
+    if (streamType === 'hls-native') {
+      // Safari native HLS - direct video.src assignment
+      isSafariNativeHLS = true
+      console.log('🍎 Using Safari native HLS playback')
+    } else if (streamType === 'mpegts') {
+      isMpegTS = true
+      console.log('📡 Using MPEG-TS with mpegts.js')
+    } else {
+      // Fallback to URL detection for movies/series
+      isMpegTS = streamUrl.includes('.ts')
+      isHLS = streamUrl.includes('.m3u8')
+    }
+    console.log('📹 Stream type:', isSafariNativeHLS ? 'Safari-HLS' : (isMpegTS ? 'MPEG-TS' : (isHLS ? 'HLS' : 'Direct')))
 
     // Clean up any existing player
     this.closeVideoPlayer()
@@ -1510,13 +1530,42 @@ class DashApp {
       if (loadingEl) loadingEl.style.display = 'flex'
     })
 
-    if (isMpegTS) {
+    if (isSafariNativeHLS) {
+      // Safari native HLS - simply set src, browser handles everything
+      this.playSafariHLS(video, streamUrl, loadingEl)
+    } else if (isMpegTS) {
       this.playMpegTS(video, streamUrl, loadingEl)
     } else if (isHLS) {
       this.playHLS(video, streamUrl, loadingEl)
     } else {
       this.playDirect(video, streamUrl, loadingEl)
     }
+  }
+
+  /**
+   * Safari Native HLS Playback
+   * Safari has built-in HLS support - no JavaScript library needed!
+   * Direct video.src assignment bypasses CORS entirely
+   */
+  playSafariHLS(video, streamUrl, loadingEl) {
+    console.log('🍎 Safari native HLS playback:', streamUrl)
+
+    video.src = streamUrl
+
+    video.addEventListener('loadedmetadata', () => {
+      console.log('✅ Safari HLS metadata loaded')
+      video.play().catch(err => console.warn('Autoplay blocked:', err))
+    })
+
+    video.addEventListener('error', (e) => {
+      console.error('❌ Safari HLS error:', video.error)
+      if (loadingEl) loadingEl.innerHTML = '<div>Stream error. Try another channel.</div>'
+    })
+
+    // Show stream info
+    video.addEventListener('playing', () => {
+      console.log('🍎 Safari HLS playing successfully - NO PROXY NEEDED!')
+    })
   }
 
   playMpegTS(video, streamUrl, loadingEl) {
