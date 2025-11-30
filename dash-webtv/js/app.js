@@ -1342,6 +1342,12 @@ class DashApp {
       if (details?.episodes && Object.keys(details.episodes).length > 0) {
         const seasons = Object.keys(details.episodes).sort((a, b) => parseInt(a) - parseInt(b))
 
+        // DEBUG: Log first episode to see its structure
+        const firstSeason = seasons[0]
+        const firstEp = details.episodes[firstSeason]?.[0]
+        console.log('🔍 DEBUG - First episode object:', firstEp)
+        console.log('🔍 DEBUG - Episode keys:', firstEp ? Object.keys(firstEp) : 'N/A')
+
         modalContent = `
           <div class="series-episodes">
             ${seasons.map(seasonNum => {
