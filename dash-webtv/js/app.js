@@ -1602,33 +1602,35 @@ class DashApp {
         workerForMSE: true,
 
         // ============================================
-        // SMOOTH PLAYBACK MODE - BUFFER FIRST, THEN PLAY
-        // Web streaming needs buffer to compensate for:
-        // - Proxy latency
-        // - Network jitter
-        // - Transcoding overhead
+        // LIVE TV STREAMING - CONTINUOUS DATA FLOW
+        // Key: lazyLoad must be FALSE for live streams!
+        // lazyLoad aborts connection = causes loop/repeat
         // ============================================
 
-        // ENABLE large stash buffer for smooth playback
-        // Accumulate data before feeding to player
+        // Enable stash buffer for smooth decoding
         enableStashBuffer: true,
-        stashInitialSize: 1024 * 1024,      // 1MB initial buffer (big!)
+        stashInitialSize: 384 * 1024,       // 384KB - enough for smooth start
 
-        // Auto cleanup to prevent memory issues
+        // Auto cleanup to prevent memory buildup
         autoCleanupSourceBuffer: true,
-        autoCleanupMaxBackwardDuration: 60,  // Keep 60s for rewind
-        autoCleanupMinBackwardDuration: 30,
+        autoCleanupMaxBackwardDuration: 30,  // Keep 30s for brief rewind
+        autoCleanupMinBackwardDuration: 10,
 
-        // ENABLE lazy loading with large buffer
-        lazyLoad: true,
-        lazyLoadMaxDuration: 120,            // Buffer up to 2 minutes ahead
-        lazyLoadRecoverDuration: 30,         // Resume loading when <30s buffered
+        // CRITICAL: lazyLoad must be FALSE for live streams!
+        // "Abort connection if enough data" = BAD for live!
+        // Live streams need CONTINUOUS data flow
+        lazyLoad: false,
 
-        // DISABLE latency chasing - we WANT delay for smoothness
-        liveBufferLatencyChasing: false,
+        // Let latency build up a bit for smoothness (3-5s behind live)
+        liveBufferLatencyChasing: true,
+        liveBufferLatencyMaxLatency: 5.0,    // Allow 5s behind live
+        liveBufferLatencyMinRemain: 1.0,     // Keep 1s min buffer
 
-        // DISABLE live sync - let it buffer naturally
-        liveSync: false,
+        // Gentle sync - don't speed up aggressively
+        liveSync: true,
+        liveSyncMaxLatency: 8.0,             // Only catch up if >8s behind
+        liveSyncTargetLatency: 3.0,          // Target 3s delay
+        liveSyncPlaybackRate: 1.05,          // Gentle 5% speedup
 
         // Other settings
         seekType: 'range',
