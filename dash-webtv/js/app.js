@@ -1621,15 +1621,15 @@ class DashApp {
         // Live streams need CONTINUOUS data flow
         lazyLoad: false,
 
-        // Let latency build up a bit for smoothness (3-5s behind live)
+        // Allow larger buffer for stability (5-10s behind live is fine)
         liveBufferLatencyChasing: true,
-        liveBufferLatencyMaxLatency: 5.0,    // Allow 5s behind live
-        liveBufferLatencyMinRemain: 1.0,     // Keep 1s min buffer
+        liveBufferLatencyMaxLatency: 10.0,   // Allow 10s behind live
+        liveBufferLatencyMinRemain: 3.0,     // Keep 3s min buffer (prevents stalls!)
 
         // Gentle sync - don't speed up aggressively
         liveSync: true,
-        liveSyncMaxLatency: 8.0,             // Only catch up if >8s behind
-        liveSyncTargetLatency: 3.0,          // Target 3s delay
+        liveSyncMaxLatency: 15.0,            // Only catch up if >15s behind
+        liveSyncTargetLatency: 5.0,          // Target 5s delay (smooth!)
         liveSyncPlaybackRate: 1.05,          // Gentle 5% speedup
 
         // Other settings
