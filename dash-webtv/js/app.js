@@ -149,6 +149,16 @@ class DashApp {
     return items.filter(item => !item.is_adult)
   }
 
+  // Fix HTTP images for HTTPS site - proxy through our worker
+  fixImageUrl(url) {
+    if (!url) return '/assets/placeholder.svg'
+    // If it's HTTP, proxy it through our Cloudflare worker to avoid mixed content blocking
+    if (url.startsWith('http://')) {
+      return `https://dash-webtv-proxy.dash-webtv.workers.dev/?url=${encodeURIComponent(url)}`
+    }
+    return url
+  }
+
   getMovieById(id) {
     return this.localMovies?.find(m => String(m.stream_id) === String(id))
   }
@@ -1102,7 +1112,7 @@ class DashApp {
     }
 
     return items.map(item => {
-      const poster = item.stream_icon || item.cover || '/assets/placeholder.svg'
+      const poster = this.fixImageUrl(item.stream_icon || item.cover)
       const title = item.name || 'Untitled'
       const id = item.stream_id || item.series_id
 
@@ -1161,7 +1171,7 @@ class DashApp {
     }
 
     return items.map(item => {
-      const poster = item.stream_icon || item.cover || '/assets/placeholder.svg'
+      const poster = this.fixImageUrl(item.stream_icon || item.cover)
       const title = item.name || 'Untitled'
       const id = item.stream_id || item.series_id
       const year = item.year || item.releaseDate?.slice(0, 4) || ''
@@ -1236,7 +1246,6 @@ class DashApp {
                   <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/>
                 </svg>
               </div>
-              <div class="live-card-name">${name}</div>
             </div>
           ` : `
             <div class="live-card-fallback">
@@ -1246,7 +1255,6 @@ class DashApp {
                   <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/>
                 </svg>
               </div>
-              <div class="live-card-name">${name}</div>
             </div>
           `}
           <div class="live-card-overlay">
@@ -1255,6 +1263,7 @@ class DashApp {
               LIVE
             </div>
           </div>
+          <div class="live-card-name-bar">${name}</div>
         </div>
       `
     }).join('')
@@ -1304,7 +1313,7 @@ class DashApp {
     // Merge local info with API details
     const info = details?.info || {}
     const name = info.name || localInfo?.name || 'Untitled'
-    const cover = info.cover || localInfo?.cover || localInfo?.stream_icon || '/assets/placeholder.svg'
+    const cover = this.fixImageUrl(info.cover || localInfo?.cover || localInfo?.stream_icon)
     const plot = info.plot || localInfo?.plot || 'No description available.'
     const rating = info.rating || localInfo?.rating || ''
     const year = info.releaseDate?.slice(0,4) || localInfo?.year || ''

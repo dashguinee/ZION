@@ -1555,6 +1555,31 @@ a:focus-visible,
   overflow: hidden;
 }
 
+/* Channel name bar - always visible at bottom of card */
+.live-card-name-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 10px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.live-card:hover .live-card-name-bar {
+  opacity: 1;
+  background: linear-gradient(transparent, rgba(157, 78, 221, 0.95));
+  padding: 10px;
+}
+
 .live-card-badge {
   position: absolute;
   top: 10px;
