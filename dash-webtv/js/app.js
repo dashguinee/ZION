@@ -1243,9 +1243,29 @@ class DashApp {
   // ============================================
 
   async showDetails(id, type) {
-    console.log(`Showing details for ${type}:`, id)
+    console.log(`📖 Showing details for ${type}:`, id)
+
+    // Show loading in modal
+    this.elements.modalContainer.innerHTML = `
+      <div class="modal-overlay">
+        <div class="modal" style="display:flex;align-items:center;justify-content:center;min-height:300px;">
+          <div class="loading-container">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading ${type} details...</div>
+          </div>
+        </div>
+      </div>
+    `
 
     let details = null
+    let localInfo = null
+
+    // Get local info for fallback display
+    if (type === 'movie') {
+      localInfo = this.localMovies?.find(m => String(m.stream_id) === String(id))
+    } else if (type === 'series') {
+      localInfo = this.localSeries?.find(s => String(s.series_id) === String(id))
+    }
 
     try {
       if (type === 'movie') {
@@ -1253,55 +1273,84 @@ class DashApp {
       } else if (type === 'series') {
         details = await this.client.getSeriesInfo(id)
       }
+      console.log(`✅ Got ${type} details from API:`, details)
     } catch (error) {
-      console.error('Failed to load details:', error)
-      this.showError('Failed to load content details')
-      return
+      console.error(`❌ Failed to load ${type} details from API:`, error)
+      // Don't return - we can still show local info and allow play attempt
     }
 
-    const extension = details?.info?.container_extension || details?.movie_data?.container_extension || 'mp4'
+    // Merge local info with API details
+    const info = details?.info || {}
+    const name = info.name || localInfo?.name || 'Untitled'
+    const cover = info.cover || localInfo?.cover || localInfo?.stream_icon || '/assets/placeholder.svg'
+    const plot = info.plot || localInfo?.plot || 'No description available.'
+    const rating = info.rating || localInfo?.rating || ''
+    const year = info.releaseDate?.slice(0,4) || localInfo?.year || ''
+    const extension = info.container_extension || details?.movie_data?.container_extension || localInfo?.container_extension || 'mp4'
 
     let modalContent = ''
 
     if (type === 'movie') {
       modalContent = `
         <div class="modal-actions">
-          <button class="btn btn-primary" onclick="dashApp.playContent('${id}', 'movie', '${extension}')">
-            ▶️ Play Now
+          <button class="btn btn-primary btn-ripple" onclick="dashApp.playContent('${id}', 'movie', '${extension}')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" style="margin-right:8px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Play Now
           </button>
           <button class="btn btn-outline" onclick="dashApp.addToFavorites('${id}', 'movie')">
             ❤️ Add to Favorites
           </button>
         </div>
       `
-    } else if (type === 'series' && details?.episodes) {
-      const seasons = Object.keys(details.episodes).sort((a, b) => parseInt(a) - parseInt(b))
+    } else if (type === 'series') {
+      // Check if we got episodes from API
+      if (details?.episodes && Object.keys(details.episodes).length > 0) {
+        const seasons = Object.keys(details.episodes).sort((a, b) => parseInt(a) - parseInt(b))
 
-      modalContent = `
-        <div class="series-episodes">
-          ${seasons.map(seasonNum => {
-            const episodes = details.episodes[seasonNum]
-            return `
-              <div class="season-section">
-                <h3>Season ${seasonNum}</h3>
-                <div class="episode-list">
-                  ${episodes.map(ep => `
-                    <div class="episode-card" onclick="dashApp.playEpisode('${ep.id}', '${ep.container_extension || 'mp4'}')">
-                      <div class="episode-number">E${ep.episode_num}</div>
-                      <div class="episode-info">
-                        <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`}</div>
-                        <div class="episode-meta">${ep.duration || ''}</div>
+        modalContent = `
+          <div class="series-episodes">
+            ${seasons.map(seasonNum => {
+              const episodes = details.episodes[seasonNum]
+              return `
+                <div class="season-section">
+                  <h3>Season ${seasonNum}</h3>
+                  <div class="episode-list">
+                    ${episodes.map(ep => `
+                      <div class="episode-card" onclick="dashApp.playEpisode('${ep.id}', '${ep.container_extension || 'mp4'}')">
+                        <div class="episode-number">E${ep.episode_num}</div>
+                        <div class="episode-info">
+                          <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`}</div>
+                          <div class="episode-meta">${ep.duration || ''}</div>
+                        </div>
+                        <div class="episode-play">▶️</div>
                       </div>
-                      <div class="episode-play">▶️</div>
-                    </div>
-                  `).join('')}
+                    `).join('')}
+                  </div>
                 </div>
-              </div>
-            `
-          }).join('')}
-        </div>
-      `
+              `
+            }).join('')}
+          </div>
+        `
+      } else {
+        // No episodes from API - show message with retry option
+        const episodeCount = localInfo?.episode_count || 'Unknown'
+        modalContent = `
+          <div class="series-no-episodes">
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+              📺 This series has ${episodeCount} episodes.
+            </p>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+              Episodes are loaded from the streaming server. If they don't appear, try refreshing or check your connection.
+            </p>
+            <button class="btn btn-primary" onclick="dashApp.showDetails('${id}', 'series')">
+              🔄 Retry Loading Episodes
+            </button>
+          </div>
+        `
+      }
     }
+
+    const seasonCount = details?.episodes ? Object.keys(details.episodes).length : 0
 
     const modalHTML = `
       <div class="modal-overlay">
@@ -1309,21 +1358,21 @@ class DashApp {
           <button class="modal-close" onclick="dashApp.closeModal()">×</button>
 
           <div class="modal-header">
-            <img src="${details?.info?.cover || '/assets/placeholder.svg'}" alt="${details?.info?.name}"
+            <img src="${cover}" alt="${name}"
                  class="modal-header-bg" onerror="this.onerror=null;this.src='/assets/placeholder.svg'">
             <div class="modal-header-overlay">
-              <h1 class="modal-title">${details?.info?.name || 'Untitled'}</h1>
+              <h1 class="modal-title">${name}</h1>
               <div class="modal-meta">
-                ${details?.info?.releaseDate ? `<span>📅 ${details.info.releaseDate}</span>` : ''}
-                ${details?.info?.rating ? `<span>⭐ ${details.info.rating}</span>` : ''}
-                ${type === 'series' ? `<span>📺 ${Object.keys(details?.episodes || {}).length} Seasons</span>` : ''}
-                ${details?.info?.duration ? `<span>⏱️ ${details.info.duration}</span>` : ''}
+                ${year ? `<span>📅 ${year}</span>` : ''}
+                ${rating ? `<span>⭐ ${rating}</span>` : ''}
+                ${type === 'series' && seasonCount > 0 ? `<span>📺 ${seasonCount} Seasons</span>` : ''}
+                ${info.duration ? `<span>⏱️ ${info.duration}</span>` : ''}
               </div>
             </div>
           </div>
 
           <div class="modal-body">
-            <p class="modal-description">${details?.info?.plot || 'No description available.'}</p>
+            <p class="modal-description">${plot}</p>
             ${modalContent}
           </div>
         </div>
