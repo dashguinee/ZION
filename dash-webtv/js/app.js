@@ -1116,8 +1116,9 @@ class DashApp {
       const title = item.name || 'Untitled'
       const id = item.stream_id || item.series_id
 
+      const escapedTitle = title.replace(/'/g, "\\'")
       const clickHandler = type === 'live'
-        ? `dashApp.playContent('${id}', 'live')`
+        ? `dashApp.playLiveChannel('${id}', '${escapedTitle}')`
         : `dashApp.showDetails('${id}', '${type}')`
 
       return `
@@ -1233,8 +1234,11 @@ class DashApp {
       const colorIndex = name.charCodeAt(0) % colors.length
       const [color1, color2] = colors[colorIndex]
 
+      // Escape name for safe onclick
+      const escapedName = name.replace(/'/g, "\\'")
+
       return `
-        <div class="live-card ${hasLogo ? '' : 'live-card-glow'}" onclick="dashApp.playContent('${id}', 'live')"
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'}" onclick="dashApp.playLiveChannel('${id}', '${escapedName}')"
              style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
           ${hasLogo ? `
             <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
@@ -1447,25 +1451,33 @@ class DashApp {
       }
       streamUrl = this.client.buildVODUrl(playableId, finalExtension)
     } else if (type === 'live') {
-      // Live TV: Hybrid approach - Safari uses HLS, others use MPEG-TS
-      console.log('🔴 Building Live TV stream URL...')
-      const liveStream = this.client.buildLiveStreamUrl(id, 'ts')
-      streamUrl = liveStream.url
-
-      // Store stream ID for auto-retry on error
-      this.currentLiveStreamId = id
-      this._proxyRetried = false
-
-      // Pass the stream type to player (hls-native or mpegts)
-      console.log(`📡 Live stream type: ${liveStream.type}`)
-      this.closeModal()
-      this.showVideoPlayer(streamUrl, type, liveStream.type)
+      // Use playLiveChannel instead for proper channel name handling
+      this.playLiveChannel(id, 'Live Channel')
       return
     }
 
     console.log('Stream URL:', streamUrl)
     this.closeModal()
     this.showVideoPlayer(streamUrl, type)
+  }
+
+  /**
+   * Play a live TV channel with channel name for overlay
+   */
+  playLiveChannel(id, channelName) {
+    console.log(`🔴 Playing live channel: ${channelName} (ID: ${id})`)
+
+    // Store channel info for UI
+    this.currentLiveStreamId = id
+    this.currentChannelName = channelName
+    this._proxyRetried = false
+
+    // Build stream URL
+    const liveStream = this.client.buildLiveStreamUrl(id, 'ts')
+    console.log(`📡 Live stream type: ${liveStream.type}`)
+
+    this.closeModal()
+    this.showVideoPlayer(liveStream.url, 'live', liveStream.type, channelName)
   }
 
   playEpisode(episodeId, extension = 'mp4') {
@@ -1484,8 +1496,11 @@ class DashApp {
     this.showVideoPlayer(streamUrl, 'series')
   }
 
-  showVideoPlayer(streamUrl, type = 'movie', streamType = null) {
+  showVideoPlayer(streamUrl, type = 'movie', streamType = null, channelName = null) {
     console.log('🎬 Playing stream:', streamUrl)
+
+    // Store channel name for offline message
+    this.currentChannelName = channelName
 
     // Detect stream type - streamType overrides URL detection for live
     let isMpegTS = false
@@ -1509,10 +1524,17 @@ class DashApp {
     // Clean up any existing player
     this.closeVideoPlayer()
 
-    // Create player HTML
+    // Create player HTML with optional channel overlay
+    const channelOverlay = channelName ? `
+      <div class="channel-overlay">
+        <div class="channel-name">${channelName}</div>
+      </div>
+    ` : ''
+
     const playerHTML = `
       <div class="video-player-container">
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
+        ${channelOverlay}
         <div class="video-loading">
           <div class="spinner"></div>
           <div>Loading stream...</div>
@@ -1713,9 +1735,28 @@ class DashApp {
       // Also check on progress events
       video.addEventListener('progress', checkBufferAndPlay)
 
+      // STREAM TIMEOUT - If no data after 20s, stream is dead
+      const channelDisplayName = this.currentChannelName || 'This channel'
+      const streamTimeout = setTimeout(() => {
+        if (!hasStartedPlaying) {
+          console.error('❌ Stream timeout - no data received in 20s')
+          if (loadingEl) {
+            loadingEl.innerHTML = `
+              <div class="offline-message">
+                <div class="offline-icon">📡</div>
+                <div class="offline-text">Sorry, "${channelDisplayName}" is not live.</div>
+                <div class="offline-subtext">Try again later</div>
+              </div>
+            `
+          }
+          clearInterval(bufferCheckInterval)
+        }
+      }, 20000)
+
       // Clear interval when playing or on error
       video.addEventListener('playing', () => {
         clearInterval(bufferCheckInterval)
+        clearTimeout(streamTimeout)
         if (loadingEl) loadingEl.style.display = 'none'
       }, { once: true })
 
