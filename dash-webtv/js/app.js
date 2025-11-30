@@ -1489,13 +1489,32 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    // ALWAYS use MP4 extension - Starshare serves video/mp4 content-type
-    // HLS transcode (m3u8) returns empty content on this provider
-    // The server may still stream MKV content but browser handles it
-    const finalExtension = 'mp4'
-    console.log('📺 Using MP4 stream (server handles format)')
+    // Check if format is unsupported (MKV, AVI, etc.)
+    const unsupportedFormats = ['mkv', 'avi', 'wmv', 'flv', 'webm']
+    let finalId = episodeId
+    let finalExtension = extension
 
-    const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
+    if (unsupportedFormats.includes(extension.toLowerCase())) {
+      // Check if we have an MP4 alternative in our fallback map
+      const alternative = this.mkvToMp4Map?.[episodeId]
+      if (alternative) {
+        console.log(`✨ Found MP4 alternative! MKV ${episodeId} → MP4 ${alternative.mp4_id}`)
+        finalId = alternative.mp4_id
+        finalExtension = 'mp4'
+      } else {
+        // No MP4 alternative - use HLS transcode (m3u8)
+        // Starshare transcodes MKV→HLS on-the-fly for browser playback
+        console.log(`⚠️ ${extension.toUpperCase()} format - using HLS transcode...`)
+        finalExtension = 'm3u8'
+      }
+    } else {
+      // Already a supported format (mp4)
+      finalExtension = 'mp4'
+    }
+
+    console.log(`📺 Final: ID=${finalId}, Extension=${finalExtension}`)
+
+    const streamUrl = this.client.buildSeriesUrl(finalId, finalExtension)
     console.log('📺 Stream URL:', streamUrl)
 
     this.closeModal()
