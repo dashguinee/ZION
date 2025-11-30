@@ -46,6 +46,26 @@ class DashApp {
     // Video player instance (for proper cleanup)
     this.currentPlayer = null
 
+    // MKV to MP4 fallback mapping (loaded at init)
+    this.mkvToMp4Map = null
+
+    // Collections for Netflix-style UI
+    this.collections = null
+
+    // Local data cache (from JSON files)
+    this.localMovies = null
+    this.localSeries = null
+    this.localLive = null
+
+    // Adult content filter (default: hide)
+    this.showAdultContent = localStorage.getItem('dash_adult') === 'true'
+
+    // Hero banner rotation
+    this.heroSlideIndex = 0
+    this.heroSlideTimer = null
+    this.heroProgressTimer = null
+    this.heroSlideDuration = 8000 // 8 seconds per slide
+
     this.init()
   }
 
@@ -73,6 +93,9 @@ class DashApp {
     // Force service worker update if needed
     await this.ensureLatestServiceWorker()
 
+    // Load MKV to MP4 fallback mapping
+    await this.loadMkvToMp4Map()
+
     // Check for saved session
     const savedUser = localStorage.getItem('dash_user')
     const savedPass = localStorage.getItem('dash_pass')
@@ -84,6 +107,58 @@ class DashApp {
       console.log('🔒 No saved session, showing login')
       this.showLoginUI()
     }
+  }
+
+  async loadMkvToMp4Map() {
+    try {
+      const response = await fetch('data/mkv_to_mp4.json')
+      if (response.ok) {
+        this.mkvToMp4Map = await response.json()
+        console.log(`📀 Loaded MKV→MP4 fallback map: ${Object.keys(this.mkvToMp4Map).length} alternatives available`)
+      }
+    } catch (err) {
+      console.warn('⚠️ Could not load MKV fallback map:', err.message)
+      this.mkvToMp4Map = {}
+    }
+  }
+
+  async loadLocalData() {
+    console.log('📂 Loading local data files...')
+    try {
+      const [moviesRes, seriesRes, liveRes, collectionsRes] = await Promise.all([
+        fetch('data/movies.json'),
+        fetch('data/series.json'),
+        fetch('data/live.json'),
+        fetch('data/collections.json')
+      ])
+
+      this.localMovies = await moviesRes.json()
+      this.localSeries = await seriesRes.json()
+      this.localLive = await liveRes.json()
+      this.collections = await collectionsRes.json()
+
+      console.log(`✅ Loaded: ${this.localMovies.length} movies, ${this.localSeries.length} series, ${this.localLive.length} live channels`)
+      console.log(`📚 Loaded ${Object.keys(this.collections).length} collections`)
+    } catch (err) {
+      console.error('❌ Failed to load local data:', err)
+    }
+  }
+
+  filterAdultContent(items) {
+    if (this.showAdultContent) return items
+    return items.filter(item => !item.is_adult)
+  }
+
+  getMovieById(id) {
+    return this.localMovies?.find(m => String(m.stream_id) === String(id))
+  }
+
+  getCollectionMovies(collectionKey, limit = 20) {
+    const collection = this.collections?.[collectionKey]
+    if (!collection) return []
+
+    const movieIds = collection.movies.slice(0, limit)
+    return movieIds.map(id => this.getMovieById(id)).filter(Boolean)
   }
 
   showLoginUI() {
@@ -191,7 +266,10 @@ class DashApp {
   async loadAppContent() {
     console.log('📂 Loading app content...')
 
-    // Load categories
+    // Load local data files (movies, series, collections)
+    await this.loadLocalData()
+
+    // Load categories from API
     await this.loadCategories()
 
     // Render home page
@@ -243,17 +321,18 @@ class DashApp {
 
   async loadCategories() {
     try {
-      console.log('📂 Loading categories...')
+      console.log('📂 Loading categories from local files...')
 
-      const [vodCats, seriesCats, liveCats] = await Promise.all([
-        this.client.getVODCategories(),
-        this.client.getSeriesCategories(),
-        this.client.getLiveCategories()
+      // Load categories from local JSON files instead of API
+      const [vodCatsRes, seriesCatsRes, liveCatsRes] = await Promise.all([
+        fetch('data/vod_categories.json'),
+        fetch('data/series_categories.json'),
+        fetch('data/live_categories.json')
       ])
 
-      this.state.categories.vod = vodCats || []
-      this.state.categories.series = seriesCats || []
-      this.state.categories.live = liveCats || []
+      this.state.categories.vod = await vodCatsRes.json() || []
+      this.state.categories.series = await seriesCatsRes.json() || []
+      this.state.categories.live = await liveCatsRes.json() || []
 
       console.log(`✅ Loaded ${this.state.categories.vod.length} movie categories`)
       console.log(`✅ Loaded ${this.state.categories.series.length} series categories`)
@@ -301,6 +380,12 @@ class DashApp {
       case 'account':
         content = this.renderAccountPage()
         break
+      case 'collection':
+        content = this.renderCollectionPage()
+        break
+      case 'search':
+        content = this.renderSearchResults()
+        break
       default:
         content = '<div class="empty-state"><h2>Page not found</h2></div>'
     }
@@ -313,109 +398,410 @@ class DashApp {
   // ============================================
 
   async renderHomePage() {
-    let featuredMovies = []
-    let featuredSeries = []
-
-    try {
-      const [movies, series] = await Promise.all([
-        this.client.getVODStreams(),
-        this.client.getSeries()
-      ])
-
-      featuredMovies = (movies || []).slice(0, 20)
-      featuredSeries = (series || []).slice(0, 20)
-    } catch (error) {
-      console.error('Failed to load featured content:', error)
-    }
-
     const username = localStorage.getItem('dash_user') || 'User'
 
+    // Get hero movies for rotation (top 5 from different collections for variety)
+    const heroMovies = [
+      ...this.getCollectionMovies('top_rated', 2),
+      ...this.getCollectionMovies('new_releases', 2),
+      ...this.getCollectionMovies('blockbusters', 1)
+    ].filter(m => m?.stream_icon).slice(0, 5)
+
+    // Build collection rows with SVG icons
+    const collectionRows = [
+      { key: 'trending', title: 'Trending Now', icon: 'fire' },
+      { key: 'new_releases', title: 'New Releases', icon: 'star' },
+      { key: 'top_rated', title: 'Top Rated', icon: 'award' },
+      { key: 'blockbusters', title: 'Blockbusters', icon: 'zap' },
+      { key: 'genre_action', title: 'Action Movies', icon: 'target' },
+      { key: 'genre_comedy', title: 'Comedy', icon: 'smile' },
+      { key: 'genre_horror', title: 'Horror', icon: 'moon' },
+      { key: 'genre_drama', title: 'Drama', icon: 'heart' },
+      { key: 'genre_animation', title: 'Animation & Kids', icon: 'palette' },
+      { key: 'hidden_gems', title: 'Hidden Gems', icon: 'gem' },
+      { key: 'lang_english', title: 'English Movies', icon: 'globe' },
+      { key: 'lang_hindi', title: 'Bollywood', icon: 'film' },
+      { key: 'lang_tamil', title: 'Tamil Cinema', icon: 'video' },
+      { key: 'lang_korean', title: 'Korean Movies', icon: 'flag' },
+      { key: 'decade_2020s', title: '2020s Hits', icon: 'calendar' },
+      { key: 'decade_2010s', title: '2010s Classics', icon: 'clock' },
+    ]
+
+    // Schedule hero rotation after render
+    setTimeout(() => this.startHeroRotation(), 100)
+
     return `
-      <div class="fade-in">
-        <!-- Hero Banner -->
-        <div class="hero-banner">
-          <div class="hero-banner-overlay"></div>
-          <div class="hero-banner-content">
-            <h1 class="hero-banner-title">Welcome, ${username}!</h1>
-            <p class="hero-banner-description">
-              The African Super Hub - 57,000+ Movies, 14,000+ Series, and Live TV all in one place.
-            </p>
-            <div class="hero-banner-actions">
-              <button class="btn btn-primary" onclick="dashApp.navigate('movies')">
-                🎬 Browse Movies
-              </button>
-              <button class="btn btn-secondary" onclick="dashApp.navigate('series')">
-                📺 Browse Series
-              </button>
+      <div class="fade-in premium-home">
+        <!-- CINEMATIC HERO BANNER WITH AUTO-ROTATION -->
+        <div class="hero-cinematic" id="hero-cinematic">
+          <div class="hero-slides">
+            ${heroMovies.map((movie, index) => `
+              <div class="hero-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
+                <img src="${movie.stream_icon}" alt="${movie.name}" class="hero-bg"
+                     onerror="this.src='https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1920&q=80'">
+                <div class="hero-gradient hero-gradient-left"></div>
+                <div class="hero-gradient hero-gradient-bottom"></div>
+                <div class="hero-vignette"></div>
+                <div class="hero-content">
+                  <div class="hero-badge-premium">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    ${index === 0 ? 'TOP RATED' : index === 1 ? 'TRENDING' : 'FEATURED'}
+                  </div>
+                  <h1 class="hero-title-premium">${movie.name}</h1>
+                  <div class="hero-meta-premium">
+                    ${movie.year ? `<span class="hero-meta-item">${movie.year}</span>` : ''}
+                    ${movie.rating ? `<span class="hero-meta-item hero-meta-rating">★ ${movie.rating}</span>` : ''}
+                    ${movie.category_name ? `<span class="hero-meta-item">${movie.category_name}</span>` : ''}
+                  </div>
+                  <p class="hero-description-premium">${movie.plot || 'An incredible cinematic experience awaits. Dive into a world of stunning visuals and captivating storytelling.'}</p>
+                  <div class="hero-actions-premium">
+                    <button class="btn-play-premium btn-ripple" onclick="dashApp.playContent('${movie.stream_id}', 'movie')">
+                      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                      Play
+                    </button>
+                    <button class="btn-info-premium" onclick="dashApp.showDetails('${movie.stream_id}', 'movie')">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                      </svg>
+                      More Info
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Hero Navigation Dots -->
+          <div class="hero-dots">
+            ${heroMovies.map((_, index) => `
+              <button class="hero-dot ${index === 0 ? 'active' : ''}" data-dot="${index}" onclick="dashApp.goToHeroSlide(${index})"></button>
+            `).join('')}
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="hero-progress">
+            <div class="hero-progress-bar" id="hero-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- Collection Rows (Netflix Style) -->
+        ${collectionRows.map(row => {
+          const movies = this.filterAdultContent(this.getCollectionMovies(row.key, 20))
+          if (movies.length === 0) return ''
+          return `
+            <div class="collection-row">
+              <div class="collection-header">
+                <h2 class="collection-title">
+                  ${this.getCollectionIcon(row.icon)}
+                  ${row.title}
+                </h2>
+                <span class="collection-see-all" onclick="dashApp.showCollection('${row.key}')">
+                  See All
+                  <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
+              <div class="collection-carousel" data-collection="${row.key}">
+                <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('${row.key}', -1)">‹</button>
+                <div class="carousel-track">
+                  ${movies.map(movie => this.renderMovieCard(movie)).join('')}
+                </div>
+                <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('${row.key}', 1)">›</button>
+              </div>
             </div>
-          </div>
-        </div>
+          `
+        }).join('')}
 
-        <!-- Featured Movies -->
-        <div class="section">
-          <div class="section-header">
-            <h2 class="section-title">Featured Movies</h2>
-            <span class="section-link" onclick="dashApp.navigate('movies')">See all →</span>
+        <!-- Quick Links - Premium -->
+        <div class="quick-links">
+          <div class="quick-link-card" onclick="dashApp.navigate('movies')">
+            <div class="quick-link-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+                <line x1="7" y1="2" x2="7" y2="22"/>
+                <line x1="17" y1="2" x2="17" y2="22"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+              </svg>
+            </div>
+            <div class="quick-link-title">Movies</div>
+            <div class="quick-link-count">${this.localMovies?.length.toLocaleString() || '49,396'} Titles</div>
           </div>
-          <div class="content-grid">
-            ${this.renderContentGrid(featuredMovies, 'movie')}
+          <div class="quick-link-card" onclick="dashApp.navigate('series')">
+            <div class="quick-link-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="7" width="20" height="15" rx="2" ry="2"/>
+                <polyline points="17 2 12 7 7 2"/>
+              </svg>
+            </div>
+            <div class="quick-link-title">TV Series</div>
+            <div class="quick-link-count">${this.localSeries?.length.toLocaleString() || '14,483'} Shows</div>
           </div>
-        </div>
-
-        <!-- Featured Series -->
-        <div class="section">
-          <div class="section-header">
-            <h2 class="section-title">Featured Series</h2>
-            <span class="section-link" onclick="dashApp.navigate('series')">See all →</span>
-          </div>
-          <div class="content-grid">
-            ${this.renderContentGrid(featuredSeries, 'series')}
+          <div class="quick-link-card" onclick="dashApp.navigate('live')">
+            <div class="quick-link-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="2"/>
+                <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
+              </svg>
+            </div>
+            <div class="quick-link-title">Live TV</div>
+            <div class="quick-link-count">${this.localLive?.length.toLocaleString() || '10,452'} Channels</div>
           </div>
         </div>
       </div>
     `
   }
 
-  async renderMoviesPage() {
-    const categories = this.state.categories.vod
+  // Hero rotation functions
+  startHeroRotation() {
+    // Clear any existing timers
+    this.stopHeroRotation()
 
-    let movies = []
-    try {
-      movies = await this.client.getVODStreams(this.state.selectedCategory)
-    } catch (error) {
-      console.error('Failed to load movies:', error)
+    const slides = document.querySelectorAll('.hero-slide')
+    if (slides.length <= 1) return
+
+    // Start progress bar animation
+    this.animateHeroProgress()
+
+    // Start rotation timer
+    this.heroSlideTimer = setInterval(() => {
+      this.heroSlideIndex = (this.heroSlideIndex + 1) % slides.length
+      this.updateHeroSlide()
+      this.animateHeroProgress()
+    }, this.heroSlideDuration)
+  }
+
+  stopHeroRotation() {
+    if (this.heroSlideTimer) {
+      clearInterval(this.heroSlideTimer)
+      this.heroSlideTimer = null
     }
+    if (this.heroProgressTimer) {
+      cancelAnimationFrame(this.heroProgressTimer)
+      this.heroProgressTimer = null
+    }
+  }
+
+  animateHeroProgress() {
+    const progressBar = document.getElementById('hero-progress-bar')
+    if (!progressBar) return
+
+    const startTime = performance.now()
+    const duration = this.heroSlideDuration
+
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime
+      const progress = Math.min((elapsed / duration) * 100, 100)
+      progressBar.style.width = `${progress}%`
+
+      if (progress < 100) {
+        this.heroProgressTimer = requestAnimationFrame(animate)
+      }
+    }
+
+    progressBar.style.width = '0%'
+    this.heroProgressTimer = requestAnimationFrame(animate)
+  }
+
+  updateHeroSlide() {
+    const slides = document.querySelectorAll('.hero-slide')
+    const dots = document.querySelectorAll('.hero-dot')
+
+    slides.forEach((slide, index) => {
+      slide.classList.toggle('active', index === this.heroSlideIndex)
+    })
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === this.heroSlideIndex)
+    })
+  }
+
+  goToHeroSlide(index) {
+    this.heroSlideIndex = index
+    this.updateHeroSlide()
+
+    // Reset rotation timer
+    this.stopHeroRotation()
+    this.startHeroRotation()
+  }
+
+  getCollectionIcon(iconName) {
+    const icons = {
+      fire: '<svg class="collection-title-icon" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
+      star: '<svg class="collection-title-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+      award: '<svg class="collection-title-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>',
+      zap: '<svg class="collection-title-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+      target: '<svg class="collection-title-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+      smile: '<svg class="collection-title-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+      moon: '<svg class="collection-title-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+      heart: '<svg class="collection-title-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+      palette: '<svg class="collection-title-icon" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="0.5"/><circle cx="17.5" cy="10.5" r="0.5"/><circle cx="8.5" cy="7.5" r="0.5"/><circle cx="6.5" cy="12.5" r="0.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c0.926 0 1.648-0.746 1.648-1.688 0-0.437-0.18-0.835-0.437-1.125-0.29-0.289-0.438-0.652-0.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/></svg>',
+      gem: '<svg class="collection-title-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 22 22 7 12 2"/><polyline points="2 7 12 12 22 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>',
+      globe: '<svg class="collection-title-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+      film: '<svg class="collection-title-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>',
+      video: '<svg class="collection-title-icon" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+      flag: '<svg class="collection-title-icon" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>',
+      calendar: '<svg class="collection-title-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      clock: '<svg class="collection-title-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    }
+    return icons[iconName] || ''
+  }
+
+  renderMovieCard(movie) {
+    const poster = movie.stream_icon || '/assets/placeholder.svg'
+    const title = movie.name || 'Untitled'
+    const id = movie.stream_id
+    const year = movie.year || movie.releaseDate?.slice(0, 4) || ''
+
+    return `
+      <div class="movie-card" onclick="dashApp.showDetails('${id}', 'movie')">
+        <img src="${poster}" alt="${title}" class="movie-card-poster" loading="lazy"
+             onerror="this.onerror=null;this.src='/assets/placeholder.svg'">
+        <div class="movie-card-overlay">
+          <div class="movie-card-play">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+        <div class="movie-card-info">
+          <div class="movie-card-title">${title}${year ? ` (${year})` : ''}</div>
+          ${movie.rating ? `<div class="movie-card-rating">★ ${movie.rating}</div>` : ''}
+        </div>
+      </div>
+    `
+  }
+
+  scrollCarousel(collectionKey, direction) {
+    const carousel = document.querySelector(`[data-collection="${collectionKey}"] .carousel-track`)
+    if (carousel) {
+      const scrollAmount = 300 * direction
+      carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+    }
+  }
+
+  showCollection(collectionKey) {
+    const collection = this.collections?.[collectionKey]
+    if (!collection) return
+
+    // Store for rendering
+    this.currentCollection = collectionKey
+    this.navigate('collection')
+  }
+
+  renderCollectionPage() {
+    const collection = this.collections?.[this.currentCollection]
+    if (!collection) return '<div class="empty-state">Collection not found</div>'
+
+    const movies = this.filterAdultContent(
+      collection.movies.map(id => this.getMovieById(id)).filter(Boolean)
+    )
 
     return `
       <div class="fade-in">
-        <h1>🎬 Movies</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-          Browse through 57,000+ movies including the latest releases
-        </p>
+        <div class="page-header">
+          <button class="btn btn-back" onclick="dashApp.navigate('home')">← Back</button>
+          <h1>${collection.title}</h1>
+          <p class="page-description">${collection.description}</p>
+        </div>
+        <div class="content-grid">
+          ${this.renderContentGrid(movies, 'movie')}
+        </div>
+      </div>
+    `
+  }
 
-        <!-- Category Filter -->
-        <div class="category-filter">
-          <div class="category-chip ${!this.state.selectedCategory ? 'active' : ''}"
-               onclick="dashApp.filterByCategory(null, 'vod')">
-            All Movies
-          </div>
-          ${categories.map(cat => `
-            <div class="category-chip ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
-                 onclick="dashApp.filterByCategory('${cat.category_id}', 'vod')">
-              ${cat.category_name}
+  async renderMoviesPage() {
+    const categories = this.state.categories.vod || []
+
+    // Use local JSON data instead of API
+    let movies = this.localMovies || []
+
+    // Filter by category if selected
+    if (this.state.selectedCategory) {
+      movies = movies.filter(m => String(m.category_id) === String(this.state.selectedCategory))
+    }
+
+    // Filter adult content
+    movies = this.filterAdultContent(movies)
+
+    // Get category counts
+    const totalMovies = this.localMovies?.length || 0
+    const filteredCount = movies.length
+    const categoryCount = categories.length
+
+    return `
+      <div class="fade-in">
+        <!-- Premium Header -->
+        <div class="browse-header">
+          <div class="browse-title-row">
+            <div class="browse-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+                <line x1="7" y1="2" x2="7" y2="22"/>
+                <line x1="17" y1="2" x2="17" y2="22"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+              </svg>
             </div>
-          `).join('')}
+            <h1 class="browse-title">Movies</h1>
+          </div>
+
+          <div class="browse-stats">
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${totalMovies.toLocaleString()}</span>
+                <span class="browse-stat-label">Total Movies</span>
+              </div>
+            </div>
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${categoryCount}</span>
+                <span class="browse-stat-label">Categories</span>
+              </div>
+            </div>
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">2025</span>
+                <span class="browse-stat-label">Latest</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Premium Category Tabs -->
+        <div class="category-tabs-container">
+          <div class="category-tabs">
+            <div class="category-tab ${!this.state.selectedCategory ? 'active' : ''}"
+                 onclick="dashApp.filterByCategory(null, 'vod')">
+              All Movies
+            </div>
+            ${categories.slice(0, 30).map(cat => `
+              <div class="category-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
+                   onclick="dashApp.filterByCategory('${cat.category_id}', 'vod')">
+                ${cat.category_name}
+              </div>
+            `).join('')}
+          </div>
         </div>
 
         <!-- Movies Grid -->
-        <div class="content-grid">
-          ${this.renderContentGrid((movies || []).slice(0, 100), 'movie')}
+        <div class="browse-grid">
+          ${this.renderBrowseGrid((movies || []).slice(0, 100), 'movie')}
         </div>
 
         ${(movies || []).length > 100 ? `
-          <div class="text-center mt-lg">
-            <button class="btn btn-outline" onclick="dashApp.loadMore()">
-              Load More
+          <div class="load-more-container">
+            <button class="btn-load-more" onclick="dashApp.loadMore()">
+              Load More Movies
             </button>
           </div>
         ` : ''}
@@ -424,79 +810,193 @@ class DashApp {
   }
 
   async renderSeriesPage() {
-    const categories = this.state.categories.series
+    const categories = this.state.categories.series || []
 
-    let series = []
-    try {
-      series = await this.client.getSeries(this.state.selectedCategory)
-    } catch (error) {
-      console.error('Failed to load series:', error)
+    // Use local JSON data instead of API
+    let series = this.localSeries || []
+
+    // Filter by category if selected
+    if (this.state.selectedCategory) {
+      series = series.filter(s => String(s.category_id) === String(this.state.selectedCategory))
     }
+
+    // Filter adult content
+    series = this.filterAdultContent(series)
+
+    const totalSeries = this.localSeries?.length || 0
+    const categoryCount = categories.length
 
     return `
       <div class="fade-in">
-        <h1>📺 Series</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-          14,324 Series - Netflix, Prime, HBO Max and more
-        </p>
-
-        <!-- Category Filter -->
-        <div class="category-filter">
-          <div class="category-chip ${!this.state.selectedCategory ? 'active' : ''}"
-               onclick="dashApp.filterByCategory(null, 'series')">
-            All Series
-          </div>
-          ${categories.map(cat => `
-            <div class="category-chip ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
-                 onclick="dashApp.filterByCategory('${cat.category_id}', 'series')">
-              ${cat.category_name}
+        <!-- Premium Header -->
+        <div class="browse-header">
+          <div class="browse-title-row">
+            <div class="browse-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="7" width="20" height="15" rx="2" ry="2"/>
+                <polyline points="17 2 12 7 7 2"/>
+              </svg>
             </div>
-          `).join('')}
+            <h1 class="browse-title">TV Series</h1>
+          </div>
+
+          <div class="browse-stats">
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${totalSeries.toLocaleString()}</span>
+                <span class="browse-stat-label">Total Series</span>
+              </div>
+            </div>
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${categoryCount}</span>
+                <span class="browse-stat-label">Categories</span>
+              </div>
+            </div>
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">500K+</span>
+                <span class="browse-stat-label">Episodes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Premium Category Tabs -->
+        <div class="category-tabs-container">
+          <div class="category-tabs">
+            <div class="category-tab ${!this.state.selectedCategory ? 'active' : ''}"
+                 onclick="dashApp.filterByCategory(null, 'series')">
+              All Series
+            </div>
+            ${categories.slice(0, 30).map(cat => `
+              <div class="category-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
+                   onclick="dashApp.filterByCategory('${cat.category_id}', 'series')">
+                ${cat.category_name}
+              </div>
+            `).join('')}
+          </div>
         </div>
 
         <!-- Series Grid -->
-        <div class="content-grid">
-          ${this.renderContentGrid((series || []).slice(0, 100), 'series')}
+        <div class="browse-grid">
+          ${this.renderBrowseGrid((series || []).slice(0, 100), 'series')}
         </div>
+
+        ${(series || []).length > 100 ? `
+          <div class="load-more-container">
+            <button class="btn-load-more" onclick="dashApp.loadMore()">
+              Load More Series
+            </button>
+          </div>
+        ` : ''}
       </div>
     `
   }
 
   async renderLiveTVPage() {
-    const categories = this.state.categories.live
+    const categories = this.state.categories.live || []
 
-    let channels = []
-    try {
-      channels = await this.client.getLiveStreams(this.state.selectedCategory)
-    } catch (error) {
-      console.error('Failed to load live TV:', error)
+    // Use local JSON data instead of API
+    let channels = this.localLive || []
+
+    // Filter by category if selected
+    if (this.state.selectedCategory) {
+      channels = channels.filter(c => String(c.category_id) === String(this.state.selectedCategory))
     }
+
+    // Filter adult content
+    channels = this.filterAdultContent(channels)
+
+    const totalChannels = this.localLive?.length || 0
+    const categoryCount = categories.length
 
     return `
       <div class="fade-in">
-        <h1>📡 Live TV</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-          Watch live TV channels from around the world
-        </p>
-
-        <!-- Category Filter -->
-        <div class="category-filter">
-          <div class="category-chip ${!this.state.selectedCategory ? 'active' : ''}"
-               onclick="dashApp.filterByCategory(null, 'live')">
-            All Channels
-          </div>
-          ${categories.map(cat => `
-            <div class="category-chip ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
-                 onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
-              ${cat.category_name}
+        <!-- Premium Header -->
+        <div class="browse-header">
+          <div class="browse-title-row">
+            <div class="browse-icon live-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="2"/>
+                <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
+              </svg>
             </div>
-          `).join('')}
+            <h1 class="browse-title">Live TV</h1>
+            <div class="live-indicator">
+              <span class="live-dot-pulse"></span>
+              LIVE
+            </div>
+          </div>
+
+          <div class="browse-stats">
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${totalChannels.toLocaleString()}</span>
+                <span class="browse-stat-label">Channels</span>
+              </div>
+            </div>
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${categoryCount}</span>
+                <span class="browse-stat-label">Countries</span>
+              </div>
+            </div>
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">24/7</span>
+                <span class="browse-stat-label">Streaming</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Channels Grid -->
-        <div class="content-grid">
-          ${this.renderContentGrid((channels || []).slice(0, 100), 'live')}
+        <!-- Premium Category Tabs -->
+        <div class="category-tabs-container">
+          <div class="category-tabs">
+            <div class="category-tab ${!this.state.selectedCategory ? 'active' : ''}"
+                 onclick="dashApp.filterByCategory(null, 'live')">
+              All Channels
+            </div>
+            ${categories.slice(0, 40).map(cat => `
+              <div class="category-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
+                   onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
+                ${cat.category_name}
+              </div>
+            `).join('')}
+          </div>
         </div>
+
+        <!-- Live TV Grid with Glow Cards -->
+        <div class="live-grid">
+          ${this.renderLiveGrid((channels || []).slice(0, 120))}
+        </div>
+
+        ${(channels || []).length > 120 ? `
+          <div class="load-more-container">
+            <button class="btn-load-more" onclick="dashApp.loadMore()">
+              Load More Channels
+            </button>
+          </div>
+        ` : ''}
       </div>
     `
   }
@@ -506,24 +1006,60 @@ class DashApp {
 
     return `
       <div class="fade-in">
-        <h1>👤 Account</h1>
-
-        <div class="card p-lg mt-md">
-          <h3>Logged in as</h3>
-          <p style="color: var(--primary-purple); font-size: 1.5rem; font-weight: bold;">${username}</p>
+        <div class="page-title-row">
+          <svg class="page-title-icon" viewBox="0 0 24 24" fill="none" stroke="var(--primary-purple)" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <h1>Account</h1>
         </div>
 
-        <div class="card p-lg mt-md">
-          <h3>Subscription Status</h3>
-          <p style="color: var(--text-secondary);">Active</p>
-          <div class="badge badge-new mt-sm">Premium Access</div>
+        <div class="card glass p-lg mt-md">
+          <div class="account-section">
+            <svg class="account-icon" viewBox="0 0 24 24" fill="none" stroke="var(--primary-purple)" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <div>
+              <h3>Logged in as</h3>
+              <p style="color: var(--primary-purple); font-size: 1.5rem; font-weight: bold;">${username}</p>
+            </div>
+          </div>
         </div>
 
-        <div class="card p-lg mt-md">
-          <h3>Session</h3>
-          <button class="btn btn-outline" onclick="dashApp.logout()" style="margin-top: 1rem;">
-            🚪 Logout
-          </button>
+        <div class="card glass p-lg mt-md">
+          <div class="account-section">
+            <svg class="account-icon" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <div>
+              <h3>Subscription Status</h3>
+              <p style="color: var(--accent-green); font-weight: 600;">Active</p>
+              <div class="badge badge-new mt-sm">Premium Access</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass p-lg mt-md">
+          <div class="account-section">
+            <svg class="account-icon" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <div>
+              <h3>Session</h3>
+              <button class="btn btn-outline btn-ripple" onclick="dashApp.logout()" style="margin-top: 1rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                  <polyline points="16 17 21 12 16 7"/>
+                  <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     `
@@ -582,6 +1118,124 @@ class DashApp {
     }
 
     return badges
+  }
+
+  // Premium Browse Grid for Movies/Series pages
+  renderBrowseGrid(items, type) {
+    if (!items || items.length === 0) {
+      return `
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <div class="empty-state-title">No content found</div>
+          <div class="empty-state-description">Try selecting a different category</div>
+        </div>
+      `
+    }
+
+    return items.map(item => {
+      const poster = item.stream_icon || item.cover || '/assets/placeholder.svg'
+      const title = item.name || 'Untitled'
+      const id = item.stream_id || item.series_id
+      const year = item.year || item.releaseDate?.slice(0, 4) || ''
+      const rating = item.rating || item.rating_5based
+
+      return `
+        <div class="browse-card" onclick="dashApp.showDetails('${id}', '${type}')">
+          <div class="browse-card-poster-wrap">
+            <img src="${poster}" alt="${title}" class="browse-card-poster" loading="lazy"
+                 onerror="this.onerror=null;this.src='/assets/placeholder.svg'">
+            <div class="browse-card-overlay">
+              <div class="browse-card-play">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+            ${rating ? `<div class="browse-card-rating">★ ${parseFloat(rating).toFixed(1)}</div>` : ''}
+          </div>
+          <div class="browse-card-info">
+            <div class="browse-card-title">${title}</div>
+            ${year ? `<div class="browse-card-year">${year}</div>` : ''}
+          </div>
+        </div>
+      `
+    }).join('')
+  }
+
+  // Premium Live TV Grid with Glow Cards
+  renderLiveGrid(channels) {
+    if (!channels || channels.length === 0) {
+      return `
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="2"/>
+              <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
+            </svg>
+          </div>
+          <div class="empty-state-title">No channels found</div>
+          <div class="empty-state-description">Try selecting a different category</div>
+        </div>
+      `
+    }
+
+    return channels.map(channel => {
+      const logo = channel.stream_icon
+      const name = channel.name || 'Unknown Channel'
+      const id = channel.stream_id
+      const hasLogo = logo && !logo.includes('placeholder')
+
+      // Generate a deterministic color based on channel name
+      const colors = [
+        ['#9d4edd', '#3a86ff'],  // Purple to Blue
+        ['#ff6b6b', '#feca57'],  // Red to Yellow
+        ['#00d9ff', '#9d4edd'],  // Cyan to Purple
+        ['#48dbfb', '#10ac84'],  // Light Blue to Green
+        ['#ff9f43', '#ee5a24'],  // Orange to Red
+        ['#00b894', '#00cec9'],  // Green to Teal
+      ]
+      const colorIndex = name.charCodeAt(0) % colors.length
+      const [color1, color2] = colors[colorIndex]
+
+      return `
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'}" onclick="dashApp.playContent('${id}', 'live')"
+             style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
+          ${hasLogo ? `
+            <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
+                 onerror="this.parentElement.classList.add('live-card-glow');this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="live-card-fallback" style="display:none;">
+              <div class="live-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="2"/>
+                  <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/>
+                </svg>
+              </div>
+              <div class="live-card-name">${name}</div>
+            </div>
+          ` : `
+            <div class="live-card-fallback">
+              <div class="live-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="2"/>
+                  <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/>
+                </svg>
+              </div>
+              <div class="live-card-name">${name}</div>
+            </div>
+          `}
+          <div class="live-card-overlay">
+            <div class="live-badge">
+              <span class="live-dot"></span>
+              LIVE
+            </div>
+          </div>
+        </div>
+      `
+    }).join('')
   }
 
   // ============================================
@@ -688,21 +1342,30 @@ class DashApp {
 
     let streamUrl = ''
     let finalExtension = extension
+    let playableId = id
 
     // Formats that browsers can't play natively
     const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
 
     if (type === 'movie') {
-      // Check if format needs HLS transcoding
+      // Check if format needs special handling
       if (unsupportedFormats.includes(extension.toLowerCase())) {
-        console.log(`🔄 ${extension.toUpperCase()} detected - requesting HLS transcode...`)
-        finalExtension = 'm3u8'
-        // Xtream Codes servers transcode MKV/AVI/FLV -> HLS on-the-fly
+        // FIRST: Check if we have an MP4 alternative for this MKV
+        const alternative = this.mkvToMp4Map?.[id]
+        if (alternative) {
+          console.log(`✨ Found MP4 alternative! MKV ${id} → MP4 ${alternative.mp4_id} (${alternative.name})`)
+          playableId = alternative.mp4_id
+          finalExtension = 'mp4'
+        } else {
+          // No alternative - try HLS transcode (usually fails but worth trying)
+          console.log(`⚠️ ${extension.toUpperCase()} detected, no MP4 alternative - trying HLS transcode...`)
+          finalExtension = 'm3u8'
+        }
       } else {
         console.log('🎬 Using direct stream (MP4 compatible)')
         finalExtension = 'mp4'
       }
-      streamUrl = this.client.buildVODUrl(id, finalExtension)
+      streamUrl = this.client.buildVODUrl(playableId, finalExtension)
     } else if (type === 'live') {
       // Live TV: Use MPEG-TS (.ts) format with mpegts.js
       console.log('🔴 Building Live TV MPEG-TS stream URL...')
