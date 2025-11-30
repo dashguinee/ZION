@@ -454,7 +454,7 @@ class DashApp {
           <div class="hero-slides">
             ${heroMovies.map((movie, index) => `
               <div class="hero-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-                <img src="${movie.stream_icon}" alt="${movie.name}" class="hero-bg"
+                <img src="${this.fixImageUrl(movie.stream_icon)}" alt="${movie.name}" class="hero-bg"
                      onerror="this.src='https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1920&q=80'">
                 <div class="hero-gradient hero-gradient-left"></div>
                 <div class="hero-gradient hero-gradient-bottom"></div>
@@ -667,7 +667,7 @@ class DashApp {
   }
 
   renderMovieCard(movie) {
-    const poster = movie.stream_icon || '/assets/placeholder.svg'
+    const poster = this.fixImageUrl(movie.stream_icon)
     const title = movie.name || 'Untitled'
     const id = movie.stream_id
     const year = movie.year || movie.releaseDate?.slice(0, 4) || ''
@@ -1216,10 +1216,10 @@ class DashApp {
     }
 
     return channels.map(channel => {
-      const logo = channel.stream_icon
+      const logo = this.fixImageUrl(channel.stream_icon)
       const name = channel.name || 'Unknown Channel'
       const id = channel.stream_id
-      const hasLogo = logo && !logo.includes('placeholder')
+      const hasLogo = channel.stream_icon && !channel.stream_icon.includes('placeholder')
 
       // Generate a deterministic color based on channel name
       const colors = [

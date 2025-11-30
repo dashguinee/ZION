@@ -158,18 +158,30 @@ class XtreamClient {
 
   /**
    * Build playable URL for VOD content
+   * Proxied via Cloudflare Worker for reliability
    */
   buildVODUrl(vodId, extension = 'mp4') {
     if (!this.isAuthenticated) return ''
-    return `${this.baseUrl}/movie/${this.username}/${this.password}/${vodId}.${extension}`
+    const directUrl = `${this.baseUrl}/movie/${this.username}/${this.password}/${vodId}.${extension}`
+
+    // Proxy through Cloudflare worker for better reliability
+    const proxyUrl = `${this.streamProxy}/?url=${encodeURIComponent(directUrl)}`
+    console.log(`🎬 Movie URL (Cloudflare proxied): ${proxyUrl}`)
+    return proxyUrl
   }
 
   /**
    * Build playable URL for Series episode
+   * Proxied via Cloudflare Worker for reliability
    */
   buildSeriesUrl(episodeId, extension = 'mp4') {
     if (!this.isAuthenticated) return ''
-    return `${this.baseUrl}/series/${this.username}/${this.password}/${episodeId}.${extension}`
+    const directUrl = `${this.baseUrl}/series/${this.username}/${this.password}/${episodeId}.${extension}`
+
+    // Proxy through Cloudflare worker for better reliability
+    const proxyUrl = `${this.streamProxy}/?url=${encodeURIComponent(directUrl)}`
+    console.log(`📺 Series URL (Cloudflare proxied): ${proxyUrl}`)
+    return proxyUrl
   }
 
   /**
