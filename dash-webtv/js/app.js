@@ -390,6 +390,9 @@ class DashApp {
       case 'search':
         content = this.renderSearchResults()
         break
+      case 'favorites':
+        content = this.renderFavoritesPage()
+        break
       default:
         content = '<div class="empty-state"><h2>Page not found</h2></div>'
     }
@@ -1028,6 +1031,21 @@ class DashApp {
               <h3>Logged in as</h3>
               <p style="color: var(--primary-purple); font-size: 1.5rem; font-weight: bold;">${username}</p>
             </div>
+          </div>
+        </div>
+
+        <div class="card glass p-lg mt-md" onclick="dashApp.navigate('favorites')" style="cursor: pointer;">
+          <div class="account-section">
+            <svg class="account-icon" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            <div style="flex:1;">
+              <h3>My Favorites</h3>
+              <p style="color: var(--text-secondary);">${this.loadFavorites().length} saved items</p>
+            </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
           </div>
         </div>
 
@@ -1876,6 +1894,79 @@ class DashApp {
     `
   }
 
+  renderFavoritesPage() {
+    const favorites = this.loadFavorites()
+
+    // Get actual items from favorites
+    const movieFavorites = favorites
+      .filter(f => f.type === 'movie')
+      .map(f => this.localMovies?.find(m => String(m.stream_id) === String(f.id)))
+      .filter(Boolean)
+
+    const seriesFavorites = favorites
+      .filter(f => f.type === 'series')
+      .map(f => this.localSeries?.find(s => String(s.series_id) === String(f.id)))
+      .filter(Boolean)
+
+    const totalFavorites = movieFavorites.length + seriesFavorites.length
+
+    return `
+      <div class="fade-in">
+        <div class="browse-header">
+          <div class="browse-title-row">
+            <div class="browse-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);">
+              <svg viewBox="0 0 24 24" fill="white">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <h1 class="browse-title">My Favorites</h1>
+          </div>
+          <div class="browse-stats">
+            <div class="browse-stat">
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${totalFavorites}</span>
+                <span class="browse-stat-label">Saved Items</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        ${totalFavorites === 0 ? `
+          <div class="empty-state">
+            <div class="empty-state-icon">❤️</div>
+            <div class="empty-state-title">No favorites yet</div>
+            <div class="empty-state-description">Start adding movies and series to your favorites!</div>
+            <button class="btn btn-primary" onclick="dashApp.navigate('movies')" style="margin-top: 1.5rem;">
+              Browse Movies
+            </button>
+          </div>
+        ` : ''}
+
+        ${movieFavorites.length > 0 ? `
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">🎬 Movies (${movieFavorites.length})</h2>
+            </div>
+            <div class="browse-grid">
+              ${this.renderBrowseGrid(movieFavorites, 'movie')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${seriesFavorites.length > 0 ? `
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">📺 Series (${seriesFavorites.length})</h2>
+            </div>
+            <div class="browse-grid">
+              ${this.renderBrowseGrid(seriesFavorites, 'series')}
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    `
+  }
+
   // Pagination state
   loadMoreOffset = 100
 
@@ -1898,14 +1989,37 @@ class DashApp {
       const updated = favorites.filter(f => !(f.id === id && f.type === type))
       localStorage.setItem('dash_favorites', JSON.stringify(updated))
       console.log('💔 Removed from favorites:', id, type)
-      alert('Removed from favorites')
+      this.showToast('Removed from favorites', 'info')
     } else {
       // Add to favorites
       favorites.push({ id, type, addedAt: Date.now() })
       localStorage.setItem('dash_favorites', JSON.stringify(favorites))
       console.log('❤️ Added to favorites:', id, type)
-      alert('Added to favorites!')
+      this.showToast('Added to favorites!', 'success')
     }
+  }
+
+  showToast(message, type = 'info') {
+    // Remove existing toast
+    const existing = document.querySelector('.toast')
+    if (existing) existing.remove()
+
+    const toast = document.createElement('div')
+    toast.className = `toast toast-${type}`
+    toast.innerHTML = `
+      <span class="toast-icon">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
+      <span class="toast-message">${message}</span>
+    `
+    document.body.appendChild(toast)
+
+    // Trigger animation
+    setTimeout(() => toast.classList.add('show'), 10)
+
+    // Auto remove
+    setTimeout(() => {
+      toast.classList.remove('show')
+      setTimeout(() => toast.remove(), 300)
+    }, 3000)
   }
 
   loadFavorites() {
