@@ -1592,66 +1592,92 @@ class DashApp {
     if (typeof mpegts !== 'undefined' && mpegts.getFeatureList().mseLivePlayback) {
       console.log('✅ mpegts.js supported - using it')
 
+      // ============================================
+      // PERFECTION MODE - MPEGTS.JS CONFIGURATION
+      // Every setting pushed to theoretical limits
+      // ============================================
       this.mpegtsPlayer = mpegts.createPlayer({
-        type: 'mse',
-        isLive: true,
-        url: streamUrl
+        type: 'mse',        // MediaSource Extensions mode
+        isLive: true,       // Critical: enables live-specific optimizations
+        url: streamUrl,
+        hasVideo: true,
+        hasAudio: true,
       }, {
-        // Worker for better performance
-        enableWorker: true,
-        workerForMSE: true,
+        // ============================================
+        // WORKER THREADS - Maximum CPU efficiency
+        // ============================================
+        enableWorker: true,           // Transmuxing in dedicated thread
+        workerForMSE: true,           // MSE operations in worker too
 
         // ============================================
-        // LIVE TV STREAMING - CONTINUOUS DATA FLOW
-        // Key: lazyLoad must be FALSE for live streams!
-        // lazyLoad aborts connection = causes loop/repeat
+        // IO BUFFER - The key to smooth streaming
+        // Larger = more resilient to network jitter
+        // Too large = memory waste + latency
         // ============================================
-
-        // Enable stash buffer for smooth decoding
         enableStashBuffer: true,
-        stashInitialSize: 1024 * 1024,       // 1MB IO buffer - handles network jitter better
+        stashInitialSize: 2 * 1024 * 1024,   // 2MB - optimal for HD streams
 
-        // Auto cleanup to prevent memory buildup
+        // ============================================
+        // SOURCE BUFFER MANAGEMENT
+        // Keep enough for rewind, clean old data
+        // ============================================
         autoCleanupSourceBuffer: true,
-        autoCleanupMaxBackwardDuration: 60,  // Keep 60s for rewind capability
-        autoCleanupMinBackwardDuration: 30,  // Clean when >30s behind
+        autoCleanupMaxBackwardDuration: 120,  // Keep 2min for rewind
+        autoCleanupMinBackwardDuration: 60,   // Start cleanup at 1min
 
-        // CRITICAL: lazyLoad must be FALSE for live streams!
-        // "Abort connection if enough data" = BAD for live!
-        // Live streams need CONTINUOUS data flow
+        // ============================================
+        // CRITICAL: CONTINUOUS DATA FLOW
+        // lazyLoad = false means NEVER abort connection
+        // This is THE key for live streaming
+        // ============================================
         lazyLoad: false,
+        deferLoadAfterSourceOpen: false,      // Start loading immediately
 
-        // LATENCY CHASING - Only trigger when really necessary
-        // High minRemain was causing premature stalls!
+        // ============================================
+        // LATENCY CHASING - Only for emergencies
+        // We want smooth playback, not low latency
+        // ============================================
         liveBufferLatencyChasing: true,
-        liveBufferLatencyMaxLatency: 30.0,   // Allow up to 30s behind (very relaxed)
-        liveBufferLatencyMinRemain: 0.5,     // Only chase when buffer < 0.5s (default!)
+        liveBufferLatencyChasingOnPaused: false,  // Don't chase when paused
+        liveBufferLatencyMaxLatency: 60.0,        // Allow 1 minute behind!
+        liveBufferLatencyMinRemain: 0.3,          // Chase only when < 0.3s
 
-        // Gentle sync - prioritize smoothness over low latency
+        // ============================================
+        // LIVE SYNC - Gentle catch-up
+        // Only kicks in when really far behind
+        // ============================================
         liveSync: true,
-        liveSyncMaxLatency: 45.0,            // Only catch up if >45s behind
-        liveSyncTargetLatency: 10.0,         // Target 10s delay (very smooth!)
-        liveSyncPlaybackRate: 1.02,          // Very gentle 2% speedup (was 5%)
+        liveSyncMaxLatency: 90.0,          // Only sync if >90s behind
+        liveSyncTargetLatency: 15.0,       // Target 15s delay (very smooth)
+        liveSyncPlaybackRate: 1.01,        // 1% speedup (imperceptible)
 
-        // Other settings
-        seekType: 'range',
-        fixAudioTimestampGap: true,
-        accurateSeek: false,
-        reuseRedirectedURL: true,
+        // ============================================
+        // AUDIO/VIDEO SYNC
+        // ============================================
+        fixAudioTimestampGap: true,        // Fill gaps to prevent desync
+        accurateSeek: false,               // Faster seeking (keyframe only)
+
+        // ============================================
+        // HTTP SETTINGS
+        // ============================================
+        seekType: 'range',                 // Use Range requests
+        reuseRedirectedURL: true,          // Cache redirects
+        referrerPolicy: 'no-referrer',     // Privacy
       })
 
       this.mpegtsPlayer.attachMediaElement(video)
       this.mpegtsPlayer.load()
 
       // ============================================
-      // SMART BUFFERING: Wait for enough data before playing
-      // This prevents the choppy "buffering in sequence" issue
+      // PERFECTION BUFFERING STRATEGY
+      // Build massive buffer upfront, aggressive rebuffer on stalls
+      // Philosophy: One long wait > many short stutters
       // ============================================
       let hasStartedPlaying = false
       let isRebuffering = false
-      const MIN_BUFFER_SECONDS = 10   // Wait for 10s buffer before initial play
-      const REBUFFER_THRESHOLD = 2    // If buffer drops below 2s, pause and rebuffer
-      const REBUFFER_TARGET = 6       // Rebuffer until we have 6s again
+      const MIN_BUFFER_SECONDS = 15   // Wait for 15s before playing (was 10)
+      const REBUFFER_THRESHOLD = 1    // Rebuffer when < 1s (more aggressive)
+      const REBUFFER_TARGET = 8       // Rebuild to 8s (was 6)
 
       const checkBufferAndPlay = () => {
         if (hasStartedPlaying) return
@@ -1702,13 +1728,33 @@ class DashApp {
         // Don't auto-play here - let buffer check handle it
       })
 
-      // METRIC: Track statistics
+      // METRIC: Track statistics + ADAPTIVE NETWORK MONITORING
+      let networkSpeedSamples = []
+      const MAX_SAMPLES = 10  // Rolling average of last 10 samples
+
       this.mpegtsPlayer.on(mpegts.Events.STATISTICS_INFO, (stats) => {
         metrics.bytesReceived = stats.totalBytes || 0
-        const speedKbps = stats.speed ? (stats.speed / 1024).toFixed(1) : 0
-        // Update UI with live stats (optional debug)
+        const speedKbps = stats.speed ? stats.speed / 1024 : 0
+
+        // Track rolling average of network speed
+        if (speedKbps > 0) {
+          networkSpeedSamples.push(speedKbps)
+          if (networkSpeedSamples.length > MAX_SAMPLES) {
+            networkSpeedSamples.shift()
+          }
+
+          const avgSpeed = networkSpeedSamples.reduce((a, b) => a + b, 0) / networkSpeedSamples.length
+          metrics.avgSpeedKbps = avgSpeed
+
+          // Debug: Log speed warnings
+          if (avgSpeed < 500 && networkSpeedSamples.length >= 5) {
+            console.warn(`⚠️ Low network speed: ${avgSpeed.toFixed(0)} KB/s - expect buffering`)
+          }
+        }
+
+        // Debug mode logging
         if (window.DASH_DEBUG) {
-          console.log(`📊 Speed: ${speedKbps} KB/s | Buffered: ${stats.videoRange?.end || 0}s`)
+          console.log(`📊 Speed: ${speedKbps.toFixed(0)} KB/s | Avg: ${(metrics.avgSpeedKbps || 0).toFixed(0)} KB/s`)
         }
       })
 

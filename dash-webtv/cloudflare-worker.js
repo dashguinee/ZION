@@ -1,99 +1,118 @@
 /**
- * DASH⚡ Cloudflare Worker - Live Stream Proxy
+ * DASH⚡ Cloudflare Worker - Live Stream Proxy (PERFECTION MODE)
  *
- * Optimized for continuous MPEG-TS live streams.
- * - TransformStream keeps connection alive
- * - Same Cloudflare network as Starshare = minimal latency
- * - No buffering/caching for real-time streaming
+ * Maximum optimization for continuous MPEG-TS live streams:
+ * - Direct passthrough (zero processing overhead)
+ * - Chunked transfer encoding for immediate data flow
+ * - No caching, no buffering, no transformation
+ * - Connection keep-alive with upstream
  *
  * Deploy: npx wrangler deploy
  */
+
+// Shared CORS headers
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
+  'Access-Control-Allow-Headers': '*',
+  'Access-Control-Expose-Headers': '*',
+  'Access-Control-Max-Age': '86400',
+}
 
 export default {
   async fetch(request) {
     const url = new URL(request.url)
     const streamUrl = url.searchParams.get('url')
 
-    // CORS preflight - fast response
+    // CORS preflight - instant response
     if (request.method === 'OPTIONS') {
-      return new Response(null, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, OPTIONS',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Max-Age': '86400',
-        }
+      return new Response(null, { headers: CORS_HEADERS })
+    }
+
+    // Health check endpoint
+    if (url.pathname === '/health') {
+      return new Response(JSON.stringify({ status: 'ok', timestamp: Date.now() }), {
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS }
       })
     }
 
     if (!streamUrl) {
       return new Response(JSON.stringify({ error: 'Missing url parameter' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS }
       })
     }
 
     try {
       const decodedUrl = decodeURIComponent(streamUrl)
 
-      // Fetch upstream with streaming optimizations
+      // PERFECTION: Fetch with maximum streaming optimizations
       const response = await fetch(decodedUrl, {
         headers: {
-          'User-Agent': 'DASH-WebTV/1.0',
+          'User-Agent': 'DASH-WebTV/2.0',
           'Accept': '*/*',
+          'Accept-Encoding': 'identity',  // No compression - raw bytes for speed
           'Connection': 'keep-alive',
         },
         cf: {
-          // Cloudflare optimizations for live streaming
-          cacheTtl: 0,
-          cacheEverything: false,
-          mirage: false,
-          polish: 'off',
+          // Cloudflare edge optimizations
+          cacheTtl: 0,              // Never cache
+          cacheEverything: false,   // Really, never cache
+          cacheKey: '',             // No cache key
+          mirage: false,            // No image optimization
+          polish: 'off',            // No compression
+          minify: false,            // No minification
+          scrapeShield: false,      // No content scanning
+          apps: false,              // No Cloudflare apps
         }
       })
 
-      // Check if upstream responded correctly
+      // Check upstream response
       if (!response.ok) {
         return new Response(JSON.stringify({
           error: 'Upstream error',
-          status: response.status
+          status: response.status,
+          statusText: response.statusText
         }), {
           status: response.status,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          }
+          headers: { 'Content-Type': 'application/json', ...CORS_HEADERS }
         })
       }
 
-      // DIRECT PASSTHROUGH - No TransformStream wrapper
-      // Pass the response body directly for true streaming
-      // The upstream connection stays open = continuous live data
+      // PERFECTION: Direct passthrough with optimal headers
+      // The response.body is a ReadableStream - pass it directly
       return new Response(response.body, {
         status: 200,
         headers: {
+          // Content type from upstream or default to MPEG-TS
           'Content-Type': response.headers.get('content-type') || 'video/mp2t',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, OPTIONS',
-          'Access-Control-Expose-Headers': '*',
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
+
+          // CORS - allow everything
+          ...CORS_HEADERS,
+
+          // Caching - absolutely none
+          'Cache-Control': 'no-cache, no-store, no-transform, must-revalidate, max-age=0',
           'Pragma': 'no-cache',
           'Expires': '0',
+
+          // Streaming hints
           'X-Content-Type-Options': 'nosniff',
-          // DO NOT set Content-Length - it's a live stream with unknown length!
+          'X-Accel-Buffering': 'no',          // Nginx hint: don't buffer
+          'X-Stream-Type': 'live',             // Custom hint for debugging
+
+          // Transfer: chunked is automatic when no Content-Length
+          // DO NOT set Content-Length for live streams!
         }
       })
 
     } catch (e) {
       return new Response(JSON.stringify({
         error: 'Stream proxy error',
-        message: e.message
+        message: e.message,
+        stack: e.stack
       }), {
         status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS }
       })
     }
   }
