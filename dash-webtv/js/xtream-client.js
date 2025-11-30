@@ -9,8 +9,32 @@ class XtreamClient {
     this.username = null
     this.password = null
     this.backendUrl = 'https://zion-production-39d8.up.railway.app'
-    // Cloudflare Worker proxy - same network as Starshare = faster
-    this.streamProxy = 'https://dash-webtv-proxy.dash-webtv.workers.dev'
+
+    // Multi-proxy fallback system for reliability
+    // If Cloudflare gets blocked, fall back to Vercel Edge
+    this.proxyList = [
+      { name: 'Cloudflare', url: 'https://dash-webtv-proxy.dash-webtv.workers.dev', param: 'url' },
+      { name: 'Vercel Edge', url: '/api/stream', param: 'url' }  // Our own Vercel Edge function
+    ]
+    this.currentProxyIndex = 0
+    this.streamProxy = this.proxyList[0].url
+  }
+
+  /**
+   * Get current proxy with fallback support
+   */
+  getProxy() {
+    return this.proxyList[this.currentProxyIndex]
+  }
+
+  /**
+   * Switch to next proxy (called on stream failure)
+   */
+  switchProxy() {
+    this.currentProxyIndex = (this.currentProxyIndex + 1) % this.proxyList.length
+    const proxy = this.getProxy()
+    console.log(`🔄 Switching to ${proxy.name} proxy`)
+    return proxy
   }
 
   /**
@@ -220,11 +244,25 @@ class XtreamClient {
       return { url: hlsUrl, type: 'hls-native' }
     }
 
-    // Android/Windows/Linux: Use MPEG-TS with Cloudflare proxy
+    // Android/Windows/Linux: Use MPEG-TS with proxy (Cloudflare or Vercel fallback)
     const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.ts`
-    const proxyUrl = `${this.streamProxy}/?url=${encodeURIComponent(directUrl)}`
-    console.log(`📡 Live TV URL (Cloudflare proxied TS for non-Apple): ${proxyUrl}`)
-    return { url: proxyUrl, type: 'mpegts' }
+    const proxy = this.getProxy()
+    const proxyUrl = `${proxy.url}/?${proxy.param}=${encodeURIComponent(directUrl)}`
+    console.log(`📡 Live TV URL (${proxy.name} proxied TS): ${proxyUrl}`)
+    return { url: proxyUrl, type: 'mpegts', proxy: proxy.name, directUrl }
+  }
+
+  /**
+   * Build fallback URL using next proxy (for retry on failure)
+   */
+  buildFallbackLiveStreamUrl(streamId) {
+    if (!this.isAuthenticated) return null
+
+    const proxy = this.switchProxy()
+    const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.ts`
+    const proxyUrl = `${proxy.url}/?${proxy.param}=${encodeURIComponent(directUrl)}`
+    console.log(`🔄 Fallback Live TV URL (${proxy.name}): ${proxyUrl}`)
+    return { url: proxyUrl, type: 'mpegts', proxy: proxy.name }
   }
 
   // ============================================
