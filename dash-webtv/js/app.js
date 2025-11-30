@@ -1602,45 +1602,90 @@ class DashApp {
         workerForMSE: true,
 
         // ============================================
-        // OPTIMIZED FOR LIVE TV - MINIMAL LATENCY
-        // Based on mpegts.js docs for real-time streaming
+        // SMOOTH PLAYBACK MODE - BUFFER FIRST, THEN PLAY
+        // Web streaming needs buffer to compensate for:
+        // - Proxy latency
+        // - Network jitter
+        // - Transcoding overhead
         // ============================================
 
-        // DISABLE stash buffer for real-time playback
-        // "Set to false if you need realtime (minimal latency)"
-        enableStashBuffer: false,
+        // ENABLE large stash buffer for smooth playback
+        // Accumulate data before feeding to player
+        enableStashBuffer: true,
+        stashInitialSize: 1024 * 1024,      // 1MB initial buffer (big!)
 
-        // Auto cleanup to prevent memory buildup
+        // Auto cleanup to prevent memory issues
         autoCleanupSourceBuffer: true,
-        autoCleanupMaxBackwardDuration: 10,  // Only keep 10s back
-        autoCleanupMinBackwardDuration: 5,
+        autoCleanupMaxBackwardDuration: 60,  // Keep 60s for rewind
+        autoCleanupMinBackwardDuration: 30,
 
-        // DISABLE lazy loading for continuous live streaming
-        // "Set false for continuous streaming"
-        lazyLoad: false,
+        // ENABLE lazy loading with large buffer
+        lazyLoad: true,
+        lazyLoadMaxDuration: 120,            // Buffer up to 2 minutes ahead
+        lazyLoadRecoverDuration: 30,         // Resume loading when <30s buffered
 
-        // Live buffer latency chasing - aggressive settings
-        liveBufferLatencyChasing: true,
-        liveBufferLatencyMaxLatency: 1.5,   // Chase if >1.5s behind
-        liveBufferLatencyMinRemain: 0.3,    // Min buffer 0.3s
+        // DISABLE latency chasing - we WANT delay for smoothness
+        liveBufferLatencyChasing: false,
 
-        // Playback rate sync for smoother catching up
-        liveSync: true,
-        liveSyncMaxLatency: 2.0,            // Max 2s behind live
-        liveSyncTargetLatency: 0.8,         // Target 0.8s buffer
-        liveSyncPlaybackRate: 1.1,          // Speed up 10% to catch up
+        // DISABLE live sync - let it buffer naturally
+        liveSync: false,
 
-        // Other optimizations
+        // Other settings
         seekType: 'range',
         fixAudioTimestampGap: true,
         accurateSeek: false,
-
-        // Fix for some streams
         reuseRedirectedURL: true,
       })
 
       this.mpegtsPlayer.attachMediaElement(video)
       this.mpegtsPlayer.load()
+
+      // ============================================
+      // SMART BUFFERING: Wait for enough data before playing
+      // This prevents the choppy "buffering in sequence" issue
+      // ============================================
+      let hasStartedPlaying = false
+      const MIN_BUFFER_SECONDS = 5  // Wait for 5 seconds of buffer
+
+      const checkBufferAndPlay = () => {
+        if (hasStartedPlaying) return
+
+        const buffered = video.buffered
+        if (buffered.length > 0) {
+          const bufferedEnd = buffered.end(buffered.length - 1)
+          const currentTime = video.currentTime
+          const bufferAhead = bufferedEnd - currentTime
+
+          // Update loading message with buffer status
+          if (loadingEl) {
+            loadingEl.innerHTML = `<div class="spinner"></div><div>Buffering... ${bufferAhead.toFixed(1)}s</div>`
+          }
+
+          console.log(`📊 Buffer: ${bufferAhead.toFixed(1)}s ahead (need ${MIN_BUFFER_SECONDS}s)`)
+
+          // Start playing once we have enough buffer
+          if (bufferAhead >= MIN_BUFFER_SECONDS) {
+            hasStartedPlaying = true
+            console.log(`✅ Buffer ready (${bufferAhead.toFixed(1)}s) - starting playback!`)
+            video.play().catch(err => {
+              console.warn('⚠️ Autoplay blocked:', err.message)
+              if (loadingEl) loadingEl.innerHTML = '<div>Click video to play</div>'
+            })
+          }
+        }
+      }
+
+      // Check buffer every 500ms
+      const bufferCheckInterval = setInterval(checkBufferAndPlay, 500)
+
+      // Also check on progress events
+      video.addEventListener('progress', checkBufferAndPlay)
+
+      // Clear interval when playing or on error
+      video.addEventListener('playing', () => {
+        clearInterval(bufferCheckInterval)
+        if (loadingEl) loadingEl.style.display = 'none'
+      }, { once: true })
 
       // METRIC: First byte received
       this.mpegtsPlayer.on(mpegts.Events.LOADING_COMPLETE, () => {
@@ -1648,10 +1693,7 @@ class DashApp {
           metrics.firstByteTime = performance.now()
           console.log(`📊 METRIC: First byte in ${(metrics.firstByteTime - metrics.startTime).toFixed(0)}ms`)
         }
-        video.play().catch(err => {
-          console.warn('⚠️ Autoplay blocked:', err.message)
-          if (loadingEl) loadingEl.innerHTML = '<div>Click video to play</div>'
-        })
+        // Don't auto-play here - let buffer check handle it
       })
 
       // METRIC: Track statistics
@@ -1716,10 +1758,8 @@ class DashApp {
       // Store metrics for external access
       this.currentMetrics = metrics
 
-      // Start playback immediately
-      video.play().catch(err => {
-        console.warn('⚠️ Initial autoplay blocked:', err.message)
-      })
+      // Playback is now handled by checkBufferAndPlay() above
+      // We wait for 5 seconds of buffer before starting
 
     } else {
       console.error('❌ mpegts.js not supported in this browser')
