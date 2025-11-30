@@ -66,28 +66,21 @@ export default {
         })
       }
 
-      // TransformStream keeps the pipe open for continuous streaming
-      // This is critical for live TV - prevents premature connection close
-      const { readable, writable } = new TransformStream()
-
-      // Pipe in background without awaiting
-      // The catch prevents unhandled rejection when client disconnects
-      response.body.pipeTo(writable).catch(() => {
-        // Client disconnected - this is normal for live streams
-      })
-
-      // Return streaming response with proper headers
-      return new Response(readable, {
+      // DIRECT PASSTHROUGH - No TransformStream wrapper
+      // Pass the response body directly for true streaming
+      // The upstream connection stays open = continuous live data
+      return new Response(response.body, {
         status: 200,
         headers: {
           'Content-Type': response.headers.get('content-type') || 'video/mp2t',
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, OPTIONS',
           'Access-Control-Expose-Headers': '*',
           'Cache-Control': 'no-cache, no-store, must-revalidate',
           'Pragma': 'no-cache',
           'Expires': '0',
-          'Connection': 'keep-alive',
           'X-Content-Type-Options': 'nosniff',
+          // DO NOT set Content-Length - it's a live stream with unknown length!
         }
       })
 
