@@ -46,9 +46,6 @@ class DashApp {
     // Video player instance (for proper cleanup)
     this.currentPlayer = null
 
-    // MKV to MP4 fallback mapping (loaded at init)
-    this.mkvToMp4Map = null
-
     // Collections for Netflix-style UI
     this.collections = null
 
@@ -93,9 +90,6 @@ class DashApp {
     // Force service worker update if needed
     await this.ensureLatestServiceWorker()
 
-    // Load MKV to MP4 fallback mapping
-    await this.loadMkvToMp4Map()
-
     // Check for saved session
     const savedUser = localStorage.getItem('dash_user')
     const savedPass = localStorage.getItem('dash_pass')
@@ -106,19 +100,6 @@ class DashApp {
     } else {
       console.log('🔒 No saved session, showing login')
       this.showLoginUI()
-    }
-  }
-
-  async loadMkvToMp4Map() {
-    try {
-      const response = await fetch('data/mkv_to_mp4.json')
-      if (response.ok) {
-        this.mkvToMp4Map = await response.json()
-        console.log(`📀 Loaded MKV→MP4 fallback map: ${Object.keys(this.mkvToMp4Map).length} alternatives available`)
-      }
-    } catch (err) {
-      console.warn('⚠️ Could not load MKV fallback map:', err.message)
-      this.mkvToMp4Map = {}
     }
   }
 
@@ -1431,31 +1412,18 @@ class DashApp {
     console.log(`Playing ${type}:`, id, `Original format: ${extension}`)
 
     let streamUrl = ''
-    let finalExtension = extension
-    let playableId = id
 
-    // Formats that browsers can't play natively
-    const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
+    // ALWAYS request MP4 extension - Xtream servers remux MKV→MP4 automatically
+    // The container format doesn't matter, servers handle the remux since codecs (H264/AAC) are same
+    const finalExtension = 'mp4'
 
     if (type === 'movie') {
-      // Check if format needs special handling
-      if (unsupportedFormats.includes(extension.toLowerCase())) {
-        // FIRST: Check if we have an MP4 alternative for this MKV
-        const alternative = this.mkvToMp4Map?.[id]
-        if (alternative) {
-          console.log(`✨ Found MP4 alternative! MKV ${id} → MP4 ${alternative.mp4_id} (${alternative.name})`)
-          playableId = alternative.mp4_id
-          finalExtension = 'mp4'
-        } else {
-          // No alternative - try HLS transcode (usually fails but worth trying)
-          console.log(`⚠️ ${extension.toUpperCase()} detected, no MP4 alternative - trying HLS transcode...`)
-          finalExtension = 'm3u8'
-        }
+      if (extension.toLowerCase() !== 'mp4') {
+        console.log(`🔄 Server remux: ${extension.toUpperCase()} → MP4 (same codecs, different container)`)
       } else {
-        console.log('🎬 Using direct stream (MP4 compatible)')
-        finalExtension = 'mp4'
+        console.log('🎬 Using direct MP4 stream')
       }
-      streamUrl = this.client.buildVODUrl(playableId, finalExtension)
+      streamUrl = this.client.buildVODUrl(id, finalExtension)
     } else if (type === 'live') {
       // Use playLiveChannel instead for proper channel name handling
       this.playLiveChannel(id, 'Live Channel')
@@ -1489,32 +1457,16 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    // Check if format is unsupported (MKV, AVI, etc.)
-    const unsupportedFormats = ['mkv', 'avi', 'wmv', 'flv', 'webm']
-    let finalId = episodeId
-    let finalExtension = extension
+    // ALWAYS request MP4 extension - Xtream servers remux MKV→MP4 automatically
+    // The container format doesn't matter, servers handle the remux since codecs (H264/AAC) are same
+    // Browsers can't play MKV container but CAN play the same video/audio in MP4 container
+    const finalExtension = 'mp4'
 
-    if (unsupportedFormats.includes(extension.toLowerCase())) {
-      // Check if we have an MP4 alternative in our fallback map
-      const alternative = this.mkvToMp4Map?.[episodeId]
-      if (alternative) {
-        console.log(`✨ Found MP4 alternative! MKV ${episodeId} → MP4 ${alternative.mp4_id}`)
-        finalId = alternative.mp4_id
-        finalExtension = 'mp4'
-      } else {
-        // No MP4 alternative - use HLS transcode (m3u8)
-        // Starshare transcodes MKV→HLS on-the-fly for browser playback
-        console.log(`⚠️ ${extension.toUpperCase()} format - using HLS transcode...`)
-        finalExtension = 'm3u8'
-      }
-    } else {
-      // Already a supported format (mp4)
-      finalExtension = 'mp4'
+    if (extension.toLowerCase() !== 'mp4') {
+      console.log(`🔄 Server remux: ${extension.toUpperCase()} → MP4 (same codecs, different container)`)
     }
 
-    console.log(`📺 Final: ID=${finalId}, Extension=${finalExtension}`)
-
-    const streamUrl = this.client.buildSeriesUrl(finalId, finalExtension)
+    const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
     console.log('📺 Stream URL:', streamUrl)
 
     this.closeModal()
