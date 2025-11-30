@@ -1451,6 +1451,11 @@ class DashApp {
       console.log('🔴 Building Live TV stream URL...')
       const liveStream = this.client.buildLiveStreamUrl(id, 'ts')
       streamUrl = liveStream.url
+
+      // Store stream ID for auto-retry on error
+      this.currentLiveStreamId = id
+      this._proxyRetried = false
+
       // Pass the stream type to player (hls-native or mpegts)
       console.log(`📡 Live stream type: ${liveStream.type}`)
       this.closeModal()
@@ -1596,29 +1601,42 @@ class DashApp {
         enableWorker: true,
         workerForMSE: true,
 
-        // Buffer settings - balanced for stability + responsiveness
-        enableStashBuffer: true,
-        stashInitialSize: 384 * 1024,   // 384KB initial stash
+        // ============================================
+        // OPTIMIZED FOR LIVE TV - MINIMAL LATENCY
+        // Based on mpegts.js docs for real-time streaming
+        // ============================================
+
+        // DISABLE stash buffer for real-time playback
+        // "Set to false if you need realtime (minimal latency)"
+        enableStashBuffer: false,
+
+        // Auto cleanup to prevent memory buildup
         autoCleanupSourceBuffer: true,
-        autoCleanupMaxBackwardDuration: 30,
-        autoCleanupMinBackwardDuration: 15,
+        autoCleanupMaxBackwardDuration: 10,  // Only keep 10s back
+        autoCleanupMinBackwardDuration: 5,
 
-        // Lazy loading - moderate buffer
-        lazyLoad: true,
-        lazyLoadMaxDuration: 45,        // 45 sec buffer (good balance)
-        lazyLoadRecoverDuration: 15,
+        // DISABLE lazy loading for continuous live streaming
+        // "Set false for continuous streaming"
+        lazyLoad: false,
 
-        // Live stream optimization
+        // Live buffer latency chasing - aggressive settings
         liveBufferLatencyChasing: true,
-        liveBufferLatencyMaxLatency: 2.0,   // Allow 2 sec behind live
-        liveBufferLatencyMinRemain: 0.5,    // Keep 0.5 sec buffer min
-        liveSync: true,
-        liveSyncMaxLatency: 3,
+        liveBufferLatencyMaxLatency: 1.5,   // Chase if >1.5s behind
+        liveBufferLatencyMinRemain: 0.3,    // Min buffer 0.3s
 
-        // Seek type for live
+        // Playback rate sync for smoother catching up
+        liveSync: true,
+        liveSyncMaxLatency: 2.0,            // Max 2s behind live
+        liveSyncTargetLatency: 0.8,         // Target 0.8s buffer
+        liveSyncPlaybackRate: 1.1,          // Speed up 10% to catch up
+
+        // Other optimizations
         seekType: 'range',
         fixAudioTimestampGap: true,
         accurateSeek: false,
+
+        // Fix for some streams
+        reuseRedirectedURL: true,
       })
 
       this.mpegtsPlayer.attachMediaElement(video)
@@ -1648,6 +1666,24 @@ class DashApp {
 
       this.mpegtsPlayer.on(mpegts.Events.ERROR, (errorType, errorDetail, errorInfo) => {
         console.error('❌ MPEG-TS Error:', errorType, errorDetail, errorInfo)
+
+        // Auto-retry with fallback proxy if available
+        if (!this._proxyRetried && this.currentLiveStreamId) {
+          this._proxyRetried = true
+          console.log('🔄 Retrying with fallback proxy...')
+          if (loadingEl) loadingEl.innerHTML = '<div>Switching proxy... Please wait</div>'
+
+          // Get fallback URL from client
+          const fallback = this.client.buildFallbackLiveStreamUrl(this.currentLiveStreamId)
+          if (fallback) {
+            setTimeout(() => {
+              this.closeVideoPlayer()
+              this.showVideoPlayer(fallback.url, 'live', 'mpegts')
+            }, 1000)
+            return
+          }
+        }
+
         if (loadingEl) loadingEl.innerHTML = '<div>Stream error. Try another channel.</div>'
       })
 
