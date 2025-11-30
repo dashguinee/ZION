@@ -347,6 +347,10 @@ class DashApp {
   navigate(page) {
     this.state.currentPage = page
 
+    // Reset pagination when navigating to new page
+    this.loadMoreOffset = 100
+    this.state.selectedCategory = null
+
     // Update active nav item
     this.elements.navItems.forEach(item => {
       if (item.dataset.page === page) {
@@ -795,7 +799,7 @@ class DashApp {
 
         <!-- Movies Grid -->
         <div class="browse-grid">
-          ${this.renderBrowseGrid((movies || []).slice(0, 100), 'movie')}
+          ${this.renderBrowseGrid((movies || []).slice(0, this.loadMoreOffset || 100), 'movie')}
         </div>
 
         ${(movies || []).length > 100 ? `
@@ -889,7 +893,7 @@ class DashApp {
 
         <!-- Series Grid -->
         <div class="browse-grid">
-          ${this.renderBrowseGrid((series || []).slice(0, 100), 'series')}
+          ${this.renderBrowseGrid((series || []).slice(0, this.loadMoreOffset || 100), 'series')}
         </div>
 
         ${(series || []).length > 100 ? `
@@ -987,7 +991,7 @@ class DashApp {
 
         <!-- Live TV Grid with Glow Cards -->
         <div class="live-grid">
-          ${this.renderLiveGrid((channels || []).slice(0, 120))}
+          ${this.renderLiveGrid((channels || []).slice(0, this.loadMoreOffset || 120))}
         </div>
 
         ${(channels || []).length > 120 ? `
@@ -1752,11 +1756,156 @@ class DashApp {
   }
 
   handleSearch() {
-    console.log('Search query:', this.state.searchQuery)
+    const query = this.state.searchQuery.trim().toLowerCase()
+
+    // Debounce - wait for user to stop typing
+    clearTimeout(this.searchTimeout)
+
+    if (query.length < 2) {
+      // Too short - don't search
+      return
+    }
+
+    this.searchTimeout = setTimeout(() => {
+      console.log('🔍 Searching for:', query)
+      this.state.currentPage = 'search'
+      this.renderPage('search')
+    }, 300)
+  }
+
+  renderSearchResults() {
+    const query = this.state.searchQuery.trim().toLowerCase()
+
+    if (query.length < 2) {
+      return `
+        <div class="fade-in">
+          <div class="browse-header">
+            <div class="browse-title-row">
+              <div class="browse-icon">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <h1 class="browse-title">Search</h1>
+            </div>
+          </div>
+          <div class="empty-state">
+            <div class="empty-state-icon">🔍</div>
+            <div class="empty-state-title">Start typing to search</div>
+            <div class="empty-state-description">Search across 74,000+ movies, series, and channels</div>
+          </div>
+        </div>
+      `
+    }
+
+    // Search movies
+    const movieResults = (this.localMovies || [])
+      .filter(m => m.name?.toLowerCase().includes(query))
+      .slice(0, 30)
+
+    // Search series
+    const seriesResults = (this.localSeries || [])
+      .filter(s => s.name?.toLowerCase().includes(query))
+      .slice(0, 20)
+
+    // Search live channels
+    const liveResults = (this.localLive || [])
+      .filter(c => c.name?.toLowerCase().includes(query))
+      .slice(0, 20)
+
+    const totalResults = movieResults.length + seriesResults.length + liveResults.length
+
+    return `
+      <div class="fade-in">
+        <div class="browse-header">
+          <div class="browse-title-row">
+            <div class="browse-icon">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h1 class="browse-title">Search: "${this.state.searchQuery}"</h1>
+          </div>
+          <div class="browse-stats">
+            <div class="browse-stat">
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${totalResults}</span>
+                <span class="browse-stat-label">Results Found</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        ${movieResults.length > 0 ? `
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">🎬 Movies (${movieResults.length})</h2>
+            </div>
+            <div class="browse-grid">
+              ${this.renderBrowseGrid(movieResults, 'movie')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${seriesResults.length > 0 ? `
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">📺 Series (${seriesResults.length})</h2>
+            </div>
+            <div class="browse-grid">
+              ${this.renderBrowseGrid(seriesResults, 'series')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${liveResults.length > 0 ? `
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">📡 Live Channels (${liveResults.length})</h2>
+            </div>
+            <div class="live-grid">
+              ${this.renderLiveGrid(liveResults)}
+            </div>
+          </div>
+        ` : ''}
+
+        ${totalResults === 0 ? `
+          <div class="empty-state">
+            <div class="empty-state-icon">😕</div>
+            <div class="empty-state-title">No results found</div>
+            <div class="empty-state-description">Try a different search term</div>
+          </div>
+        ` : ''}
+      </div>
+    `
+  }
+
+  // Pagination state
+  loadMoreOffset = 100
+
+  loadMore() {
+    const page = this.state.currentPage
+    this.loadMoreOffset += 100
+
+    console.log(`📄 Loading more ${page}, offset: ${this.loadMoreOffset}`)
+
+    // Re-render with increased offset
+    this.renderPage(page)
   }
 
   addToFavorites(id, type) {
-    console.log('Added to favorites:', id, type)
+    const favorites = this.loadFavorites()
+    const exists = favorites.find(f => f.id === id && f.type === type)
+
+    if (exists) {
+      // Remove from favorites
+      const updated = favorites.filter(f => !(f.id === id && f.type === type))
+      localStorage.setItem('dash_favorites', JSON.stringify(updated))
+      console.log('💔 Removed from favorites:', id, type)
+      alert('Removed from favorites')
+    } else {
+      // Add to favorites
+      favorites.push({ id, type, addedAt: Date.now() })
+      localStorage.setItem('dash_favorites', JSON.stringify(favorites))
+      console.log('❤️ Added to favorites:', id, type)
+      alert('Added to favorites!')
+    }
   }
 
   loadFavorites() {
