@@ -1609,7 +1609,7 @@ class DashApp {
 
         // Enable stash buffer for smooth decoding
         enableStashBuffer: true,
-        stashInitialSize: 384 * 1024,       // 384KB - enough for smooth start
+        stashInitialSize: 512 * 1024,       // 512KB - bigger buffer for stability
 
         // Auto cleanup to prevent memory buildup
         autoCleanupSourceBuffer: true,
@@ -1647,7 +1647,7 @@ class DashApp {
       // This prevents the choppy "buffering in sequence" issue
       // ============================================
       let hasStartedPlaying = false
-      const MIN_BUFFER_SECONDS = 5  // Wait for 5 seconds of buffer
+      const MIN_BUFFER_SECONDS = 8  // Wait for 8 seconds of buffer before playing
 
       const checkBufferAndPlay = () => {
         if (hasStartedPlaying) return
