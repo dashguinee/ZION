@@ -1460,19 +1460,11 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    // Formats that browsers can't play natively
-    const unsupportedFormats = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
-    let finalExtension = extension
-
-    // Check if format needs HLS transcoding
-    if (unsupportedFormats.includes(extension.toLowerCase())) {
-      console.log(`🔄 ${extension.toUpperCase()} episode - requesting HLS transcode...`)
-      finalExtension = 'm3u8'
-      // Xtream Codes servers transcode MKV/AVI/FLV -> HLS on-the-fly
-    } else {
-      console.log('📺 Using direct stream (MP4 compatible)')
-      finalExtension = 'mp4'
-    }
+    // ALWAYS use MP4 extension - Starshare serves video/mp4 content-type
+    // HLS transcode (m3u8) returns empty content on this provider
+    // The server may still stream MKV content but browser handles it
+    const finalExtension = 'mp4'
+    console.log('📺 Using MP4 stream (server handles format)')
 
     const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
     console.log('📺 Stream URL:', streamUrl)
