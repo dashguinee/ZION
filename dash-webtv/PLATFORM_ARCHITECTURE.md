@@ -165,33 +165,36 @@ User clicks Play
 
 ## FFmpeg INTEGRATION (CONNECTED - Dec 1, 2025)
 
-**STATUS: ✅ FULLY CONNECTED**
+**STATUS: ✅ FULLY CONNECTED & WORKING**
 
-In `xtream-client.js`:
-```javascript
-// Line 11:
-this.backendUrl = 'https://zion-production-39d8.up.railway.app'
+### How It Works
 
-// NOW USED IN buildVODUrl() and buildSeriesUrl():
-// - MP4: Direct to Starshare (native browser playback)
-// - MKV/AVI/etc: Route through FFmpeg server for transcoding
-
-buildVODUrl(vodId, extension) {
-  const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm'].includes(extension)
-  if (needsTranscode) {
-    return `${this.backendUrl}/api/stream/vod/${vodId}?extension=${extension}&quality=720p`
-  }
-  return `${this.baseUrl}/movie/${user}/${pass}/${vodId}.${extension}`
-}
-
-buildSeriesUrl(episodeId, extension) {
-  const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm'].includes(extension)
-  if (needsTranscode) {
-    return `${this.backendUrl}/api/stream/episode/${episodeId}?extension=${extension}&quality=720p`
-  }
-  return `${this.baseUrl}/series/${user}/${pass}/${episodeId}.${extension}`
-}
 ```
+MKV Episode/Movie → playEpisode()/playContent()
+                  → buildSeriesUrl()/buildVODUrl() with ORIGINAL extension
+                  → Extension is MKV → Route to FFmpeg server
+                  → FFmpeg transcodes MKV→MP4 in real-time
+                  → Browser receives MP4 stream → PLAYS!
+
+MP4 Episode/Movie → playEpisode()/playContent()
+                  → buildSeriesUrl()/buildVODUrl() with 'mp4'
+                  → Extension is MP4 → Direct to Starshare
+                  → Browser plays natively → PLAYS!
+
+Download MKV      → downloadToDevice()
+                  → buildDirectSeriesUrl() (bypasses FFmpeg)
+                  → Direct Starshare URL
+                  → VLC/External player handles MKV natively
+```
+
+### URL Methods in xtream-client.js
+
+| Method | Purpose | Routes Through |
+|--------|---------|----------------|
+| `buildVODUrl(id, ext)` | Stream movies | FFmpeg (MKV) / Starshare (MP4) |
+| `buildSeriesUrl(id, ext)` | Stream episodes | FFmpeg (MKV) / Starshare (MP4) |
+| `buildDirectVODUrl(id, ext)` | Download movies | Always Starshare (for VLC) |
+| `buildDirectSeriesUrl(id, ext)` | Download episodes | Always Starshare (for VLC) |
 
 ### FFmpeg Server Endpoints
 
@@ -201,6 +204,21 @@ buildSeriesUrl(episodeId, extension) {
 | `/api/stream/episode/:episodeId` | Transcode series by episode ID |
 | `/api/stream/series/:id/:season/:episode` | Legacy series endpoint |
 | `/health` | Health check with Redis status |
+
+### CRITICAL: Extension Must Be Original!
+
+**Previous bug (commit d3bbfbd):**
+```javascript
+// WRONG - forced mp4, bypassed FFmpeg routing!
+const finalExtension = 'mp4'
+const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
+```
+
+**Fixed (commit a3d5e89):**
+```javascript
+// CORRECT - pass original extension, let xtream-client decide routing
+const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+```
 
 ---
 
@@ -376,12 +394,13 @@ npx serve -l 3006
 
 | Commit | Description |
 |--------|-------------|
+| `a3d5e89` | **FIX**: Route MKV through FFmpeg, direct URL for downloads |
 | `0c43fc1` | **MAJOR**: Connect FFmpeg server for MKV playback (Dec 1, 2025) |
 | `3be02bd` | Add /episode/:episodeId endpoint to FFmpeg server |
 | `d614d9f` | MKV server remux + FFmpeg integration plan |
 | `9ccb011` | Western-focused collections + NEON fallback cards |
 | `2f2297c` | Offline Exclusive download system + Download Library |
-| `d3bbfbd` | Fix series/MKV - always request MP4 (server remuxes) |
+| `d3bbfbd` | Fix series/MKV - always request MP4 (server remuxes) - **SUPERSEDED** |
 | `a502ae3` | lazyLoad bug fix for live streaming |
 | `6442a42` | PERFECTION MODE - streaming optimization |
 | `2faa060` | BREAKTHROUGH - mpegts.js for Live TV |
@@ -390,5 +409,13 @@ npx serve -l 3006
 ---
 
 *Last Updated: December 1, 2025*
-*FFmpeg Integration: ✅ COMPLETE*
-*This document should give any future instance complete context to continue development.*
+*MKV Solution: ✅ FFmpeg transcoding WORKING*
+*Platform Status: 100% functional for all content types*
+
+## QUICK REFERENCE FOR FUTURE INSTANCES
+
+1. **MKV won't stream**: Check that `playEpisode()` passes original extension, not forced 'mp4'
+2. **Downloads broken**: Ensure downloads use `buildDirectSeriesUrl()` not `buildSeriesUrl()`
+3. **FFmpeg server down**: Check Railway deployment at `zion-production-39d8.up.railway.app/health`
+4. **Live TV loops**: Verify `lazyLoad: false` in mpegts.js config
+5. **HLS returns empty**: Don't use `.m3u8` for this provider, use `.ts` with mpegts.js
