@@ -384,6 +384,9 @@ class DashApp {
       case 'favorites':
         content = this.renderFavoritesPage()
         break
+      case 'downloads':
+        content = this.renderDownloadsPage()
+        break
       default:
         content = '<div class="empty-state"><h2>Page not found</h2></div>'
     }
@@ -1339,36 +1342,37 @@ class DashApp {
                   <div class="episode-list">
                     ${episodes.map(ep => {
                       const ext = (ep.container_extension || 'mp4').toLowerCase()
-                      const isMKV = ext === 'mkv'
-                      const formatBadge = isMKV
-                        ? '<span class="format-badge mkv">MKV</span>'
-                        : '<span class="format-badge mp4">MP4</span>'
+                      const isOfflineExclusive = ext === 'mkv'
+                      const epTitle = (ep.title || `Episode ${ep.episode_num}`).replace(/'/g, "\\'")
 
-                      if (isMKV) {
-                        // MKV: Show download button (browsers can't play MKV)
+                      if (isOfflineExclusive) {
+                        // OFFLINE EXCLUSIVE (MKV) - Premium gold styling, unlimited downloads
                         return `
-                          <div class="episode-card mkv-episode">
+                          <div class="episode-card offline-exclusive-episode">
                             <div class="episode-number">E${ep.episode_num}</div>
                             <div class="episode-info">
-                              <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`} ${formatBadge}</div>
-                              <div class="episode-meta">${ep.duration || ''}</div>
+                              <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`} <span class="format-badge offline-exclusive">⬇️ OFFLINE EXCLUSIVE</span></div>
+                              <div class="episode-meta">${ep.duration || ''} • Unlimited Downloads</div>
                             </div>
                             <div class="episode-actions">
-                              <button class="episode-btn play-btn" onclick="event.stopPropagation(); dashApp.tryPlayEpisode('${ep.id}', '${ext}')" title="Try Play (may not work)">▶️</button>
-                              <button class="episode-btn download-btn" onclick="event.stopPropagation(); dashApp.downloadEpisode('${ep.id}', '${ext}', '${(ep.title || `Episode ${ep.episode_num}`).replace(/'/g, "\\'")}')" title="Open in VLC/MX Player">📲</button>
+                              <button class="episode-btn watch-player-btn" onclick="event.stopPropagation(); dashApp.watchInPlayer('${ep.id}', '${ext}', '${epTitle}', '${id}')" title="Watch in VLC/MX Player">▶️ Watch</button>
+                              <button class="episode-btn download-btn" onclick="event.stopPropagation(); dashApp.downloadToDevice('${ep.id}', '${ext}', '${epTitle}', '${id}')" title="Download to device">⬇️ Download</button>
                             </div>
                           </div>
                         `
                       } else {
-                        // MP4: Direct play (browsers support this)
+                        // STREAM FIRST (MP4) - Can stream directly, download limited
                         return `
                           <div class="episode-card" onclick="dashApp.playEpisode('${ep.id}', '${ext}')">
                             <div class="episode-number">E${ep.episode_num}</div>
                             <div class="episode-info">
-                              <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`} ${formatBadge}</div>
+                              <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`} <span class="format-badge stream-first">▶️ STREAM FIRST</span></div>
                               <div class="episode-meta">${ep.duration || ''}</div>
                             </div>
-                            <div class="episode-play">▶️</div>
+                            <div class="episode-actions">
+                              <button class="episode-btn stream-btn" onclick="event.stopPropagation(); dashApp.playEpisode('${ep.id}', '${ext}')">▶️ Stream</button>
+                              <button class="episode-btn stream-download-btn" onclick="event.stopPropagation(); dashApp.downloadStreamFirst('${ep.id}', '${ext}', '${epTitle}', '${id}')" title="Download (limited)">⬇️</button>
+                            </div>
                           </div>
                         `
                       }
@@ -1590,6 +1594,410 @@ class DashApp {
 
     // Auto-remove after 3s
     setTimeout(() => toast.remove(), 3000)
+  }
+
+  // ============================================
+  // DOWNLOAD LIBRARY SYSTEM
+  // ============================================
+
+  /**
+   * Load download library from localStorage
+   */
+  loadDownloadLibrary() {
+    const saved = localStorage.getItem('dash_download_library')
+    return saved ? JSON.parse(saved) : { series: {}, movies: {} }
+  }
+
+  /**
+   * Save download library to localStorage
+   */
+  saveDownloadLibrary(library) {
+    localStorage.setItem('dash_download_library', JSON.stringify(library))
+  }
+
+  /**
+   * Add episode to download library
+   * Also fetches ALL episodes of the series for the complete library view
+   */
+  async addToDownloadLibrary(seriesId, episodeId, episodeTitle, format, action = 'downloaded') {
+    const library = this.loadDownloadLibrary()
+
+    // Get series info
+    const seriesInfo = this.localSeries?.find(s => String(s.series_id) === String(seriesId))
+
+    // If series not in library yet, fetch all episodes
+    if (!library.series[seriesId]) {
+      library.series[seriesId] = {
+        id: seriesId,
+        title: seriesInfo?.name || 'Unknown Series',
+        thumbnail: seriesInfo?.cover || seriesInfo?.stream_icon || '',
+        episodes: {},
+        allEpisodes: [], // Store ALL episodes for full view
+        addedAt: new Date().toISOString()
+      }
+
+      // Fetch all episodes from API
+      try {
+        const details = await this.client.getSeriesInfo(seriesId)
+        if (details?.episodes) {
+          const allEps = []
+          Object.keys(details.episodes).forEach(seasonNum => {
+            details.episodes[seasonNum].forEach(ep => {
+              allEps.push({
+                id: ep.id,
+                title: ep.title || `Episode ${ep.episode_num}`,
+                season: seasonNum,
+                episode_num: ep.episode_num,
+                format: (ep.container_extension || 'mp4').toLowerCase(),
+                type: (ep.container_extension || 'mp4').toLowerCase() === 'mkv' ? 'offline-exclusive' : 'stream-first',
+                duration: ep.duration || ''
+              })
+            })
+          })
+          library.series[seriesId].allEpisodes = allEps
+          console.log(`📚 Loaded ${allEps.length} episodes for ${seriesInfo?.name}`)
+        }
+      } catch (err) {
+        console.log('Could not fetch all episodes:', err)
+      }
+    }
+
+    // Mark this specific episode as downloaded/watched
+    library.series[seriesId].episodes[episodeId] = {
+      id: episodeId,
+      title: episodeTitle,
+      format: format,
+      type: format === 'mkv' ? 'offline-exclusive' : 'stream-first',
+      action: action, // 'watched' or 'downloaded'
+      addedAt: new Date().toISOString()
+    }
+
+    this.saveDownloadLibrary(library)
+    console.log(`📥 Added to library: ${episodeTitle}`)
+
+    // Show toast
+    this.showToast(`✨ Added to your Downloads library!`, 'success')
+
+    return library
+  }
+
+  /**
+   * Watch in external player (OFFLINE EXCLUSIVE)
+   * Opens stream in VLC, MX Player, etc.
+   */
+  async watchInPlayer(episodeId, extension, title, seriesId) {
+    console.log(`▶️ Watch in Player: ${title} (${extension})`)
+
+    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+    const isAndroid = /Android/i.test(navigator.userAgent)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
+    // Add to download library as "watched"
+    await this.addToDownloadLibrary(seriesId, episodeId, title, extension, 'watched')
+
+    if (isAndroid) {
+      // Android intent for video players
+      const intentUrl = `intent:${streamUrl}#Intent;type=video/*;end`
+      try {
+        window.location.href = intentUrl
+      } catch (e) {
+        window.open(streamUrl, '_blank')
+      }
+      this.showToast(`Opening in video player...`, 'success')
+    } else if (isIOS) {
+      // iOS VLC URL scheme
+      const vlcUrl = `vlc-x-callback://x-callback-url/stream?url=${encodeURIComponent(streamUrl)}`
+      const iframe = document.createElement('iframe')
+      iframe.style.display = 'none'
+      iframe.src = vlcUrl
+      document.body.appendChild(iframe)
+      setTimeout(() => {
+        document.body.removeChild(iframe)
+        window.open(streamUrl, '_blank')
+      }, 2000)
+      this.showToast(`Opening in VLC...`, 'success')
+    } else {
+      // Desktop - open in default player
+      window.open(streamUrl, '_blank')
+      this.showToast(`Opening: ${title}`, 'success')
+    }
+  }
+
+  /**
+   * Download to device (OFFLINE EXCLUSIVE)
+   * Triggers actual file download
+   */
+  async downloadToDevice(episodeId, extension, title, seriesId) {
+    console.log(`⬇️ Download to device: ${title} (${extension})`)
+
+    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+
+    // Add to download library
+    await this.addToDownloadLibrary(seriesId, episodeId, title, extension, 'downloaded')
+
+    // Create download link
+    const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_')
+    const filename = `${sanitizedTitle}.${extension}`
+
+    // For mobile, we use different approaches
+    const isAndroid = /Android/i.test(navigator.userAgent)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
+    if (isAndroid) {
+      // Android: Use download attribute or intent
+      const a = document.createElement('a')
+      a.href = streamUrl
+      a.download = filename
+      a.target = '_blank'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      this.showToast(`⬇️ Downloading: ${title}`, 'success')
+    } else if (isIOS) {
+      // iOS: Open in new tab (Safari will prompt to save)
+      window.open(streamUrl, '_blank')
+      this.showToast(`Tap "Download" in Safari menu`, 'info')
+    } else {
+      // Desktop: Force download
+      const a = document.createElement('a')
+      a.href = streamUrl
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      this.showToast(`⬇️ Downloading: ${title}`, 'success')
+    }
+  }
+
+  /**
+   * Download Stream First content (LIMITED)
+   * TODO: Implement daily limit tracking
+   */
+  async downloadStreamFirst(episodeId, extension, title, seriesId) {
+    console.log(`⬇️ Stream First download: ${title}`)
+
+    // For now, allow download (future: add limit)
+    await this.addToDownloadLibrary(seriesId, episodeId, title, extension, 'downloaded')
+
+    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+    const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_')
+    const filename = `${sanitizedTitle}.${extension}`
+
+    const a = document.createElement('a')
+    a.href = streamUrl
+    a.download = filename
+    a.target = '_blank'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+
+    this.showToast(`⬇️ Downloading: ${title}`, 'success')
+  }
+
+  /**
+   * Render Downloads page
+   * Shows ALL episodes of series in library, with download status
+   */
+  renderDownloadsPage() {
+    const library = this.loadDownloadLibrary()
+    const seriesKeys = Object.keys(library.series)
+
+    let content = `
+      <div class="downloads-page">
+        <div class="downloads-header">
+          <div class="downloads-title">
+            <span class="icon">📥</span>
+            <h1>My Downloads</h1>
+          </div>
+          <div class="downloads-stats">
+            <div class="downloads-stat gold">
+              <span>⬇️</span>
+              <span>Offline Exclusive: Unlimited</span>
+            </div>
+          </div>
+        </div>
+    `
+
+    if (seriesKeys.length === 0) {
+      content += `
+        <div class="downloads-empty">
+          <div class="downloads-empty-icon">📥</div>
+          <h2>No Downloads Yet</h2>
+          <p>Your downloaded and watched content will appear here. Look for the golden "Offline Exclusive" badge on episodes!</p>
+        </div>
+      `
+    } else {
+      // Group by series - show ALL episodes
+      seriesKeys.forEach(seriesId => {
+        const series = library.series[seriesId]
+        const downloadedEpisodes = series.episodes || {}
+        const allEpisodes = series.allEpisodes || []
+
+        // Count stats
+        const downloadedCount = Object.keys(downloadedEpisodes).length
+        const offlineExclusiveTotal = allEpisodes.filter(e => e.type === 'offline-exclusive').length
+        const offlineExclusiveDownloaded = Object.values(downloadedEpisodes).filter(e => e.type === 'offline-exclusive').length
+
+        content += `
+          <div class="downloads-series">
+            <div class="downloads-series-header">
+              <img src="${this.fixImageUrl(series.thumbnail)}" alt="" class="downloads-series-poster" onerror="this.src='/assets/placeholder.svg'">
+              <div class="downloads-series-info">
+                <h3>${series.title}</h3>
+                <div class="downloads-series-meta">
+                  ${allEpisodes.length > 0 ? `${allEpisodes.length} episodes` : `${downloadedCount} in library`}
+                  ${offlineExclusiveTotal > 0 ? ` • <span style="color:#ffd700">${offlineExclusiveDownloaded}/${offlineExclusiveTotal} Offline Exclusive</span>` : ''}
+                </div>
+              </div>
+            </div>
+            <div class="downloads-series-episodes">
+        `
+
+        // If we have allEpisodes, show them all with status
+        if (allEpisodes.length > 0) {
+          // Group by season
+          const seasons = {}
+          allEpisodes.forEach(ep => {
+            if (!seasons[ep.season]) seasons[ep.season] = []
+            seasons[ep.season].push(ep)
+          })
+
+          Object.keys(seasons).sort((a, b) => parseInt(a) - parseInt(b)).forEach(seasonNum => {
+            content += `<div class="downloads-season-label">Season ${seasonNum}</div>`
+            content += `<div class="downloads-season-episodes">`
+
+            seasons[seasonNum].forEach(ep => {
+              const isDownloaded = !!downloadedEpisodes[ep.id]
+              const isOfflineExclusive = ep.type === 'offline-exclusive'
+
+              // Determine chip style
+              let chipClass = ''
+              let chipStyle = ''
+
+              if (isOfflineExclusive) {
+                if (isDownloaded) {
+                  // Downloaded Offline Exclusive - Full gold glory
+                  chipClass = 'offline-exclusive downloaded'
+                } else {
+                  // Not downloaded Offline Exclusive - Transparent with gold dashed border
+                  chipClass = 'offline-exclusive not-downloaded'
+                }
+              } else {
+                // Stream First - always available
+                chipClass = 'stream-first'
+                if (isDownloaded) chipClass += ' downloaded'
+              }
+
+              const epLabel = `E${ep.episode_num}`
+
+              content += `
+                <div class="downloads-episode-chip ${chipClass}"
+                     onclick="dashApp.playOrDownloadFromLibrary('${seriesId}', '${ep.id}', '${ep.format}', '${ep.title.replace(/'/g, "\\'")}', ${isDownloaded}, ${isOfflineExclusive})"
+                     title="${ep.title}${isDownloaded ? ' ✓ Downloaded' : isOfflineExclusive ? ' - Tap to download' : ''}">
+                  ${epLabel}
+                  ${isDownloaded ? '<span class="chip-check">✓</span>' : ''}
+                </div>
+              `
+            })
+
+            content += `</div>`
+          })
+        } else {
+          // Fallback: just show downloaded episodes
+          Object.keys(downloadedEpisodes).forEach(epId => {
+            const ep = downloadedEpisodes[epId]
+            const chipClass = ep.type === 'offline-exclusive' ? 'offline-exclusive downloaded' : 'stream-first downloaded'
+            content += `
+              <div class="downloads-episode-chip ${chipClass}" onclick="dashApp.playFromLibrary('${seriesId}', '${epId}')">
+                ${ep.title.includes('Episode') ? ep.title.replace('Episode ', 'E') : ep.title}
+                <span class="chip-check">✓</span>
+              </div>
+            `
+          })
+        }
+
+        content += `
+            </div>
+            <button class="download-all-btn" onclick="dashApp.downloadAllOfflineExclusive('${seriesId}')">
+              ⬇️ Download All Offline Exclusive
+            </button>
+          </div>
+        `
+      })
+    }
+
+    content += '</div>'
+    return content
+  }
+
+  /**
+   * Play or download episode from library view
+   */
+  playOrDownloadFromLibrary(seriesId, episodeId, format, title, isDownloaded, isOfflineExclusive) {
+    if (isOfflineExclusive) {
+      if (isDownloaded) {
+        // Already downloaded - watch in player
+        this.watchInPlayer(episodeId, format, title, seriesId)
+      } else {
+        // Not downloaded - prompt to download
+        this.downloadToDevice(episodeId, format, title, seriesId)
+      }
+    } else {
+      // Stream First - just play
+      this.playEpisode(episodeId, format)
+    }
+  }
+
+  /**
+   * Download all Offline Exclusive episodes for a series
+   */
+  async downloadAllOfflineExclusive(seriesId) {
+    const library = this.loadDownloadLibrary()
+    const series = library.series[seriesId]
+
+    if (!series || !series.allEpisodes) {
+      this.showToast('No episodes found', 'error')
+      return
+    }
+
+    const offlineExclusive = series.allEpisodes.filter(ep => ep.type === 'offline-exclusive')
+    const notDownloaded = offlineExclusive.filter(ep => !series.episodes[ep.id])
+
+    if (notDownloaded.length === 0) {
+      this.showToast('All Offline Exclusive episodes already downloaded!', 'success')
+      return
+    }
+
+    this.showToast(`Starting ${notDownloaded.length} downloads...`, 'info')
+
+    // Download with slight delay between each to not overwhelm
+    for (let i = 0; i < notDownloaded.length; i++) {
+      const ep = notDownloaded[i]
+      setTimeout(() => {
+        this.downloadToDevice(ep.id, ep.format, ep.title, seriesId)
+      }, i * 1500) // 1.5s between each download
+    }
+  }
+
+  /**
+   * Play episode from download library
+   */
+  playFromLibrary(seriesId, episodeId) {
+    const library = this.loadDownloadLibrary()
+    const episode = library.series[seriesId]?.episodes[episodeId]
+
+    if (!episode) {
+      this.showToast('Episode not found', 'error')
+      return
+    }
+
+    if (episode.type === 'offline-exclusive') {
+      // Open in external player
+      this.watchInPlayer(episodeId, episode.format, episode.title, seriesId)
+    } else {
+      // Stream in app
+      this.playEpisode(episodeId, episode.format)
+    }
   }
 
   showVideoPlayer(streamUrl, type = 'movie', streamType = null, channelName = null) {
