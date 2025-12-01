@@ -1355,7 +1355,7 @@ class DashApp {
                             </div>
                             <div class="episode-actions">
                               <button class="episode-btn play-btn" onclick="event.stopPropagation(); dashApp.tryPlayEpisode('${ep.id}', '${ext}')" title="Try Play (may not work)">▶️</button>
-                              <button class="episode-btn download-btn" onclick="event.stopPropagation(); dashApp.downloadEpisode('${ep.id}', '${ext}', '${(ep.title || `Episode ${ep.episode_num}`).replace(/'/g, "\\'")}')">⬇️</button>
+                              <button class="episode-btn download-btn" onclick="event.stopPropagation(); dashApp.downloadEpisode('${ep.id}', '${ext}', '${(ep.title || `Episode ${ep.episode_num}`).replace(/'/g, "\\'")}')" title="Open in VLC/MX Player">📲</button>
                             </div>
                           </div>
                         `
@@ -1516,28 +1516,60 @@ class DashApp {
   }
 
   /**
-   * Download MKV episode file
-   * Opens in new tab - user's browser will handle the download
+   * Open MKV episode in external player
+   * On mobile: Opens in VLC, MX Player, or default video app
+   * On desktop: Opens in default video player or downloads
    */
   downloadEpisode(episodeId, extension = 'mkv', title = 'Episode') {
-    console.log(`⬇️ Downloading episode: ${episodeId} (${extension})`)
+    console.log(`🎬 Opening episode in external player: ${episodeId} (${extension})`)
 
-    const downloadUrl = this.client.buildSeriesUrl(episodeId, extension)
-    console.log('⬇️ Download URL:', downloadUrl)
+    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+    console.log('🎬 Stream URL:', streamUrl)
 
-    // Create a temporary anchor element for download
-    const a = document.createElement('a')
-    a.href = downloadUrl
-    a.target = '_blank'
-    a.download = `${title}.${extension}`
+    // Detect platform
+    const isAndroid = /Android/i.test(navigator.userAgent)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    const isMobile = isAndroid || isIOS
 
-    // Trigger download
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
+    if (isAndroid) {
+      // Android: Try intent URL for video players
+      // This will prompt user to choose: VLC, MX Player, etc.
+      const intentUrl = `intent:${streamUrl}#Intent;type=video/*;end`
+      console.log('📱 Android intent URL:', intentUrl)
 
-    // Show toast notification
-    this.showToast(`Downloading: ${title}`, 'info')
+      // Try intent first, fallback to direct open
+      try {
+        window.location.href = intentUrl
+      } catch (e) {
+        window.open(streamUrl, '_blank')
+      }
+      this.showToast(`Opening in video player...`, 'info')
+    } else if (isIOS) {
+      // iOS: VLC has a custom URL scheme
+      // vlc-x-callback://x-callback-url/stream?url=VIDEO_URL
+      const vlcUrl = `vlc-x-callback://x-callback-url/stream?url=${encodeURIComponent(streamUrl)}`
+      console.log('🍎 iOS VLC URL:', vlcUrl)
+
+      // Try VLC first, then Infuse, then direct
+      const tryOpen = (url, fallback) => {
+        const iframe = document.createElement('iframe')
+        iframe.style.display = 'none'
+        iframe.src = url
+        document.body.appendChild(iframe)
+        setTimeout(() => {
+          document.body.removeChild(iframe)
+          if (fallback) fallback()
+        }, 2000)
+      }
+
+      tryOpen(vlcUrl, () => window.open(streamUrl, '_blank'))
+      this.showToast(`Opening in VLC or video player...`, 'info')
+    } else {
+      // Desktop: Just open in new tab
+      // Browser will either play it or trigger download based on user settings
+      window.open(streamUrl, '_blank')
+      this.showToast(`Opening: ${title}`, 'info')
+    }
   }
 
   /**
