@@ -818,6 +818,14 @@ class DashApp {
           if (row.key === 'african_stories') {
             return this.renderAfricanStoriesRow()
           }
+          // Special Kids & Family row with playful bubble style
+          if (row.key === 'kids_family') {
+            return this.renderKidsRow()
+          }
+          // Special K-Drama row with elegant Korean aesthetic
+          if (row.key === 'kdrama') {
+            return this.renderKDramaRow()
+          }
           // Handle mixed collections (series + movies)
           const collection = this.collections?.[row.key]
           if (collection?.type === 'mixed' || collection?.type === 'series') {
@@ -4120,6 +4128,201 @@ class DashApp {
             <div class="story-title">${item.name || 'Unknown'}</div>
             ${rating ? `<div class="story-rating">★ ${rating}</div>` : ''}
           </div>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render Kids & Family row with playful bubble style
+   * Fun, colorful cards with bouncy animations - Disney/Pixar vibes
+   */
+  renderKidsRow() {
+    const collection = this.collections?.kids_family
+    if (!collection) return ''
+
+    // Get both series and movies for kids content
+    let items = []
+
+    // Get series by category keywords
+    const kidsKeywords = ['kids', 'children', 'family', 'animation', 'cartoon', 'animated', 'disney', 'pixar', 'dreamworks', 'nickelodeon']
+    const kidsSeries = (this.localSeries || []).filter(s => {
+      const name = (s.name || '').toLowerCase()
+      const category = (s.category_name || '').toLowerCase()
+      return kidsKeywords.some(kw => name.includes(kw) || category.includes(kw))
+    }).map(s => ({ ...s, itemType: 'series' }))
+    items.push(...kidsSeries)
+
+    // Get kids movies
+    const kidsMovies = (this.localMovies || []).filter(m => {
+      const name = (m.name || '').toLowerCase()
+      const category = (m.category_name || '').toLowerCase()
+      return kidsKeywords.some(kw => name.includes(kw) || category.includes(kw))
+    }).map(m => ({ ...m, itemType: 'movie' }))
+    items.push(...kidsMovies)
+
+    // Prioritize items with images and good ratings
+    items = items
+      .filter(i => {
+        const hasImage = i.itemType === 'series' ? (i.cover || i.stream_icon) : i.stream_icon
+        return hasImage
+      })
+      .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+      .slice(0, 25)
+
+    if (items.length === 0) return ''
+
+    return `
+      <div class="collection-row featured-row kids-row">
+        <div class="collection-header">
+          <h2 class="collection-title kids-title">
+            <span class="kids-stars">✨</span>
+            <span class="kids-emoji">🎈</span>
+            Kids & Family
+            <span class="kids-emoji">🎠</span>
+            <span class="kids-stars">✨</span>
+            <span class="kids-tagline">FUN FOR EVERYONE!</span>
+          </h2>
+          <span class="collection-see-all" onclick="dashApp.showCollection('kids_family')">
+            See All
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="collection-carousel" data-collection="kids_family">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('kids_family', -1)">‹</button>
+          <div class="carousel-track">
+            ${items.map((item, idx) => this.renderKidsCard(item, idx)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('kids_family', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render a single Kids card (playful bubble style)
+   */
+  renderKidsCard(item, index) {
+    const isSeries = item.itemType === 'series'
+    const id = isSeries ? item.series_id : item.stream_id
+    const image = isSeries ? (item.cover || item.stream_icon) : item.stream_icon
+    const rating = item.rating ? parseFloat(item.rating).toFixed(1) : ''
+    const onClick = isSeries
+      ? `dashApp.showDetails('${id}', 'series')`
+      : `dashApp.showDetails('${id}', 'movie')`
+
+    // Fun rainbow colors that cycle
+    const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#95E1D3', '#F38181', '#AA96DA', '#FCBAD3', '#A8D8EA']
+    const accentColor = colors[index % colors.length]
+
+    return `
+      <div class="kids-card" onclick="${onClick}" style="--kids-accent: ${accentColor}">
+        <div class="kids-card-bubble">
+          <img class="kids-card-image" src="${this.fixImageUrl(image)}" alt="${item.name}"
+               onerror="this.onerror=null; this.src='/assets/placeholder.svg'">
+          <div class="kids-card-sparkle">✨</div>
+          <div class="kids-card-overlay">
+            <div class="kids-card-play">▶</div>
+          </div>
+        </div>
+        <div class="kids-card-info">
+          <div class="kids-card-title">${item.name || 'Fun Time!'}</div>
+          ${rating ? `<div class="kids-card-rating">⭐ ${rating}</div>` : ''}
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render K-Drama row with elegant Korean aesthetic
+   * Romantic, soft gradients, heart elements - Hallyu wave style
+   */
+  renderKDramaRow() {
+    const collection = this.collections?.kdrama
+    if (!collection) return ''
+
+    // Get both series and movies for K-Drama content
+    let items = []
+
+    // Get series by category keywords
+    const kdramaKeywords = ['korean', 'korea', 'k-drama', 'kdrama', 'seoul', 'hangul']
+    const kdramaSeries = (this.localSeries || []).filter(s => {
+      const name = (s.name || '').toLowerCase()
+      const category = (s.category_name || '').toLowerCase()
+      return kdramaKeywords.some(kw => name.includes(kw) || category.includes(kw))
+    }).map(s => ({ ...s, itemType: 'series' }))
+    items.push(...kdramaSeries)
+
+    // Get Korean movies
+    const kdramaMovies = (this.localMovies || []).filter(m => {
+      const name = (m.name || '').toLowerCase()
+      const category = (m.category_name || '').toLowerCase()
+      return kdramaKeywords.some(kw => name.includes(kw) || category.includes(kw))
+    }).map(m => ({ ...m, itemType: 'movie' }))
+    items.push(...kdramaMovies)
+
+    // Prioritize items with images and good ratings
+    items = items
+      .filter(i => {
+        const hasImage = i.itemType === 'series' ? (i.cover || i.stream_icon) : i.stream_icon
+        return hasImage
+      })
+      .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+      .slice(0, 25)
+
+    if (items.length === 0) return ''
+
+    return `
+      <div class="collection-row featured-row kdrama-row">
+        <div class="collection-header">
+          <h2 class="collection-title kdrama-title">
+            <span class="kdrama-hangul">한국</span>
+            K-Drama
+            <span class="kdrama-heart">💕</span>
+            <span class="kdrama-tagline">HALLYU WAVE 한류</span>
+          </h2>
+          <span class="collection-see-all" onclick="dashApp.showCollection('kdrama')">
+            See All
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="collection-carousel" data-collection="kdrama">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('kdrama', -1)">‹</button>
+          <div class="carousel-track">
+            ${items.map(item => this.renderKDramaCard(item)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('kdrama', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render a single K-Drama card (elegant romantic style)
+   */
+  renderKDramaCard(item) {
+    const isSeries = item.itemType === 'series'
+    const id = isSeries ? item.series_id : item.stream_id
+    const image = isSeries ? (item.cover || item.stream_icon) : item.stream_icon
+    const rating = item.rating ? parseFloat(item.rating).toFixed(1) : ''
+    const badge = isSeries ? '드라마' : '영화'  // Drama / Movie in Korean
+    const onClick = isSeries
+      ? `dashApp.showDetails('${id}', 'series')`
+      : `dashApp.showDetails('${id}', 'movie')`
+
+    return `
+      <div class="kdrama-card" onclick="${onClick}">
+        <div class="kdrama-card-container">
+          <img class="kdrama-card-image" src="${this.fixImageUrl(image)}" alt="${item.name}"
+               onerror="this.onerror=null; this.src='/assets/placeholder.svg'">
+          <div class="kdrama-card-petals"></div>
+          <span class="kdrama-badge">${badge}</span>
+          <div class="kdrama-card-gradient"></div>
+          <div class="kdrama-card-info">
+            <div class="kdrama-card-title">${item.name || 'Unknown'}</div>
+            ${rating ? `<div class="kdrama-card-rating">★ ${rating}</div>` : ''}
+          </div>
+          <div class="kdrama-card-heart">♡</div>
         </div>
       </div>
     `
