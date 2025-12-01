@@ -392,8 +392,56 @@ class DashApp {
     const collection = this.collections?.[collectionKey]
     if (!collection) return []
 
-    const movieIds = collection.movies.slice(0, limit)
-    return movieIds.map(id => this.getMovieById(id)).filter(Boolean)
+    // First try by ID
+    let movies = []
+    if (collection.movies && collection.movies.length > 0) {
+      movies = collection.movies.map(id => this.getMovieById(id)).filter(Boolean)
+    }
+
+    // If no movies found by ID, search by collection keywords/name
+    if (movies.length < 3) {
+      const searchTerms = this.getCollectionSearchTerms(collectionKey)
+      if (searchTerms.length > 0) {
+        const keywordMatches = (this.localMovies || []).filter(m => {
+          const name = (m.name || '').toLowerCase()
+          const plot = (m.plot || '').toLowerCase()
+          return searchTerms.some(term => name.includes(term) || plot.includes(term))
+        })
+        // Add matches that aren't already in the list
+        const existingIds = new Set(movies.map(m => m.stream_id))
+        keywordMatches.forEach(m => {
+          if (!existingIds.has(m.stream_id) && m.stream_icon) {
+            movies.push(m)
+          }
+        })
+      }
+    }
+
+    // Sort by rating and return limited results
+    return movies
+      .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+      .slice(0, limit)
+  }
+
+  // Get search terms for a collection
+  getCollectionSearchTerms(collectionKey) {
+    const searchMap = {
+      'fast_furious': ['fast', 'furious', 'f9', 'f10', 'hobbs', 'shaw'],
+      'marvel': ['marvel', 'avengers', 'spider-man', 'iron man', 'thor', 'hulk', 'captain america', 'guardians galaxy', 'black panther', 'ant-man', 'doctor strange'],
+      'dc': ['batman', 'superman', 'wonder woman', 'justice league', 'aquaman', 'flash', 'shazam', 'joker', 'dc'],
+      'wizarding_world': ['harry potter', 'fantastic beasts', 'hogwarts', 'dumbledore', 'voldemort'],
+      'star_wars': ['star wars', 'jedi', 'skywalker', 'mandalorian', 'boba fett', 'force awakens', 'rogue one'],
+      'john_wick': ['john wick', 'wick'],
+      'james_bond': ['bond', '007', 'skyfall', 'spectre', 'casino royale'],
+      'horror': ['horror', 'scary', 'nightmare', 'haunted', 'conjuring', 'annabelle', 'exorcist'],
+      'comedy': ['comedy', 'funny', 'laugh'],
+      'romance': ['romance', 'love story', 'romantic'],
+      'bollywood': ['bollywood', 'hindi', 'shah rukh', 'salman khan', 'aamir khan'],
+      'african_stories': ['nigeria', 'nollywood', 'africa', 'lagos', 'johannesburg', 'kenya', 'ghana'],
+      'kdrama': ['korean', 'k-drama', 'kdrama'],
+      'turkish_drama': ['turkish', 'turkey']
+    }
+    return searchMap[collectionKey] || []
   }
 
   showLoginUI() {
@@ -651,11 +699,22 @@ class DashApp {
   async renderHomePage() {
     const username = localStorage.getItem('dash_user') || 'User'
 
-    // Get hero movies for rotation (top rated with images)
+    // Get hero movies for rotation (top rated with images from real collections)
     const heroMovies = [
-      ...this.getCollectionMovies('hollywood_hits', 3),
-      ...this.getCollectionMovies('new_2025', 2)
+      ...this.getCollectionMovies('marvel', 2),
+      ...this.getCollectionMovies('african_stories', 1),
+      ...this.getCollectionMovies('star_wars', 1),
+      ...this.getCollectionMovies('award_winners', 1)
     ].filter(m => m?.stream_icon).slice(0, 5)
+
+    // Fallback: if no collection movies, get top rated from all movies
+    if (heroMovies.length === 0) {
+      const fallbackHero = (this.localMovies || [])
+        .filter(m => m.stream_icon && m.rating && parseFloat(m.rating) > 7)
+        .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+        .slice(0, 5)
+      heroMovies.push(...fallbackHero)
+    }
 
     // Build collection rows - WESTERN FOCUSED with blockbusters
     const collectionRows = [
@@ -755,6 +814,10 @@ class DashApp {
 
         <!-- Collection Rows (Netflix Style) -->
         ${collectionRows.map(row => {
+          // Special African Stories row with tall poster style
+          if (row.key === 'african_stories') {
+            return this.renderAfricanStoriesRow()
+          }
           // Handle mixed collections (series + movies)
           const collection = this.collections?.[row.key]
           if (collection?.type === 'mixed' || collection?.type === 'series') {
@@ -3958,6 +4021,106 @@ class DashApp {
             <p>Add movies and shows to watch later</p>
           </div>
         ` : ''}
+      </div>
+    `
+  }
+
+  /**
+   * Render African Stories row with unique tall poster "story" style
+   * This is a signature DASH feature showcasing African content
+   */
+  renderAfricanStoriesRow() {
+    const collection = this.collections?.african_stories
+    if (!collection) return ''
+
+    // Get both series and movies for African content
+    let items = []
+
+    // Get series by ID first
+    if (collection.series && collection.series.length > 0) {
+      const seriesItems = collection.series.map(id =>
+        (this.localSeries || []).find(s => s.series_id === id || String(s.series_id) === String(id))
+      ).filter(Boolean).map(s => ({ ...s, itemType: 'series' }))
+      items.push(...seriesItems)
+    }
+
+    // Search for African series by keywords
+    const africanKeywords = ['nigeria', 'nollywood', 'africa', 'lagos', 'johannesburg', 'kenya', 'ghana', 'south africa', 'nairobi']
+    const keywordSeriesMatches = (this.localSeries || []).filter(s => {
+      const name = (s.name || '').toLowerCase()
+      const category = (s.category_name || '').toLowerCase()
+      return africanKeywords.some(kw => name.includes(kw) || category.includes(kw))
+    }).map(s => ({ ...s, itemType: 'series' }))
+
+    // Add keyword matches (dedupe)
+    const existingSeriesIds = new Set(items.filter(i => i.itemType === 'series').map(s => s.series_id))
+    keywordSeriesMatches.forEach(s => {
+      if (!existingSeriesIds.has(s.series_id)) {
+        items.push(s)
+      }
+    })
+
+    // Get African movies
+    const movieItems = this.getCollectionMovies('african_stories', 15).map(m => ({ ...m, itemType: 'movie' }))
+    items.push(...movieItems)
+
+    // Prioritize items with images
+    items = items.filter(i => {
+      const hasImage = i.itemType === 'series' ? (i.cover || i.stream_icon) : i.stream_icon
+      return hasImage
+    }).slice(0, 25)
+
+    if (items.length === 0) return ''
+
+    return `
+      <div class="collection-row featured-row african-stories-row">
+        <div class="collection-header">
+          <h2 class="collection-title">
+            <span style="margin-right: 8px;">🌍</span>
+            African Stories
+            <span style="font-size: 0.6em; margin-left: 12px; color: var(--accent-gold);">FROM LAGOS TO JOHANNESBURG</span>
+          </h2>
+          <span class="collection-see-all" onclick="dashApp.showCollection('african_stories')">
+            See All
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="collection-carousel" data-collection="african_stories">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('african_stories', -1)">‹</button>
+          <div class="carousel-track">
+            ${items.map(item => this.renderAfricanStoryCard(item)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('african_stories', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render a single African story card (tall poster style)
+   */
+  renderAfricanStoryCard(item) {
+    const isSeries = item.itemType === 'series'
+    const id = isSeries ? item.series_id : item.stream_id
+    const image = isSeries ? (item.cover || item.stream_icon) : item.stream_icon
+    const rating = item.rating ? parseFloat(item.rating).toFixed(1) : ''
+    const badge = isSeries ? 'SERIES' : 'MOVIE'
+    const onClick = isSeries
+      ? `dashApp.showDetails('${id}', 'series')`
+      : `dashApp.showDetails('${id}', 'movie')`
+
+    return `
+      <div class="african-story-card" onclick="${onClick}">
+        <div class="story-image-container">
+          <img class="story-image" src="${this.fixImageUrl(image)}" alt="${item.name}"
+               onerror="this.onerror=null; this.parentElement.style.background='linear-gradient(135deg, #6B46C1 0%, #2D1B4E 100%)'">
+          <span class="story-badge">${badge}</span>
+          <div class="story-gradient"></div>
+          <div class="story-info">
+            <div class="story-title">${item.name || 'Unknown'}</div>
+            ${rating ? `<div class="story-rating">★ ${rating}</div>` : ''}
+          </div>
+        </div>
       </div>
     `
   }
