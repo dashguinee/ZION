@@ -1337,16 +1337,42 @@ class DashApp {
                 <div class="season-section">
                   <h3>Season ${seasonNum}</h3>
                   <div class="episode-list">
-                    ${episodes.map(ep => `
-                      <div class="episode-card" onclick="dashApp.playEpisode('${ep.id}', '${ep.container_extension || 'mp4'}')">
-                        <div class="episode-number">E${ep.episode_num}</div>
-                        <div class="episode-info">
-                          <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`}</div>
-                          <div class="episode-meta">${ep.duration || ''}</div>
-                        </div>
-                        <div class="episode-play">▶️</div>
-                      </div>
-                    `).join('')}
+                    ${episodes.map(ep => {
+                      const ext = (ep.container_extension || 'mp4').toLowerCase()
+                      const isMKV = ext === 'mkv'
+                      const formatBadge = isMKV
+                        ? '<span class="format-badge mkv">MKV</span>'
+                        : '<span class="format-badge mp4">MP4</span>'
+
+                      if (isMKV) {
+                        // MKV: Show download button (browsers can't play MKV)
+                        return `
+                          <div class="episode-card mkv-episode">
+                            <div class="episode-number">E${ep.episode_num}</div>
+                            <div class="episode-info">
+                              <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`} ${formatBadge}</div>
+                              <div class="episode-meta">${ep.duration || ''}</div>
+                            </div>
+                            <div class="episode-actions">
+                              <button class="episode-btn play-btn" onclick="event.stopPropagation(); dashApp.tryPlayEpisode('${ep.id}', '${ext}')" title="Try Play (may not work)">▶️</button>
+                              <button class="episode-btn download-btn" onclick="event.stopPropagation(); dashApp.downloadEpisode('${ep.id}', '${ext}', '${(ep.title || `Episode ${ep.episode_num}`).replace(/'/g, "\\'")}')">⬇️</button>
+                            </div>
+                          </div>
+                        `
+                      } else {
+                        // MP4: Direct play (browsers support this)
+                        return `
+                          <div class="episode-card" onclick="dashApp.playEpisode('${ep.id}', '${ext}')">
+                            <div class="episode-number">E${ep.episode_num}</div>
+                            <div class="episode-info">
+                              <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`} ${formatBadge}</div>
+                              <div class="episode-meta">${ep.duration || ''}</div>
+                            </div>
+                            <div class="episode-play">▶️</div>
+                          </div>
+                        `
+                      }
+                    }).join('')}
                   </div>
                 </div>
               `
@@ -1457,20 +1483,73 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    // ALWAYS request MP4 extension - Xtream servers remux MKV→MP4 automatically
-    // The container format doesn't matter, servers handle the remux since codecs (H264/AAC) are same
-    // Browsers can't play MKV container but CAN play the same video/audio in MP4 container
-    const finalExtension = 'mp4'
-
-    if (extension.toLowerCase() !== 'mp4') {
-      console.log(`🔄 Server remux: ${extension.toUpperCase()} → MP4 (same codecs, different container)`)
-    }
-
-    const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
+    // For MP4, play directly
+    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
     console.log('📺 Stream URL:', streamUrl)
 
     this.closeModal()
     this.showVideoPlayer(streamUrl, 'series')
+  }
+
+  /**
+   * Try to play MKV episode - may fail in browser
+   * Option 1: Request as .mp4 (server remux)
+   * Option 2: Request as .m3u8 (HLS if server supports)
+   */
+  tryPlayEpisode(episodeId, extension = 'mkv') {
+    console.log(`🎯 Attempting to play MKV episode: ${episodeId}`)
+
+    // Strategy 1: Try requesting as MP4 (some servers remux on-the-fly)
+    const mp4Url = this.client.buildSeriesUrl(episodeId, 'mp4')
+    console.log('📺 Trying MP4 URL:', mp4Url)
+
+    this.closeModal()
+    this.showVideoPlayer(mp4Url, 'series')
+  }
+
+  /**
+   * Download MKV episode file
+   * Opens in new tab - user's browser will handle the download
+   */
+  downloadEpisode(episodeId, extension = 'mkv', title = 'Episode') {
+    console.log(`⬇️ Downloading episode: ${episodeId} (${extension})`)
+
+    const downloadUrl = this.client.buildSeriesUrl(episodeId, extension)
+    console.log('⬇️ Download URL:', downloadUrl)
+
+    // Create a temporary anchor element for download
+    const a = document.createElement('a')
+    a.href = downloadUrl
+    a.target = '_blank'
+    a.download = `${title}.${extension}`
+
+    // Trigger download
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+
+    // Show toast notification
+    this.showToast(`Downloading: ${title}`, 'info')
+  }
+
+  /**
+   * Show toast notification
+   */
+  showToast(message, type = 'info') {
+    // Remove existing toast
+    const existingToast = document.querySelector('.toast-notification')
+    if (existingToast) existingToast.remove()
+
+    const toast = document.createElement('div')
+    toast.className = `toast-notification toast-${type}`
+    toast.innerHTML = `
+      <span class="toast-icon">${type === 'info' ? 'ℹ️' : type === 'success' ? '✅' : '⚠️'}</span>
+      <span class="toast-message">${message}</span>
+    `
+    document.body.appendChild(toast)
+
+    // Auto-remove after 3s
+    setTimeout(() => toast.remove(), 3000)
   }
 
   showVideoPlayer(streamUrl, type = 'movie', streamType = null, channelName = null) {
