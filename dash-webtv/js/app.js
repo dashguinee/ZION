@@ -1157,6 +1157,22 @@ class DashApp {
       const rating = item.rating || item.rating_5based
       const plot = item.plot || ''
 
+      // Check if this is offline exclusive (MKV)
+      // Movies have container_extension, series we check category
+      const ext = (item.container_extension || '').toLowerCase()
+      const isOfflineExclusive = ext === 'mkv'
+
+      // Gold download icon for offline exclusive content
+      const offlineIcon = isOfflineExclusive ? `
+        <div class="offline-exclusive-badge" title="Offline Exclusive - Download Only">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </div>
+      ` : ''
+
       // NEON card for movies without images
       if (!hasImage) {
         // Generate gradient based on title
@@ -1187,6 +1203,7 @@ class DashApp {
                   <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 </div>
               </div>
+              ${offlineIcon}
               ${rating ? `<div class="browse-card-rating">★ ${parseFloat(rating).toFixed(1)}</div>` : ''}
             </div>
             <div class="browse-card-info">
@@ -1207,6 +1224,7 @@ class DashApp {
                 <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               </div>
             </div>
+            ${offlineIcon}
             ${rating ? `<div class="browse-card-rating">★ ${parseFloat(rating).toFixed(1)}</div>` : ''}
           </div>
           <div class="browse-card-info">
@@ -1404,17 +1422,18 @@ class DashApp {
                       const epTitle = (ep.title || `Episode ${ep.episode_num}`).replace(/'/g, "\\'")
 
                       if (isOfflineExclusive) {
-                        // OFFLINE EXCLUSIVE (MKV) - Premium gold styling, unlimited downloads
+                        // OFFLINE EXCLUSIVE (MKV) - Now with streaming via server remux!
+                        // Server remuxes MKV→MP4 automatically (same H264/AAC codecs)
                         return `
-                          <div class="episode-card offline-exclusive-episode">
+                          <div class="episode-card offline-exclusive-episode" onclick="dashApp.playEpisode('${ep.id}', '${ext}')">
                             <div class="episode-number">E${ep.episode_num}</div>
                             <div class="episode-info">
                               <div class="episode-title">${ep.title || `Episode ${ep.episode_num}`} <span class="format-badge offline-exclusive">⬇️ OFFLINE EXCLUSIVE</span></div>
-                              <div class="episode-meta">${ep.duration || ''} • Unlimited Downloads</div>
+                              <div class="episode-meta">${ep.duration || ''} • Stream or Download</div>
                             </div>
                             <div class="episode-actions">
-                              <button class="episode-btn watch-player-btn" onclick="event.stopPropagation(); dashApp.watchInPlayer('${ep.id}', '${ext}', '${epTitle}', '${id}')" title="Watch in VLC/MX Player">▶️ Watch</button>
-                              <button class="episode-btn download-btn" onclick="event.stopPropagation(); dashApp.downloadToDevice('${ep.id}', '${ext}', '${epTitle}', '${id}')" title="Download to device">⬇️ Download</button>
+                              <button class="episode-btn stream-btn" onclick="event.stopPropagation(); dashApp.playEpisode('${ep.id}', '${ext}')" title="Stream (server remux)">▶️ Stream</button>
+                              <button class="episode-btn download-btn" onclick="event.stopPropagation(); dashApp.downloadToDevice('${ep.id}', '${ext}', '${epTitle}', '${id}')" title="Download to device">⬇️</button>
                             </div>
                           </div>
                         `
@@ -1545,8 +1564,16 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    // For MP4, play directly
-    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+    // ALWAYS request MP4 extension - Xtream servers remux MKV→MP4 automatically
+    // The container format doesn't matter, servers handle the remux since codecs (H264/AAC) are same
+    // Browsers can't play MKV container but CAN play the same video/audio in MP4 container
+    const finalExtension = 'mp4'
+
+    if (extension.toLowerCase() !== 'mp4') {
+      console.log(`🔄 Server remux: ${extension.toUpperCase()} → MP4 (same codecs, different container)`)
+    }
+
+    const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
     console.log('📺 Stream URL:', streamUrl)
 
     this.closeModal()
