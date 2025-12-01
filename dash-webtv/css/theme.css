@@ -8,6 +8,9 @@
   --primary-purple: #9D4EDD;
   --primary-purple-dark: #7B2CBF;
   --primary-purple-light: #C77DFF;
+  --dark-purple: #2D1B4E;
+  --primary: #9D4EDD;
+  --primary-cyan: #00F5FF;
 
   /* Secondary Colors - Electric Blue */
   --secondary-blue: #00F5FF;
@@ -18,11 +21,19 @@
   --bg-dark: #1A1A1A;
   --bg-card: #242424;
   --bg-card-hover: #2E2E2E;
+  --bg-hover: #3A3A3A;
 
   /* Accent Colors */
   --accent-gold: #FFD700;
   --accent-red: #FF006E;
   --accent-green: #06FFA5;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.1);
+
+  /* Neon Colors (for effects) */
+  --neon-color1: #667eea;
+  --neon-color2: #764ba2;
 
   /* Text Colors */
   --text-primary: #FFFFFF;
