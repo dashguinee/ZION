@@ -182,10 +182,27 @@ class XtreamClient {
 
   /**
    * Build playable URL for VOD content
-   * Direct URL - Starshare has CORS enabled (access-control-allow-origin: *)
+   * - MP4: Direct to Starshare (CORS enabled)
+   * - MKV/AVI/etc: Route through FFmpeg server for real-time transcoding
+   *
+   * FFmpeg server uses env credentials (single account mode)
    */
   buildVODUrl(vodId, extension = 'mp4') {
     if (!this.isAuthenticated) return ''
+
+    // Formats that need transcoding (browser can't play these containers)
+    const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
+      .includes(extension.toLowerCase())
+
+    if (needsTranscode) {
+      // Route through our FFmpeg transcoding server
+      // Server uses env vars for Starshare credentials (single account mode)
+      const url = `${this.backendUrl}/api/stream/vod/${vodId}?extension=${extension}&quality=720p`
+      console.log(`🎬 Movie URL (FFmpeg transcode): ${url}`)
+      return url
+    }
+
+    // Direct play for MP4 - Starshare has CORS enabled
     const url = `${this.baseUrl}/movie/${this.username}/${this.password}/${vodId}.${extension}`
     console.log(`🎬 Movie URL (direct): ${url}`)
     return url
@@ -193,10 +210,27 @@ class XtreamClient {
 
   /**
    * Build playable URL for Series episode
-   * Direct URL - Starshare has CORS enabled (access-control-allow-origin: *)
+   * - MP4: Direct to Starshare (CORS enabled)
+   * - MKV/AVI/etc: Route through FFmpeg server for real-time transcoding
+   *
+   * FFmpeg server uses env credentials (single account mode)
    */
   buildSeriesUrl(episodeId, extension = 'mp4') {
     if (!this.isAuthenticated) return ''
+
+    // Formats that need transcoding (browser can't play these containers)
+    const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
+      .includes(extension.toLowerCase())
+
+    if (needsTranscode) {
+      // Route through our FFmpeg transcoding server
+      // Using /episode/:episodeId endpoint - takes episode ID directly
+      const url = `${this.backendUrl}/api/stream/episode/${episodeId}?extension=${extension}&quality=720p`
+      console.log(`📺 Series URL (FFmpeg transcode): ${url}`)
+      return url
+    }
+
+    // Direct play for MP4 - Starshare has CORS enabled
     const url = `${this.baseUrl}/series/${this.username}/${this.password}/${episodeId}.${extension}`
     console.log(`📺 Series URL (direct): ${url}`)
     return url
