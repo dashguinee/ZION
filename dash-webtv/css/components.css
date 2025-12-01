@@ -236,6 +236,125 @@
   z-index: 10;
 }
 
+/* Content Card - Neon Style (for items without posters) */
+.content-card.neon-card {
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-cyan));
+  aspect-ratio: 2/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.content-card.neon-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: neonSweep 4s infinite;
+}
+
+.content-card.neon-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+.content-card.neon-card .neon-card-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 15px;
+  width: 100%;
+}
+
+.content-card.neon-card .neon-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+  text-transform: uppercase;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.content-card.neon-card .neon-year {
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+.content-card.neon-card:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 0 3px rgba(157, 78, 221, 0.5),
+    0 0 30px rgba(157, 78, 221, 0.4);
+}
+
+/* Hidden Gems Section Divider */
+.neon-section-divider {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 40px 0 20px;
+  text-align: center;
+  position: relative;
+}
+
+.neon-section-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(157, 78, 221, 0.5),
+    rgba(0, 212, 255, 0.5),
+    transparent
+  );
+}
+
+.neon-section-title {
+  display: inline-block;
+  background: var(--bg-dark);
+  padding: 0 20px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.neon-section-subtitle {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+@keyframes neonSweep {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
 /* ============================================
    HERO BANNER
    ============================================ */
@@ -521,6 +640,245 @@
 
 .video-player-container:hover .channel-overlay {
   opacity: 1;
+}
+
+/* ============================================
+   QUALITY SELECTOR - Video quality dropdown
+   ============================================ */
+
+.quality-selector {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-cyan));
+  border-radius: 12px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Animated glow effect like neon-card */
+.quality-selector::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent 30%
+  );
+  animation: neonRotate 4s linear infinite;
+}
+
+/* Glass overlay */
+.quality-selector::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(1px);
+}
+
+.video-player-container:hover .quality-selector {
+  opacity: 1;
+}
+
+.quality-selector label {
+  position: relative;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 2px;
+}
+
+.quality-selector select {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  text-align: center;
+  text-align-last: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+}
+
+.quality-selector select:hover,
+.quality-selector select:focus {
+  transform: scale(1.05);
+}
+
+.quality-selector select option {
+  background: #1a1a2e;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem;
+}
+
+/* Quality selector for Account page */
+.quality-select-account {
+  background: rgba(157, 78, 221, 0.2);
+  border: 2px solid rgba(157, 78, 221, 0.4);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.quality-select-account:hover,
+.quality-select-account:focus {
+  background: rgba(157, 78, 221, 0.3);
+  border-color: var(--primary-purple);
+}
+
+.quality-select-account option {
+  background: #1a1a2e;
+  color: white;
+  padding: 0.5rem;
+}
+
+/* ============================================
+   SEASON COUNT BADGE - Multi-season indicator
+   ============================================ */
+
+.season-count-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-cyan) 100%);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(157, 78, 221, 0.4);
+}
+
+/* ============================================
+   SEASON PICKER MODAL
+   ============================================ */
+
+.season-picker-modal {
+  max-width: 800px;
+}
+
+.season-picker-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-cyan) 100%);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.season-picker-container {
+  margin-top: 1.5rem;
+}
+
+.season-picker-heading {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.season-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.season-picker-card {
+  background: rgba(157, 78, 221, 0.1);
+  border: 1px solid rgba(157, 78, 221, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.season-picker-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-purple);
+  box-shadow: 0 8px 24px rgba(157, 78, 221, 0.3);
+}
+
+.season-picker-poster {
+  aspect-ratio: 2/3;
+  overflow: hidden;
+}
+
+.season-picker-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.season-picker-card:hover .season-picker-poster img {
+  transform: scale(1.05);
+}
+
+.season-picker-info {
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.season-picker-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.season-picker-episodes {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .season-picker-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .season-picker-modal .modal-header {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 .channel-name {
@@ -1152,28 +1510,39 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   text-align: center;
   z-index: 2;
+  gap: 0.5rem;
 }
 
-/* Neon title - prominent */
+/* Neon title - BOLD POSTER STYLE */
 .neon-title {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.1rem;
+  font-weight: 800;
   color: white;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  line-height: 1.2;
-  margin-bottom: var(--spacing-xs);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  line-height: 1.15;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  max-width: 90%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
-/* Neon year badge */
+/* Neon year badge - bottom of card */
 .neon-year {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(0, 0, 0, 0.3);
-  padding: 2px 8px;
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 3px 10px;
   border-radius: 4px;
   margin-bottom: var(--spacing-xs);
 }
@@ -1197,13 +1566,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   text-align: center;
   border-radius: inherit;
+  position: relative;
 }
 
 .neon-fallback .neon-title {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+}
+
+.neon-fallback .neon-year {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Hover effects for neon cards */
@@ -1678,5 +2055,869 @@
 
   .carousel-btn {
     display: none;
+  }
+}
+
+/* ============================================
+   COMING SOON BANNER
+   ============================================ */
+
+.coming-soon-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(0, 212, 255, 0.1));
+  border-radius: 20px;
+  border: 2px dashed rgba(157, 78, 221, 0.3);
+  margin-top: 40px;
+}
+
+.coming-soon-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+.coming-soon-banner h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--gradient-cosmic);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.coming-soon-banner p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 400px;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ============================================
+   CONTINUE WATCHING & MY LIST
+   ============================================ */
+
+/* Continue Watching Row */
+.continue-watching-row {
+  background: linear-gradient(180deg, rgba(157, 78, 221, 0.1) 0%, transparent 100%);
+  padding: 1.5rem 0;
+  margin: 0 -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.continue-watching-row .collection-title {
+  color: var(--primary-purple-light);
+}
+
+/* My List Row */
+.my-list-row {
+  background: linear-gradient(180deg, rgba(0, 245, 255, 0.05) 0%, transparent 100%);
+  padding: 1.5rem 0;
+  margin: 0 -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Featured Row Styling */
+.featured-row {
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.05) 0%, transparent 100%);
+  padding: 1.5rem 0;
+  margin: 0 -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-left: 3px solid var(--accent-gold);
+}
+
+/* Continue Watching Card */
+.continue-card {
+  position: relative;
+}
+
+.continue-card .progress-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.continue-card .progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-purple), var(--secondary-blue));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.continue-card .card-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(157, 78, 221, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.continue-card:hover .card-play-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.continue-card .card-play-icon svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 3px;
+}
+
+/* Remove from History Button */
+.remove-history-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.8);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.continue-card:hover .remove-history-btn {
+  opacity: 1;
+}
+
+.remove-history-btn:hover {
+  background: var(--accent-red);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* My List Badge */
+.mylist-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  background: var(--primary-purple);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(157, 78, 221, 0.4);
+}
+
+.mylist-badge svg {
+  width: 14px;
+  height: 14px;
+  fill: white;
+}
+
+/* Remove from My List Button */
+.remove-mylist-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  background: var(--primary-purple);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-card:hover .remove-mylist-btn {
+  opacity: 1;
+}
+
+.remove-mylist-btn:hover {
+  background: var(--accent-red);
+  transform: scale(1.1);
+}
+
+/* My List Button in Modal */
+.mylist-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 2px solid var(--primary-purple);
+  border-radius: var(--radius-md);
+  color: var(--primary-purple);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mylist-btn:hover {
+  background: var(--primary-purple);
+  color: white;
+}
+
+.mylist-btn.in-list {
+  background: var(--primary-purple);
+  color: white;
+}
+
+/* Series Card Badge */
+.series-badge {
+  background: linear-gradient(135deg, var(--secondary-blue), var(--primary-purple));
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+/* Card Placeholder for items without images */
+.card-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.card-placeholder span {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary-purple);
+  text-transform: uppercase;
+}
+
+/* Card Meta Info */
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.card-rating {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.card-category {
+  background: rgba(157, 78, 221, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.card-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Page Headers */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h2 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Globe icon for African content */
+.collection-title-icon.globe {
+  color: var(--accent-gold);
+}
+
+/* ============================================
+   TOP 10 ROW - Netflix Style
+   ============================================ */
+
+.top-10-row {
+  background: linear-gradient(180deg, rgba(255, 0, 110, 0.08) 0%, transparent 100%);
+  padding: 1.5rem 0;
+  margin: 0 -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.top-10-row .collection-title {
+  color: var(--accent-red);
+}
+
+.top-10-row .collection-title-icon {
+  color: var(--accent-gold);
+}
+
+.top-10-carousel .carousel-track {
+  gap: 30px;
+}
+
+.top-10-card {
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.top-10-card:hover {
+  transform: scale(1.05);
+}
+
+.top-10-rank {
+  font-size: 8rem;
+  font-weight: 900;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 4px var(--primary-purple);
+  text-stroke: 4px var(--primary-purple);
+  margin-right: -20px;
+  position: relative;
+  z-index: 1;
+  font-family: 'Arial Black', sans-serif;
+  text-shadow:
+    0 0 20px rgba(157, 78, 221, 0.5),
+    4px 4px 0 var(--bg-black);
+}
+
+.top-10-poster {
+  position: relative;
+  width: 120px;
+  height: 180px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.top-10-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.top-10-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+}
+
+.top-10-info h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+}
+
+.top-10-rating {
+  font-size: 0.7rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+/* Top 10 number styling for different positions */
+.top-10-card:nth-child(1) .top-10-rank {
+  -webkit-text-stroke-color: var(--accent-gold);
+  text-shadow:
+    0 0 30px rgba(255, 215, 0, 0.6),
+    4px 4px 0 var(--bg-black);
+}
+
+.top-10-card:nth-child(2) .top-10-rank {
+  -webkit-text-stroke-color: #C0C0C0;
+}
+
+.top-10-card:nth-child(3) .top-10-rank {
+  -webkit-text-stroke-color: #CD7F32;
+}
+
+/* Responsive Top 10 */
+@media (max-width: 768px) {
+  .top-10-rank {
+    font-size: 5rem;
+    -webkit-text-stroke-width: 3px;
+    margin-right: -15px;
+  }
+
+  .top-10-poster {
+    width: 90px;
+    height: 135px;
+  }
+
+  .top-10-carousel .carousel-track {
+    gap: 15px;
+  }
+}
+
+/* ============================================
+   RECOMMENDATIONS ROW - "Because You Watched"
+   ============================================ */
+
+.recommendations-row {
+  background: linear-gradient(180deg, rgba(0, 245, 255, 0.08) 0%, transparent 100%);
+  padding: 1.5rem 0;
+  margin: 0 -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-left: 3px solid var(--secondary-blue);
+}
+
+.recommendations-row .collection-title {
+  color: var(--secondary-blue);
+}
+
+.recommendations-row .collection-title-icon {
+  color: var(--secondary-blue);
+}
+
+/* ============================================
+   SEARCH ENHANCEMENTS
+   ============================================ */
+
+.search-page {
+  padding: 0 2rem;
+}
+
+.search-quick-filters {
+  margin: 2rem 0;
+}
+
+.search-quick-filters h3 {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.genre-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.genre-btn {
+  padding: 10px 18px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 78, 221, 0.3);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.genre-btn:hover {
+  background: var(--primary-purple);
+  border-color: var(--primary-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(157, 78, 221, 0.3);
+}
+
+.genre-btn.featured {
+  background: linear-gradient(135deg, var(--accent-gold), #FFA500);
+  border-color: var(--accent-gold);
+  color: #000;
+  font-weight: 700;
+}
+
+.genre-btn.featured:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .search-quick-filters {
+    margin: 1.5rem 0;
+  }
+
+  .genre-buttons {
+    gap: 8px;
+  }
+
+  .genre-btn {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================================
+   PERFORMANCE - SKELETON LOADING & LAZY LOAD
+   ============================================ */
+
+/* Skeleton Loading Animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 0%,
+    var(--bg-card-hover) 50%,
+    var(--bg-card) 100%
+  );
+  background-size: 200px 100%;
+  animation: skeleton-shimmer 1.5s infinite linear;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-card {
+  width: 160px;
+  height: 240px;
+  flex-shrink: 0;
+}
+
+.skeleton-hero {
+  width: 100%;
+  height: 500px;
+}
+
+.skeleton-row {
+  display: flex;
+  gap: 16px;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+/* Lazy Load with Blur-up Effect */
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}
+
+.image-placeholder {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--primary-purple-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-placeholder::before {
+  content: '🎬';
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+/* Smooth fade for collection rows */
+.collection-row {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.collection-row:nth-child(1) { animation-delay: 0.1s; }
+.collection-row:nth-child(2) { animation-delay: 0.2s; }
+.collection-row:nth-child(3) { animation-delay: 0.3s; }
+.collection-row:nth-child(4) { animation-delay: 0.4s; }
+.collection-row:nth-child(5) { animation-delay: 0.5s; }
+.collection-row:nth-child(6) { animation-delay: 0.6s; }
+.collection-row:nth-child(7) { animation-delay: 0.7s; }
+.collection-row:nth-child(8) { animation-delay: 0.8s; }
+
+/* Optimize images */
+.movie-card-poster,
+.card-image {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* ============================================
+   MOBILE POLISH - PHASE 6
+   ============================================ */
+
+/* Touch-friendly targets (44px minimum) */
+@media (max-width: 768px) {
+  /* Carousel buttons */
+  .carousel-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+  }
+
+  /* Movie cards - larger touch target */
+  .movie-card,
+  .content-card {
+    min-width: 130px;
+    touch-action: manipulation;
+  }
+
+  /* Better spacing for touch */
+  .collection-header {
+    padding: 0.5rem 0;
+  }
+
+  .collection-see-all {
+    padding: 10px 15px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Hide carousel buttons on mobile - use swipe */
+  .carousel-btn {
+    opacity: 0.5;
+  }
+
+  /* Swipe hint animation */
+  .carousel-track {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .movie-card,
+  .content-card,
+  .top-10-card {
+    scroll-snap-align: start;
+  }
+
+  /* Better hero on mobile */
+  .hero-cinematic {
+    height: 60vh;
+    min-height: 400px;
+  }
+
+  .hero-title-premium {
+    font-size: 1.5rem !important;
+  }
+
+  .hero-description-premium {
+    display: none;
+  }
+
+  .hero-actions-premium {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-play-premium,
+  .btn-info-premium {
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  /* Top 10 mobile adjustment */
+  .top-10-row {
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Featured row mobile */
+  .featured-row,
+  .continue-watching-row,
+  .my-list-row,
+  .recommendations-row {
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Better navigation */
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .navbar-search {
+    max-width: 200px;
+  }
+
+  .search-input {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* Quick links grid on mobile */
+  .quick-links {
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 1rem;
+  }
+
+  .quick-link-card {
+    flex-direction: row;
+    padding: 15px 20px;
+    gap: 15px;
+  }
+
+  .quick-link-icon-wrap {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Bottom safe area for iOS */
+  .navbar-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Pull to refresh indicator */
+  body.refreshing::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--primary-purple);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    z-index: 9999;
+  }
+
+  /* Genre buttons scroll on mobile */
+  .genre-buttons {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .genre-btn {
+    flex-shrink: 0;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .hero-cinematic {
+    height: 50vh;
+    min-height: 350px;
+  }
+
+  .hero-title-premium {
+    font-size: 1.3rem !important;
+  }
+
+  .movie-card,
+  .content-card {
+    min-width: 110px;
+  }
+
+  .top-10-poster {
+    width: 80px;
+    height: 120px;
+  }
+
+  .top-10-rank {
+    font-size: 4rem;
+    -webkit-text-stroke-width: 2px;
+    margin-right: -10px;
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-cinematic {
+    height: 100vh;
+  }
+
+  .navbar {
+    height: 50px;
+  }
+}
+
+/* Touch feedback */
+.movie-card:active,
+.content-card:active,
+.genre-btn:active,
+.quick-link-card:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+  .movie-card:hover,
+  .content-card:hover {
+    transform: none;
+  }
+
+  .movie-card-overlay {
+    opacity: 0.3;
   }
 }

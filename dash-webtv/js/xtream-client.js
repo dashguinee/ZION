@@ -18,6 +18,46 @@ class XtreamClient {
     ]
     this.currentProxyIndex = 0
     this.streamProxy = this.proxyList[0].url
+
+    // Quality settings - FFmpeg server supports 360p, 480p, 720p, 1080p
+    this.availableQualities = ['360p', '480p', '720p', '1080p']
+    this.defaultQuality = '720p'
+  }
+
+  // ============================================
+  // QUALITY PREFERENCE MANAGEMENT
+  // ============================================
+
+  /**
+   * Get user's preferred quality from localStorage
+   * Defaults to 720p for good balance of quality/bandwidth
+   */
+  getPreferredQuality() {
+    const saved = localStorage.getItem('dash_quality_preference')
+    if (saved && this.availableQualities.includes(saved)) {
+      return saved
+    }
+    return this.defaultQuality
+  }
+
+  /**
+   * Set user's preferred quality
+   */
+  setPreferredQuality(quality) {
+    if (this.availableQualities.includes(quality)) {
+      localStorage.setItem('dash_quality_preference', quality)
+      console.log(`📺 Quality preference set to: ${quality}`)
+      return true
+    }
+    console.warn(`⚠️ Invalid quality: ${quality}. Available: ${this.availableQualities.join(', ')}`)
+    return false
+  }
+
+  /**
+   * Get all available quality options
+   */
+  getAvailableQualities() {
+    return [...this.availableQualities]
   }
 
   /**
@@ -186,9 +226,15 @@ class XtreamClient {
    * - MKV/AVI/etc: Route through FFmpeg server for real-time transcoding
    *
    * FFmpeg server uses env credentials (single account mode)
+   * @param {string} vodId - VOD content ID
+   * @param {string} extension - File extension (mp4, mkv, etc)
+   * @param {string} quality - Quality setting (360p, 480p, 720p, 1080p) - optional, uses preference
    */
-  buildVODUrl(vodId, extension = 'mp4') {
+  buildVODUrl(vodId, extension = 'mp4', quality = null) {
     if (!this.isAuthenticated) return ''
+
+    // Use provided quality or fall back to user preference
+    const selectedQuality = quality || this.getPreferredQuality()
 
     // Formats that need transcoding (browser can't play these containers)
     const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
@@ -197,8 +243,8 @@ class XtreamClient {
     if (needsTranscode) {
       // Route through our FFmpeg transcoding server
       // Server uses env vars for Starshare credentials (single account mode)
-      const url = `${this.backendUrl}/api/stream/vod/${vodId}?extension=${extension}&quality=720p`
-      console.log(`🎬 Movie URL (FFmpeg transcode): ${url}`)
+      const url = `${this.backendUrl}/api/stream/vod/${vodId}?extension=${extension}&quality=${selectedQuality}`
+      console.log(`🎬 Movie URL (FFmpeg transcode @ ${selectedQuality}): ${url}`)
       return url
     }
 
@@ -214,9 +260,15 @@ class XtreamClient {
    * - MKV/AVI/etc: Route through FFmpeg server for real-time transcoding
    *
    * FFmpeg server uses env credentials (single account mode)
+   * @param {string} episodeId - Episode ID
+   * @param {string} extension - File extension (mp4, mkv, etc)
+   * @param {string} quality - Quality setting (360p, 480p, 720p, 1080p) - optional, uses preference
    */
-  buildSeriesUrl(episodeId, extension = 'mp4') {
+  buildSeriesUrl(episodeId, extension = 'mp4', quality = null) {
     if (!this.isAuthenticated) return ''
+
+    // Use provided quality or fall back to user preference
+    const selectedQuality = quality || this.getPreferredQuality()
 
     // Formats that need transcoding (browser can't play these containers)
     const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
@@ -225,8 +277,8 @@ class XtreamClient {
     if (needsTranscode) {
       // Route through our FFmpeg transcoding server
       // Using /episode/:episodeId endpoint - takes episode ID directly
-      const url = `${this.backendUrl}/api/stream/episode/${episodeId}?extension=${extension}&quality=720p`
-      console.log(`📺 Series URL (FFmpeg transcode): ${url}`)
+      const url = `${this.backendUrl}/api/stream/episode/${episodeId}?extension=${extension}&quality=${selectedQuality}`
+      console.log(`📺 Series URL (FFmpeg transcode @ ${selectedQuality}): ${url}`)
       return url
     }
 

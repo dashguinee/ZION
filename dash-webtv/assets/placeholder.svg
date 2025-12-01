@@ -1,26 +1,36 @@
 <svg width="300" height="450" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
   <defs>
+    <!-- Gradient background like neon cards -->
     <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1A1A1A;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#242424;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="text-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#9D4EDD;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#00F5FF;stop-opacity:1" />
+    <!-- Logo gradient -->
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.8" />
     </linearGradient>
+    <!-- Subtle glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
 
-  <!-- Background Rectangle -->
+  <!-- Background -->
   <rect width="300" height="450" fill="url(#bg-gradient)"/>
 
-  <!-- DASH Logo -->
-  <text x="150" y="200" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="url(#text-gradient)">
-    DASH⚡
-  </text>
+  <!-- Subtle overlay for depth -->
+  <rect width="300" height="450" fill="rgba(0,0,0,0.15)"/>
 
-  <!-- Placeholder Text -->
-  <text x="150" y="250" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#6B6B6B">
-    No Poster Available
+  <!-- DASH Logo - centered, bold -->
+  <text x="150" y="215" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" text-anchor="middle" fill="url(#logo-gradient)" filter="url(#glow)">
+    DASH
+  </text>
+  <text x="150" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.7)">
+    WebTV
   </text>
 </svg>

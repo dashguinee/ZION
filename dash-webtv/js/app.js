@@ -46,6 +46,12 @@ class DashApp {
     // Video player instance (for proper cleanup)
     this.currentPlayer = null
 
+    // Current stream info for quality changes
+    this.currentStreamNeedsTranscode = false
+    this.currentStreamId = null
+    this.currentStreamExtension = null
+    this.currentStreamType = null
+
     // Collections for Netflix-style UI
     this.collections = null
 
@@ -53,6 +59,10 @@ class DashApp {
     this.localMovies = null
     this.localSeries = null
     this.localLive = null
+
+    // Season grouping cache
+    this.groupedSeries = null
+    this.seriesGroups = new Map() // baseName -> [series1, series2, ...]
 
     // Adult content filter (default: hide)
     this.showAdultContent = localStorage.getItem('dash_adult') === 'true'
@@ -120,9 +130,243 @@ class DashApp {
 
       console.log(`✅ Loaded: ${this.localMovies.length} movies, ${this.localSeries.length} series, ${this.localLive.length} live channels`)
       console.log(`📚 Loaded ${Object.keys(this.collections).length} collections`)
+
+      // Build season groupings for series
+      this.buildSeriesGroups()
     } catch (err) {
       console.error('❌ Failed to load local data:', err)
     }
+  }
+
+  /**
+   * Extract base series name by removing season/language indicators
+   * Examples:
+   *   "Game of Thrones (season 1)" -> "Game of Thrones"
+   *   "Vikings 6" -> "Vikings"
+   *   "Stranger Things 2 S02" -> "Stranger Things"
+   *   "Breaking Bad (Hindi)" -> "Breaking Bad"
+   */
+  extractSeriesBaseName(name) {
+    if (!name) return ''
+
+    let baseName = name.trim()
+
+    // Remove language tags: (Hindi), (English), (Turkish), (Tamil), (Telugu), (URDU)
+    baseName = baseName.replace(/\s*\((Hindi|English|Turkish|Tamil|Telugu|URDU|Urdu|urdu)\)\s*$/i, '')
+
+    // Remove season patterns
+    // Pattern: "Season X", "(Season X)", "(season X)", "S0X", "SX"
+    baseName = baseName.replace(/\s*\(?\s*[Ss]eason\s*\d+\s*\)?\s*$/i, '')
+    baseName = baseName.replace(/\s+S\d{1,2}$/i, '')
+
+    // Remove trailing numbers (Vikings 6 -> Vikings)
+    // But be careful: "24" should stay as "24", "1883" should stay as "1883"
+    // Only remove if preceded by a word
+    baseName = baseName.replace(/\s+\d{1,2}$/, '')
+
+    // Remove trailing "S02", "S2" style without space
+    baseName = baseName.replace(/\s*S\d{1,2}\s*$/i, '')
+
+    return baseName.trim()
+  }
+
+  /**
+   * Extract season number from series name
+   */
+  extractSeasonNumber(name) {
+    if (!name) return 1
+
+    // Match various season patterns
+    const patterns = [
+      /[Ss]eason\s*(\d+)/,      // Season 1, season 2
+      /\(season\s*(\d+)\)/i,    // (season 1)
+      /\s+S(\d{1,2})$/i,        // S01, S1
+      /\s+(\d{1,2})$/,          // trailing number: Vikings 6
+      /\s+S(\d{1,2})\s*$/i      // S02 at end
+    ]
+
+    for (const pattern of patterns) {
+      const match = name.match(pattern)
+      if (match) return parseInt(match[1], 10)
+    }
+
+    return 1 // Default to season 1
+  }
+
+  /**
+   * Build groupings of related series (by season)
+   */
+  buildSeriesGroups() {
+    if (!this.localSeries) return
+
+    this.seriesGroups = new Map()
+    const processed = new Set()
+
+    for (const series of this.localSeries) {
+      const baseName = this.extractSeriesBaseName(series.name)
+      const seasonNum = this.extractSeasonNumber(series.name)
+
+      if (!this.seriesGroups.has(baseName)) {
+        this.seriesGroups.set(baseName, [])
+      }
+
+      this.seriesGroups.get(baseName).push({
+        ...series,
+        season_number: seasonNum,
+        base_name: baseName
+      })
+    }
+
+    // Sort seasons within each group
+    for (const [baseName, seasons] of this.seriesGroups) {
+      seasons.sort((a, b) => a.season_number - b.season_number)
+    }
+
+    // Create grouped series list (one entry per base name)
+    this.groupedSeries = []
+    for (const [baseName, seasons] of this.seriesGroups) {
+      if (seasons.length > 1) {
+        // Multiple seasons - create grouped entry
+        const primary = seasons[0] // Use first season as primary
+        this.groupedSeries.push({
+          ...primary,
+          name: baseName,
+          is_grouped: true,
+          season_count: seasons.length,
+          seasons: seasons,
+          all_series_ids: seasons.map(s => s.series_id)
+        })
+      } else {
+        // Single season - keep as is
+        this.groupedSeries.push({
+          ...seasons[0],
+          is_grouped: false,
+          season_count: 1,
+          seasons: seasons
+        })
+      }
+    }
+
+    // Count multi-season series
+    const multiSeasonCount = [...this.seriesGroups.values()].filter(s => s.length > 1).length
+    console.log(`📺 Season grouping: ${this.groupedSeries.length} unique series (${multiSeasonCount} with multiple seasons)`)
+  }
+
+  // ============================================
+  // CONTENT SCORING ALGORITHM
+  // Prioritizes: Images, Ratings, English/African, Recent content
+  // ============================================
+
+  /**
+   * Score content for priority display
+   * Higher score = shown first
+   */
+  scoreContent(item) {
+    let score = 0
+    const category = (item.category_name || '').toUpperCase()
+    const name = (item.name || '').toUpperCase()
+
+    // IMAGE SCORE (30 points max)
+    // Content with images should appear first
+    const hasImage = item.stream_icon && item.stream_icon.trim() &&
+                     !item.stream_icon.includes('placeholder')
+    if (hasImage) {
+      // High quality TMDB images get full points
+      if (item.stream_icon.includes('tmdb.org')) {
+        score += 30
+      } else {
+        score += 20
+      }
+    }
+
+    // RATING SCORE (25 points max)
+    const rating = parseFloat(item.rating) || 0
+    if (rating >= 8.0) score += 25
+    else if (rating >= 7.0) score += 20
+    else if (rating >= 6.0) score += 15
+    else if (rating >= 5.0) score += 10
+    else score += 5
+
+    // LANGUAGE/ORIGIN SCORE (20 points max)
+    // English and African content prioritized for West Africa market
+    const englishKeywords = ['ENGLISH', 'HOLLYWOOD', 'NETFLIX', 'AMAZON PRIME',
+                             'HBO', 'APPLE TV', 'DISNEY', 'HULU', 'OSCAR', 'BLOCKBUSTER']
+    const africanKeywords = ['AFRICA', 'NOLLYWOOD', 'LAGOS', 'NIGERIA', 'GHANA', 'KENYA']
+    const indianKeywords = ['HINDI', 'TAMIL', 'TELUGU', 'MALAYALAM', 'KANNADA',
+                           'MARATHI', 'BANGLA', 'PUNJABI', 'INDIAN', 'SOUTH INDIAN']
+    const turkishKeywords = ['TURKISH']
+
+    if (africanKeywords.some(kw => category.includes(kw) || name.includes(kw))) {
+      score += 20 // African content same priority as English
+    } else if (englishKeywords.some(kw => category.includes(kw))) {
+      score += 20
+    } else if (turkishKeywords.some(kw => category.includes(kw))) {
+      score += 10
+    } else if (indianKeywords.some(kw => category.includes(kw))) {
+      score += 8 // Indian content lower priority (dedicated section)
+    } else {
+      score += 5
+    }
+
+    // YEAR SCORE (15 points max)
+    const year = parseInt(item.year) || 0
+    const currentYear = new Date().getFullYear()
+    if (year >= currentYear) score += 15
+    else if (year >= currentYear - 1) score += 12
+    else if (year >= currentYear - 2) score += 10
+    else if (year >= currentYear - 3) score += 8
+    else if (year >= 2020) score += 5
+    else score += 3
+
+    // POPULARITY BOOST (10 points max)
+    if (category.includes('BLOCKBUSTER')) score += 10
+    if (category.includes('NETFLIX')) score += 8
+    if (category.includes('OSCAR')) score += 8
+    if (category.includes('4K')) score += 5
+    if (category.includes('FHD')) score += 3
+
+    // PENALTY: CAM quality
+    if (name.includes('(CAM)') || category.includes('(CAM)')) {
+      score -= 15
+    }
+
+    return score
+  }
+
+  /**
+   * Sort content by priority score (highest first)
+   */
+  sortByPriority(items) {
+    if (!items || !Array.isArray(items)) return items
+    return [...items].sort((a, b) => this.scoreContent(b) - this.scoreContent(a))
+  }
+
+  /**
+   * Check if content is English/Western (for filtering)
+   */
+  isEnglishContent(item) {
+    const category = (item.category_name || '').toUpperCase()
+    const englishKeywords = ['ENGLISH', 'HOLLYWOOD', 'NETFLIX', 'AMAZON PRIME',
+                             'HBO', 'APPLE TV', 'DISNEY', 'HULU', 'OSCAR', 'BLOCKBUSTER', 'BBC', 'KIDS']
+    return englishKeywords.some(kw => category.includes(kw))
+  }
+
+  /**
+   * Check if content is Indian (for dedicated section)
+   */
+  isIndianContent(item) {
+    const category = (item.category_name || '').toUpperCase()
+    const indianKeywords = ['HINDI', 'TAMIL', 'TELUGU', 'MALAYALAM', 'KANNADA',
+                           'MARATHI', 'BANGLA', 'PUNJABI', 'INDIAN', 'SOUTH INDIAN']
+    return indianKeywords.some(kw => category.includes(kw))
+  }
+
+  /**
+   * Check if content is Turkish (for dedicated section)
+   */
+  isTurkishContent(item) {
+    const category = (item.category_name || '').toUpperCase()
+    return category.includes('TURKISH')
   }
 
   filterAdultContent(items) {
@@ -387,6 +631,12 @@ class DashApp {
       case 'downloads':
         content = this.renderDownloadsPage()
         break
+      case 'continue_watching':
+        content = this.renderContinueWatchingPage()
+        break
+      case 'mylist':
+        content = this.renderMyListPage()
+        break
       default:
         content = '<div class="empty-state"><h2>Page not found</h2></div>'
     }
@@ -409,16 +659,25 @@ class DashApp {
 
     // Build collection rows - WESTERN FOCUSED with blockbusters
     const collectionRows = [
-      { key: 'featured', title: '⭐ Featured', icon: 'star' },
-      { key: 'trending', title: '🔥 Trending Now', icon: 'fire' },
-      { key: 'new_2025', title: '✨ New in 2025', icon: 'sparkle' },
-      { key: 'hollywood_hits', title: '🎬 Hollywood Hits', icon: 'award' },
-      { key: 'netflix', title: '🎥 Netflix Movies', icon: 'play' },
-      { key: '4k_quality', title: '📺 4K Ultra HD', icon: 'monitor' },
-      { key: 'action', title: '💥 Action & Thrillers', icon: 'target' },
-      { key: 'oscar', title: '🏆 Award Winners', icon: 'award' },
+      { key: 'african_stories', title: '🌍 African Stories', icon: 'globe', featured: true },
       { key: 'marvel', title: '🦸 Marvel Universe', icon: 'zap' },
+      { key: 'dc', title: '🦇 DC Universe', icon: 'zap' },
+      { key: 'fast_furious', title: '🏎️ Fast & Furious', icon: 'car' },
+      { key: 'wizarding_world', title: '⚡ Wizarding World', icon: 'magic' },
+      { key: 'star_wars', title: '✨ Star Wars', icon: 'star' },
+      { key: 'john_wick', title: '🔫 John Wick', icon: 'target' },
+      { key: 'james_bond', title: '🎯 James Bond 007', icon: 'target' },
+      { key: 'kids_family', title: '👨‍👩‍👧‍👦 Kids & Family', icon: 'smile' },
+      { key: 'kdrama', title: '🇰🇷 K-Drama', icon: 'heart' },
+      { key: 'netflix', title: '🎬 Netflix Originals', icon: 'play' },
+      { key: '4k_quality', title: '📺 4K Ultra HD', icon: 'monitor' },
       { key: 'horror', title: '👻 Horror', icon: 'moon' },
+      { key: 'comedy', title: '😂 Comedy', icon: 'smile' },
+      { key: 'romance', title: '💕 Romance', icon: 'heart' },
+      { key: 'documentary', title: '📚 Documentaries', icon: 'award' },
+      { key: 'bollywood', title: '🎭 Bollywood', icon: 'gem' },
+      { key: 'turkish_drama', title: '🇹🇷 Turkish Drama', icon: 'palette' },
+      { key: 'award_winners', title: '🏆 Award Winners', icon: 'award' },
     ]
 
     // Schedule hero rotation after render
@@ -482,12 +741,29 @@ class DashApp {
           </div>
         </div>
 
+        <!-- Continue Watching Row (Priority 1) -->
+        ${this.renderContinueWatchingRow()}
+
+        <!-- My List Row (Priority 2) -->
+        ${this.renderMyListRow()}
+
+        <!-- Top 10 Today (Netflix Style) -->
+        ${this.renderTop10Row()}
+
+        <!-- Because You Watched (Recommendations) -->
+        ${this.renderRecommendationsRow()}
+
         <!-- Collection Rows (Netflix Style) -->
         ${collectionRows.map(row => {
+          // Handle mixed collections (series + movies)
+          const collection = this.collections?.[row.key]
+          if (collection?.type === 'mixed' || collection?.type === 'series') {
+            return this.renderMixedCollectionRow(row.key, row.title, row.icon)
+          }
           const movies = this.filterAdultContent(this.getCollectionMovies(row.key, 20))
           if (movies.length === 0) return ''
           return `
-            <div class="collection-row">
+            <div class="collection-row ${row.featured ? 'featured-row' : ''}">
               <div class="collection-header">
                 <h2 class="collection-title">
                   ${this.getCollectionIcon(row.icon)}
@@ -687,19 +963,124 @@ class DashApp {
     const collection = this.collections?.[this.currentCollection]
     if (!collection) return '<div class="empty-state">Collection not found</div>'
 
-    const movies = this.filterAdultContent(
-      collection.movies.map(id => this.getMovieById(id)).filter(Boolean)
-    )
+    // Handle "Coming Soon" collections
+    if (collection.coming_soon) {
+      return `
+        <div class="fade-in">
+          <div class="page-header">
+            <button class="btn btn-back" onclick="dashApp.navigate('home')">← Back</button>
+            <h1>${collection.title}</h1>
+            <p class="page-description">${collection.description}</p>
+          </div>
+          <div class="coming-soon-banner">
+            <div class="coming-soon-icon">🎬</div>
+            <h2>Coming Soon!</h2>
+            <p>We're working on bringing you the best content. Stay tuned!</p>
+          </div>
+        </div>
+      `
+    }
+
+    // Check if this is a SERIES collection
+    if (collection.type === 'series') {
+      return this.renderSeriesCollection(collection)
+    }
+
+    let movies = []
+
+    // Handle dynamic collections that filter by category
+    if (collection.dynamic && collection.filter?.categories) {
+      const categoryKeywords = collection.filter.categories.map(c => c.toUpperCase())
+      movies = (this.localMovies || []).filter(movie => {
+        const category = (movie.category_name || '').toUpperCase()
+        return categoryKeywords.some(kw => category.includes(kw))
+      })
+    } else if (collection.dynamic && collection.filter?.extensions) {
+      // Filter by file extension (for offline_ready collection)
+      const extensions = collection.filter.extensions
+      movies = (this.localMovies || []).filter(movie => {
+        const ext = (movie.container_extension || '').toLowerCase()
+        return extensions.includes(ext)
+      })
+    } else {
+      // Static collection with movie IDs
+      movies = (collection.movies || []).map(id => this.getMovieById(id)).filter(Boolean)
+    }
+
+    // Filter adult content and apply priority sorting
+    movies = this.filterAdultContent(movies)
+    movies = this.sortByPriority(movies)
 
     return `
       <div class="fade-in">
         <div class="page-header">
           <button class="btn btn-back" onclick="dashApp.navigate('home')">← Back</button>
           <h1>${collection.title}</h1>
-          <p class="page-description">${collection.description}</p>
+          <p class="page-description">${collection.description} (${movies.length.toLocaleString()} titles)</p>
         </div>
         <div class="content-grid">
           ${this.renderContentGrid(movies, 'movie')}
+        </div>
+      </div>
+    `
+  }
+
+  // New: Render Series Collection (for African Stories, Kids, K-Drama)
+  renderSeriesCollection(collection) {
+    let series = []
+
+    // Handle dynamic series collections that filter by category
+    if (collection.dynamic && collection.filter?.series_categories) {
+      const categoryKeywords = collection.filter.series_categories.map(c => c.toUpperCase())
+      series = (this.localSeries || []).filter(s => {
+        const category = (s.category_name || '').toUpperCase()
+        return categoryKeywords.some(kw => category.includes(kw))
+      })
+    } else if (collection.series && collection.series.length > 0) {
+      // Static series collection with series IDs
+      series = collection.series.map(id =>
+        (this.localSeries || []).find(s => s.series_id === id || String(s.series_id) === String(id))
+      ).filter(Boolean)
+    }
+
+    // Also search by keywords if provided (for African content)
+    if (collection.keywords && collection.keywords.length > 0) {
+      const keywordMatches = (this.localSeries || []).filter(s => {
+        const name = (s.name || '').toLowerCase()
+        const plot = (s.plot || '').toLowerCase()
+        const category = (s.category_name || '').toLowerCase()
+        return collection.keywords.some(kw =>
+          name.includes(kw) || plot.includes(kw) || category.includes(kw)
+        )
+      })
+      // Merge and dedupe
+      const existingIds = new Set(series.map(s => s.series_id))
+      keywordMatches.forEach(s => {
+        if (!existingIds.has(s.series_id)) {
+          series.push(s)
+        }
+      })
+    }
+
+    // Sort by rating (higher first), then by having images
+    series = series.sort((a, b) => {
+      const ratingA = parseFloat(a.rating) || 0
+      const ratingB = parseFloat(b.rating) || 0
+      if (ratingB !== ratingA) return ratingB - ratingA
+      const hasImgA = a.cover && a.cover.includes('tmdb') ? 1 : 0
+      const hasImgB = b.cover && b.cover.includes('tmdb') ? 1 : 0
+      return hasImgB - hasImgA
+    })
+
+    return `
+      <div class="fade-in">
+        <div class="page-header">
+          <button class="btn btn-back" onclick="dashApp.navigate('home')">← Back</button>
+          <h1>${collection.title}</h1>
+          <p class="page-description">${collection.description} (${series.length.toLocaleString()} shows)</p>
+        </div>
+        <div class="content-grid">
+          ${this.renderContentGrid(series, 'series')}
         </div>
       </div>
     `
@@ -718,6 +1099,9 @@ class DashApp {
 
     // Filter adult content
     movies = this.filterAdultContent(movies)
+
+    // Sort by priority score (images, ratings, English/African first)
+    movies = this.sortByPriority(movies)
 
     // Get category counts
     const totalMovies = this.localMovies?.length || 0
@@ -806,8 +1190,8 @@ class DashApp {
   async renderSeriesPage() {
     const categories = this.state.categories.series || []
 
-    // Use local JSON data instead of API
-    let series = this.localSeries || []
+    // Use grouped series for cleaner display (related seasons combined)
+    let series = this.groupedSeries || this.localSeries || []
 
     // Filter by category if selected
     if (this.state.selectedCategory) {
@@ -817,7 +1201,10 @@ class DashApp {
     // Filter adult content
     series = this.filterAdultContent(series)
 
-    const totalSeries = this.localSeries?.length || 0
+    // Sort by priority score (images, ratings, English/African first)
+    series = this.sortByPriority(series)
+
+    const totalSeries = this.groupedSeries?.length || this.localSeries?.length || 0
     const categoryCount = categories.length
 
     return `
@@ -1052,6 +1439,24 @@ class DashApp {
 
         <div class="card glass p-lg mt-md">
           <div class="account-section">
+            <svg class="account-icon" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <div style="flex:1;">
+              <h3>Streaming Quality</h3>
+              <p style="color: var(--text-secondary); margin-bottom: 0.75rem;">Default quality for transcoded content (MKV)</p>
+              <select id="accountQualitySelect" onchange="dashApp.updateQualityPreference(this.value)" class="quality-select-account">
+                ${this.client.getAvailableQualities().map(q =>
+                  `<option value="${q}" ${q === this.client.getPreferredQuality() ? 'selected' : ''}>${q}</option>`
+                ).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass p-lg mt-md">
+          <div class="account-section">
             <svg class="account-icon" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
               <polyline points="16 17 21 12 16 7"/>
@@ -1074,6 +1479,22 @@ class DashApp {
     `
   }
 
+  /**
+   * Update quality preference from Account page
+   */
+  updateQualityPreference(quality) {
+    if (this.client.setPreferredQuality(quality)) {
+      // Show confirmation
+      const select = document.getElementById('accountQualitySelect')
+      if (select) {
+        select.style.borderColor = 'var(--accent-green)'
+        setTimeout(() => {
+          select.style.borderColor = ''
+        }, 1000)
+      }
+    }
+  }
+
   // ============================================
   // CONTENT RENDERING
   // ============================================
@@ -1088,9 +1509,24 @@ class DashApp {
       `
     }
 
-    return items.map(item => {
+    // Helper to check if item has a real image
+    const hasRealImage = (item) => {
+      const poster = item.stream_icon || item.cover
+      return poster && poster.trim() &&
+             !poster.includes('placeholder') &&
+             poster !== 'null' &&
+             poster !== 'undefined'
+    }
+
+    // Separate items with and without images
+    const withImages = items.filter(hasRealImage)
+    const withoutImages = items.filter(item => !hasRealImage(item))
+
+    // Render a single item card
+    const renderCard = (item, isNeonCard = false) => {
       const poster = this.fixImageUrl(item.stream_icon || item.cover)
       const title = item.name || 'Untitled'
+      const year = item.year || ''
       const id = item.stream_id || item.series_id
 
       const escapedTitle = title.replace(/'/g, "\\'")
@@ -1098,10 +1534,22 @@ class DashApp {
         ? `dashApp.playLiveChannel('${id}', '${escapedTitle}')`
         : `dashApp.showDetails('${id}', '${type}')`
 
+      // Use neon card style for items without images
+      if (isNeonCard || !hasRealImage(item)) {
+        return `
+          <div class="content-card neon-card" onclick="${clickHandler}">
+            <div class="neon-card-content">
+              <div class="neon-title">${title}</div>
+              ${year ? `<div class="neon-year">${year}</div>` : ''}
+            </div>
+          </div>
+        `
+      }
+
       return `
         <div class="content-card" onclick="${clickHandler}">
           <img src="${poster}" alt="${title}" class="content-card-poster" loading="lazy"
-               onerror="this.onerror=null;this.src='/assets/placeholder.svg'">
+               onerror="this.parentElement.classList.add('neon-card');this.remove();this.parentElement.innerHTML='<div class=\\'neon-card-content\\'><div class=\\'neon-title\\'>${escapedTitle}</div></div>'">
           <div class="content-card-overlay">
             <div class="content-card-title">${title}</div>
             <div class="content-card-meta">
@@ -1110,12 +1558,38 @@ class DashApp {
           </div>
         </div>
       `
-    }).join('')
+    }
+
+    // Build the grid HTML
+    let html = ''
+
+    // Render all items with images first
+    html += withImages.map(item => renderCard(item)).join('')
+
+    // If there are items without images, group them in a "Hidden Gems" section
+    if (withoutImages.length > 0) {
+      html += `
+        <div class="neon-section-divider">
+          <div class="neon-section-title">Hidden Gems</div>
+          <div class="neon-section-subtitle">${withoutImages.length} titles without posters</div>
+        </div>
+      `
+      // Render neon cards in rows of 4
+      html += withoutImages.map(item => renderCard(item, true)).join('')
+    }
+
+    return html
   }
 
   renderBadges(item) {
     let badges = ''
     const categoryName = (item.category_name || '').toLowerCase()
+    const extension = item.container_extension || ''
+
+    // Download badge for MKV content (offline-ready)
+    if (extension === 'mkv') {
+      badges += '<span class="badge badge-download" title="Download for Offline">⬇️ DL</span>'
+    }
 
     if (categoryName.includes('netflix')) {
       badges += '<span class="badge badge-netflix">Netflix</span>'
@@ -1125,6 +1599,9 @@ class DashApp {
     }
     if (categoryName.includes('hbo')) {
       badges += '<span class="badge badge-hbo">HBO</span>'
+    }
+    if (categoryName.includes('4k') || categoryName.includes('uhd')) {
+      badges += '<span class="badge badge-4k">4K</span>'
     }
 
     return badges
@@ -1173,6 +1650,13 @@ class DashApp {
         </div>
       ` : ''
 
+      // Season count badge for grouped series
+      const seasonBadge = (type === 'series' && item.is_grouped && item.season_count > 1) ? `
+        <div class="season-count-badge" title="${item.season_count} Seasons Available">
+          ${item.season_count} Seasons
+        </div>
+      ` : ''
+
       // NEON card for movies without images
       if (!hasImage) {
         // Generate gradient based on title
@@ -1204,6 +1688,7 @@ class DashApp {
                 </div>
               </div>
               ${offlineIcon}
+              ${seasonBadge}
               ${rating ? `<div class="browse-card-rating">★ ${parseFloat(rating).toFixed(1)}</div>` : ''}
             </div>
             <div class="browse-card-info">
@@ -1225,6 +1710,7 @@ class DashApp {
               </div>
             </div>
             ${offlineIcon}
+            ${seasonBadge}
             ${rating ? `<div class="browse-card-rating">★ ${parseFloat(rating).toFixed(1)}</div>` : ''}
           </div>
           <div class="browse-card-info">
@@ -1339,6 +1825,16 @@ class DashApp {
 
   async showDetails(id, type) {
     console.log(`📖 Showing details for ${type}:`, id)
+
+    // Check if this is a grouped series (multiple seasons combined)
+    if (type === 'series') {
+      const groupedInfo = this.groupedSeries?.find(s => String(s.series_id) === String(id))
+      if (groupedInfo?.is_grouped && groupedInfo.seasons?.length > 1) {
+        // Show season picker for grouped series
+        this.showSeasonPicker(groupedInfo)
+        return
+      }
+    }
 
     // Show loading in modal
     this.elements.modalContainer.innerHTML = `
@@ -1515,6 +2011,62 @@ class DashApp {
     this.elements.modalContainer.innerHTML = ''
   }
 
+  /**
+   * Show season picker for grouped series (multiple seasons)
+   */
+  showSeasonPicker(groupedSeries) {
+    const seasons = groupedSeries.seasons || []
+    const baseName = groupedSeries.name || groupedSeries.base_name
+    const cover = this.fixImageUrl(groupedSeries.cover || groupedSeries.stream_icon)
+    const plot = groupedSeries.plot || 'Multiple seasons available'
+
+    const seasonCards = seasons.map(season => {
+      const seasonName = season.name || `Season ${season.season_number}`
+      const seasonCover = this.fixImageUrl(season.cover || season.stream_icon || cover)
+      const episodeCount = season.episode_count || '?'
+
+      return `
+        <div class="season-picker-card" onclick="dashApp.showDetails('${season.series_id}', 'series'); dashApp.lastGroupedSeries = null;">
+          <div class="season-picker-poster">
+            <img src="${seasonCover}" alt="${seasonName}" loading="lazy"
+                 onerror="this.src='${cover}'">
+          </div>
+          <div class="season-picker-info">
+            <div class="season-picker-title">${seasonName}</div>
+            <div class="season-picker-episodes">${episodeCount} episodes</div>
+          </div>
+        </div>
+      `
+    }).join('')
+
+    this.elements.modalContainer.innerHTML = `
+      <div class="modal-overlay">
+        <div class="modal season-picker-modal">
+          <button class="modal-close" onclick="dashApp.closeModal()">×</button>
+
+          <div class="modal-header">
+            <img src="${cover}" alt="${baseName}" class="modal-poster">
+            <div class="modal-info">
+              <h2>${baseName}</h2>
+              <p class="modal-plot">${plot}</p>
+              <div class="season-picker-badge">${seasons.length} Seasons Available</div>
+            </div>
+          </div>
+
+          <div class="season-picker-container">
+            <h3 class="season-picker-heading">Select a Season</h3>
+            <div class="season-picker-grid">
+              ${seasonCards}
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+
+    // Store for reference when closing
+    this.lastGroupedSeries = groupedSeries
+  }
+
   async playContent(id, type, extension = 'mp4') {
     console.log(`Playing ${type}:`, id, `Original format: ${extension}`)
 
@@ -1533,6 +2085,15 @@ class DashApp {
       // - MKV/AVI/etc → FFmpeg server (https://zion-production-39d8.up.railway.app)
       // - MP4 → Direct to Starshare
       streamUrl = this.client.buildVODUrl(id, extension)
+
+      // Save to watch history
+      const movie = (this.localMovies || []).find(m => String(m.stream_id) === String(id))
+      if (movie) {
+        this.saveToWatchHistory(id, 'movie', {
+          name: movie.name,
+          image: movie.stream_icon || movie.cover
+        }, 0)
+      }
     } else if (type === 'live') {
       // Use playLiveChannel instead for proper channel name handling
       this.playLiveChannel(id, 'Live Channel')
@@ -1563,14 +2124,34 @@ class DashApp {
     this.showVideoPlayer(liveStream.url, 'live', liveStream.type, channelName)
   }
 
-  playEpisode(episodeId, extension = 'mp4') {
+  playEpisode(episodeId, extension = 'mp4', seriesInfo = null) {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
+
+    // Check if this content needs transcoding (for quality selector display)
+    const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
+      .includes(extension.toLowerCase())
+
+    // Store current stream info for quality changes
+    this.currentStreamNeedsTranscode = needsTranscode
+    this.currentStreamId = episodeId
+    this.currentStreamExtension = extension
+    this.currentStreamType = 'series'
 
     // Pass the ORIGINAL extension to buildSeriesUrl
     // xtream-client.js will route MKV/AVI/etc through FFmpeg server
     // MP4 goes direct to Starshare (no transcoding needed)
-    if (extension.toLowerCase() !== 'mp4') {
-      console.log(`🔄 MKV detected - routing through FFmpeg transcoding server`)
+    if (needsTranscode) {
+      console.log(`🔄 MKV detected - routing through FFmpeg transcoding server @ ${this.client.getPreferredQuality()}`)
+    }
+
+    // Save to watch history if we have series info
+    if (this._currentSeriesInfo) {
+      this.saveToWatchHistory(this._currentSeriesInfo.id, 'series', {
+        name: this._currentSeriesInfo.name,
+        image: this._currentSeriesInfo.cover || this._currentSeriesInfo.stream_icon,
+        episodeId: episodeId,
+        episodeName: this._currentEpisodeName || `Episode ${episodeId}`
+      }, 0)
     }
 
     // buildSeriesUrl handles the routing:
@@ -2128,10 +2709,29 @@ class DashApp {
       </div>
     ` : ''
 
+    // Build quality selector (only for transcoded content, not live TV)
+    const currentQuality = this.client.getPreferredQuality()
+    const qualities = this.client.getAvailableQualities()
+    const qualityOptions = qualities.map(q =>
+      `<option value="${q}" ${q === currentQuality ? 'selected' : ''}>${q}</option>`
+    ).join('')
+
+    // Only show quality selector for MKV/transcoded content (type === 'series' or 'movie' with MKV)
+    const showQualitySelector = type !== 'live' && this.currentStreamNeedsTranscode
+    const qualitySelector = showQualitySelector ? `
+      <div class="quality-selector">
+        <label>Quality:</label>
+        <select id="qualitySelect" onchange="dashApp.changeQuality(this.value)">
+          ${qualityOptions}
+        </select>
+      </div>
+    ` : ''
+
     const playerHTML = `
       <div class="video-player-container">
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
         ${channelOverlay}
+        ${qualitySelector}
         <div class="video-loading">
           <div class="spinner"></div>
           <div>Loading stream...</div>
@@ -2619,6 +3219,66 @@ class DashApp {
 
     // Clear container
     this.elements.videoPlayerContainer.innerHTML = ''
+
+    // Reset stream info
+    this.currentStreamNeedsTranscode = false
+    this.currentStreamId = null
+    this.currentStreamExtension = null
+    this.currentStreamType = null
+  }
+
+  /**
+   * Change video quality on-the-fly
+   * Saves preference and reloads stream with new quality
+   */
+  changeQuality(quality) {
+    console.log(`🎚️ Changing quality to: ${quality}`)
+
+    // Save preference
+    this.client.setPreferredQuality(quality)
+
+    // Only reload if we have current stream info and it needs transcoding
+    if (!this.currentStreamId || !this.currentStreamNeedsTranscode) {
+      console.log('📺 Quality saved for next stream (current stream is direct)')
+      return
+    }
+
+    // Get current video position
+    const video = document.getElementById('dashPlayer')
+    const currentTime = video ? video.currentTime : 0
+    const wasPlaying = video ? !video.paused : false
+
+    console.log(`📺 Reloading stream at ${quality} (position: ${currentTime.toFixed(1)}s)`)
+
+    // Build new URL with selected quality
+    let newUrl
+    if (this.currentStreamType === 'series') {
+      newUrl = this.client.buildSeriesUrl(this.currentStreamId, this.currentStreamExtension, quality)
+    } else if (this.currentStreamType === 'movie') {
+      newUrl = this.client.buildVODUrl(this.currentStreamId, this.currentStreamExtension, quality)
+    }
+
+    if (newUrl && video) {
+      // Show loading
+      const loadingEl = this.elements.videoPlayerContainer.querySelector('.video-loading')
+      if (loadingEl) loadingEl.style.display = 'flex'
+
+      // Update video source
+      video.src = newUrl
+
+      // Seek to previous position when ready
+      video.addEventListener('loadedmetadata', () => {
+        if (currentTime > 0) {
+          video.currentTime = currentTime
+        }
+        if (wasPlaying) {
+          video.play().catch(e => console.warn('Autoplay blocked:', e))
+        }
+        if (loadingEl) loadingEl.style.display = 'none'
+      }, { once: true })
+
+      video.load()
+    }
   }
 
   // ============================================
@@ -2628,6 +3288,17 @@ class DashApp {
   async filterByCategory(categoryId, type) {
     this.state.selectedCategory = categoryId
     this.renderPage(this.state.currentPage)
+  }
+
+  /**
+   * Quick search by genre - fills search box and triggers search
+   */
+  quickSearch(genre) {
+    this.state.searchQuery = genre
+    if (this.elements.searchInput) {
+      this.elements.searchInput.value = genre
+    }
+    this.renderPage('search')
   }
 
   handleSearch() {
@@ -2653,7 +3324,7 @@ class DashApp {
 
     if (query.length < 2) {
       return `
-        <div class="fade-in">
+        <div class="fade-in search-page">
           <div class="browse-header">
             <div class="browse-title-row">
               <div class="browse-icon">
@@ -2662,6 +3333,35 @@ class DashApp {
               <h1 class="browse-title">Search</h1>
             </div>
           </div>
+
+          <!-- Quick Genre Filters -->
+          <div class="search-quick-filters">
+            <h3>Browse by Genre</h3>
+            <div class="genre-buttons">
+              <button class="genre-btn" onclick="dashApp.quickSearch('action')">💥 Action</button>
+              <button class="genre-btn" onclick="dashApp.quickSearch('comedy')">😂 Comedy</button>
+              <button class="genre-btn" onclick="dashApp.quickSearch('horror')">👻 Horror</button>
+              <button class="genre-btn" onclick="dashApp.quickSearch('romance')">💕 Romance</button>
+              <button class="genre-btn" onclick="dashApp.quickSearch('drama')">🎭 Drama</button>
+              <button class="genre-btn" onclick="dashApp.quickSearch('sci-fi')">🚀 Sci-Fi</button>
+              <button class="genre-btn" onclick="dashApp.quickSearch('thriller')">🔪 Thriller</button>
+              <button class="genre-btn" onclick="dashApp.quickSearch('animation')">🎨 Animation</button>
+            </div>
+          </div>
+
+          <!-- Quick Collection Links -->
+          <div class="search-quick-filters">
+            <h3>Popular Collections</h3>
+            <div class="genre-buttons">
+              <button class="genre-btn featured" onclick="dashApp.showCollection('african_stories')">🌍 African Stories</button>
+              <button class="genre-btn" onclick="dashApp.showCollection('marvel')">🦸 Marvel</button>
+              <button class="genre-btn" onclick="dashApp.showCollection('kdrama')">🇰🇷 K-Drama</button>
+              <button class="genre-btn" onclick="dashApp.showCollection('kids_family')">👨‍👩‍👧‍👦 Kids</button>
+              <button class="genre-btn" onclick="dashApp.showCollection('netflix')">🎬 Netflix</button>
+              <button class="genre-btn" onclick="dashApp.showCollection('bollywood')">🎭 Bollywood</button>
+            </div>
+          </div>
+
           <div class="empty-state">
             <div class="empty-state-icon">🔍</div>
             <div class="empty-state-title">Start typing to search</div>
@@ -2671,19 +3371,46 @@ class DashApp {
       `
     }
 
-    // Search movies
+    // Search movies (name, plot, cast, genre)
     const movieResults = (this.localMovies || [])
-      .filter(m => m.name?.toLowerCase().includes(query))
+      .filter(m => {
+        const name = (m.name || '').toLowerCase()
+        const plot = (m.plot || '').toLowerCase()
+        const cast = (m.cast || '').toLowerCase()
+        const genre = (m.genre || '').toLowerCase()
+        return name.includes(query) || plot.includes(query) || cast.includes(query) || genre.includes(query)
+      })
+      .sort((a, b) => {
+        // Prioritize name matches over plot/cast matches
+        const aNameMatch = (a.name || '').toLowerCase().includes(query)
+        const bNameMatch = (b.name || '').toLowerCase().includes(query)
+        if (aNameMatch && !bNameMatch) return -1
+        if (!aNameMatch && bNameMatch) return 1
+        // Secondary sort: priority score (images, ratings, English first)
+        return this.scoreContent(b) - this.scoreContent(a)
+      })
       .slice(0, 30)
 
-    // Search series
-    const seriesResults = (this.localSeries || [])
-      .filter(s => s.name?.toLowerCase().includes(query))
+    // Search series (use grouped series for cleaner results)
+    const seriesResults = (this.groupedSeries || this.localSeries || [])
+      .filter(s => {
+        const name = (s.name || '').toLowerCase()
+        const plot = (s.plot || '').toLowerCase()
+        const cast = (s.cast || '').toLowerCase()
+        return name.includes(query) || plot.includes(query) || cast.includes(query)
+      })
+      .sort((a, b) => {
+        const aNameMatch = (a.name || '').toLowerCase().includes(query)
+        const bNameMatch = (b.name || '').toLowerCase().includes(query)
+        if (aNameMatch && !bNameMatch) return -1
+        if (!aNameMatch && bNameMatch) return 1
+        return 0
+      })
       .slice(0, 20)
 
     // Search live channels
     const liveResults = (this.localLive || [])
-      .filter(c => c.name?.toLowerCase().includes(query))
+      .filter(c => (c.name || '').toLowerCase().includes(query))
       .slice(0, 20)
 
     const totalResults = movieResults.length + seriesResults.length + liveResults.length
@@ -2887,6 +3614,635 @@ class DashApp {
   loadWatchHistory() {
     const saved = localStorage.getItem('dash_watch_history')
     return saved ? JSON.parse(saved) : []
+  }
+
+  // ============================================
+  // WATCH HISTORY & CONTINUE WATCHING
+  // ============================================
+
+  /**
+   * Save an item to watch history with progress tracking
+   * @param {string|number} id - Content ID
+   * @param {string} type - 'movie' or 'series'
+   * @param {object} metadata - Additional metadata (name, image, etc.)
+   * @param {number} progress - Watch progress percentage (0-100)
+   */
+  saveToWatchHistory(id, type, metadata = {}, progress = 0) {
+    const history = this.loadWatchHistory()
+    const timestamp = Date.now()
+
+    // Remove existing entry for this content
+    const existingIndex = history.findIndex(h =>
+      String(h.id) === String(id) && h.type === type
+    )
+    if (existingIndex !== -1) {
+      history.splice(existingIndex, 1)
+    }
+
+    // Add to front of array (most recent first)
+    history.unshift({
+      id: String(id),
+      type,
+      timestamp,
+      progress,
+      name: metadata.name || '',
+      image: metadata.image || '',
+      episodeId: metadata.episodeId || null,
+      episodeName: metadata.episodeName || '',
+      seasonNum: metadata.seasonNum || null
+    })
+
+    // Keep only last 50 items
+    const trimmedHistory = history.slice(0, 50)
+
+    localStorage.setItem('dash_watch_history', JSON.stringify(trimmedHistory))
+    this.state.watchHistory = trimmedHistory
+
+    console.log(`📝 Added to watch history: ${metadata.name || id} (${type})`)
+  }
+
+  /**
+   * Get continue watching items (recent, with progress < 90%)
+   */
+  getContinueWatching() {
+    const history = this.loadWatchHistory()
+    // Filter items with progress < 90% (not finished)
+    return history.filter(h => (h.progress || 0) < 90).slice(0, 15)
+  }
+
+  /**
+   * Update watch progress for an item
+   */
+  updateWatchProgress(id, type, progress) {
+    const history = this.loadWatchHistory()
+    const item = history.find(h => String(h.id) === String(id) && h.type === type)
+    if (item) {
+      item.progress = progress
+      item.timestamp = Date.now()
+      localStorage.setItem('dash_watch_history', JSON.stringify(history))
+    }
+  }
+
+  /**
+   * Remove item from watch history
+   */
+  removeFromWatchHistory(id, type) {
+    const history = this.loadWatchHistory()
+    const filtered = history.filter(h => !(String(h.id) === String(id) && h.type === type))
+    localStorage.setItem('dash_watch_history', JSON.stringify(filtered))
+    this.state.watchHistory = filtered
+    // Refresh the page to show updated list
+    this.navigateTo(this.state.currentPage)
+  }
+
+  // ============================================
+  // MY LIST (WATCHLIST) MANAGEMENT
+  // ============================================
+
+  /**
+   * Load My List items
+   */
+  loadMyList() {
+    const saved = localStorage.getItem('dash_my_list')
+    return saved ? JSON.parse(saved) : []
+  }
+
+  /**
+   * Add/Remove item from My List
+   */
+  toggleMyList(id, type, metadata = {}) {
+    const myList = this.loadMyList()
+    const existingIndex = myList.findIndex(item =>
+      String(item.id) === String(id) && item.type === type
+    )
+
+    if (existingIndex !== -1) {
+      // Remove from list
+      myList.splice(existingIndex, 1)
+      this.showToast('Removed from My List')
+    } else {
+      // Add to list
+      myList.unshift({
+        id: String(id),
+        type,
+        timestamp: Date.now(),
+        name: metadata.name || '',
+        image: metadata.image || ''
+      })
+      this.showToast('Added to My List ✓')
+    }
+
+    localStorage.setItem('dash_my_list', JSON.stringify(myList))
+
+    // Update button state if on detail modal
+    this.updateMyListButton(id, type)
+  }
+
+  /**
+   * Check if item is in My List
+   */
+  isInMyList(id, type) {
+    const myList = this.loadMyList()
+    return myList.some(item => String(item.id) === String(id) && item.type === type)
+  }
+
+  /**
+   * Update My List button state in modal
+   */
+  updateMyListButton(id, type) {
+    const btn = document.querySelector('.mylist-btn')
+    if (btn) {
+      const isInList = this.isInMyList(id, type)
+      btn.innerHTML = isInList
+        ? '✓ In My List'
+        : '+ My List'
+      btn.classList.toggle('in-list', isInList)
+    }
+  }
+
+  /**
+   * Render Continue Watching row for homepage
+   */
+  renderContinueWatchingRow() {
+    const continueWatching = this.getContinueWatching()
+    if (continueWatching.length === 0) return ''
+
+    return `
+      <div class="collection-row continue-watching-row">
+        <div class="collection-header">
+          <h2 class="collection-title">
+            <svg class="collection-title-icon" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Continue Watching
+          </h2>
+          <span class="collection-see-all" onclick="dashApp.showAllContinueWatching()">
+            See All
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="collection-carousel" data-collection="continue_watching">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('continue_watching', -1)">‹</button>
+          <div class="carousel-track">
+            ${continueWatching.map(item => this.renderContinueWatchingCard(item)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('continue_watching', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render a continue watching card with progress bar
+   */
+  renderContinueWatchingCard(item) {
+    const progress = item.progress || 0
+    const onClick = item.type === 'movie'
+      ? `dashApp.playContent('${item.id}', 'movie')`
+      : `dashApp.showDetails('${item.id}', 'series')`
+
+    return `
+      <div class="content-card continue-card" onclick="${onClick}">
+        <div class="card-image-container">
+          <img class="card-image" src="${this.fixImageUrl(item.image)}" alt="${item.name}"
+               onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=60'">
+          <div class="progress-overlay">
+            <div class="progress-bar" style="width: ${progress}%"></div>
+          </div>
+          <div class="card-play-icon">
+            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <button class="remove-history-btn" onclick="event.stopPropagation(); dashApp.removeFromWatchHistory('${item.id}', '${item.type}')" title="Remove">✕</button>
+        </div>
+        <div class="card-info">
+          <h3 class="card-title">${item.name || 'Unknown'}</h3>
+          ${item.episodeName ? `<p class="card-subtitle">${item.episodeName}</p>` : ''}
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render My List row for homepage
+   */
+  renderMyListRow() {
+    const myList = this.loadMyList()
+    if (myList.length === 0) return ''
+
+    return `
+      <div class="collection-row my-list-row">
+        <div class="collection-header">
+          <h2 class="collection-title">
+            <svg class="collection-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+            My List
+          </h2>
+          <span class="collection-see-all" onclick="dashApp.navigate('mylist')">
+            See All
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="collection-carousel" data-collection="my_list">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('my_list', -1)">‹</button>
+          <div class="carousel-track">
+            ${myList.slice(0, 15).map(item => this.renderMyListCard(item)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('my_list', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render a My List card
+   */
+  renderMyListCard(item) {
+    const onClick = item.type === 'movie'
+      ? `dashApp.showDetails('${item.id}', 'movie')`
+      : `dashApp.showDetails('${item.id}', 'series')`
+
+    return `
+      <div class="content-card mylist-card" onclick="${onClick}">
+        <div class="card-image-container">
+          <img class="card-image" src="${this.fixImageUrl(item.image)}" alt="${item.name}"
+               onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=60'">
+          <div class="mylist-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-info">
+          <h3 class="card-title">${item.name || 'Unknown'}</h3>
+          <p class="card-subtitle">${item.type === 'movie' ? 'Movie' : 'Series'}</p>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Show all continue watching items
+   */
+  showAllContinueWatching() {
+    this.state.currentPage = 'continue_watching'
+    this.navigateTo('continue_watching')
+  }
+
+  /**
+   * Render continue watching page
+   */
+  renderContinueWatchingPage() {
+    const items = this.loadWatchHistory()
+
+    return `
+      <div class="page-content fade-in">
+        <div class="page-header">
+          <h1>Continue Watching</h1>
+          <p class="page-subtitle">${items.length} items in your history</p>
+        </div>
+        <div class="content-grid">
+          ${items.map(item => this.renderContinueWatchingCard(item)).join('')}
+        </div>
+        ${items.length === 0 ? `
+          <div class="empty-state">
+            <div class="empty-state-icon">📺</div>
+            <h2>No watch history yet</h2>
+            <p>Start watching something and it will appear here</p>
+          </div>
+        ` : ''}
+      </div>
+    `
+  }
+
+  /**
+   * Render My List page
+   */
+  renderMyListPage() {
+    const items = this.loadMyList()
+
+    return `
+      <div class="page-content fade-in">
+        <div class="page-header">
+          <h1>My List</h1>
+          <p class="page-subtitle">${items.length} saved items</p>
+        </div>
+        <div class="content-grid">
+          ${items.map(item => {
+            const onClick = item.type === 'movie'
+              ? `dashApp.showDetails('${item.id}', 'movie')`
+              : `dashApp.showDetails('${item.id}', 'series')`
+            return `
+              <div class="content-card" onclick="${onClick}">
+                <div class="card-image-container">
+                  <img class="card-image" src="${this.fixImageUrl(item.image)}" alt="${item.name}"
+                       onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=60'">
+                  <button class="remove-mylist-btn" onclick="event.stopPropagation(); dashApp.toggleMyList('${item.id}', '${item.type}')" title="Remove from My List">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title">${item.name || 'Unknown'}</h3>
+                  <p class="card-subtitle">${item.type === 'movie' ? 'Movie' : 'Series'}</p>
+                </div>
+              </div>
+            `
+          }).join('')}
+        </div>
+        ${items.length === 0 ? `
+          <div class="empty-state">
+            <div class="empty-state-icon">📑</div>
+            <h2>Your list is empty</h2>
+            <p>Add movies and shows to watch later</p>
+          </div>
+        ` : ''}
+      </div>
+    `
+  }
+
+  /**
+   * Render a mixed collection row (movies + series)
+   */
+  renderMixedCollectionRow(key, title, icon) {
+    const collection = this.collections?.[key]
+    if (!collection) return ''
+
+    // Get series items
+    let seriesItems = []
+    if (collection.series && collection.series.length > 0) {
+      seriesItems = collection.series.map(id =>
+        (this.localSeries || []).find(s => s.series_id === id || String(s.series_id) === String(id))
+      ).filter(Boolean)
+    }
+
+    // Also search by keywords if provided (for African content)
+    if (collection.keywords && collection.keywords.length > 0) {
+      const keywordMatches = (this.localSeries || []).filter(s => {
+        const name = (s.name || '').toLowerCase()
+        const plot = (s.plot || '').toLowerCase()
+        const category = (s.category_name || '').toLowerCase()
+        return collection.keywords.some(kw => name.includes(kw) || plot.includes(kw) || category.includes(kw))
+      })
+      // Merge and dedupe
+      const existingIds = new Set(seriesItems.map(s => s.series_id))
+      keywordMatches.forEach(s => {
+        if (!existingIds.has(s.series_id)) {
+          seriesItems.push(s)
+        }
+      })
+    }
+
+    // Get movie items
+    let movieItems = []
+    if (collection.movies && collection.movies.length > 0) {
+      movieItems = collection.movies.map(id =>
+        (this.localMovies || []).find(m => m.stream_id === id || String(m.stream_id) === String(id))
+      ).filter(Boolean)
+    }
+
+    // Combine and sort (prioritize items with images)
+    const allItems = [
+      ...seriesItems.map(s => ({ ...s, itemType: 'series', hasImage: !!(s.cover || s.stream_icon) })),
+      ...movieItems.map(m => ({ ...m, itemType: 'movie', hasImage: !!(m.stream_icon || m.cover) }))
+    ].sort((a, b) => (b.hasImage ? 1 : 0) - (a.hasImage ? 1 : 0))
+
+    if (allItems.length === 0) return ''
+
+    return `
+      <div class="collection-row featured-row">
+        <div class="collection-header">
+          <h2 class="collection-title">
+            ${this.getCollectionIcon(icon)}
+            ${title}
+          </h2>
+          <span class="collection-see-all" onclick="dashApp.showCollection('${key}')">
+            See All
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="collection-carousel" data-collection="${key}">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('${key}', -1)">‹</button>
+          <div class="carousel-track">
+            ${allItems.slice(0, 20).map(item => {
+              if (item.itemType === 'series') {
+                return this.renderSeriesCard(item)
+              } else {
+                return this.renderMovieCard(item)
+              }
+            }).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('${key}', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  // ============================================
+  // SMART RECOMMENDATIONS ENGINE
+  // ============================================
+
+  /**
+   * Get recommendations based on watch history
+   * "Because you watched X" - Netflix style
+   */
+  getRecommendations() {
+    const history = this.loadWatchHistory()
+    if (history.length === 0) return []
+
+    // Get the most recently watched items
+    const recentItems = history.slice(0, 5)
+
+    // Build a genre/category profile from watch history
+    const categoryProfile = {}
+    recentItems.forEach(item => {
+      const content = item.type === 'movie'
+        ? (this.localMovies || []).find(m => String(m.stream_id) === String(item.id))
+        : (this.localSeries || []).find(s => String(s.series_id) === String(item.id))
+
+      if (content?.category_name) {
+        const cat = content.category_name.toUpperCase()
+        categoryProfile[cat] = (categoryProfile[cat] || 0) + 1
+      }
+    })
+
+    // Get top categories
+    const topCategories = Object.entries(categoryProfile)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([cat]) => cat)
+
+    if (topCategories.length === 0) return []
+
+    // Find similar content
+    const watchedIds = new Set(history.map(h => String(h.id)))
+    const recommendations = (this.localMovies || [])
+      .filter(m => {
+        const cat = (m.category_name || '').toUpperCase()
+        return topCategories.some(tc => cat.includes(tc)) &&
+               !watchedIds.has(String(m.stream_id)) &&
+               m.stream_icon
+      })
+      .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+      .slice(0, 15)
+
+    return recommendations
+  }
+
+  /**
+   * Render "Because You Watched" row
+   */
+  renderRecommendationsRow() {
+    const history = this.loadWatchHistory()
+    if (history.length === 0) return ''
+
+    const recommendations = this.getRecommendations()
+    if (recommendations.length === 0) return ''
+
+    // Get the name of the most recent watch for the title
+    const recentName = history[0]?.name || 'your favorites'
+
+    return `
+      <div class="collection-row recommendations-row">
+        <div class="collection-header">
+          <h2 class="collection-title">
+            <svg class="collection-title-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+            Because You Watched "${recentName.substring(0, 25)}${recentName.length > 25 ? '...' : ''}"
+          </h2>
+        </div>
+        <div class="collection-carousel" data-collection="recommendations">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('recommendations', -1)">‹</button>
+          <div class="carousel-track">
+            ${recommendations.map(movie => this.renderMovieCard(movie)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('recommendations', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Get "More Like This" suggestions for a specific content
+   */
+  getMoreLikeThis(id, type) {
+    let sourceContent = null
+    if (type === 'movie') {
+      sourceContent = (this.localMovies || []).find(m => String(m.stream_id) === String(id))
+    } else {
+      sourceContent = (this.localSeries || []).find(s => String(s.series_id) === String(id))
+    }
+
+    if (!sourceContent) return []
+
+    const sourceCategory = (sourceContent.category_name || '').toUpperCase()
+    const sourceRating = parseFloat(sourceContent.rating) || 5
+
+    // Find similar content by category and rating range
+    const similar = (this.localMovies || [])
+      .filter(m => {
+        const cat = (m.category_name || '').toUpperCase()
+        const rating = parseFloat(m.rating) || 0
+        return cat === sourceCategory &&
+               String(m.stream_id) !== String(id) &&
+               Math.abs(rating - sourceRating) < 2 &&
+               m.stream_icon
+      })
+      .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+      .slice(0, 10)
+
+    return similar
+  }
+
+  /**
+   * Render Top 10 Today row with Netflix-style numbered badges
+   */
+  renderTop10Row() {
+    // Get top 10 movies by rating that have images
+    const topMovies = (this.localMovies || [])
+      .filter(m => m.stream_icon && m.rating)
+      .sort((a, b) => {
+        const ratingA = parseFloat(a.rating) || 0
+        const ratingB = parseFloat(b.rating) || 0
+        return ratingB - ratingA
+      })
+      .slice(0, 10)
+
+    if (topMovies.length === 0) return ''
+
+    return `
+      <div class="collection-row top-10-row">
+        <div class="collection-header">
+          <h2 class="collection-title">
+            <svg class="collection-title-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+            Top 10 Today
+          </h2>
+        </div>
+        <div class="collection-carousel top-10-carousel" data-collection="top10">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('top10', -1)">‹</button>
+          <div class="carousel-track">
+            ${topMovies.map((movie, index) => this.renderTop10Card(movie, index + 1)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('top10', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render a Top 10 card with large number
+   */
+  renderTop10Card(movie, rank) {
+    return `
+      <div class="top-10-card" onclick="dashApp.showDetails('${movie.stream_id}', 'movie')">
+        <div class="top-10-rank">${rank}</div>
+        <div class="top-10-poster">
+          <img src="${this.fixImageUrl(movie.stream_icon)}" alt="${movie.name}"
+               onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=60'">
+          <div class="top-10-info">
+            <h4>${movie.name}</h4>
+            ${movie.rating ? `<span class="top-10-rating">★ ${parseFloat(movie.rating).toFixed(1)}</span>` : ''}
+          </div>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render a series card for carousels
+   */
+  renderSeriesCard(series) {
+    const image = series.cover || series.stream_icon || ''
+    const rating = series.rating ? parseFloat(series.rating).toFixed(1) : ''
+
+    return `
+      <div class="content-card series-card" onclick="dashApp.showDetails('${series.series_id}', 'series')">
+        <div class="card-image-container">
+          ${image ? `
+            <img class="card-image" src="${this.fixImageUrl(image)}" alt="${series.name}"
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=60'">
+          ` : `
+            <div class="card-placeholder">
+              <span>${series.name?.charAt(0) || 'S'}</span>
+            </div>
+          `}
+          <div class="card-overlay">
+            <span class="card-badge series-badge">SERIES</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <h3 class="card-title">${series.name || 'Unknown Series'}</h3>
+          <div class="card-meta">
+            ${rating ? `<span class="card-rating">★ ${rating}</span>` : ''}
+            ${series.category_name ? `<span class="card-category">${series.category_name}</span>` : ''}
+          </div>
+        </div>
+      </div>
+    `
   }
 
   showLoading() {
