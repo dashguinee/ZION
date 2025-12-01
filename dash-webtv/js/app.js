@@ -1493,18 +1493,26 @@ class DashApp {
 
   /**
    * Try to play MKV episode - may fail in browser
-   * Option 1: Request as .mp4 (server remux)
-   * Option 2: Request as .m3u8 (HLS if server supports)
+   * Strategy 1: Safari/iOS - Try HLS (.m3u8) which they support natively
+   * Strategy 2: Request as MP4 (server might remux on-the-fly)
    */
   tryPlayEpisode(episodeId, extension = 'mkv') {
     console.log(`🎯 Attempting to play MKV episode: ${episodeId}`)
 
-    // Strategy 1: Try requesting as MP4 (some servers remux on-the-fly)
-    const mp4Url = this.client.buildSeriesUrl(episodeId, 'mp4')
-    console.log('📺 Trying MP4 URL:', mp4Url)
-
-    this.closeModal()
-    this.showVideoPlayer(mp4Url, 'series')
+    // Check if Safari/iOS - they have native HLS support
+    if (this.client.hasNativeHLS()) {
+      // Try HLS endpoint first for Safari/iOS
+      const hlsUrl = this.client.buildSeriesUrl(episodeId, 'm3u8')
+      console.log('🍎 Safari/iOS detected - trying HLS URL:', hlsUrl)
+      this.closeModal()
+      this.showVideoPlayer(hlsUrl, 'series', 'hls-native')
+    } else {
+      // For other browsers, try MP4 (some servers remux on-the-fly)
+      const mp4Url = this.client.buildSeriesUrl(episodeId, 'mp4')
+      console.log('📺 Trying MP4 URL (server remux):', mp4Url)
+      this.closeModal()
+      this.showVideoPlayer(mp4Url, 'series')
+    }
   }
 
   /**
