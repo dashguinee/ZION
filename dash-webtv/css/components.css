@@ -1098,6 +1098,124 @@
   border-style: solid;
 }
 
+/* ============================================
+   NEON FALLBACK CARDS
+   For movies without poster images
+   ============================================ */
+
+/* Neon card with gradient background */
+.browse-card.neon-card .browse-card-poster-wrap,
+.neon-poster {
+  background: linear-gradient(135deg, var(--neon-color1), var(--neon-color2));
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated glow effect */
+.browse-card.neon-card .browse-card-poster-wrap::before,
+.neon-poster::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent 30%
+  );
+  animation: neonRotate 4s linear infinite;
+}
+
+@keyframes neonRotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Glass effect overlay */
+.browse-card.neon-card .browse-card-poster-wrap::after,
+.neon-poster::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(1px);
+}
+
+/* Neon content container */
+.neon-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md);
+  text-align: center;
+  z-index: 2;
+}
+
+/* Neon title - prominent */
+.neon-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Neon year badge */
+.neon-year {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Neon plot text */
+.neon-plot {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.3;
+  max-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Neon fallback inline (for onerror) */
+.neon-fallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--neon-color1, #667eea), var(--neon-color2, #764ba2));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md);
+  text-align: center;
+  border-radius: inherit;
+}
+
+.neon-fallback .neon-title {
+  font-size: 0.9rem;
+}
+
+/* Hover effects for neon cards */
+.browse-card.neon-card:hover .browse-card-poster-wrap::before {
+  animation-duration: 2s;
+}
+
+.browse-card.neon-card:hover .neon-content {
+  transform: scale(1.02);
+  transition: transform var(--transition-fast);
+}
+
 /* Toast Notifications */
 .toast-notification {
   position: fixed;

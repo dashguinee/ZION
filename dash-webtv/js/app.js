@@ -401,31 +401,24 @@ class DashApp {
   async renderHomePage() {
     const username = localStorage.getItem('dash_user') || 'User'
 
-    // Get hero movies for rotation (top 5 from different collections for variety)
+    // Get hero movies for rotation (top rated with images)
     const heroMovies = [
-      ...this.getCollectionMovies('top_rated', 2),
-      ...this.getCollectionMovies('new_releases', 2),
-      ...this.getCollectionMovies('blockbusters', 1)
+      ...this.getCollectionMovies('hollywood_hits', 3),
+      ...this.getCollectionMovies('new_2025', 2)
     ].filter(m => m?.stream_icon).slice(0, 5)
 
-    // Build collection rows with SVG icons
+    // Build collection rows - WESTERN FOCUSED with blockbusters
     const collectionRows = [
-      { key: 'trending', title: 'Trending Now', icon: 'fire' },
-      { key: 'new_releases', title: 'New Releases', icon: 'star' },
-      { key: 'top_rated', title: 'Top Rated', icon: 'award' },
-      { key: 'blockbusters', title: 'Blockbusters', icon: 'zap' },
-      { key: 'genre_action', title: 'Action Movies', icon: 'target' },
-      { key: 'genre_comedy', title: 'Comedy', icon: 'smile' },
-      { key: 'genre_horror', title: 'Horror', icon: 'moon' },
-      { key: 'genre_drama', title: 'Drama', icon: 'heart' },
-      { key: 'genre_animation', title: 'Animation & Kids', icon: 'palette' },
-      { key: 'hidden_gems', title: 'Hidden Gems', icon: 'gem' },
-      { key: 'lang_english', title: 'English Movies', icon: 'globe' },
-      { key: 'lang_hindi', title: 'Bollywood', icon: 'film' },
-      { key: 'lang_tamil', title: 'Tamil Cinema', icon: 'video' },
-      { key: 'lang_korean', title: 'Korean Movies', icon: 'flag' },
-      { key: 'decade_2020s', title: '2020s Hits', icon: 'calendar' },
-      { key: 'decade_2010s', title: '2010s Classics', icon: 'clock' },
+      { key: 'featured', title: '⭐ Featured', icon: 'star' },
+      { key: 'trending', title: '🔥 Trending Now', icon: 'fire' },
+      { key: 'new_2025', title: '✨ New in 2025', icon: 'sparkle' },
+      { key: 'hollywood_hits', title: '🎬 Hollywood Hits', icon: 'award' },
+      { key: 'netflix', title: '🎥 Netflix Movies', icon: 'play' },
+      { key: '4k_quality', title: '📺 4K Ultra HD', icon: 'monitor' },
+      { key: 'action', title: '💥 Action & Thrillers', icon: 'target' },
+      { key: 'oscar', title: '🏆 Award Winners', icon: 'award' },
+      { key: 'marvel', title: '🦸 Marvel Universe', icon: 'zap' },
+      { key: 'horror', title: '👻 Horror', icon: 'moon' },
     ]
 
     // Schedule hero rotation after render
@@ -1156,17 +1149,59 @@ class DashApp {
     }
 
     return items.map(item => {
+      const hasImage = item.stream_icon || item.cover
       const poster = this.fixImageUrl(item.stream_icon || item.cover)
       const title = item.name || 'Untitled'
       const id = item.stream_id || item.series_id
       const year = item.year || item.releaseDate?.slice(0, 4) || ''
       const rating = item.rating || item.rating_5based
+      const plot = item.plot || ''
+
+      // NEON card for movies without images
+      if (!hasImage) {
+        // Generate gradient based on title
+        const gradients = [
+          ['#667eea', '#764ba2'],  // Purple
+          ['#f093fb', '#f5576c'],  // Pink
+          ['#4facfe', '#00f2fe'],  // Cyan
+          ['#43e97b', '#38f9d7'],  // Green
+          ['#fa709a', '#fee140'],  // Sunset
+          ['#a8edea', '#fed6e3'],  // Soft
+          ['#ff9a9e', '#fecfef'],  // Rose
+          ['#667eea', '#764ba2'],  // Purple
+        ]
+        const gradientIndex = title.length % gradients.length
+        const [color1, color2] = gradients[gradientIndex]
+
+        return `
+          <div class="browse-card neon-card" onclick="dashApp.showDetails('${id}', '${type}')"
+               style="--neon-color1: ${color1}; --neon-color2: ${color2};">
+            <div class="browse-card-poster-wrap neon-poster">
+              <div class="neon-content">
+                <div class="neon-title">${title.length > 30 ? title.slice(0, 27) + '...' : title}</div>
+                ${year ? `<div class="neon-year">${year}</div>` : ''}
+                ${plot ? `<div class="neon-plot">${plot.slice(0, 80)}${plot.length > 80 ? '...' : ''}</div>` : ''}
+              </div>
+              <div class="browse-card-overlay">
+                <div class="browse-card-play">
+                  <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+              </div>
+              ${rating ? `<div class="browse-card-rating">★ ${parseFloat(rating).toFixed(1)}</div>` : ''}
+            </div>
+            <div class="browse-card-info">
+              <div class="browse-card-title">${title}</div>
+              ${year ? `<div class="browse-card-year">${year}</div>` : ''}
+            </div>
+          </div>
+        `
+      }
 
       return `
         <div class="browse-card" onclick="dashApp.showDetails('${id}', '${type}')">
           <div class="browse-card-poster-wrap">
             <img src="${poster}" alt="${title}" class="browse-card-poster" loading="lazy"
-                 onerror="this.onerror=null;this.src='/assets/placeholder.svg'">
+                 onerror="this.onerror=null; this.parentElement.innerHTML = dashApp.getNeonFallback('${title.replace(/'/g, "\\'")}', '${year}')">
             <div class="browse-card-overlay">
               <div class="browse-card-play">
                 <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -1181,6 +1216,29 @@ class DashApp {
         </div>
       `
     }).join('')
+  }
+
+  // Neon fallback for broken images (called via onerror)
+  getNeonFallback(title, year) {
+    const gradients = [
+      ['#667eea', '#764ba2'],  // Purple
+      ['#f093fb', '#f5576c'],  // Pink
+      ['#4facfe', '#00f2fe'],  // Cyan
+      ['#43e97b', '#38f9d7'],  // Green
+      ['#fa709a', '#fee140'],  // Sunset
+      ['#a8edea', '#fed6e3'],  // Soft
+      ['#ff9a9e', '#fecfef'],  // Rose
+      ['#6a11cb', '#2575fc'],  // Royal
+    ]
+    const gradientIndex = (title || '').length % gradients.length
+    const [color1, color2] = gradients[gradientIndex]
+
+    return `
+      <div class="neon-fallback" style="--neon-color1: ${color1}; --neon-color2: ${color2};">
+        <div class="neon-title">${(title || 'Unknown').length > 25 ? (title || 'Unknown').slice(0, 22) + '...' : (title || 'Unknown')}</div>
+        ${year ? `<div class="neon-year">${year}</div>` : ''}
+      </div>
+    `
   }
 
   // Premium Live TV Grid with Glow Cards
