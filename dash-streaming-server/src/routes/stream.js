@@ -80,8 +80,81 @@ router.get('/vod/:id', async (req, res) => {
 });
 
 /**
+ * GET /api/stream/episode/:episodeId
+ * Stream a series episode by episode ID only (Xtream Codes style)
+ *
+ * Query params:
+ *   - quality: 360p, 480p, 720p, 1080p (default: 720p)
+ *   - format: mp4, hls (default: mp4)
+ *   - extension: Original file extension (default: mp4)
+ */
+router.get('/episode/:episodeId', async (req, res) => {
+  const { episodeId } = req.params;
+  const { quality = '720p', format = 'mp4', extension = 'mp4' } = req.query;
+
+  try {
+    logger.info(`Episode stream request: ${episodeId} (${quality}, ${format}, ext: ${extension})`);
+
+    // Track view for bandwidth optimization
+    await bandwidthOptimizer.trackView(episodeId, 'series');
+
+    // Build source URL from Starshare using episode ID directly
+    const sourceUrl = starshareService.buildSeriesUrlByEpisodeId(episodeId, extension);
+
+    // Check if source needs transcoding
+    const needsTranscode = extension.toLowerCase() !== 'mp4' || format === 'hls';
+
+    if (format === 'hls') {
+      // HLS adaptive streaming
+      const streamId = `episode_${episodeId}`;
+      const hlsResult = await ffmpegService.transcodeToHLS(sourceUrl, streamId);
+      const masterPlaylist = await hlsService.getMasterPlaylist(streamId);
+
+      res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
+      res.send(masterPlaylist);
+
+    } else if (needsTranscode) {
+      // Transcode to MP4
+      const stream = await ffmpegService.transcodeToMP4(sourceUrl, quality);
+
+      res.setHeader('Content-Type', 'video/mp4');
+      res.setHeader('Accept-Ranges', 'bytes');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+
+      stream.pipe(res);
+
+      stream.on('error', (err) => {
+        logger.error(`Stream error: ${err.message}`);
+        if (!res.headersSent) {
+          res.status(500).json({ error: 'Streaming error' });
+        }
+      });
+
+    } else {
+      // Direct proxy - Use streaming proxy to save bandwidth
+      logger.info('Direct proxy (no transcoding)');
+      const streamData = await starshareService.fetchStream(sourceUrl);
+
+      // Use bandwidth-optimized streaming proxy
+      const proxy = bandwidthOptimizer.createStreamingProxy(streamData);
+
+      res.setHeader('Content-Type', 'video/mp4');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+
+      proxy.pipe(res);
+
+      bandwidthOptimizer.logOptimizationMetrics(episodeId, 'series', false, 0);
+    }
+
+  } catch (error) {
+    logger.error(`Episode stream error: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
  * GET /api/stream/series/:id/:season/:episode
- * Stream a series episode
+ * Stream a series episode (legacy - requires season/episode)
  */
 router.get('/series/:id/:season/:episode', async (req, res) => {
   const { id, season, episode } = req.params;

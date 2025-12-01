@@ -18,10 +18,18 @@ class StarshareService {
   }
 
   /**
-   * Build stream URL for Series episode
+   * Build stream URL for Series episode (with season/episode path)
    */
   buildSeriesUrl(seriesId, season, episode, extension = 'mp4') {
     return `${this.baseUrl}/series/${this.username}/${this.password}/${seriesId}/${season}/${episode}.${extension}`;
+  }
+
+  /**
+   * Build stream URL for Series episode by episode ID only
+   * Xtream Codes API uses direct episode IDs on /series/ path
+   */
+  buildSeriesUrlByEpisodeId(episodeId, extension = 'mp4') {
+    return `${this.baseUrl}/series/${this.username}/${this.password}/${episodeId}.${extension}`;
   }
 
   /**
