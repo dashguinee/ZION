@@ -1520,17 +1520,19 @@ class DashApp {
 
     let streamUrl = ''
 
-    // ALWAYS request MP4 extension - Xtream servers remux MKV→MP4 automatically
-    // The container format doesn't matter, servers handle the remux since codecs (H264/AAC) are same
-    const finalExtension = 'mp4'
-
     if (type === 'movie') {
+      // Pass the ORIGINAL extension to buildVODUrl
+      // xtream-client.js will route MKV/AVI/etc through FFmpeg server
+      // MP4 goes direct to Starshare (no transcoding needed)
       if (extension.toLowerCase() !== 'mp4') {
-        console.log(`🔄 Server remux: ${extension.toUpperCase()} → MP4 (same codecs, different container)`)
+        console.log(`🔄 MKV detected - routing through FFmpeg transcoding server`)
       } else {
         console.log('🎬 Using direct MP4 stream')
       }
-      streamUrl = this.client.buildVODUrl(id, finalExtension)
+      // buildVODUrl handles the routing:
+      // - MKV/AVI/etc → FFmpeg server (https://zion-production-39d8.up.railway.app)
+      // - MP4 → Direct to Starshare
+      streamUrl = this.client.buildVODUrl(id, extension)
     } else if (type === 'live') {
       // Use playLiveChannel instead for proper channel name handling
       this.playLiveChannel(id, 'Live Channel')
@@ -1564,16 +1566,17 @@ class DashApp {
   playEpisode(episodeId, extension = 'mp4') {
     console.log(`📺 Playing episode: ${episodeId}, Original format: ${extension}`)
 
-    // ALWAYS request MP4 extension - Xtream servers remux MKV→MP4 automatically
-    // The container format doesn't matter, servers handle the remux since codecs (H264/AAC) are same
-    // Browsers can't play MKV container but CAN play the same video/audio in MP4 container
-    const finalExtension = 'mp4'
-
+    // Pass the ORIGINAL extension to buildSeriesUrl
+    // xtream-client.js will route MKV/AVI/etc through FFmpeg server
+    // MP4 goes direct to Starshare (no transcoding needed)
     if (extension.toLowerCase() !== 'mp4') {
-      console.log(`🔄 Server remux: ${extension.toUpperCase()} → MP4 (same codecs, different container)`)
+      console.log(`🔄 MKV detected - routing through FFmpeg transcoding server`)
     }
 
-    const streamUrl = this.client.buildSeriesUrl(episodeId, finalExtension)
+    // buildSeriesUrl handles the routing:
+    // - MKV/AVI/etc → FFmpeg server (https://zion-production-39d8.up.railway.app)
+    // - MP4 → Direct to Starshare
+    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
     console.log('📺 Stream URL:', streamUrl)
 
     this.closeModal()
@@ -1612,7 +1615,8 @@ class DashApp {
   downloadEpisode(episodeId, extension = 'mkv', title = 'Episode') {
     console.log(`🎬 Opening episode in external player: ${episodeId} (${extension})`)
 
-    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+    // Use DIRECT URL for external players - they can handle MKV natively
+    const streamUrl = this.client.buildDirectSeriesUrl(episodeId, extension)
     console.log('🎬 Stream URL:', streamUrl)
 
     // Detect platform
@@ -1773,7 +1777,8 @@ class DashApp {
   async watchInPlayer(episodeId, extension, title, seriesId) {
     console.log(`▶️ Watch in Player: ${title} (${extension})`)
 
-    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+    // Use DIRECT URL for external players - they can handle MKV natively
+    const streamUrl = this.client.buildDirectSeriesUrl(episodeId, extension)
     const isAndroid = /Android/i.test(navigator.userAgent)
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
@@ -1815,7 +1820,9 @@ class DashApp {
   async downloadToDevice(episodeId, extension, title, seriesId) {
     console.log(`⬇️ Download to device: ${title} (${extension})`)
 
-    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+    // Use DIRECT URL for downloads - not transcoded
+    // Downloads need the original file, FFmpeg streaming is for browser playback only
+    const streamUrl = this.client.buildDirectSeriesUrl(episodeId, extension)
 
     // Add to download library
     await this.addToDownloadLibrary(seriesId, episodeId, title, extension, 'downloaded')
@@ -1864,7 +1871,8 @@ class DashApp {
     // For now, allow download (future: add limit)
     await this.addToDownloadLibrary(seriesId, episodeId, title, extension, 'downloaded')
 
-    const streamUrl = this.client.buildSeriesUrl(episodeId, extension)
+    // Use DIRECT URL for downloads - not transcoded
+    const streamUrl = this.client.buildDirectSeriesUrl(episodeId, extension)
     const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_')
     const filename = `${sanitizedTitle}.${extension}`
 

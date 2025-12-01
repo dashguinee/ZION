@@ -237,6 +237,28 @@ class XtreamClient {
   }
 
   /**
+   * Build DIRECT URL for Series episode (bypasses FFmpeg, for downloads)
+   * Downloads need the original file, not transcoded stream
+   */
+  buildDirectSeriesUrl(episodeId, extension = 'mp4') {
+    if (!this.isAuthenticated) return ''
+    const url = `${this.baseUrl}/series/${this.username}/${this.password}/${episodeId}.${extension}`
+    console.log(`⬇️ Series Direct URL (download): ${url}`)
+    return url
+  }
+
+  /**
+   * Build DIRECT URL for VOD content (bypasses FFmpeg, for downloads)
+   * Downloads need the original file, not transcoded stream
+   */
+  buildDirectVODUrl(vodId, extension = 'mp4') {
+    if (!this.isAuthenticated) return ''
+    const url = `${this.baseUrl}/movie/${this.username}/${this.password}/${vodId}.${extension}`
+    console.log(`⬇️ Movie Direct URL (download): ${url}`)
+    return url
+  }
+
+  /**
    * Detect if browser has native HLS support (no CORS issues!)
    * - Safari macOS/iOS: Native HLS
    * - ALL iOS browsers: Use WebKit engine = Native HLS
