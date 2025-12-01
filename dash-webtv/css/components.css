@@ -1786,6 +1786,86 @@
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Franchise Tagline - Signature collection branding */
+.franchise-tagline {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.3) 0%, rgba(0, 209, 178, 0.3) 100%);
+  border: 1px solid rgba(157, 78, 221, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  animation: taglinePulse 3s ease-in-out infinite;
+}
+
+@keyframes taglinePulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Franchise-specific tagline colors */
+[data-franchise="marvel"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(237, 28, 36, 0.4) 0%, rgba(255, 200, 0, 0.3) 100%);
+  border-color: rgba(237, 28, 36, 0.6);
+  color: #ffd700;
+}
+
+[data-franchise="dc"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(0, 99, 178, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+  border-color: rgba(0, 99, 178, 0.6);
+  color: #4a9fd9;
+}
+
+[data-franchise="star_wars"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(255, 232, 31, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border-color: rgba(255, 232, 31, 0.6);
+  color: #ffe81f;
+  text-shadow: 0 0 10px rgba(255, 232, 31, 0.5);
+}
+
+[data-franchise="john_wick"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 100%);
+  border-color: rgba(139, 0, 0, 0.7);
+  color: #ff4444;
+  font-style: italic;
+}
+
+[data-franchise="james_bond"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(212, 175, 55, 0.3) 100%);
+  border-color: rgba(212, 175, 55, 0.6);
+  color: #d4af37;
+}
+
+[data-franchise="fast_furious"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(255, 102, 0, 0.4) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border-color: rgba(255, 102, 0, 0.6);
+  color: #ff6600;
+}
+
+[data-franchise="wizarding_world"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(116, 0, 184, 0.4) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border-color: rgba(116, 0, 184, 0.6);
+  color: #9d4edd;
+}
+
+[data-franchise="jurassic"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(34, 139, 34, 0.4) 0%, rgba(139, 69, 19, 0.4) 100%);
+  border-color: rgba(34, 139, 34, 0.6);
+  color: #90EE90;
+}
+
+[data-franchise="animation"] .franchise-tagline {
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.3) 0%, rgba(135, 206, 250, 0.3) 100%);
+  border-color: rgba(255, 105, 180, 0.5);
+  color: #FFB6C1;
 }
 
 .collection-see-all {

@@ -423,23 +423,24 @@ class DashApp {
       .slice(0, limit)
   }
 
-  // Get search terms for a collection
+  // Get search terms for a collection (strict matching to avoid unrelated content)
   getCollectionSearchTerms(collectionKey) {
     const searchMap = {
-      'fast_furious': ['fast', 'furious', 'f9', 'f10', 'hobbs', 'shaw'],
-      'marvel': ['marvel', 'avengers', 'spider-man', 'iron man', 'thor', 'hulk', 'captain america', 'guardians galaxy', 'black panther', 'ant-man', 'doctor strange'],
-      'dc': ['batman', 'superman', 'wonder woman', 'justice league', 'aquaman', 'flash', 'shazam', 'joker', 'dc'],
-      'wizarding_world': ['harry potter', 'fantastic beasts', 'hogwarts', 'dumbledore', 'voldemort'],
-      'star_wars': ['star wars', 'jedi', 'skywalker', 'mandalorian', 'boba fett', 'force awakens', 'rogue one'],
-      'john_wick': ['john wick', 'wick'],
-      'james_bond': ['bond', '007', 'skyfall', 'spectre', 'casino royale'],
-      'horror': ['horror', 'scary', 'nightmare', 'haunted', 'conjuring', 'annabelle', 'exorcist'],
-      'comedy': ['comedy', 'funny', 'laugh'],
-      'romance': ['romance', 'love story', 'romantic'],
-      'bollywood': ['bollywood', 'hindi', 'shah rukh', 'salman khan', 'aamir khan'],
-      'african_stories': ['nigeria', 'nollywood', 'africa', 'lagos', 'johannesburg', 'kenya', 'ghana'],
-      'kdrama': ['korean', 'k-drama', 'kdrama'],
-      'turkish_drama': ['turkish', 'turkey']
+      // Strict terms - must match exact franchise names
+      'fast_furious': ['fast and furious', 'fast & furious', 'furious 7', 'furious 8', 'fate of the furious', 'f9', 'f10', 'hobbs and shaw', 'hobbs & shaw', 'tokyo drift'],
+      'marvel': ['marvel', 'avengers', 'spider-man', 'spiderman', 'iron man', 'thor:', 'hulk', 'captain america', 'guardians of the galaxy', 'black panther', 'ant-man', 'doctor strange', 'black widow', 'eternals', 'shang-chi'],
+      'dc': ['batman', 'superman', 'wonder woman', 'justice league', 'aquaman', 'the flash', 'shazam', 'joker', 'dc:'],
+      'wizarding_world': ['harry potter', 'fantastic beasts', 'secrets of dumbledore'],
+      'star_wars': ['star wars', 'a new hope', 'empire strikes', 'return of the jedi', 'phantom menace', 'attack of the clones', 'revenge of the sith', 'force awakens', 'last jedi', 'rise of skywalker', 'rogue one', 'solo:', 'mandalorian', 'book of boba', 'obi-wan', 'ahsoka', 'andor'],
+      'john_wick': ['john wick'],
+      'james_bond': ['james bond', 'bond:', 'no time to die', 'spectre', 'skyfall', 'quantum of solace', 'casino royale 2006', 'die another day', 'goldeneye', 'tomorrow never dies', 'the world is not enough', 'licence to kill', 'living daylights', 'a view to a kill', 'octopussy', 'for your eyes only', 'moonraker', 'the spy who loved me', 'goldfinger', 'thunderball', 'dr. no', 'from russia with love'],
+      'horror': ['conjuring', 'annabelle', 'insidious', 'paranormal activity', 'saw', 'scream', 'halloween', 'nightmare on elm', 'friday the 13th', 'exorcist', 'it chapter', 'hereditary', 'midsommar', 'get out', 'us 2019'],
+      'comedy': ['comedy', 'hangover', 'superbad', 'bridesmaids', 'step brothers', 'anchorman', 'ted 2', 'bad boys'],
+      'romance': ['romantic', 'notebook', 'titanic', 'pride and prejudice', 'me before you', 'fault in our stars', 'crazy rich asians', 'to all the boys'],
+      'bollywood': ['bollywood', 'shah rukh khan', 'salman khan', 'aamir khan', 'hrithik roshan', 'akshay kumar', 'deepika padukone'],
+      'african_stories': ['nollywood', 'nigeria', 'lagos', 'johannesburg', 'nairobi', 'ghana', 'south africa'],
+      'kdrama': ['korean drama', 'k-drama', 'kdrama', '(korean)'],
+      'turkish_drama': ['turkish drama', 'dizi', 'turkish series']
     }
     return searchMap[collectionKey] || []
   }
@@ -719,24 +720,24 @@ class DashApp {
     // Build collection rows - WESTERN FOCUSED with blockbusters
     const collectionRows = [
       { key: 'african_stories', title: '🌍 African Stories', icon: 'globe', featured: true },
-      { key: 'marvel', title: '🦸 Marvel Universe', icon: 'zap' },
-      { key: 'dc', title: '🦇 DC Universe', icon: 'zap' },
-      { key: 'fast_furious', title: '🏎️ Fast & Furious', icon: 'car' },
-      { key: 'wizarding_world', title: '⚡ Wizarding World', icon: 'magic' },
-      { key: 'star_wars', title: '✨ Star Wars', icon: 'star' },
-      { key: 'john_wick', title: '🔫 John Wick', icon: 'target' },
-      { key: 'james_bond', title: '🎯 James Bond 007', icon: 'target' },
+      { key: 'marvel', title: '🦸 Marvel Universe', icon: 'zap', tagline: 'ASSEMBLE' },
+      { key: 'dc', title: '🦇 DC Universe', icon: 'zap', tagline: 'JUSTICE AWAITS' },
+      { key: 'fast_furious', title: '🏎️ Fast & Furious', icon: 'car', tagline: 'FAMILY. SPEED. ACTION.' },
+      { key: 'wizarding_world', title: '⚡ Wizarding World', icon: 'magic', tagline: 'MAGIC AWAITS' },
+      { key: 'star_wars', title: '⭐ Galactic Legends', icon: 'star', tagline: 'MAY THE FORCE BE WITH YOU' },
+      { key: 'john_wick', title: '🎯 The Continental', icon: 'target', tagline: 'BABA YAGA RETURNS' },
+      { key: 'james_bond', title: '🍸 007 Collection', icon: 'target', tagline: 'SHAKEN, NOT STIRRED' },
       { key: 'kids_family', title: '👨‍👩‍👧‍👦 Kids & Family', icon: 'smile' },
       { key: 'kdrama', title: '🇰🇷 K-Drama', icon: 'heart' },
-      { key: 'netflix', title: '🎬 Netflix Originals', icon: 'play' },
-      { key: '4k_quality', title: '📺 4K Ultra HD', icon: 'monitor' },
-      { key: 'horror', title: '👻 Horror', icon: 'moon' },
-      { key: 'comedy', title: '😂 Comedy', icon: 'smile' },
-      { key: 'romance', title: '💕 Romance', icon: 'heart' },
-      { key: 'documentary', title: '📚 Documentaries', icon: 'award' },
-      { key: 'bollywood', title: '🎭 Bollywood', icon: 'gem' },
-      { key: 'turkish_drama', title: '🇹🇷 Turkish Drama', icon: 'palette' },
-      { key: 'award_winners', title: '🏆 Award Winners', icon: 'award' },
+      { key: 'netflix', title: '🎬 Netflix Originals', icon: 'play', tagline: 'BINGE-WORTHY' },
+      { key: '4k_quality', title: '📺 4K Ultra HD', icon: 'monitor', tagline: 'CRYSTAL CLEAR' },
+      { key: 'horror', title: '👻 Horror', icon: 'moon', tagline: 'DARE TO WATCH' },
+      { key: 'comedy', title: '😂 Comedy', icon: 'smile', tagline: 'LOL GUARANTEED' },
+      { key: 'romance', title: '💕 Romance', icon: 'heart', tagline: 'LOVE STORIES' },
+      { key: 'documentary', title: '📚 Documentaries', icon: 'award', tagline: 'TRUE STORIES' },
+      { key: 'bollywood', title: '🎭 Bollywood', icon: 'gem', tagline: 'NAACH GAANA' },
+      { key: 'turkish_drama', title: '🇹🇷 Turkish Drama', icon: 'palette', tagline: 'DIZI MAGIC' },
+      { key: 'award_winners', title: '🏆 Award Winners', icon: 'award', tagline: 'CRITICALLY ACCLAIMED' },
     ]
 
     // Schedule hero rotation after render
@@ -834,11 +835,12 @@ class DashApp {
           const movies = this.filterAdultContent(this.getCollectionMovies(row.key, 20))
           if (movies.length === 0) return ''
           return `
-            <div class="collection-row ${row.featured ? 'featured-row' : ''}">
+            <div class="collection-row ${row.featured ? 'featured-row' : ''}" data-franchise="${row.key}">
               <div class="collection-header">
                 <h2 class="collection-title">
                   ${this.getCollectionIcon(row.icon)}
                   ${row.title}
+                  ${row.tagline ? `<span class="franchise-tagline">${row.tagline}</span>` : ''}
                 </h2>
                 <span class="collection-see-all" onclick="dashApp.showCollection('${row.key}')">
                   See All
