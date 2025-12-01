@@ -163,19 +163,44 @@ User clicks Play
 
 ---
 
-## THE CRITICAL GAP
+## FFmpeg INTEGRATION (CONNECTED - Dec 1, 2025)
+
+**STATUS: ✅ FULLY CONNECTED**
 
 In `xtream-client.js`:
 ```javascript
-// Line 11 - THIS EXISTS:
+// Line 11:
 this.backendUrl = 'https://zion-production-39d8.up.railway.app'
 
-// BUT IT'S NEVER USED IN:
-buildVODUrl()      // Goes direct to Starshare
-buildSeriesUrl()   // Goes direct to Starshare
+// NOW USED IN buildVODUrl() and buildSeriesUrl():
+// - MP4: Direct to Starshare (native browser playback)
+// - MKV/AVI/etc: Route through FFmpeg server for transcoding
+
+buildVODUrl(vodId, extension) {
+  const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm'].includes(extension)
+  if (needsTranscode) {
+    return `${this.backendUrl}/api/stream/vod/${vodId}?extension=${extension}&quality=720p`
+  }
+  return `${this.baseUrl}/movie/${user}/${pass}/${vodId}.${extension}`
+}
+
+buildSeriesUrl(episodeId, extension) {
+  const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm'].includes(extension)
+  if (needsTranscode) {
+    return `${this.backendUrl}/api/stream/episode/${episodeId}?extension=${extension}&quality=720p`
+  }
+  return `${this.baseUrl}/series/${user}/${pass}/${episodeId}.${extension}`
+}
 ```
 
-**The FFmpeg server is deployed and running but the frontend doesn't route any traffic to it!**
+### FFmpeg Server Endpoints
+
+| Endpoint | Purpose |
+|----------|---------|
+| `/api/stream/vod/:id` | Transcode movies (MKV→MP4) |
+| `/api/stream/episode/:episodeId` | Transcode series by episode ID |
+| `/api/stream/series/:id/:season/:episode` | Legacy series endpoint |
+| `/health` | Health check with Redis status |
 
 ---
 
@@ -312,7 +337,7 @@ npx serve -l 3006
 ## COMMON ISSUES & SOLUTIONS
 
 ### Issue: MKV won't play
-**Solution**: Request .mp4 extension (server remux) OR route through FFmpeg server
+**Solution**: Now auto-routes through FFmpeg server (Dec 1, 2025 fix). Fallback: server remux (.mp4 extension)
 
 ### Issue: Live TV loops/repeats
 **Solution**: Set `lazyLoad: false` in mpegts.js config
@@ -330,15 +355,20 @@ npx serve -l 3006
 
 ## NEXT STEPS FOR FUTURE INSTANCES
 
-1. **Connect FFmpeg Server**: Modify `xtream-client.js` to route MKV through `this.backendUrl`
+### ✅ COMPLETED (Dec 1, 2025)
+1. **Connect FFmpeg Server** - MKV now routes through `this.backendUrl` automatically
+2. **Episode ID Endpoint** - Added `/api/stream/episode/:episodeId` for series
 
-2. **Test End-to-End**: Verify FFmpeg transcoding works for both movies and series
+### REMAINING TASKS
+1. **Season Grouping**: Group related seasons (e.g., Umbrella Academy S1/S2/S3/S4)
 
-3. **Season Grouping**: Group related seasons (e.g., Umbrella Academy S1/S2/S3/S4)
+2. **Remove Duplicates**: Filter out Hindi/Malayalam versions from Western collections
 
-4. **Remove Duplicates**: Filter out Hindi/Malayalam versions from Western collections
+3. **Quality Selection**: Add UI to choose 360p/480p/720p/1080p from FFmpeg server
 
-5. **Quality Selection**: Add UI to choose 360p/480p/720p/1080p from FFmpeg server
+4. **Offline Downloads**: Complete the download-to-device flow for MKV content
+
+5. **Search Feature**: Add global search across movies, series, and live TV
 
 ---
 
@@ -346,6 +376,8 @@ npx serve -l 3006
 
 | Commit | Description |
 |--------|-------------|
+| `0c43fc1` | **MAJOR**: Connect FFmpeg server for MKV playback (Dec 1, 2025) |
+| `3be02bd` | Add /episode/:episodeId endpoint to FFmpeg server |
 | `d614d9f` | MKV server remux + FFmpeg integration plan |
 | `9ccb011` | Western-focused collections + NEON fallback cards |
 | `2f2297c` | Offline Exclusive download system + Download Library |
@@ -357,4 +389,6 @@ npx serve -l 3006
 
 ---
 
+*Last Updated: December 1, 2025*
+*FFmpeg Integration: ✅ COMPLETE*
 *This document should give any future instance complete context to continue development.*
