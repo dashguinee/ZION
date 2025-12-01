@@ -793,6 +793,47 @@
   max-width: 800px;
 }
 
+.season-picker-modal .modal-header {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  height: auto;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
+}
+
+.season-picker-modal .modal-poster {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.season-picker-modal .modal-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.season-picker-modal .modal-info h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.season-picker-modal .modal-plot {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .season-picker-badge {
   display: inline-block;
   background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-cyan) 100%);

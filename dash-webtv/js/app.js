@@ -1900,7 +1900,8 @@ class DashApp {
     console.log(`📖 Showing details for ${type}:`, id)
 
     // Check if this is a grouped series (multiple seasons combined)
-    if (type === 'series') {
+    // Skip season picker if we're coming from a season card click (lastGroupedSeries was nulled)
+    if (type === 'series' && this.lastGroupedSeries !== null) {
       const groupedInfo = this.groupedSeries?.find(s => String(s.series_id) === String(id))
       if (groupedInfo?.is_grouped && groupedInfo.seasons?.length > 1) {
         // Show season picker for grouped series
@@ -1908,6 +1909,8 @@ class DashApp {
         return
       }
     }
+    // Reset the flag for next time
+    this.lastGroupedSeries = undefined
 
     // Show loading in modal
     this.elements.modalContainer.innerHTML = `
@@ -2099,7 +2102,7 @@ class DashApp {
       const episodeCount = season.episode_count || '?'
 
       return `
-        <div class="season-picker-card" onclick="dashApp.showDetails('${season.series_id}', 'series'); dashApp.lastGroupedSeries = null;">
+        <div class="season-picker-card" onclick="dashApp.lastGroupedSeries = null; dashApp.showDetails('${season.series_id}', 'series');">
           <div class="season-picker-poster">
             <img src="${seasonCover}" alt="${seasonName}" loading="lazy"
                  onerror="this.src='${cover}'">
