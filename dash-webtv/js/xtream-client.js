@@ -11,10 +11,11 @@ class XtreamClient {
     this.backendUrl = 'https://zion-production-39d8.up.railway.app'
 
     // Multi-proxy fallback system for reliability
-    // If Cloudflare gets blocked, fall back to Vercel Edge
+    // Vercel Edge first (Cloudflare Workers blocked by Starshare as of Dec 2025)
+    // NOTE: Must use absolute URLs because mpegts.js runs in Web Worker!
     this.proxyList = [
-      { name: 'Cloudflare', url: 'https://dash-webtv-proxy.dash-webtv.workers.dev', param: 'url' },
-      { name: 'Vercel Edge', url: '/api/stream', param: 'url' }  // Our own Vercel Edge function
+      { name: 'Vercel Edge', url: 'https://dash-webtv.vercel.app/api/stream', param: 'url' },
+      { name: 'Cloudflare', url: 'https://dash-webtv-proxy.dash-webtv.workers.dev', param: 'url' }
     ]
     this.currentProxyIndex = 0
     this.streamProxy = this.proxyList[0].url
