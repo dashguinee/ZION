@@ -417,8 +417,27 @@ class DashApp {
       }
     }
 
+    // Deduplicate by base movie name (remove year, quality, language markers)
+    const deduped = []
+    const seenNames = new Set()
+    movies.forEach(m => {
+      if (!m || !m.name) return
+      // Normalize name: remove (2023), [Hindi], .720p. etc
+      const baseName = m.name
+        .replace(/\s*\([^)]*\)\s*/g, '')  // Remove (2023), (Hindi), etc
+        .replace(/\s*\[[^\]]*\]\s*/g, '') // Remove [Tam, Tel], etc
+        .replace(/\.\d{3,4}p\./gi, '')    // Remove .720p., .1080p.
+        .replace(/[\.\,\s]+$/g, '')       // Remove trailing dots/commas
+        .trim()
+        .toLowerCase()
+      if (!seenNames.has(baseName)) {
+        seenNames.add(baseName)
+        deduped.push(m)
+      }
+    })
+
     // Sort by rating and return limited results
-    return movies
+    return deduped
       .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
       .slice(0, limit)
   }
