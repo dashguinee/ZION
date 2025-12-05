@@ -13,6 +13,8 @@ import hlsRouter from './routes/hls.js';
 import secureApiRouter from './routes/secure-api.js';
 import freeChannelsRouter from './routes/free-channels.js';
 import curatedChannelsRouter from './routes/curated-channels.js';
+import adminRouter from './routes/admin.js';
+import iptvAccessRouter from './routes/iptv-access.js';
 
 const app = express();
 
@@ -63,13 +65,15 @@ app.use('/api/hls', hlsRouter);
 app.use('/api/secure', secureApiRouter);  // Secure API - hides provider details
 app.use('/api/free', freeChannelsRouter);  // Free IPTV channels (iptv-org + direct)
 app.use('/api/curated', curatedChannelsRouter);  // Curated channels with tier-based access
+app.use('/api/admin', adminRouter);  // Admin panel API
+app.use('/api/iptv-access', iptvAccessRouter);  // User access check (for customer app)
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'DASH Streaming Server',
-    version: '2.2.0',
-    description: 'Secure streaming server with provider abstraction + tiered free IPTV',
+    version: '2.3.0',
+    description: 'Secure streaming server with user management + tiered access',
     endpoints: {
       // Secure API (recommended - hides provider)
       categories: '/api/secure/categories/:type',
@@ -97,7 +101,12 @@ app.get('/', (req, res) => {
       vod: '/api/stream/vod/:id?quality=720p',
       series: '/api/stream/episode/:episodeId',
       live: '/api/live/:streamId',
-      hls: '/api/hls/:streamId/master.m3u8'
+      hls: '/api/hls/:streamId/master.m3u8',
+      // Admin & Access Control
+      adminStats: '/api/admin/stats',
+      adminUsers: '/api/admin/users',
+      adminPackages: '/api/admin/packages',
+      iptvAccess: '/api/iptv-access/:username'
     },
     qualities: Object.keys(config.qualities),
     formats: ['mp4', 'hls']
@@ -132,10 +141,12 @@ async function start() {
     // Start Express server
     const port = config.port;
     app.listen(port, () => {
-      logger.info(`🚀 DASH Streaming Server v2.1 running on port ${port}`);
+      logger.info(`🚀 DASH Streaming Server v2.3 running on port ${port}`);
       logger.info(`📺 Environment: ${config.env}`);
       logger.info(`🔒 Secure API: /api/secure/* (provider hidden)`);
       logger.info(`📺 Free IPTV: /api/free/* (iptv-org + direct)`);
+      logger.info(`👤 Admin API: /api/admin/* (user management)`);
+      logger.info(`🎫 Access API: /api/iptv-access/* (tier check)`);
       logger.info(`🔴 Redis: ${cacheService.connected ? 'Connected' : 'Disconnected'}`);
       logger.info(`\n✨ Ready to stream! Try: http://localhost:${port}/health\n`);
     });

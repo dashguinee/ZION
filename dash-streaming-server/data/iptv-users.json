@@ -1,0 +1,78 @@
+{
+  "users": {
+    "demo_basic": {
+      "name": "Demo Basic User",
+      "whatsapp": "000000000",
+      "package": "basic",
+      "tier": "BASIC",
+      "starshareEnabled": false,
+      "status": "active",
+      "createdAt": "2025-12-05T00:00:00Z"
+    },
+    "demo_standard": {
+      "name": "Demo Standard User",
+      "whatsapp": "000000001",
+      "package": "standard",
+      "tier": "STANDARD",
+      "starshareEnabled": false,
+      "status": "active",
+      "createdAt": "2025-12-05T00:00:00Z"
+    },
+    "demo_premium": {
+      "name": "Demo Premium User",
+      "whatsapp": "000000002",
+      "package": "premium",
+      "tier": "PREMIUM",
+      "starshareEnabled": false,
+      "status": "active",
+      "createdAt": "2025-12-05T00:00:00Z"
+    },
+    "demo_premiumplus": {
+      "name": "Demo Premium+ User",
+      "whatsapp": "000000003",
+      "package": "premium_plus",
+      "tier": "PREMIUM",
+      "starshareEnabled": true,
+      "status": "active",
+      "createdAt": "2025-12-05T00:00:00Z"
+    }
+  },
+  "packages": {
+    "basic": {
+      "name": "Basic",
+      "price": 40000,
+      "currency": "GNF",
+      "tier": "BASIC",
+      "starshare": false,
+      "description": "News & Local channels",
+      "features": ["50 channels", "News", "Guinea local"]
+    },
+    "standard": {
+      "name": "Standard",
+      "price": 60000,
+      "currency": "GNF",
+      "tier": "STANDARD",
+      "starshare": false,
+      "description": "Sports, News & Entertainment",
+      "features": ["200 channels", "Sports", "French", "Entertainment"]
+    },
+    "premium": {
+      "name": "Premium",
+      "price": 80000,
+      "currency": "GNF",
+      "tier": "PREMIUM",
+      "starshare": false,
+      "description": "Full access to all free content",
+      "features": ["81,000+ channels", "All sports", "Movies", "PlutoTV"]
+    },
+    "premium_plus": {
+      "name": "Premium+",
+      "price": 100000,
+      "currency": "GNF",
+      "tier": "PREMIUM",
+      "starshare": true,
+      "description": "Everything + StarShare VOD & Series",
+      "features": ["Everything in Premium", "StarShare VOD", "StarShare Series", "Premium support"]
+    }
+  }
+}
