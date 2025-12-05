@@ -37,7 +37,7 @@ class FrenchVODService {
     };
 
     // TMDB API for metadata
-    this.tmdbApiKey = process.env.TMDB_API_KEY || ''; // Optional - works without it using cached data
+    this.tmdbApiKey = process.env.TMDB_API_KEY || '632e644be9521013bdac3661ae65494e';
     this.tmdbBaseUrl = 'https://api.themoviedb.org/3';
     this.tmdbImageBase = 'https://image.tmdb.org/t/p';
 
