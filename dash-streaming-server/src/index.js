@@ -12,6 +12,7 @@ import liveRouter from './routes/live.js';
 import hlsRouter from './routes/hls.js';
 import secureApiRouter from './routes/secure-api.js';
 import freeChannelsRouter from './routes/free-channels.js';
+import curatedChannelsRouter from './routes/curated-channels.js';
 
 const app = express();
 
@@ -61,13 +62,14 @@ app.use('/api/live', liveRouter);
 app.use('/api/hls', hlsRouter);
 app.use('/api/secure', secureApiRouter);  // Secure API - hides provider details
 app.use('/api/free', freeChannelsRouter);  // Free IPTV channels (iptv-org + direct)
+app.use('/api/curated', curatedChannelsRouter);  // Curated channels with tier-based access
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'DASH Streaming Server',
-    version: '2.1.0',
-    description: 'Secure streaming server with provider abstraction + free IPTV',
+    version: '2.2.0',
+    description: 'Secure streaming server with provider abstraction + tiered free IPTV',
     endpoints: {
       // Secure API (recommended - hides provider)
       categories: '/api/secure/categories/:type',
@@ -76,13 +78,21 @@ app.get('/', (req, res) => {
       playMovie: '/api/secure/play/movie/:id',
       playEpisode: '/api/secure/play/episode/:id',
       playLive: '/api/secure/play/live/:id',
-      // Free IPTV (iptv-org + direct)
+      // Curated Channels (TIERED ACCESS)
+      curatedBasic: '/api/curated/basic',
+      curatedStandard: '/api/curated/standard',
+      curatedPremium: '/api/curated/premium',
+      curatedTiers: '/api/curated/tiers',
+      curatedStats: '/api/curated/stats',
+      curatedCategory: '/api/curated/category/:name?tier=PREMIUM',
+      curatedSearch: '/api/curated/search?q=:query&tier=PREMIUM',
+      // Free IPTV (raw sources)
       freeChannels: '/api/free/channels',
-      freeGuinea: '/api/free/guinea',
-      freeSports: '/api/free/sports',
-      freeFrench: '/api/free/french',
-      freeWestAfrica: '/api/free/west-africa',
-      freeStats: '/api/free/stats',
+      freeMega: '/api/free/mega',
+      freeAllSports: '/api/free/all-sports',
+      freeZillaCombined: '/api/free/zilla/combined',
+      freeApiChannels: '/api/free/api/channels',
+      freeApiStreams: '/api/free/api/streams',
       // Legacy (direct FFmpeg)
       vod: '/api/stream/vod/:id?quality=720p',
       series: '/api/stream/episode/:episodeId',
