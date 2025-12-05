@@ -1,6 +1,6 @@
 /**
  * DASH WebTV - Login Proxy
- * Proxies authentication to Starshare API with CORS headers
+ * SECURE: Provider URL from env variable, never hardcoded
  */
 
 export default async function handler(req, res) {
@@ -22,8 +22,14 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing username or password' })
     }
 
-    // Authenticate against Starshare
-    const url = `https://starshare.cx/player_api.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    // SECURE: Provider URL from environment variable
+    const providerUrl = process.env.XTREAM_PROVIDER_URL
+    if (!providerUrl) {
+      console.error('XTREAM_PROVIDER_URL not configured')
+      return res.status(500).json({ error: 'Server configuration error' })
+    }
+
+    const url = `${providerUrl}/player_api.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
 
     console.log('Proxying login for:', username)
 

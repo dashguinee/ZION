@@ -1,18 +1,26 @@
 /**
- * DASH⚡ Xtream Codes API Client
- * Dynamic credentials - no hardcoding!
+ * DASH⚡ Secure Streaming Client v2.0
+ *
+ * SECURITY UPDATE (Dec 2025):
+ * - Provider URL fetched from backend at runtime
+ * - No hardcoded provider information in frontend code
+ * - Patterns cached locally after first fetch
  */
 
 class XtreamClient {
   constructor() {
-    this.baseUrl = 'https://starshare.cx'
-    this.username = null
-    this.password = null
+    // SECURE: Backend URL only - provider details fetched at runtime
     this.backendUrl = 'https://zion-production-39d8.up.railway.app'
 
+    // URL patterns (loaded from backend)
+    this._patterns = null
+    this._patternsLoading = null
+
+    // User session
+    this.username = null
+    this.password = null
+
     // Multi-proxy fallback system for reliability
-    // Vercel Edge first (Cloudflare Workers blocked by Starshare as of Dec 2025)
-    // NOTE: Must use absolute URLs because mpegts.js runs in Web Worker!
     this.proxyList = [
       { name: 'Vercel Edge', url: 'https://dash-webtv.vercel.app/api/stream', param: 'url' },
       { name: 'Cloudflare', url: 'https://dash-webtv-proxy.dash-webtv.workers.dev', param: 'url' }
@@ -20,9 +28,46 @@ class XtreamClient {
     this.currentProxyIndex = 0
     this.streamProxy = this.proxyList[0].url
 
-    // Quality settings - FFmpeg server supports 360p, 480p, 720p, 1080p
+    // Quality settings
     this.availableQualities = ['360p', '480p', '720p', '1080p']
     this.defaultQuality = '720p'
+
+    // Auto-load patterns on construction
+    this._loadPatterns()
+  }
+
+  /**
+   * Load URL patterns from backend (called once)
+   * Patterns contain the provider URL but are fetched at runtime
+   */
+  async _loadPatterns() {
+    if (this._patternsLoading) return this._patternsLoading
+
+    this._patternsLoading = fetch(`${this.backendUrl}/api/secure/patterns`)
+      .then(r => r.json())
+      .then(patterns => {
+        this._patterns = patterns
+        console.log('🔒 Secure patterns loaded')
+        return patterns
+      })
+      .catch(err => {
+        console.warn('⚠️ Failed to load patterns, using fallback mode')
+        return null
+      })
+
+    return this._patternsLoading
+  }
+
+  /**
+   * Get base URL from patterns (or null if not loaded)
+   */
+  get baseUrl() {
+    if (this._patterns?.movie) {
+      // Extract base URL from movie pattern
+      const match = this._patterns.movie.match(/^(https?:\/\/[^/]+)/)
+      return match ? match[1] : null
+    }
+    return null
   }
 
   // ============================================
@@ -223,92 +268,106 @@ class XtreamClient {
 
   /**
    * Build playable URL for VOD content
-   * - MP4: Direct to Starshare (CORS enabled)
-   * - MKV/AVI/etc: Route through FFmpeg server for real-time transcoding
+   * SECURE: Uses patterns from backend (no hardcoded provider URL)
    *
-   * FFmpeg server uses env credentials (single account mode)
    * @param {string} vodId - VOD content ID
    * @param {string} extension - File extension (mp4, mkv, etc)
-   * @param {string} quality - Quality setting (360p, 480p, 720p, 1080p) - optional, uses preference
+   * @param {string} quality - Quality setting (360p, 480p, 720p, 1080p)
    */
   buildVODUrl(vodId, extension = 'mp4', quality = null) {
     if (!this.isAuthenticated) return ''
 
-    // Use provided quality or fall back to user preference
     const selectedQuality = quality || this.getPreferredQuality()
 
     // Formats that need transcoding (browser can't play these containers)
     const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
       .includes(extension.toLowerCase())
 
+    // MKV always goes through our secure FFmpeg transcoder
     if (needsTranscode) {
-      // Route through our FFmpeg transcoding server
-      // Server uses env vars for Starshare credentials (single account mode)
       const url = `${this.backendUrl}/api/stream/vod/${vodId}?extension=${extension}&quality=${selectedQuality}`
-      console.log(`🎬 Movie URL (FFmpeg transcode @ ${selectedQuality}): ${url}`)
+      console.log(`🎬 Movie (transcode): ${vodId}`)
       return url
     }
 
-    // Direct play for MP4 - Starshare has CORS enabled
-    const url = `${this.baseUrl}/movie/${this.username}/${this.password}/${vodId}.${extension}`
-    console.log(`🎬 Movie URL (direct): ${url}`)
-    return url
+    // Use pattern from backend if available
+    if (this._patterns?.movie) {
+      const url = this._patterns.movie
+        .replace('{id}', vodId)
+        .replace('{ext}', extension)
+      console.log(`🎬 Movie (direct): ${vodId}`)
+      return url
+    }
+
+    // Fallback: Route through backend transcoder (slower but always works)
+    console.log(`🎬 Movie (fallback): ${vodId}`)
+    return `${this.backendUrl}/api/stream/vod/${vodId}?extension=${extension}&quality=${selectedQuality}`
   }
 
   /**
    * Build playable URL for Series episode
-   * - MP4: Direct to Starshare (CORS enabled)
-   * - MKV/AVI/etc: Route through FFmpeg server for real-time transcoding
-   *
-   * FFmpeg server uses env credentials (single account mode)
-   * @param {string} episodeId - Episode ID
-   * @param {string} extension - File extension (mp4, mkv, etc)
-   * @param {string} quality - Quality setting (360p, 480p, 720p, 1080p) - optional, uses preference
+   * SECURE: Uses patterns from backend (no hardcoded provider URL)
    */
   buildSeriesUrl(episodeId, extension = 'mp4', quality = null) {
     if (!this.isAuthenticated) return ''
 
-    // Use provided quality or fall back to user preference
     const selectedQuality = quality || this.getPreferredQuality()
 
-    // Formats that need transcoding (browser can't play these containers)
     const needsTranscode = ['mkv', 'avi', 'flv', 'wmv', 'mov', 'webm']
       .includes(extension.toLowerCase())
 
     if (needsTranscode) {
-      // Route through our FFmpeg transcoding server
-      // Using /episode/:episodeId endpoint - takes episode ID directly
       const url = `${this.backendUrl}/api/stream/episode/${episodeId}?extension=${extension}&quality=${selectedQuality}`
-      console.log(`📺 Series URL (FFmpeg transcode @ ${selectedQuality}): ${url}`)
+      console.log(`📺 Episode (transcode): ${episodeId}`)
       return url
     }
 
-    // Direct play for MP4 - Starshare has CORS enabled
-    const url = `${this.baseUrl}/series/${this.username}/${this.password}/${episodeId}.${extension}`
-    console.log(`📺 Series URL (direct): ${url}`)
-    return url
+    // Use pattern from backend if available
+    if (this._patterns?.series) {
+      const url = this._patterns.series
+        .replace('{id}', episodeId)
+        .replace('{ext}', extension)
+      console.log(`📺 Episode (direct): ${episodeId}`)
+      return url
+    }
+
+    // Fallback: Route through backend transcoder
+    console.log(`📺 Episode (fallback): ${episodeId}`)
+    return `${this.backendUrl}/api/stream/episode/${episodeId}?extension=${extension}&quality=${selectedQuality}`
   }
 
   /**
-   * Build DIRECT URL for Series episode (bypasses FFmpeg, for downloads)
-   * Downloads need the original file, not transcoded stream
+   * Build DIRECT URL for Series episode (for downloads)
+   * SECURE: Uses patterns from backend
    */
   buildDirectSeriesUrl(episodeId, extension = 'mp4') {
     if (!this.isAuthenticated) return ''
-    const url = `${this.baseUrl}/series/${this.username}/${this.password}/${episodeId}.${extension}`
-    console.log(`⬇️ Series Direct URL (download): ${url}`)
-    return url
+
+    if (this._patterns?.series) {
+      return this._patterns.series
+        .replace('{id}', episodeId)
+        .replace('{ext}', extension)
+    }
+
+    // Fallback
+    return `${this.backendUrl}/api/stream/episode/${episodeId}?extension=${extension}`
   }
 
   /**
-   * Build DIRECT URL for VOD content (bypasses FFmpeg, for downloads)
-   * Downloads need the original file, not transcoded stream
+   * Build DIRECT URL for VOD content (for downloads)
+   * SECURE: Uses patterns from backend
    */
   buildDirectVODUrl(vodId, extension = 'mp4') {
     if (!this.isAuthenticated) return ''
-    const url = `${this.baseUrl}/movie/${this.username}/${this.password}/${vodId}.${extension}`
-    console.log(`⬇️ Movie Direct URL (download): ${url}`)
-    return url
+
+    if (this._patterns?.movie) {
+      return this._patterns.movie
+        .replace('{id}', vodId)
+        .replace('{ext}', extension)
+    }
+
+    // Fallback
+    return `${this.backendUrl}/api/stream/vod/${vodId}?extension=${extension}`
   }
 
   /**
@@ -339,38 +398,61 @@ class XtreamClient {
 
   /**
    * Build playable URL for Live TV stream
-   * HYBRID APPROACH:
-   * - iOS (all browsers) + Safari macOS: Direct HLS (.m3u8) - native support, no CORS needed!
-   * - Android/Windows/Linux: Proxied MPEG-TS (.ts) via Cloudflare
+   * SECURE: Uses patterns from backend
    */
   buildLiveStreamUrl(streamId, extension = 'ts') {
     if (!this.isAuthenticated) return ''
 
-    // iOS/Safari has native HLS support - can play .m3u8 directly without CORS!
+    // iOS/Safari has native HLS support
     if (this.hasNativeHLS()) {
-      const hlsUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.m3u8`
-      console.log(`🍎 Live TV URL (native HLS - no proxy!): ${hlsUrl}`)
-      return { url: hlsUrl, type: 'hls-native' }
+      if (this._patterns?.live) {
+        const hlsUrl = this._patterns.live
+          .replace('{id}', streamId)
+          .replace('{ext}', 'm3u8')
+        console.log(`🍎 Live TV (HLS): ${streamId}`)
+        return { url: hlsUrl, type: 'hls-native' }
+      }
+      // Fallback to backend
+      return {
+        url: `${this.backendUrl}/api/live/${streamId}`,
+        type: 'hls-native'
+      }
     }
 
-    // Android/Windows/Linux: Use MPEG-TS with proxy (Cloudflare or Vercel fallback)
-    const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.ts`
+    // Android/Windows/Linux: Use MPEG-TS with proxy
+    let directUrl = ''
+    if (this._patterns?.live) {
+      directUrl = this._patterns.live
+        .replace('{id}', streamId)
+        .replace('{ext}', 'ts')
+    } else {
+      directUrl = `${this.backendUrl}/api/live/${streamId}`
+    }
+
     const proxy = this.getProxy()
     const proxyUrl = `${proxy.url}/?${proxy.param}=${encodeURIComponent(directUrl)}`
-    console.log(`📡 Live TV URL (${proxy.name} proxied TS): ${proxyUrl}`)
+    console.log(`📡 Live TV (${proxy.name}): ${streamId}`)
     return { url: proxyUrl, type: 'mpegts', proxy: proxy.name, directUrl }
   }
 
   /**
-   * Build fallback URL using next proxy (for retry on failure)
+   * Build fallback URL using next proxy
    */
   buildFallbackLiveStreamUrl(streamId) {
     if (!this.isAuthenticated) return null
 
     const proxy = this.switchProxy()
-    const directUrl = `${this.baseUrl}/live/${this.username}/${this.password}/${streamId}.ts`
+    let directUrl = ''
+    if (this._patterns?.live) {
+      directUrl = this._patterns.live
+        .replace('{id}', streamId)
+        .replace('{ext}', 'ts')
+    } else {
+      directUrl = `${this.backendUrl}/api/live/${streamId}`
+    }
+
     const proxyUrl = `${proxy.url}/?${proxy.param}=${encodeURIComponent(directUrl)}`
-    console.log(`🔄 Fallback Live TV URL (${proxy.name}): ${proxyUrl}`)
+    console.log(`🔄 Fallback Live TV (${proxy.name}): ${streamId}`)
     return { url: proxyUrl, type: 'mpegts', proxy: proxy.name }
   }
 
@@ -379,9 +461,13 @@ class XtreamClient {
   // ============================================
 
   async getAccountInfo() {
-    if (!this.isAuthenticated) return null
-    const url = `${this.baseUrl}/player_api.php?username=${this.username}&password=${this.password}`
-    return this.fetch(url)
+    // Use backend secure health check instead of direct provider call
+    try {
+      const response = await fetch(`${this.backendUrl}/api/secure/health`)
+      return response.json()
+    } catch {
+      return null
+    }
   }
 
   async testConnection() {
@@ -394,8 +480,11 @@ class XtreamClient {
   }
 
   buildM3UUrl(type = 'm3u_plus', output = 'ts') {
-    if (!this.isAuthenticated) return ''
-    return `${this.baseUrl}/get.php?username=${this.username}&password=${this.password}&type=${type}&output=${output}`
+    // SECURITY: M3U export disabled in secure mode
+    // This would expose the provider URL directly
+    // If needed, implement via backend: /api/secure/export/m3u
+    console.warn('⚠️ M3U export disabled for security - use backend endpoint')
+    return ''
   }
 }
 

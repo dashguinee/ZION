@@ -1,6 +1,6 @@
 /**
  * DASH WebTV - Xtream API Proxy
- * Proxies requests with DYNAMIC user credentials
+ * SECURE: Provider URL from env variable, never hardcoded
  */
 
 export default async function handler(req, res) {
@@ -27,8 +27,13 @@ export default async function handler(req, res) {
       })
     }
 
-    // Build API URL with user's credentials
-    const baseUrl = 'https://starshare.cx'
+    // SECURE: Provider URL from environment variable
+    const baseUrl = process.env.XTREAM_PROVIDER_URL
+    if (!baseUrl) {
+      console.error('XTREAM_PROVIDER_URL not configured')
+      return res.status(500).json({ error: 'Server configuration error' })
+    }
+
     const url = new URL(`${baseUrl}/player_api.php`)
     url.searchParams.set('username', username)
     url.searchParams.set('password', password)
