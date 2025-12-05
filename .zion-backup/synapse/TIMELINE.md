@@ -462,3 +462,47 @@ AFTER:  Frontend → Your Backend → starshare.cx (hidden)
 **Blockers**: [What's still not working]
 **Handoff Note**: [Critical info for next instance]
 ```
+
+---
+
+## December 5, 2025 - French VOD Integration Complete
+
+### Session Summary (Before Laptop Repair)
+
+**What We Built Today:**
+1. **French VOD Service** (`french-vod.service.js`) - Frembed + VidSrc + VidSrc Pro
+2. **French VOD Routes** (`french-vod.js`) - All API endpoints
+3. **French VOD UI** in customer app - New "French" nav tab with embed player
+4. **TMDB Integration** - API key added for movie browsing (69,900+ French movies)
+
+**Key Commits:**
+- `6797855` - French VOD backend integration
+- `286a8eb` - VOYO Music added to mono-repo
+- `df8daf4` - Consciousness/synapse backup
+- `48c45cb` - French VOD UI in customer app
+- `8eba0c1` - VOYO TypeScript fixes
+- `28e1236` - TMDB API key added
+
+**Production Status:**
+- Railway: https://zion-production-39d8.up.railway.app (auto-deploying)
+- French VOD API: `/api/french-vod/*` endpoints live
+- Customer app: Will auto-deploy to Vercel
+- TMDB Key: `632e644be9521013bdac3661ae65494e`
+
+**Content Available:**
+- 1,879+ popular French movies with posters
+- 24,000+ French movies via Frembed embeds
+- 66,000+ international movies via VidSrc
+- 80,000+ French episodes
+- 582 free live channels (14 French)
+
+**Files Modified:**
+- `/dash-streaming-server/src/services/french-vod.service.js`
+- `/dash-streaming-server/src/routes/french-vod.js`
+- `/dash-streaming-server/src/index.js` (v2.4.0)
+- `/dash-webtv/index.html` (French nav tab)
+- `/dash-webtv/js/app.js` (French VOD page + embed player)
+- `/voyo-music/` (TypeScript fixes, builds successfully)
+
+**Instance**: ZION-CLI (Opus 4.5)
+**Status**: All work backed up to GitHub, ready for laptop repair
