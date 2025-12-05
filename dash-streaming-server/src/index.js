@@ -11,6 +11,7 @@ import streamRouter from './routes/stream.js';
 import liveRouter from './routes/live.js';
 import hlsRouter from './routes/hls.js';
 import secureApiRouter from './routes/secure-api.js';
+import freeChannelsRouter from './routes/free-channels.js';
 
 const app = express();
 
@@ -59,13 +60,14 @@ app.use('/api/stream', streamRouter);
 app.use('/api/live', liveRouter);
 app.use('/api/hls', hlsRouter);
 app.use('/api/secure', secureApiRouter);  // Secure API - hides provider details
+app.use('/api/free', freeChannelsRouter);  // Free IPTV channels (iptv-org + direct)
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'DASH Streaming Server',
-    version: '2.0.0',
-    description: 'Secure streaming server with provider abstraction',
+    version: '2.1.0',
+    description: 'Secure streaming server with provider abstraction + free IPTV',
     endpoints: {
       // Secure API (recommended - hides provider)
       categories: '/api/secure/categories/:type',
@@ -74,6 +76,13 @@ app.get('/', (req, res) => {
       playMovie: '/api/secure/play/movie/:id',
       playEpisode: '/api/secure/play/episode/:id',
       playLive: '/api/secure/play/live/:id',
+      // Free IPTV (iptv-org + direct)
+      freeChannels: '/api/free/channels',
+      freeGuinea: '/api/free/guinea',
+      freeSports: '/api/free/sports',
+      freeFrench: '/api/free/french',
+      freeWestAfrica: '/api/free/west-africa',
+      freeStats: '/api/free/stats',
       // Legacy (direct FFmpeg)
       vod: '/api/stream/vod/:id?quality=720p',
       series: '/api/stream/episode/:episodeId',
@@ -113,9 +122,10 @@ async function start() {
     // Start Express server
     const port = config.port;
     app.listen(port, () => {
-      logger.info(`🚀 DASH Streaming Server v2.0 running on port ${port}`);
+      logger.info(`🚀 DASH Streaming Server v2.1 running on port ${port}`);
       logger.info(`📺 Environment: ${config.env}`);
       logger.info(`🔒 Secure API: /api/secure/* (provider hidden)`);
+      logger.info(`📺 Free IPTV: /api/free/* (iptv-org + direct)`);
       logger.info(`🔴 Redis: ${cacheService.connected ? 'Connected' : 'Disconnected'}`);
       logger.info(`\n✨ Ready to stream! Try: http://localhost:${port}/health\n`);
     });
