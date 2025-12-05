@@ -46,6 +46,31 @@ class FreeIPTVService {
       anime: 'https://raw.githubusercontent.com/abusaeeidx/IPTV-Scraper-Zilla/main/anime.m3u'
     };
 
+    // Free-TV/IPTV (Quality curated, 80+ countries, HD preferred)
+    this.freeTV = {
+      master: 'https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8'
+    };
+
+    // M3U8-Xtream (TMDB movies + trending shows)
+    this.m3u8Xtream = {
+      trendingSeries: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/trending-series.m3u',
+      topMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/top-movies.m3u',
+      actionMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/action-movies.m3u',
+      comedyMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/comedy-movies.m3u',
+      dramaMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/drama-movies.m3u',
+      horrorMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/horror-movies.m3u',
+      scifiMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/science-fiction-movies.m3u',
+      thrillerMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/thriller-movies.m3u',
+      documentaryMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/documentary-movies.m3u',
+      familyMovies: 'https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/family-movies.m3u'
+    };
+
+    // PlutoTV Direct Streams (from iptv-org)
+    this.plutoTV = {
+      us: 'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_pluto.m3u',
+      intl: 'https://iptv-org.github.io/iptv/subdivisions/us-ca.m3u' // California for good variety
+    };
+
     // Regional focus for DASH audience
     this.priorityRegions = {
       guinea: 'gn',
@@ -817,6 +842,294 @@ class FreeIPTVService {
 
     } catch (error) {
       return { error: error.message };
+    }
+  }
+
+  // ===== NEW SOURCES: Free-TV, M3U8-Xtream, PlutoTV =====
+
+  /**
+   * Get channels from Free-TV/IPTV (quality curated, 80+ countries)
+   */
+  async getFreeTVChannels() {
+    const cacheKey = 'iptv:freetv:master';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Fetching Free-TV/IPTV playlist...');
+      const response = await axios.get(this.freeTV.master, { timeout: 60000 });
+      const channels = this.parseM3U(response.data);
+
+      const tagged = channels.map(ch => ({
+        ...ch,
+        source: 'free-tv',
+        quality: 'hd-preferred',
+        legal: true
+      }));
+
+      await cacheService.set(cacheKey, JSON.stringify(tagged), this.cacheTTL);
+      logger.info(`Loaded ${tagged.length} channels from Free-TV`);
+      return tagged;
+
+    } catch (error) {
+      logger.error('Error fetching Free-TV:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get trending series from M3U8-Xtream (TMDB powered)
+   */
+  async getTrendingSeries() {
+    const cacheKey = 'iptv:xtream:trending-series';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Fetching trending series from M3U8-Xtream...');
+      const response = await axios.get(this.m3u8Xtream.trendingSeries, { timeout: 30000 });
+      const channels = this.parseM3U(response.data);
+
+      const tagged = channels.map(ch => ({
+        ...ch,
+        source: 'm3u8-xtream',
+        contentType: 'series',
+        legal: true
+      }));
+
+      await cacheService.set(cacheKey, JSON.stringify(tagged), this.cacheTTL);
+      logger.info(`Loaded ${tagged.length} trending series`);
+      return tagged;
+
+    } catch (error) {
+      logger.error('Error fetching trending series:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get top movies from M3U8-Xtream (TMDB Top IMDB 2024-2025)
+   */
+  async getTopMovies() {
+    const cacheKey = 'iptv:xtream:top-movies';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Fetching top movies from M3U8-Xtream...');
+      const response = await axios.get(this.m3u8Xtream.topMovies, { timeout: 30000 });
+      const channels = this.parseM3U(response.data);
+
+      const tagged = channels.map(ch => ({
+        ...ch,
+        source: 'm3u8-xtream',
+        contentType: 'movie',
+        legal: true
+      }));
+
+      await cacheService.set(cacheKey, JSON.stringify(tagged), this.cacheTTL);
+      logger.info(`Loaded ${tagged.length} top movies`);
+      return tagged;
+
+    } catch (error) {
+      logger.error('Error fetching top movies:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get movies by genre from M3U8-Xtream
+   */
+  async getMoviesByGenre(genre) {
+    const genreMap = {
+      action: this.m3u8Xtream.actionMovies,
+      comedy: this.m3u8Xtream.comedyMovies,
+      drama: this.m3u8Xtream.dramaMovies,
+      horror: this.m3u8Xtream.horrorMovies,
+      scifi: this.m3u8Xtream.scifiMovies,
+      thriller: this.m3u8Xtream.thrillerMovies,
+      documentary: this.m3u8Xtream.documentaryMovies,
+      family: this.m3u8Xtream.familyMovies
+    };
+
+    const url = genreMap[genre.toLowerCase()];
+    if (!url) {
+      return [];
+    }
+
+    const cacheKey = `iptv:xtream:${genre}-movies`;
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info(`Fetching ${genre} movies from M3U8-Xtream...`);
+      const response = await axios.get(url, { timeout: 30000 });
+      const channels = this.parseM3U(response.data);
+
+      const tagged = channels.map(ch => ({
+        ...ch,
+        source: 'm3u8-xtream',
+        contentType: 'movie',
+        genre: genre,
+        legal: true
+      }));
+
+      await cacheService.set(cacheKey, JSON.stringify(tagged), this.cacheTTL);
+      logger.info(`Loaded ${tagged.length} ${genre} movies`);
+      return tagged;
+
+    } catch (error) {
+      logger.error(`Error fetching ${genre} movies:`, error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get ALL movies from M3U8-Xtream (all genres combined)
+   */
+  async getAllXtreamMovies() {
+    const cacheKey = 'iptv:xtream:all-movies';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Fetching all movies from M3U8-Xtream...');
+
+      const genres = ['action', 'comedy', 'drama', 'horror', 'scifi', 'thriller', 'documentary', 'family'];
+      const promises = [
+        this.getTopMovies(),
+        ...genres.map(g => this.getMoviesByGenre(g))
+      ];
+
+      const results = await Promise.all(promises);
+
+      // Deduplicate
+      const seen = new Set();
+      const combined = [];
+      results.flat().forEach(ch => {
+        if (ch.url && !seen.has(ch.url)) {
+          seen.add(ch.url);
+          combined.push(ch);
+        }
+      });
+
+      await cacheService.set(cacheKey, JSON.stringify(combined), this.cacheTTL);
+      logger.info(`Loaded ${combined.length} total movies from M3U8-Xtream`);
+      return combined;
+
+    } catch (error) {
+      logger.error('Error fetching all movies:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get PlutoTV channels (free ad-supported)
+   */
+  async getPlutoTVChannels() {
+    const cacheKey = 'iptv:plutotv:all';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Fetching PlutoTV channels...');
+      const response = await axios.get(this.plutoTV.us, { timeout: 30000 });
+      const channels = this.parseM3U(response.data);
+
+      const tagged = channels.map(ch => ({
+        ...ch,
+        source: 'plutotv',
+        legal: true,
+        adSupported: true
+      }));
+
+      await cacheService.set(cacheKey, JSON.stringify(tagged), this.cacheTTL);
+      logger.info(`Loaded ${tagged.length} PlutoTV channels`);
+      return tagged;
+
+    } catch (error) {
+      logger.error('Error fetching PlutoTV:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get ULTIMATE combined list - ALL sources
+   */
+  async getUltimateList() {
+    const cacheKey = 'iptv:ultimate';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Building ULTIMATE channel list...');
+
+      // Fetch from ALL sources in parallel
+      const [
+        dashPriority,
+        zilla,
+        freeTV,
+        xtreamMovies,
+        trendingSeries,
+        plutoTV
+      ] = await Promise.all([
+        this.getDashPriorityChannels(),
+        this.getScraperZillaChannels('combined'),
+        this.getFreeTVChannels(),
+        this.getAllXtreamMovies(),
+        this.getTrendingSeries(),
+        this.getPlutoTVChannels()
+      ]);
+
+      // Deduplicate by URL
+      const seen = new Set();
+      const combined = [];
+
+      // Priority order
+      const ordered = [
+        ...dashPriority,
+        ...zilla,
+        ...freeTV,
+        ...xtreamMovies,
+        ...trendingSeries,
+        ...plutoTV
+      ];
+
+      for (const channel of ordered) {
+        if (channel.url && !seen.has(channel.url)) {
+          seen.add(channel.url);
+          combined.push(channel);
+        }
+      }
+
+      await cacheService.set(cacheKey, JSON.stringify(combined), 1800); // 30 min cache
+      logger.info(`Built ULTIMATE list: ${combined.length} channels`);
+      return combined;
+
+    } catch (error) {
+      logger.error('Error building ultimate list:', error.message);
+      return [];
     }
   }
 

@@ -415,6 +415,156 @@ router.get('/mega', async (req, res) => {
   }
 });
 
+// ===== NEW SOURCES: Free-TV, M3U8-Xtream, PlutoTV =====
+
+/**
+ * GET /api/free/freetv
+ * Get channels from Free-TV/IPTV (quality curated, 80+ countries)
+ */
+router.get('/freetv', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getFreeTVChannels();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      source: 'free-tv',
+      description: 'Quality curated channels, 80+ countries, HD preferred',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching Free-TV:', error.message);
+    res.status(500).json({ error: 'Failed to fetch channels' });
+  }
+});
+
+/**
+ * GET /api/free/movies/trending
+ * Get trending series from M3U8-Xtream
+ */
+router.get('/movies/trending', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getTrendingSeries();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      source: 'm3u8-xtream',
+      contentType: 'series',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching trending:', error.message);
+    res.status(500).json({ error: 'Failed to fetch' });
+  }
+});
+
+/**
+ * GET /api/free/movies/top
+ * Get top IMDB movies 2024-2025
+ */
+router.get('/movies/top', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getTopMovies();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      source: 'm3u8-xtream',
+      contentType: 'movie',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching top movies:', error.message);
+    res.status(500).json({ error: 'Failed to fetch' });
+  }
+});
+
+/**
+ * GET /api/free/movies/genre/:name
+ * Get movies by genre (action, comedy, drama, horror, scifi, thriller, documentary, family)
+ */
+router.get('/movies/genre/:name', async (req, res) => {
+  try {
+    const { name } = req.params;
+    const channels = await freeIPTVService.getMoviesByGenre(name);
+
+    res.json({
+      success: true,
+      count: channels.length,
+      source: 'm3u8-xtream',
+      genre: name,
+      channels
+    });
+  } catch (error) {
+    logger.error(`Error fetching ${req.params.name} movies:`, error.message);
+    res.status(500).json({ error: 'Failed to fetch' });
+  }
+});
+
+/**
+ * GET /api/free/movies/all
+ * Get ALL movies from M3U8-Xtream (all genres combined)
+ */
+router.get('/movies/all', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getAllXtreamMovies();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      source: 'm3u8-xtream',
+      description: 'All genres combined - TMDB powered',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching all movies:', error.message);
+    res.status(500).json({ error: 'Failed to fetch' });
+  }
+});
+
+/**
+ * GET /api/free/plutotv
+ * Get PlutoTV channels (free ad-supported)
+ */
+router.get('/plutotv', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getPlutoTVChannels();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      source: 'plutotv',
+      description: 'Free ad-supported TV',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching PlutoTV:', error.message);
+    res.status(500).json({ error: 'Failed to fetch' });
+  }
+});
+
+/**
+ * GET /api/free/ultimate
+ * Get ULTIMATE list - ALL sources combined (THE MOTHERLODE)
+ */
+router.get('/ultimate', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getUltimateList();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      sources: ['dash-priority', 'scraper-zilla', 'free-tv', 'm3u8-xtream', 'plutotv'],
+      description: 'THE MOTHERLODE - All sources combined',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching ultimate:', error.message);
+    res.status(500).json({ error: 'Failed to fetch' });
+  }
+});
+
 // ===== VERIFIED STREAMS (Health-checked, GUARANTEED working) =====
 
 /**
