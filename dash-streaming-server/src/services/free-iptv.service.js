@@ -393,16 +393,56 @@ class FreeIPTVService {
    */
   async testStream(url) {
     try {
+      // Try HEAD first (faster)
       const response = await axios.head(url, {
         timeout: 5000,
+        maxRedirects: 5,
         headers: {
           'User-Agent': 'DASH-WebTV/2.0'
-        }
+        },
+        validateStatus: (status) => status < 500 // Accept redirects
       });
-      return response.status === 200;
+      return response.status === 200 || response.status === 302 || response.status === 301;
     } catch {
-      return false;
+      // If HEAD fails, try GET (some servers don't support HEAD)
+      try {
+        const response = await axios.get(url, {
+          timeout: 5000,
+          maxRedirects: 5,
+          headers: {
+            'User-Agent': 'DASH-WebTV/2.0',
+            'Range': 'bytes=0-1024' // Only get first KB
+          },
+          responseType: 'stream',
+          validateStatus: (status) => status < 500
+        });
+        response.data.destroy(); // Don't download the whole thing
+        return true;
+      } catch {
+        return false;
+      }
     }
+  }
+
+  /**
+   * Batch test multiple streams concurrently
+   */
+  async testStreamsBatch(urls, concurrency = 10) {
+    const results = new Map();
+
+    // Process in batches
+    for (let i = 0; i < urls.length; i += concurrency) {
+      const batch = urls.slice(i, i + concurrency);
+      const promises = batch.map(async (url) => {
+        const working = await this.testStream(url);
+        return { url, working };
+      });
+
+      const batchResults = await Promise.all(promises);
+      batchResults.forEach(r => results.set(r.url, r.working));
+    }
+
+    return results;
   }
 
   /**
@@ -777,6 +817,202 @@ class FreeIPTVService {
 
     } catch (error) {
       return { error: error.message };
+    }
+  }
+
+  // ===== VERIFIED STREAMS (Health-checked) =====
+
+  /**
+   * Get verified working channels with health check
+   * Caches results for 2 hours to avoid hammering sources
+   */
+  async getVerifiedChannels(sourceType = 'priority', limit = 100) {
+    const cacheKey = `iptv:verified:${sourceType}:${limit}`;
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info(`Building verified ${sourceType} list (limit: ${limit})...`);
+
+      let channels = [];
+
+      switch (sourceType) {
+        case 'guinea':
+          channels = await this.getChannelsByCountry('gn');
+          break;
+        case 'sports':
+          channels = await this.getAllSports();
+          break;
+        case 'french':
+          channels = await this.getFrenchChannels();
+          break;
+        case 'news':
+          channels = await this.getAPIChannelsByCategory('news');
+          break;
+        case 'priority':
+        default:
+          channels = await this.getDashPriorityChannels();
+          break;
+      }
+
+      // Limit channels to test
+      const toTest = channels.slice(0, Math.min(limit * 2, channels.length));
+
+      // Test streams in batches
+      const urls = toTest.map(ch => ch.url).filter(Boolean);
+      const results = await this.testStreamsBatch(urls, 15);
+
+      // Filter to working only
+      const verified = toTest.filter(ch => results.get(ch.url) === true);
+
+      // Take up to limit
+      const final = verified.slice(0, limit);
+
+      // Cache for 2 hours (verified streams are expensive to check)
+      await cacheService.set(cacheKey, JSON.stringify(final), 7200);
+
+      logger.info(`Verified ${final.length} working ${sourceType} channels`);
+      return final;
+
+    } catch (error) {
+      logger.error(`Error getting verified ${sourceType}:`, error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get verified Guinea channels
+   */
+  async getVerifiedGuinea() {
+    return this.getVerifiedChannels('guinea', 20);
+  }
+
+  /**
+   * Get verified sports channels
+   */
+  async getVerifiedSports() {
+    return this.getVerifiedChannels('sports', 150);
+  }
+
+  /**
+   * Get verified French channels
+   */
+  async getVerifiedFrench() {
+    return this.getVerifiedChannels('french', 200);
+  }
+
+  /**
+   * Get verified news channels
+   */
+  async getVerifiedNews() {
+    return this.getVerifiedChannels('news', 100);
+  }
+
+  /**
+   * Get ALL verified channels - the GOLD list
+   * Combines all verified sources into one mega-verified list
+   */
+  async getVerifiedMega() {
+    const cacheKey = 'iptv:verified:mega';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Building VERIFIED MEGA list...');
+
+      // Get verified from each category in parallel
+      const [guinea, sports, french, news] = await Promise.all([
+        this.getVerifiedGuinea(),
+        this.getVerifiedSports(),
+        this.getVerifiedFrench(),
+        this.getVerifiedNews()
+      ]);
+
+      // Also get some from Scraper Zilla (fresh hourly content)
+      const zilla = await this.getScraperZillaChannels('combined');
+      const zillaUrls = zilla.slice(0, 200).map(ch => ch.url).filter(Boolean);
+      const zillaResults = await this.testStreamsBatch(zillaUrls, 20);
+      const verifiedZilla = zilla.filter(ch => zillaResults.get(ch.url) === true).slice(0, 100);
+
+      // Deduplicate
+      const seen = new Set();
+      const combined = [];
+
+      // Priority order: Guinea → Sports → French → News → Zilla
+      const ordered = [...guinea, ...sports, ...french, ...news, ...verifiedZilla];
+
+      for (const channel of ordered) {
+        if (channel.url && !seen.has(channel.url)) {
+          seen.add(channel.url);
+          combined.push({
+            ...channel,
+            verified: true,
+            verifiedAt: new Date().toISOString()
+          });
+        }
+      }
+
+      // Cache for 2 hours
+      await cacheService.set(cacheKey, JSON.stringify(combined), 7200);
+
+      logger.info(`Built VERIFIED MEGA: ${combined.length} working channels`);
+      return combined;
+
+    } catch (error) {
+      logger.error('Error building verified mega:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Quick health check for a single channel
+   * Returns detailed info about stream health
+   */
+  async getStreamHealth(url) {
+    const startTime = Date.now();
+
+    try {
+      const response = await axios.get(url, {
+        timeout: 10000,
+        maxRedirects: 5,
+        headers: {
+          'User-Agent': 'DASH-WebTV/2.0',
+          'Range': 'bytes=0-10240'
+        },
+        responseType: 'arraybuffer',
+        validateStatus: (status) => status < 500
+      });
+
+      const latency = Date.now() - startTime;
+      const contentType = response.headers['content-type'] || '';
+      const isHLS = contentType.includes('mpegurl') || url.includes('.m3u8');
+      const isMPEGTS = contentType.includes('video/mp2t') || url.includes('.ts');
+
+      return {
+        url,
+        working: true,
+        latency,
+        status: response.status,
+        contentType,
+        streamType: isHLS ? 'hls' : isMPEGTS ? 'mpegts' : 'unknown',
+        size: response.data.length,
+        checkedAt: new Date().toISOString()
+      };
+
+    } catch (error) {
+      return {
+        url,
+        working: false,
+        error: error.message,
+        latency: Date.now() - startTime,
+        checkedAt: new Date().toISOString()
+      };
     }
   }
 }

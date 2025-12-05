@@ -415,4 +415,141 @@ router.get('/mega', async (req, res) => {
   }
 });
 
+// ===== VERIFIED STREAMS (Health-checked, GUARANTEED working) =====
+
+/**
+ * GET /api/free/verified/guinea
+ * Get VERIFIED working Guinea channels
+ */
+router.get('/verified/guinea', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getVerifiedGuinea();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      verified: true,
+      description: 'Health-checked Guinea channels',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching verified Guinea:', error.message);
+    res.status(500).json({ error: 'Failed to fetch channels' });
+  }
+});
+
+/**
+ * GET /api/free/verified/sports
+ * Get VERIFIED working sports channels
+ */
+router.get('/verified/sports', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getVerifiedSports();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      verified: true,
+      description: 'Health-checked sports channels',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching verified sports:', error.message);
+    res.status(500).json({ error: 'Failed to fetch channels' });
+  }
+});
+
+/**
+ * GET /api/free/verified/french
+ * Get VERIFIED working French channels
+ */
+router.get('/verified/french', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getVerifiedFrench();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      verified: true,
+      description: 'Health-checked French channels',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching verified French:', error.message);
+    res.status(500).json({ error: 'Failed to fetch channels' });
+  }
+});
+
+/**
+ * GET /api/free/verified/news
+ * Get VERIFIED working news channels
+ */
+router.get('/verified/news', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getVerifiedNews();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      verified: true,
+      description: 'Health-checked news channels',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching verified news:', error.message);
+    res.status(500).json({ error: 'Failed to fetch channels' });
+  }
+});
+
+/**
+ * GET /api/free/verified/mega
+ * Get VERIFIED MEGA - THE GOLD LIST (all verified channels combined)
+ */
+router.get('/verified/mega', async (req, res) => {
+  try {
+    const channels = await freeIPTVService.getVerifiedMega();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      verified: true,
+      description: 'THE GOLD LIST - All verified working channels',
+      categories: {
+        guinea: channels.filter(c => c.country === 'GN' || (c.name || '').toLowerCase().includes('guinea')).length,
+        sports: channels.filter(c => (c.group || '').toLowerCase().includes('sport') || (c.categories || []).includes('sports')).length,
+        french: channels.filter(c => (c.languages || []).includes('fra')).length,
+        news: channels.filter(c => (c.group || '').toLowerCase().includes('news') || (c.categories || []).includes('news')).length
+      },
+      channels
+    });
+  } catch (error) {
+    logger.error('Error fetching verified mega:', error.message);
+    res.status(500).json({ error: 'Failed to fetch channels' });
+  }
+});
+
+/**
+ * GET /api/free/health
+ * Check health of a specific stream URL
+ */
+router.get('/health', async (req, res) => {
+  try {
+    const { url } = req.query;
+
+    if (!url) {
+      return res.status(400).json({ error: 'URL parameter required' });
+    }
+
+    const health = await freeIPTVService.getStreamHealth(url);
+
+    res.json({
+      success: true,
+      ...health
+    });
+  } catch (error) {
+    logger.error('Error checking stream health:', error.message);
+    res.status(500).json({ error: 'Failed to check health' });
+  }
+});
+
 export default router;
