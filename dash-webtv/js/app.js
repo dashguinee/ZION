@@ -25,7 +25,12 @@ class DashApp {
       selectedCategory: null,
       searchQuery: '',
       favorites: this.loadFavorites(),
-      watchHistory: this.loadWatchHistory()
+      watchHistory: this.loadWatchHistory(),
+      // User tier info from DASH admin system
+      userTier: null,
+      userPackage: null,
+      tierEndpoints: null,
+      starshareEnabled: false
     }
 
     // DOM Elements
@@ -615,6 +620,10 @@ class DashApp {
       localStorage.setItem('dash_pass', password)
 
       console.log('✅ Login successful!')
+
+      // Check user tier from DASH admin system
+      await this.loadUserTier(username)
+
       this.showAppUI()
     } else {
       const errorMsg = result.error || 'Invalid username or password'
@@ -643,8 +652,79 @@ class DashApp {
     if (confirm('Are you sure you want to logout?')) {
       localStorage.removeItem('dash_user')
       localStorage.removeItem('dash_pass')
+      localStorage.removeItem('dash_tier')
       location.reload()
     }
+  }
+
+  /**
+   * Load user tier info from DASH admin system
+   * This determines what content the user can access
+   */
+  async loadUserTier(username) {
+    try {
+      console.log('🎫 Checking user tier for:', username)
+      const response = await fetch(`${this.client.backendUrl}/api/iptv-access/${username}`)
+      const data = await response.json()
+
+      if (data.success && data.found && data.active) {
+        this.state.userTier = data.tier
+        this.state.userPackage = data.packageName
+        this.state.tierEndpoints = data.endpoints
+        this.state.starshareEnabled = data.starshareEnabled
+
+        // Cache tier info
+        localStorage.setItem('dash_tier', JSON.stringify({
+          tier: data.tier,
+          package: data.packageName,
+          endpoints: data.endpoints,
+          starshare: data.starshareEnabled,
+          features: data.features
+        }))
+
+        console.log(`✅ User tier loaded: ${data.tier} (${data.packageName})`)
+        console.log(`📺 StarShare: ${data.starshareEnabled ? 'Enabled' : 'Disabled'}`)
+        console.log(`🎬 Endpoints:`, data.endpoints)
+      } else if (data.found && !data.active) {
+        console.warn('⚠️ User account is suspended')
+        // Could show a message or limit access
+      } else {
+        // User not in our system - default to BASIC tier
+        console.log('ℹ️ User not in admin system, defaulting to BASIC tier')
+        this.state.userTier = 'BASIC'
+        this.state.userPackage = 'Basic'
+        this.state.starshareEnabled = true // They logged in with StarShare
+        this.state.tierEndpoints = data.endpoints // Default endpoints
+      }
+    } catch (error) {
+      console.error('❌ Failed to load user tier:', error)
+      // On error, assume StarShare-only access (they logged in successfully)
+      this.state.userTier = 'BASIC'
+      this.state.starshareEnabled = true
+    }
+  }
+
+  /**
+   * Check if user has access to a specific tier
+   */
+  hasTierAccess(requiredTier) {
+    const tierLevels = { 'BASIC': 1, 'STANDARD': 2, 'PREMIUM': 3 }
+    const userLevel = tierLevels[this.state.userTier] || 1
+    const requiredLevel = tierLevels[requiredTier] || 1
+    return userLevel >= requiredLevel
+  }
+
+  /**
+   * Get user's tier badge HTML
+   */
+  getTierBadge() {
+    const tier = this.state.userTier || 'BASIC'
+    const colors = {
+      'BASIC': '#6b7280',
+      'STANDARD': '#3b82f6',
+      'PREMIUM': '#f59e0b'
+    }
+    return `<span style="background:${colors[tier]};color:white;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:bold;">${tier}</span>`
   }
 
   async loadAppContent() {
