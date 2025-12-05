@@ -181,4 +181,85 @@ https://www.youtube.com/euronewsfr/live
 
 ---
 
+---
+
+## THE GOLDMINE: FRENCH VOD EMBED APIs
+
+### 1. FREMBED (French Movies & Series)
+**THE BIG ONE FOR FRENCH MARKET**
+
+- **24,000+ Movies**
+- **3,000+ TV Series**
+- **80,000+ Episodes**
+- **All in FRENCH**
+- **FREE - No API key needed**
+- **Updates daily**
+
+**API Endpoints:**
+```
+# Movies (use IMDB ID)
+https://frembed.com/api/film.php?id=tt0137523
+
+# Series (IMDB ID + Season + Episode)
+https://frembed.com/api/serie.php?id=tt8111088&sa=3&epi=1
+```
+
+**Websites:** frembed.com, frembed.pro, frembed.xyz, frembed.fun
+
+---
+
+### 2. FrWatch (4K French Movies)
+- French movies in **4K quality**
+- Uses TMDB IDs
+- Daily updates
+
+**API Endpoint:**
+```
+# Movies (use TMDB ID)
+/film.php?id=550
+```
+
+---
+
+### 3. VidSrc (66,000+ Movies, 320,000+ Episodes)
+- Not French-specific but MASSIVE library
+- Works with TMDB or IMDB IDs
+- Supports subtitles in any language
+
+**Embed URLs:**
+```
+# Movie by IMDB
+https://vidsrc.to/embed/movie/tt0137523
+
+# Movie by TMDB
+https://vidsrc.to/embed/movie/550
+
+# TV Series
+https://vidsrc.to/embed/tv/tt8111088/1/1
+```
+
+---
+
+## HOW TO USE FOR DASH WEBTV
+
+**Option 1: Embed in iframe**
+```html
+<iframe src="https://frembed.com/api/film.php?id=tt0137523" width="100%" height="100%"></iframe>
+```
+
+**Option 2: Build VOD library**
+1. Get French movie list from TMDB API (filter by language=fr)
+2. For each movie, generate embed URL using IMDB/TMDB ID
+3. Display in your app with poster/metadata from TMDB
+4. On click, load embed player
+
+**This gives you:**
+- 24,000+ French movies (Frembed)
+- 66,000+ international movies (VidSrc)
+- No hosting costs
+- No bandwidth costs
+- Updates automatically
+
+---
+
 *Documented by ZION SYNAPSE - December 5, 2025*
