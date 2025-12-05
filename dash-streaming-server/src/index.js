@@ -15,6 +15,7 @@ import freeChannelsRouter from './routes/free-channels.js';
 import curatedChannelsRouter from './routes/curated-channels.js';
 import adminRouter from './routes/admin.js';
 import iptvAccessRouter from './routes/iptv-access.js';
+import frenchVodRouter from './routes/french-vod.js';
 
 const app = express();
 
@@ -67,13 +68,14 @@ app.use('/api/free', freeChannelsRouter);  // Free IPTV channels (iptv-org + dir
 app.use('/api/curated', curatedChannelsRouter);  // Curated channels with tier-based access
 app.use('/api/admin', adminRouter);  // Admin panel API
 app.use('/api/iptv-access', iptvAccessRouter);  // User access check (for customer app)
+app.use('/api/french-vod', frenchVodRouter);  // French VOD (Frembed, VidSrc embeds)
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'DASH Streaming Server',
-    version: '2.3.0',
-    description: 'Secure streaming server with user management + tiered access',
+    version: '2.4.0',
+    description: 'Secure streaming server with French VOD + tiered access',
     endpoints: {
       // Secure API (recommended - hides provider)
       categories: '/api/secure/categories/:type',
@@ -106,7 +108,14 @@ app.get('/', (req, res) => {
       adminStats: '/api/admin/stats',
       adminUsers: '/api/admin/users',
       adminPackages: '/api/admin/packages',
-      iptvAccess: '/api/iptv-access/:username'
+      iptvAccess: '/api/iptv-access/:username',
+      // French VOD (NEW - 24K+ French movies)
+      frenchVodStats: '/api/french-vod/stats',
+      frenchMovies: '/api/french-vod/movies',
+      frenchSeries: '/api/french-vod/series',
+      frenchSearch: '/api/french-vod/search?q=:query',
+      frenchMovieDetail: '/api/french-vod/movie/:id',
+      frenchEmbed: '/api/french-vod/embed/movie/:id'
     },
     qualities: Object.keys(config.qualities),
     formats: ['mp4', 'hls']
