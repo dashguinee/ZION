@@ -13,9 +13,9 @@ import { Track } from '../../types';
 
 // Spring configs
 const springs = {
-  gentle: { type: 'spring', stiffness: 120, damping: 14 },
-  snappy: { type: 'spring', stiffness: 400, damping: 30 },
-  bouncy: { type: 'spring', stiffness: 300, damping: 10 },
+  gentle: { type: 'spring' as const, stiffness: 120, damping: 14 },
+  snappy: { type: 'spring' as const, stiffness: 400, damping: 30 },
+  bouncy: { type: 'spring' as const, stiffness: 300, damping: 10 },
 };
 
 // Timeline Card - Premium Version

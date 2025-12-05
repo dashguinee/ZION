@@ -20,9 +20,9 @@ import { Track } from '../../types';
 
 // Spring configs
 const springs = {
-  gentle: { type: 'spring', stiffness: 120, damping: 14 },
-  snappy: { type: 'spring', stiffness: 400, damping: 30 },
-  bouncy: { type: 'spring', stiffness: 300, damping: 10 },
+  gentle: { type: 'spring' as const, stiffness: 120, damping: 14 },
+  snappy: { type: 'spring' as const, stiffness: 400, damping: 30 },
+  bouncy: { type: 'spring' as const, stiffness: 300, damping: 10 },
 };
 
 // ============================================
@@ -463,9 +463,9 @@ export const VoyoPortraitPlayer = ({
     history,
     hotTracks,
     discoverTracks,
-    togglePlayPause,
-    skipToNext,
-    skipToPrevious,
+    togglePlay,
+    nextTrack,
+    prevTrack,
     setCurrentTrack,
   } = usePlayerStore();
 
@@ -549,9 +549,9 @@ export const VoyoPortraitPlayer = ({
       <div className="py-6">
         <PlayControls
           isPlaying={isPlaying}
-          onToggle={togglePlayPause}
-          onPrev={skipToPrevious}
-          onNext={skipToNext}
+          onToggle={togglePlay}
+          onPrev={prevTrack}
+          onNext={nextTrack}
         />
       </div>
 

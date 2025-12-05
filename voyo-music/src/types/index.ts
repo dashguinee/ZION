@@ -198,4 +198,4 @@ export interface FeedItem {
 }
 
 // DJ Mode States
-export type DJMode = 'idle' | 'listening' | 'thinking' | 'responding';
+export type DJMode = 'idle' | 'listening' | 'thinking' | 'responding' | 'speaking';
