@@ -225,6 +225,184 @@ class DashApp {
   }
 
   /**
+   * Load French VOD content from backend API
+   * Uses Frembed + VidSrc embed providers (90,000+ French content)
+   */
+  async loadFrenchVOD() {
+    console.log('🇫🇷 Loading French VOD content...')
+    try {
+      const backendUrl = this.client.backendUrl || 'https://zion-production-39d8.up.railway.app'
+      const [statsRes, moviesRes] = await Promise.all([
+        fetch(`${backendUrl}/api/french-vod/stats`),
+        fetch(`${backendUrl}/api/french-vod/curated`)
+      ])
+
+      const stats = await statsRes.json()
+      const curated = await moviesRes.json()
+
+      this.frenchVODStats = stats
+      this.frenchVODMovies = curated.movies || []
+
+      console.log(`🇫🇷 French VOD ready: ${this.frenchVODMovies.length} curated movies`)
+      console.log(`📊 Providers: ${stats.providers?.map(p => p.name).join(', ')}`)
+    } catch (err) {
+      console.warn('⚠️ Could not load French VOD:', err.message)
+      this.frenchVODStats = null
+      this.frenchVODMovies = []
+    }
+  }
+
+  /**
+   * Render French VOD page with embed-based movies
+   */
+  async renderFrenchVODPage() {
+    // Load if not already loaded
+    if (!this.frenchVODStats) {
+      await this.loadFrenchVOD()
+    }
+
+    const stats = this.frenchVODStats || {}
+    const movies = this.frenchVODMovies || []
+    const estimated = stats.estimated_content || {}
+
+    return `
+      <div class="page-content french-vod-page">
+        <!-- French VOD Header -->
+        <div class="french-header" style="background: linear-gradient(135deg, #002395 0%, #FFFFFF 50%, #ED2939 100%); padding: 30px 20px; border-radius: 16px; margin-bottom: 24px;">
+          <h1 style="font-size: 2rem; margin: 0 0 8px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">🇫🇷 French Cinema</h1>
+          <p style="opacity: 0.9; margin: 0;">24,000+ French Movies • 80,000+ Episodes • Free Streaming</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <div class="stat-card" style="background: rgba(157, 78, 221, 0.2); padding: 20px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: bold; color: #9D4EDD;">${estimated.french_movies || '24,000+'}</div>
+            <div style="opacity: 0.7; font-size: 0.85rem;">French Movies</div>
+          </div>
+          <div class="stat-card" style="background: rgba(59, 130, 246, 0.2); padding: 20px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: bold; color: #3B82F6;">${estimated.french_episodes || '80,000+'}</div>
+            <div style="opacity: 0.7; font-size: 0.85rem;">French Episodes</div>
+          </div>
+          <div class="stat-card" style="background: rgba(34, 197, 94, 0.2); padding: 20px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: bold; color: #22C55E;">${estimated.international_movies || '66,000+'}</div>
+            <div style="opacity: 0.7; font-size: 0.85rem;">International</div>
+          </div>
+        </div>
+
+        <!-- How It Works -->
+        <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin-bottom: 24px;">
+          <h3 style="margin: 0 0 8px; font-size: 1rem;">💡 How It Works</h3>
+          <p style="margin: 0; opacity: 0.8; font-size: 0.9rem;">Click any movie to open the embed player. Multiple sources available (Frembed, VidSrc) - if one doesn't work, try another!</p>
+        </div>
+
+        <!-- Curated French Movies -->
+        <h2 class="section-title" style="margin-bottom: 16px;">🎬 Curated French Cinema</h2>
+        <div class="content-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px;">
+          ${movies.length > 0 ? movies.map(movie => `
+            <div class="content-card french-movie-card" onclick="dashApp.openFrenchMovie(${movie.id})" style="cursor: pointer;">
+              <div class="card-poster" style="aspect-ratio: 2/3; overflow: hidden; border-radius: 8px; background: #1a1a2e;">
+                ${movie.poster ? `<img src="${movie.poster}" alt="${movie.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;">🎬</div>`}
+              </div>
+              <div class="card-info" style="padding: 8px 0;">
+                <div class="card-title" style="font-size: 0.9rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${movie.title}</div>
+                <div style="display: flex; gap: 8px; font-size: 0.75rem; opacity: 0.7;">
+                  ${movie.year ? `<span>${movie.year}</span>` : ''}
+                  ${movie.rating ? `<span>⭐ ${movie.rating.toFixed(1)}</span>` : ''}
+                </div>
+              </div>
+            </div>
+          `).join('') : '<p style="opacity: 0.6; grid-column: 1/-1;">Loading French movies... Try refreshing the page.</p>'}
+        </div>
+
+        <!-- Search Any Movie -->
+        <div style="margin-top: 32px; padding: 20px; background: rgba(157, 78, 221, 0.1); border-radius: 12px; border: 1px solid rgba(157, 78, 221, 0.3);">
+          <h3 style="margin: 0 0 12px;">🔍 Search Any Movie by IMDB/TMDB ID</h3>
+          <p style="opacity: 0.8; margin-bottom: 16px; font-size: 0.9rem;">Enter an IMDB ID (like tt0137523) or TMDB ID (like 550) to watch any movie:</p>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="frenchSearchInput" placeholder="tt0137523 or 550" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white;">
+            <button onclick="dashApp.searchFrenchById()" style="padding: 12px 24px; background: #9D4EDD; border: none; border-radius: 8px; color: white; cursor: pointer; font-weight: 500;">Watch</button>
+          </div>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Open French movie embed player
+   */
+  openFrenchMovie(tmdbId) {
+    const backendUrl = this.client.backendUrl || 'https://zion-production-39d8.up.railway.app'
+
+    // Fetch embed URLs
+    fetch(`${backendUrl}/api/french-vod/embed/movie/${tmdbId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          alert('Could not load movie embed')
+          return
+        }
+
+        const embeds = data.all_embeds || []
+        this.showFrenchEmbedPlayer(data.id, embeds)
+      })
+      .catch(err => {
+        console.error('Failed to get embed:', err)
+        alert('Failed to load movie. Please try again.')
+      })
+  }
+
+  /**
+   * Search French movie by ID
+   */
+  searchFrenchById() {
+    const input = document.getElementById('frenchSearchInput')
+    const id = input?.value?.trim()
+
+    if (!id) {
+      alert('Please enter an IMDB ID (tt1234567) or TMDB ID (12345)')
+      return
+    }
+
+    this.openFrenchMovie(id)
+  }
+
+  /**
+   * Show French embed player with source selection
+   */
+  showFrenchEmbedPlayer(id, embeds) {
+    const container = this.elements.videoPlayerContainer
+
+    const embedHTML = embeds.map((e, i) => `
+      <button onclick="dashApp.switchFrenchEmbed('${e.url}')" class="embed-source-btn" style="padding: 8px 16px; margin: 4px; background: ${i === 0 ? '#9D4EDD' : 'rgba(255,255,255,0.1)'}; border: none; border-radius: 4px; color: white; cursor: pointer;">
+        ${e.provider}
+      </button>
+    `).join('')
+
+    container.innerHTML = `
+      <div class="video-player-overlay" style="position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; flex-direction: column;">
+        <div style="padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            ${embedHTML}
+          </div>
+          <button onclick="dashApp.closeFrenchPlayer()" style="padding: 8px 16px; background: #ef4444; border: none; border-radius: 4px; color: white; cursor: pointer;">✕ Close</button>
+        </div>
+        <div style="flex: 1; padding: 0 16px 16px;">
+          <iframe id="frenchEmbedFrame" src="${embeds[0]?.url || ''}" style="width: 100%; height: 100%; border: none; border-radius: 8px;" allowfullscreen></iframe>
+        </div>
+      </div>
+    `
+  }
+
+  switchFrenchEmbed(url) {
+    const frame = document.getElementById('frenchEmbedFrame')
+    if (frame) frame.src = url
+  }
+
+  closeFrenchPlayer() {
+    this.elements.videoPlayerContainer.innerHTML = ''
+  }
+
+  /**
    * Extract base series name by removing season/language indicators
    * Examples:
    *   "Game of Thrones (season 1)" -> "Game of Thrones"
@@ -859,6 +1037,9 @@ class DashApp {
         break
       case 'downloads':
         content = this.renderDownloadsPage()
+        break
+      case 'french':
+        content = await this.renderFrenchVODPage()
         break
       case 'continue_watching':
         content = this.renderContinueWatchingPage()
