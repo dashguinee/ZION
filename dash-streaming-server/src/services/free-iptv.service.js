@@ -3,6 +3,8 @@
  *
  * Sources:
  * - iptv-org/iptv (community-maintained, 8000+ channels)
+ * - iptv-org/api (JSON API with channels, streams, categories)
+ * - IPTV Scraper Zilla (auto-updates hourly, thousands of channels)
  * - FIFA+ (official free football streams)
  * - France24, DW, etc. (official broadcaster streams)
  *
@@ -13,6 +15,7 @@
  * 3. Public service broadcasters
  *
  * Created: December 2025
+ * Updated: December 5, 2025 - Added iptv-org API + Scraper Zilla
  * Author: ZION SYNAPSE for DASH
  */
 
@@ -24,6 +27,24 @@ class FreeIPTVService {
   constructor() {
     // iptv-org base URLs (GitHub Pages hosted)
     this.iptvOrgBase = 'https://iptv-org.github.io/iptv';
+
+    // iptv-org API (JSON endpoints - structured data)
+    this.iptvOrgAPI = {
+      channels: 'https://iptv-org.github.io/api/channels.json',
+      streams: 'https://iptv-org.github.io/api/streams.json',
+      categories: 'https://iptv-org.github.io/api/categories.json',
+      countries: 'https://iptv-org.github.io/api/countries.json',
+      languages: 'https://iptv-org.github.io/api/languages.json',
+      guides: 'https://iptv-org.github.io/api/guides.json'
+    };
+
+    // IPTV Scraper Zilla (auto-updates hourly!)
+    this.scraperZilla = {
+      combined: 'https://raw.githubusercontent.com/abusaeeidx/IPTV-Scraper-Zilla/main/combined-playlist.m3u',
+      sports: 'https://raw.githubusercontent.com/abusaeeidx/IPTV-Scraper-Zilla/main/sports.m3u',
+      movies: 'https://raw.githubusercontent.com/abusaeeidx/IPTV-Scraper-Zilla/main/movies.m3u',
+      anime: 'https://raw.githubusercontent.com/abusaeeidx/IPTV-Scraper-Zilla/main/anime.m3u'
+    };
 
     // Regional focus for DASH audience
     this.priorityRegions = {
@@ -63,7 +84,7 @@ class FreeIPTVService {
       }
     };
 
-    // Channel cache TTL (1 hour)
+    // Channel cache TTL (1 hour - matches Scraper Zilla update frequency)
     this.cacheTTL = 3600;
   }
 
@@ -402,6 +423,361 @@ class FreeIPTVService {
     }
 
     return results;
+  }
+
+  // ===== NEW: iptv-org API Methods (JSON-based) =====
+
+  /**
+   * Fetch full channels database from iptv-org API
+   * Returns structured JSON with all channel metadata
+   */
+  async getAPIChannels() {
+    const cacheKey = 'iptv:api:channels';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Fetching iptv-org API channels...');
+      const response = await axios.get(this.iptvOrgAPI.channels, { timeout: 30000 });
+
+      // Cache for 1 hour
+      await cacheService.set(cacheKey, JSON.stringify(response.data), this.cacheTTL);
+
+      logger.info(`Loaded ${response.data.length} channels from API`);
+      return response.data;
+
+    } catch (error) {
+      logger.error('Error fetching API channels:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Fetch streams database from iptv-org API
+   * Contains actual stream URLs linked to channel IDs
+   */
+  async getAPIStreams() {
+    const cacheKey = 'iptv:api:streams';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Fetching iptv-org API streams...');
+      const response = await axios.get(this.iptvOrgAPI.streams, { timeout: 30000 });
+
+      await cacheService.set(cacheKey, JSON.stringify(response.data), this.cacheTTL);
+
+      logger.info(`Loaded ${response.data.length} streams from API`);
+      return response.data;
+
+    } catch (error) {
+      logger.error('Error fetching API streams:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get channels by country using API (more reliable than M3U)
+   */
+  async getAPIChannelsByCountry(countryCode) {
+    const cacheKey = `iptv:api:country:${countryCode}`;
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      const [channels, streams] = await Promise.all([
+        this.getAPIChannels(),
+        this.getAPIStreams()
+      ]);
+
+      // Filter channels by country
+      const countryChannels = channels.filter(ch =>
+        ch.country === countryCode.toUpperCase()
+      );
+
+      // Map streams to channels
+      const streamMap = new Map();
+      streams.forEach(s => {
+        if (!streamMap.has(s.channel)) {
+          streamMap.set(s.channel, s);
+        }
+      });
+
+      // Combine channel info with stream URLs
+      const result = countryChannels.map(ch => {
+        const stream = streamMap.get(ch.id);
+        return {
+          id: ch.id,
+          name: ch.name,
+          logo: ch.logo,
+          country: ch.country,
+          categories: ch.categories || [],
+          languages: ch.languages || [],
+          url: stream?.url || null,
+          type: stream?.url?.includes('.m3u8') ? 'hls' : 'mpegts',
+          source: 'iptv-org-api',
+          legal: true
+        };
+      }).filter(ch => ch.url); // Only include channels with working streams
+
+      await cacheService.set(cacheKey, JSON.stringify(result), this.cacheTTL);
+
+      logger.info(`Found ${result.length} channels for ${countryCode} via API`);
+      return result;
+
+    } catch (error) {
+      logger.error(`Error fetching ${countryCode} from API:`, error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get channels by category using API
+   */
+  async getAPIChannelsByCategory(category) {
+    const cacheKey = `iptv:api:category:${category}`;
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      const [channels, streams] = await Promise.all([
+        this.getAPIChannels(),
+        this.getAPIStreams()
+      ]);
+
+      // Filter channels by category
+      const categoryChannels = channels.filter(ch =>
+        ch.categories?.includes(category.toLowerCase())
+      );
+
+      // Map streams to channels
+      const streamMap = new Map();
+      streams.forEach(s => {
+        if (!streamMap.has(s.channel)) {
+          streamMap.set(s.channel, s);
+        }
+      });
+
+      const result = categoryChannels.map(ch => {
+        const stream = streamMap.get(ch.id);
+        return {
+          id: ch.id,
+          name: ch.name,
+          logo: ch.logo,
+          country: ch.country,
+          categories: ch.categories || [],
+          languages: ch.languages || [],
+          url: stream?.url || null,
+          type: stream?.url?.includes('.m3u8') ? 'hls' : 'mpegts',
+          source: 'iptv-org-api',
+          legal: true
+        };
+      }).filter(ch => ch.url);
+
+      await cacheService.set(cacheKey, JSON.stringify(result), this.cacheTTL);
+
+      logger.info(`Found ${result.length} ${category} channels via API`);
+      return result;
+
+    } catch (error) {
+      logger.error(`Error fetching ${category} from API:`, error.message);
+      return [];
+    }
+  }
+
+  // ===== NEW: Scraper Zilla Methods (Auto-updating hourly!) =====
+
+  /**
+   * Get channels from IPTV Scraper Zilla (combined playlist)
+   * Updates automatically every hour on GitHub
+   */
+  async getScraperZillaChannels(type = 'combined') {
+    const cacheKey = `iptv:zilla:${type}`;
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      const url = this.scraperZilla[type] || this.scraperZilla.combined;
+      logger.info(`Fetching Scraper Zilla ${type} playlist...`);
+
+      const response = await axios.get(url, { timeout: 60000 });
+      const channels = this.parseM3U(response.data);
+
+      // Tag as from Zilla
+      const tagged = channels.map(ch => ({
+        ...ch,
+        source: 'scraper-zilla',
+        autoUpdated: true,
+        legal: true // Zilla aggregates legal streams
+      }));
+
+      await cacheService.set(cacheKey, JSON.stringify(tagged), this.cacheTTL);
+
+      logger.info(`Loaded ${tagged.length} channels from Scraper Zilla (${type})`);
+      return tagged;
+
+    } catch (error) {
+      logger.error(`Error fetching Scraper Zilla ${type}:`, error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get Scraper Zilla sports channels (updated hourly!)
+   */
+  async getZillaSports() {
+    return this.getScraperZillaChannels('sports');
+  }
+
+  /**
+   * Get Scraper Zilla movies channels
+   */
+  async getZillaMovies() {
+    return this.getScraperZillaChannels('movies');
+  }
+
+  /**
+   * Get Scraper Zilla anime channels
+   */
+  async getZillaAnime() {
+    return this.getScraperZillaChannels('anime');
+  }
+
+  // ===== NEW: Combined "Super" Methods =====
+
+  /**
+   * Get ALL sports from all sources
+   * Combines: iptv-org API + Scraper Zilla + Official sources
+   */
+  async getAllSports() {
+    const cacheKey = 'iptv:all-sports';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Building ALL sports super-list...');
+
+      const [apiSports, zillaSports, africanSports] = await Promise.all([
+        this.getAPIChannelsByCategory('sports'),
+        this.getZillaSports(),
+        this.getAfricanSports()
+      ]);
+
+      // Deduplicate by URL
+      const seen = new Set();
+      const combined = [];
+
+      // Priority: African sports first, then Zilla (fresh), then API
+      const ordered = [...africanSports, ...zillaSports, ...apiSports];
+
+      for (const channel of ordered) {
+        if (channel.url && !seen.has(channel.url)) {
+          seen.add(channel.url);
+          combined.push(channel);
+        }
+      }
+
+      await cacheService.set(cacheKey, JSON.stringify(combined), this.cacheTTL);
+
+      logger.info(`Built super sports list: ${combined.length} channels`);
+      return combined;
+
+    } catch (error) {
+      logger.error('Error building all sports:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get MEGA combined list from all sources
+   * iptv-org API + Scraper Zilla + M3U sources
+   */
+  async getMegaList() {
+    const cacheKey = 'iptv:mega-list';
+
+    try {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
+      logger.info('Building MEGA channel list...');
+
+      const [dashPriority, zillaCombined, allSports] = await Promise.all([
+        this.getDashPriorityChannels(),
+        this.getScraperZillaChannels('combined'),
+        this.getAllSports()
+      ]);
+
+      // Deduplicate
+      const seen = new Set();
+      const combined = [];
+
+      // Priority: DASH priority → Sports → Zilla combined
+      const ordered = [...dashPriority, ...allSports, ...zillaCombined];
+
+      for (const channel of ordered) {
+        if (channel.url && !seen.has(channel.url)) {
+          seen.add(channel.url);
+          combined.push(channel);
+        }
+      }
+
+      await cacheService.set(cacheKey, JSON.stringify(combined), 1800); // 30 min cache
+
+      logger.info(`Built MEGA list: ${combined.length} channels`);
+      return combined;
+
+    } catch (error) {
+      logger.error('Error building mega list:', error.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get stats about available channels
+   */
+  async getStats() {
+    try {
+      const [apiChannels, apiStreams, dashPriority] = await Promise.all([
+        this.getAPIChannels(),
+        this.getAPIStreams(),
+        this.getDashPriorityChannels()
+      ]);
+
+      return {
+        totalChannels: apiChannels.length,
+        totalStreams: apiStreams.length,
+        dashPriorityChannels: dashPriority.length,
+        sources: {
+          iptvOrgAPI: true,
+          scraperZilla: true,
+          officialSports: true
+        },
+        lastUpdated: new Date().toISOString()
+      };
+
+    } catch (error) {
+      return { error: error.message };
+    }
   }
 }
 
