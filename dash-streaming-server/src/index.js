@@ -10,6 +10,7 @@ import bandwidthOptimizer from './services/bandwidth-optimizer.service.js';
 import streamRouter from './routes/stream.js';
 import liveRouter from './routes/live.js';
 import hlsRouter from './routes/hls.js';
+import secureApiRouter from './routes/secure-api.js';
 
 const app = express();
 
@@ -57,16 +58,25 @@ app.get('/api/stats/bandwidth', async (req, res) => {
 app.use('/api/stream', streamRouter);
 app.use('/api/live', liveRouter);
 app.use('/api/hls', hlsRouter);
+app.use('/api/secure', secureApiRouter);  // Secure API - hides provider details
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'DASH Streaming Server',
-    version: '1.0.0',
-    description: 'FFmpeg-powered streaming server with HLS support',
+    version: '2.0.0',
+    description: 'Secure streaming server with provider abstraction',
     endpoints: {
-      vod: '/api/stream/vod/:id?quality=720p&format=mp4',
-      series: '/api/stream/series/:id/:season/:episode?quality=720p&format=mp4',
+      // Secure API (recommended - hides provider)
+      categories: '/api/secure/categories/:type',
+      content: '/api/secure/content/:type',
+      info: '/api/secure/info/:type/:id',
+      playMovie: '/api/secure/play/movie/:id',
+      playEpisode: '/api/secure/play/episode/:id',
+      playLive: '/api/secure/play/live/:id',
+      // Legacy (direct FFmpeg)
+      vod: '/api/stream/vod/:id?quality=720p',
+      series: '/api/stream/episode/:episodeId',
       live: '/api/live/:streamId',
       hls: '/api/hls/:streamId/master.m3u8'
     },
@@ -103,9 +113,9 @@ async function start() {
     // Start Express server
     const port = config.port;
     app.listen(port, () => {
-      logger.info(`🚀 DASH Streaming Server running on port ${port}`);
+      logger.info(`🚀 DASH Streaming Server v2.0 running on port ${port}`);
       logger.info(`📺 Environment: ${config.env}`);
-      logger.info(`🎬 Starshare Provider: ${config.starshare.baseUrl}`);
+      logger.info(`🔒 Secure API: /api/secure/* (provider hidden)`);
       logger.info(`🔴 Redis: ${cacheService.connected ? 'Connected' : 'Disconnected'}`);
       logger.info(`\n✨ Ready to stream! Try: http://localhost:${port}/health\n`);
     });
