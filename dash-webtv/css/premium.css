@@ -2315,6 +2315,74 @@ a:focus-visible,
 }
 
 /* ============================================
+   FREE CHANNEL INDICATOR
+   Subtle blinking green dot like Claude Code status
+   ============================================ */
+.free-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00ff88;
+  animation: free-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+  z-index: 10;
+}
+
+@keyframes free-pulse {
+  0%, 100% {
+    background: #00ff88;
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+    opacity: 1;
+  }
+  50% {
+    background: #ffffff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+    opacity: 0.9;
+  }
+}
+
+/* Free channel card subtle glow */
+.free-channel-card {
+  border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.free-channel-card:hover {
+  border-color: rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+/* Free tab styling in category tabs */
+.category-tab.free-tab {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 200, 100, 0.05));
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  color: #00ff88;
+}
+
+.category-tab.free-tab:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 200, 100, 0.1));
+  border-color: rgba(0, 255, 136, 0.5);
+}
+
+.category-tab.free-tab.active {
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  color: #000;
+  border-color: #00ff88;
+  font-weight: 600;
+}
+
+/* Free stats styling */
+.free-stat-icon svg {
+  stroke: #00ff88 !important;
+}
+
+.free-value {
+  color: #00ff88 !important;
+}
+
+/* ============================================
    BROWSE GRID RESPONSIVE
    ============================================ */
 

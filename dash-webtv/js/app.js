@@ -133,9 +133,90 @@ class DashApp {
 
       // Build season groupings for series
       this.buildSeriesGroups()
+
+      // Load FREE channels from backend
+      await this.loadFreeChannels()
     } catch (err) {
       console.error('❌ Failed to load local data:', err)
+      // Try to load free channels even if local data fails
+      await this.loadFreeChannels()
     }
+  }
+
+  /**
+   * Load FREE channels from backend (iptv-org + direct sources)
+   * These are legal, free streams available to all users
+   */
+  async loadFreeChannels() {
+    console.log('🆓 Loading FREE channels from backend...')
+    try {
+      const backendUrl = this.client.backendUrl || 'https://zion-production-39d8.up.railway.app'
+      const response = await fetch(`${backendUrl}/api/free/channels`)
+
+      if (!response.ok) {
+        console.warn('⚠️ Free channels API not available')
+        return
+      }
+
+      const data = await response.json()
+      if (!data.success || !data.channels) {
+        console.warn('⚠️ No free channels returned')
+        return
+      }
+
+      // Transform free channels to match local format
+      this.freeChannels = data.channels.map((ch, index) => ({
+        stream_id: `free_${index}_${ch.id || index}`,
+        name: ch.name,
+        stream_icon: ch.logo || '',
+        category_id: this.getFreeChannelCategory(ch),
+        isFree: true,
+        freeSource: ch.source,
+        streamUrl: ch.url,
+        streamType: ch.type || 'hls',
+        group: ch.group
+      }))
+
+      // Create free channel categories
+      this.freeCategories = [
+        { category_id: 'free_all', category_name: '🆓 All Free', isFree: true },
+        { category_id: 'free_guinea', category_name: '🇬🇳 Guinea', isFree: true },
+        { category_id: 'free_sports', category_name: '⚽ Sports', isFree: true },
+        { category_id: 'free_french', category_name: '🇫🇷 French', isFree: true },
+        { category_id: 'free_news', category_name: '📰 News', isFree: true }
+      ]
+
+      console.log(`🆓 Loaded ${this.freeChannels.length} FREE channels!`)
+
+      // Merge with existing live channels (free channels first for visibility)
+      if (!this.localLive) this.localLive = []
+      this.localLive = [...this.freeChannels, ...this.localLive]
+
+    } catch (err) {
+      console.warn('⚠️ Could not load free channels:', err.message)
+      this.freeChannels = []
+      this.freeCategories = []
+    }
+  }
+
+  /**
+   * Determine category for free channel based on its group/name
+   */
+  getFreeChannelCategory(channel) {
+    const name = (channel.name || '').toLowerCase()
+    const group = (channel.group || '').toLowerCase()
+
+    if (name.includes('guinea') || name.includes('gn') || group.includes('guinea')) {
+      return 'free_guinea'
+    }
+    if (group.includes('sport') || name.includes('sport') || name.includes('football')) {
+      return 'free_sports'
+    }
+    if (group.includes('news') || name.includes('news') || name.includes('info')) {
+      return 'free_news'
+    }
+    // Default to french for francophone channels
+    return 'free_french'
   }
 
   /**
@@ -1378,19 +1459,28 @@ class DashApp {
 
   async renderLiveTVPage() {
     const categories = this.state.categories.live || []
+    const freeCategories = this.freeCategories || []
 
     // Use local JSON data instead of API
     let channels = this.localLive || []
 
     // Filter by category if selected
     if (this.state.selectedCategory) {
-      channels = channels.filter(c => String(c.category_id) === String(this.state.selectedCategory))
+      // Handle free category filtering
+      if (this.state.selectedCategory === 'free_all') {
+        channels = channels.filter(c => c.isFree === true)
+      } else if (this.state.selectedCategory.startsWith('free_')) {
+        channels = channels.filter(c => c.isFree === true && String(c.category_id) === String(this.state.selectedCategory))
+      } else {
+        channels = channels.filter(c => String(c.category_id) === String(this.state.selectedCategory))
+      }
     }
 
     // Filter adult content
     channels = this.filterAdultContent(channels)
 
     const totalChannels = this.localLive?.length || 0
+    const freeCount = this.freeChannels?.length || 0
     const categoryCount = categories.length
 
     return `
@@ -1422,12 +1512,12 @@ class DashApp {
               </div>
             </div>
             <div class="browse-stat">
-              <div class="browse-stat-icon">
-                <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+              <div class="browse-stat-icon free-stat-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
               </div>
               <div class="browse-stat-info">
-                <span class="browse-stat-value">${categoryCount}</span>
-                <span class="browse-stat-label">Countries</span>
+                <span class="browse-stat-value free-value">${freeCount}</span>
+                <span class="browse-stat-label">Free Channels</span>
               </div>
             </div>
             <div class="browse-stat">
@@ -1442,14 +1532,20 @@ class DashApp {
           </div>
         </div>
 
-        <!-- Premium Category Tabs -->
+        <!-- Premium Category Tabs with FREE tabs first -->
         <div class="category-tabs-container">
           <div class="category-tabs">
             <div class="category-tab ${!this.state.selectedCategory ? 'active' : ''}"
                  onclick="dashApp.filterByCategory(null, 'live')">
               All Channels
             </div>
-            ${categories.slice(0, 40).map(cat => `
+            ${freeCategories.map(cat => `
+              <div class="category-tab free-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
+                   onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
+                ${cat.category_name}
+              </div>
+            `).join('')}
+            ${categories.slice(0, 35).map(cat => `
               <div class="category-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
                    onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
                 ${cat.category_name}
@@ -1859,6 +1955,7 @@ class DashApp {
       const name = channel.name || 'Unknown Channel'
       const id = channel.stream_id
       const hasLogo = channel.stream_icon && !channel.stream_icon.includes('placeholder')
+      const isFree = channel.isFree === true
 
       // Generate a deterministic color based on channel name
       const colors = [
@@ -1875,8 +1972,13 @@ class DashApp {
       // Escape name for safe onclick
       const escapedName = name.replace(/'/g, "\\'")
 
+      // For free channels, use special playback
+      const onclick = isFree
+        ? `dashApp.playFreeChannel('${id}', '${escapedName}')`
+        : `dashApp.playLiveChannel('${id}', '${escapedName}')`
+
       return `
-        <div class="live-card ${hasLogo ? '' : 'live-card-glow'}" onclick="dashApp.playLiveChannel('${id}', '${escapedName}')"
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'} ${isFree ? 'free-channel-card' : ''}" onclick="${onclick}"
              style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
           ${hasLogo ? `
             <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
@@ -1904,6 +2006,7 @@ class DashApp {
               <span class="live-dot"></span>
               LIVE
             </div>
+            ${isFree ? `<span class="free-indicator" title="Free channel"></span>` : ''}
           </div>
           <div class="live-card-name-bar">${name}</div>
         </div>
@@ -2217,6 +2320,36 @@ class DashApp {
 
     this.closeModal()
     this.showVideoPlayer(liveStream.url, 'live', liveStream.type, channelName)
+  }
+
+  /**
+   * Play a FREE channel (from iptv-org or direct sources)
+   * These have their stream URL already stored, no need to build
+   */
+  playFreeChannel(id, channelName) {
+    console.log(`🆓 Playing FREE channel: ${channelName} (ID: ${id})`)
+
+    // Find the channel in our free channels list
+    const channel = this.freeChannels?.find(c => c.stream_id === id)
+
+    if (!channel || !channel.streamUrl) {
+      console.error('❌ Free channel not found:', id)
+      return
+    }
+
+    // Store channel info for UI
+    this.currentLiveStreamId = id
+    this.currentChannelName = channelName
+    this._proxyRetried = false
+
+    // Free channels have their URL directly stored
+    const streamUrl = channel.streamUrl
+    const streamType = channel.streamType || 'hls'
+
+    console.log(`📡 Free stream: ${streamUrl} (type: ${streamType})`)
+
+    this.closeModal()
+    this.showVideoPlayer(streamUrl, 'live', streamType === 'hls' ? 'hls-native' : 'mpegts', channelName)
   }
 
   playEpisode(episodeId, extension = 'mp4', seriesInfo = null) {
