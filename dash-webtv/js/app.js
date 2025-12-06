@@ -2174,14 +2174,84 @@ class DashApp {
       return
     }
 
-    // Detect format
+    // Detect format and use appropriate player
     const isHLS = streamUrl.includes('.m3u8')
     const isDash = streamUrl.includes('.mpd')
     const isTS = streamUrl.includes('.ts') || streamUrl.includes(':8080') || streamUrl.includes(':8000')
-    const format = isHLS ? 'hls' : (isDash ? 'dash' : (isTS ? 'ts' : 'hls'))
 
-    // Use our native video player (same as playLiveChannel for free channels)
-    this.showVideoPlayer(streamUrl, 'live', format, channelName)
+    if (isDash) {
+      // DASH streams need dash.js - use our DASH player
+      console.log('[FrenchTV] DASH stream detected, using dash.js')
+      this.playDashStream(streamUrl, channelName)
+    } else if (isHLS) {
+      // HLS streams - use hls.js or native
+      this.showVideoPlayer(streamUrl, 'live', 'hls', channelName)
+    } else if (isTS) {
+      // MPEG-TS streams - use mpegts.js
+      this.showVideoPlayer(streamUrl, 'live', 'mpegts', channelName)
+    } else {
+      // Default to HLS (most common)
+      this.showVideoPlayer(streamUrl, 'live', 'hls', channelName)
+    }
+  }
+
+  // Play DASH stream using dash.js
+  playDashStream(streamUrl, channelName) {
+    console.log('📡 Playing DASH stream:', streamUrl)
+
+    // Clean up any existing player
+    this.closeVideoPlayer()
+
+    // Create player HTML
+    const channelOverlay = channelName ? `
+      <div class="channel-overlay">
+        <div class="channel-name">${channelName}</div>
+      </div>
+    ` : ''
+
+    const playerHTML = `
+      <div class="video-player-container">
+        <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
+        ${channelOverlay}
+        <div class="video-loading">
+          <div class="spinner"></div>
+          <div>Loading DASH stream...</div>
+        </div>
+        <video id="dashPlayer" controls autoplay playsinline style="width:100%;height:100%;background:#000;"></video>
+      </div>
+    `
+    this.elements.videoPlayerContainer.innerHTML = playerHTML
+
+    const video = document.getElementById('dashPlayer')
+    const loadingEl = this.elements.videoPlayerContainer.querySelector('.video-loading')
+
+    // Hide loading when playing
+    video.addEventListener('playing', () => {
+      if (loadingEl) loadingEl.style.display = 'none'
+    })
+
+    // Check if dash.js is available
+    if (typeof dashjs !== 'undefined') {
+      console.log('✅ dash.js available, initializing player')
+      const player = dashjs.MediaPlayer().create()
+      player.initialize(video, streamUrl, true)
+
+      player.on(dashjs.MediaPlayer.events.ERROR, (e) => {
+        console.error('❌ DASH error:', e)
+        if (loadingEl) loadingEl.innerHTML = '<div>DASH stream error. Try another channel.</div>'
+      })
+
+      // Store for cleanup
+      this._dashPlayer = player
+    } else {
+      // Fallback: try native playback (some browsers support DASH natively)
+      console.log('⚠️ dash.js not loaded, trying native playback')
+      video.src = streamUrl
+      video.addEventListener('error', () => {
+        console.error('❌ Native DASH playback failed')
+        if (loadingEl) loadingEl.innerHTML = '<div>DASH not supported. Try HLS channel.</div>'
+      })
+    }
   }
 
   // Show all French TV channels
@@ -4039,6 +4109,16 @@ class DashApp {
   }
 
   closeVideoPlayer() {
+    // Destroy dash.js instance if exists
+    if (this._dashPlayer) {
+      try {
+        this._dashPlayer.reset()
+        this._dashPlayer = null
+      } catch (e) {
+        console.warn('DASH cleanup warning:', e)
+      }
+    }
+
     // Destroy mpegts instance if exists
     if (this.mpegtsPlayer) {
       try {
