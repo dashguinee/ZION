@@ -5,6 +5,9 @@
 
 class DashApp {
   constructor() {
+    // Backend URL for API calls
+    this.backendUrl = 'https://zion-production-39d8.up.railway.app'
+
     // Initialize Xtream Client (no credentials until login)
     this.client = new XtreamClient()
 
