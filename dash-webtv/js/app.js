@@ -649,6 +649,9 @@ class DashApp {
     // Load categories from API
     await this.loadCategories()
 
+    // Load offline/degraded content status for health indicators
+    await this.loadOfflineStatus()
+
     // Render home page
     this.navigate('home')
   }
@@ -1095,9 +1098,10 @@ class DashApp {
     const title = movie.name || 'Untitled'
     const id = movie.stream_id
     const year = movie.year || movie.releaseDate?.slice(0, 4) || ''
+    const healthClass = this.getContentHealthClass(id, 'movie')
 
     return `
-      <div class="movie-card" onclick="dashApp.showDetails('${id}', 'movie')">
+      <div class="movie-card ${healthClass}" onclick="dashApp.showDetails('${id}', 'movie')">
         <img src="${poster}" alt="${title}" class="movie-card-poster" loading="lazy"
              onerror="this.onerror=null;this.src='/assets/placeholder.svg'">
         <div class="movie-card-overlay">
@@ -1990,6 +1994,7 @@ class DashApp {
       const name = channel.name || 'Unknown Channel'
       const id = channel.stream_id
       const hasLogo = channel.stream_icon && !channel.stream_icon.includes('placeholder')
+      const healthClass = this.getContentHealthClass(id, 'live')
 
       // Generate a deterministic color based on channel name
       const colors = [
@@ -2007,7 +2012,7 @@ class DashApp {
       const escapedName = name.replace(/'/g, "\\'")
 
       return `
-        <div class="live-card ${hasLogo ? '' : 'live-card-glow'}" onclick="dashApp.playLiveChannel('${id}', '${escapedName}')"
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'} ${healthClass}" onclick="dashApp.playLiveChannel('${id}', '${escapedName}')"
              style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
           ${hasLogo ? `
             <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
@@ -5021,9 +5026,10 @@ class DashApp {
   renderSeriesCard(series) {
     const image = series.cover || series.stream_icon || ''
     const rating = series.rating ? parseFloat(series.rating).toFixed(1) : ''
+    const healthClass = this.getContentHealthClass(series.series_id, 'series')
 
     return `
-      <div class="content-card series-card" onclick="dashApp.showDetails('${series.series_id}', 'series')">
+      <div class="content-card series-card ${healthClass}" onclick="dashApp.showDetails('${series.series_id}', 'series')">
         <div class="card-image-container">
           ${image ? `
             <img class="card-image" src="${this.fixImageUrl(image)}" alt="${series.name}"
