@@ -833,6 +833,7 @@ class DashApp {
       { key: 'documentary', title: '📚 Documentaries', icon: 'award' },
       { key: 'bollywood', title: '🎭 Bollywood', icon: 'gem' },
       { key: 'turkish_drama', title: '🇹🇷 Turkish Drama', icon: 'palette' },
+      { key: 'french_cinema', title: '🇫🇷 French Cinema', icon: 'film' },
       { key: 'award_winners', title: '🏆 Award Winners', icon: 'award' },
     ]
 
@@ -2301,6 +2302,28 @@ class DashApp {
     let streamUrl = ''
 
     if (type === 'movie') {
+      // Get movie data for embed check
+      const movie = (this.localMovies || []).find(m => String(m.stream_id) === String(id))
+
+      // Check if this is EMBED content (French Cinema, free movies with embed_url)
+      if (extension.toLowerCase() === 'embed' || movie?.embed_url || movie?.embeds) {
+        console.log(`🎬 Embed content detected - using iframe player`)
+        // Get the best embed URL
+        const embedUrl = movie?.embed_url || movie?.embeds?.[0]?.url
+        if (embedUrl) {
+          // Save to watch history before showing embed
+          if (movie) {
+            this.saveToWatchHistory(id, 'movie', {
+              name: movie.name,
+              image: movie.stream_icon || movie.cover
+            }, 0)
+          }
+          this.closeModal()
+          this.showEmbedPlayer(embedUrl, movie?.name || 'Movie', movie?.embeds)
+          return
+        }
+      }
+
       // Pass the ORIGINAL extension to buildVODUrl
       // xtream-client.js will route MKV/AVI/etc through FFmpeg server
       // MP4 goes direct to Starshare (no transcoding needed)
@@ -2315,7 +2338,6 @@ class DashApp {
       streamUrl = this.client.buildVODUrl(id, extension)
 
       // Save to watch history
-      const movie = (this.localMovies || []).find(m => String(m.stream_id) === String(id))
       if (movie) {
         this.saveToWatchHistory(id, 'movie', {
           name: movie.name,
@@ -2331,6 +2353,150 @@ class DashApp {
     console.log('Stream URL:', streamUrl)
     this.closeModal()
     this.showVideoPlayer(streamUrl, type)
+  }
+
+  /**
+   * Show embed player with iframe for external video sources (French Cinema, etc.)
+   */
+  showEmbedPlayer(embedUrl, title, alternativeEmbeds = []) {
+    console.log(`🎬 Opening embed player: ${embedUrl}`)
+
+    // Create fullscreen embed player
+    const embedContainer = document.createElement('div')
+    embedContainer.id = 'embed-player-container'
+    embedContainer.innerHTML = `
+      <div class="embed-player-overlay">
+        <div class="embed-player-header">
+          <button class="embed-close-btn" onclick="dashApp.closeEmbedPlayer()">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+          <span class="embed-title">${title}</span>
+          ${alternativeEmbeds && alternativeEmbeds.length > 1 ? `
+            <div class="embed-source-selector">
+              ${alternativeEmbeds.map((embed, i) => `
+                <button class="embed-source-btn ${i === 0 ? 'active' : ''}" onclick="dashApp.switchEmbedSource('${embed.url}', this)">
+                  ${embed.provider}
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+        <iframe
+          id="embed-player-iframe"
+          src="${embedUrl}"
+          frameborder="0"
+          allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          style="width: 100%; height: 100%; border: none;"
+        ></iframe>
+      </div>
+    `
+
+    // Add styles if not already present
+    if (!document.getElementById('embed-player-styles')) {
+      const style = document.createElement('style')
+      style.id = 'embed-player-styles'
+      style.textContent = `
+        #embed-player-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 10000;
+          background: #000;
+        }
+        .embed-player-overlay {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+        .embed-player-header {
+          display: flex;
+          align-items: center;
+          padding: 12px 16px;
+          background: rgba(0,0,0,0.9);
+          gap: 16px;
+        }
+        .embed-close-btn {
+          background: rgba(255,255,255,0.1);
+          border: none;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s;
+        }
+        .embed-close-btn:hover {
+          background: rgba(255,255,255,0.2);
+        }
+        .embed-title {
+          color: white;
+          font-size: 18px;
+          font-weight: 600;
+          flex: 1;
+        }
+        .embed-source-selector {
+          display: flex;
+          gap: 8px;
+        }
+        .embed-source-btn {
+          background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.2);
+          border-radius: 4px;
+          padding: 6px 12px;
+          color: white;
+          cursor: pointer;
+          font-size: 12px;
+          transition: all 0.2s;
+        }
+        .embed-source-btn:hover {
+          background: rgba(255,255,255,0.2);
+        }
+        .embed-source-btn.active {
+          background: var(--accent-color, #e50914);
+          border-color: var(--accent-color, #e50914);
+        }
+        #embed-player-iframe {
+          flex: 1;
+        }
+      `
+      document.head.appendChild(style)
+    }
+
+    document.body.appendChild(embedContainer)
+
+    // Handle escape key
+    this._embedEscapeHandler = (e) => {
+      if (e.key === 'Escape') this.closeEmbedPlayer()
+    }
+    document.addEventListener('keydown', this._embedEscapeHandler)
+  }
+
+  switchEmbedSource(url, btn) {
+    const iframe = document.getElementById('embed-player-iframe')
+    if (iframe) {
+      iframe.src = url
+    }
+    // Update active state
+    document.querySelectorAll('.embed-source-btn').forEach(b => b.classList.remove('active'))
+    btn.classList.add('active')
+  }
+
+  closeEmbedPlayer() {
+    const container = document.getElementById('embed-player-container')
+    if (container) {
+      container.remove()
+    }
+    if (this._embedEscapeHandler) {
+      document.removeEventListener('keydown', this._embedEscapeHandler)
+      this._embedEscapeHandler = null
+    }
   }
 
   /**
