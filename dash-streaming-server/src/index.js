@@ -17,6 +17,8 @@ import adminRouter from './routes/admin.js';
 import iptvAccessRouter from './routes/iptv-access.js';
 import frenchVodRouter from './routes/french-vod.js';
 import contentHealthRouter from './routes/content-health.js';
+import packagesRouter from './routes/packages.js';
+import walletRouter from './routes/wallet.js';
 import contentHealthService from './services/content-health.service.js';
 
 const app = express();
@@ -72,6 +74,8 @@ app.use('/api/admin', adminRouter);  // Admin panel API
 app.use('/api/iptv-access', iptvAccessRouter);  // User access check (for customer app)
 app.use('/api/french-vod', frenchVodRouter);  // French VOD (Frembed, VidSrc embeds)
 app.use('/api/health', contentHealthRouter);  // Content health, user reports, duplicates (Elite Tier)
+app.use('/api/packages', packagesRouter);  // Custom package builder
+app.use('/api/wallet', walletRouter);  // DASH Wallet system
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -125,7 +129,20 @@ app.get('/', (req, res) => {
       healthFallback: '/api/health/fallback/:type/:id',
       healthOffline: '/api/health/offline',
       healthDashboard: '/api/health/admin/dashboard',
-      healthReports: '/api/health/admin/reports'
+      healthReports: '/api/health/admin/reports',
+      // Custom Packages (North Star Feature)
+      packageCategories: '/api/packages/categories',
+      packageGet: '/api/packages/:username',
+      packageCreate: 'POST /api/packages/create',
+      packageUpdate: 'PUT /api/packages/:username',
+      packageDelete: 'DELETE /api/packages/:username',
+      // DASH Wallet (North Star Feature)
+      walletGet: '/api/wallet/:username',
+      walletHistory: '/api/wallet/:username/history',
+      walletTopup: 'POST /api/wallet/:username/topup',
+      walletDeduct: 'POST /api/wallet/:username/deduct',
+      walletSettings: 'PUT /api/wallet/:username/settings',
+      walletAdmin: '/api/wallet/admin/all'
     },
     qualities: Object.keys(config.qualities),
     formats: ['mp4', 'hls']
