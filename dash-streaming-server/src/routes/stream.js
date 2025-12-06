@@ -4,6 +4,7 @@ import ffmpegService from '../services/ffmpeg.service.js';
 import hlsService from '../services/hls.service.js';
 import bandwidthOptimizer from '../services/bandwidth-optimizer.service.js';
 import logger from '../utils/logger.js';
+import { requireAuth, requirePackageAccess } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const router = express.Router();
  *   - format: mp4, hls (default: mp4)
  *   - extension: Original file extension (default: mp4)
  */
-router.get('/vod/:id', async (req, res) => {
+router.get('/vod/:id', requireAuth, requirePackageAccess('vod'), async (req, res) => {
   const { id } = req.params;
   const { quality = '720p', format = 'mp4', extension = 'mp4' } = req.query;
 
@@ -88,7 +89,7 @@ router.get('/vod/:id', async (req, res) => {
  *   - format: mp4, hls (default: mp4)
  *   - extension: Original file extension (default: mp4)
  */
-router.get('/episode/:episodeId', async (req, res) => {
+router.get('/episode/:episodeId', requireAuth, requirePackageAccess('series'), async (req, res) => {
   const { episodeId } = req.params;
   const { quality = '720p', format = 'mp4', extension = 'mp4' } = req.query;
 
@@ -156,7 +157,7 @@ router.get('/episode/:episodeId', async (req, res) => {
  * GET /api/stream/series/:id/:season/:episode
  * Stream a series episode (legacy - requires season/episode)
  */
-router.get('/series/:id/:season/:episode', async (req, res) => {
+router.get('/series/:id/:season/:episode', requireAuth, requirePackageAccess('series'), async (req, res) => {
   const { id, season, episode } = req.params;
   const { quality = '720p', format = 'mp4', extension = 'mp4' } = req.query;
 

@@ -1,10 +1,13 @@
 import express from 'express';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import config from './config.js';
 import logger from './utils/logger.js';
 import cacheService from './services/cache.service.js';
 import hlsService from './services/hls.service.js';
 import bandwidthOptimizer from './services/bandwidth-optimizer.service.js';
+import schedulerService from './services/scheduler.service.js';
+import { timeout } from './middleware/timeout.js';
 
 // Import routes
 import streamRouter from './routes/stream.js';
@@ -20,12 +23,58 @@ import contentHealthRouter from './routes/content-health.js';
 import packagesRouter from './routes/packages.js';
 import walletRouter from './routes/wallet.js';
 import xtreamProxyRouter from './routes/xtream-proxy.js';
+import healthRouter from './routes/health.js';
 import contentHealthService from './services/content-health.service.js';
 
 const app = express();
 
+// ===== RATE LIMITERS =====
+
+// General API rate limiter (100 requests per 15 minutes)
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message: { error: 'Too many requests, please try again later' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => req.path === '/health' || req.path === '/api/health' // Don't limit health checks
+});
+
+// Streaming endpoints rate limiter (10 requests per minute)
+const streamLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 10,
+  message: { error: 'Stream rate limit exceeded, please wait before requesting another stream' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+// Admin endpoints rate limiter (30 requests per 15 minutes)
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30,
+  message: { error: 'Admin API rate limit exceeded' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+// ===== CORS CONFIGURATION =====
+
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production'
+    ? [
+        'https://dash-webtv.vercel.app',
+        'https://dash-webtv-admin.vercel.app',
+        process.env.FRONTEND_URL
+      ].filter(Boolean)
+    : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-admin-key'],
+  credentials: true
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Request logging
@@ -34,15 +83,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check
+// Legacy health check (redirect to /api/health)
 app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    service: 'DASH Streaming Server',
-    version: '1.0.0',
-    redis: cacheService.connected,
-    timestamp: new Date().toISOString()
-  });
+  res.redirect('/api/health');
 });
 
 // Bandwidth optimization stats
@@ -64,28 +107,42 @@ app.get('/api/stats/bandwidth', async (req, res) => {
   }
 });
 
-// API Routes
-app.use('/api/stream', streamRouter);
-app.use('/api/live', liveRouter);
-app.use('/api/hls', hlsRouter);
-app.use('/api/secure', secureApiRouter);  // Secure API - hides provider details
-app.use('/api/free', freeChannelsRouter);  // Free IPTV channels (iptv-org + direct)
-app.use('/api/curated', curatedChannelsRouter);  // Curated channels with tier-based access
-app.use('/api/admin', adminRouter);  // Admin panel API
-app.use('/api/iptv-access', iptvAccessRouter);  // User access check (for customer app)
-app.use('/api/french-vod', frenchVodRouter);  // French VOD (Frembed, VidSrc embeds)
-app.use('/api/health', contentHealthRouter);  // Content health, user reports, duplicates (Elite Tier)
-app.use('/api/packages', packagesRouter);  // Custom package builder
-app.use('/api/wallet', walletRouter);  // DASH Wallet system
-app.use('/api/xtream', xtreamProxyRouter);  // Xtream API proxy (for series info, vod info)
+// API Routes (with rate limiting and timeouts)
+
+// Health endpoint (no rate limit, short timeout)
+app.use('/api/health', timeout('5s'), healthRouter);
+
+// Streaming endpoints (rate limited, longer timeout for streaming operations)
+app.use('/api/stream', streamLimiter, timeout('30s'), streamRouter);
+app.use('/api/live', streamLimiter, timeout('60s'), liveRouter);
+app.use('/api/hls', streamLimiter, timeout('30s'), hlsRouter);
+
+// Admin endpoints (stricter rate limit)
+app.use('/api/admin', adminLimiter, timeout('10s'), adminRouter);
+
+// General API endpoints (standard rate limit and timeout)
+app.use('/api/secure', apiLimiter, timeout('10s'), secureApiRouter);
+app.use('/api/free', apiLimiter, timeout('10s'), freeChannelsRouter);
+app.use('/api/curated', apiLimiter, timeout('10s'), curatedChannelsRouter);
+app.use('/api/iptv-access', apiLimiter, timeout('5s'), iptvAccessRouter);
+app.use('/api/french-vod', apiLimiter, timeout('10s'), frenchVodRouter);
+app.use('/api/content-health', apiLimiter, timeout('10s'), contentHealthRouter);
+app.use('/api/packages', apiLimiter, timeout('10s'), packagesRouter);
+app.use('/api/wallet', apiLimiter, timeout('10s'), walletRouter);
+app.use('/api/xtream', apiLimiter, timeout('15s'), xtreamProxyRouter);
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'DASH Streaming Server',
-    version: '3.0.0',
-    description: 'Elite Tier streaming server with health monitoring, user reports, and fallback system',
+    version: '3.1.0',
+    description: 'Elite Tier streaming server with health monitoring, rate limiting, and session persistence',
     endpoints: {
+      // Health & Monitoring
+      health: '/api/health',
+      healthDetailed: '/api/health/detailed',
+      healthReady: '/api/health/ready',
+      healthLive: '/api/health/live',
       // Secure API (recommended - hides provider)
       categories: '/api/secure/categories/:type',
       content: '/api/secure/content/:type',
@@ -198,6 +255,10 @@ async function start() {
     contentHealthService.startAutomatedChecks(30);
     logger.info(`🏥 Health checks: Automated checks enabled (every 30 min)`);
 
+    // Start billing scheduler (runs daily at midnight)
+    schedulerService.start();
+    logger.info(`💰 Billing scheduler: Started (daily at midnight)`);
+
   } catch (error) {
     logger.error('Failed to start server:', error);
     process.exit(1);
@@ -208,6 +269,7 @@ async function start() {
 process.on('SIGTERM', async () => {
   logger.info('SIGTERM received, shutting down gracefully...');
   contentHealthService.stopAutomatedChecks();
+  schedulerService.stop();
   await cacheService.disconnect();
   process.exit(0);
 });
@@ -215,6 +277,7 @@ process.on('SIGTERM', async () => {
 process.on('SIGINT', async () => {
   logger.info('SIGINT received, shutting down gracefully...');
   contentHealthService.stopAutomatedChecks();
+  schedulerService.stop();
   await cacheService.disconnect();
   process.exit(0);
 });

@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import logger from '../utils/logger.js';
+import { withFileLock } from '../utils/file-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,16 +19,27 @@ const DATA_FILE = path.join(__dirname, '../../data/iptv-users.json');
 class IPTVUsersService {
   constructor() {
     this.data = null;
-    this.loadData();
+    this.initialized = false;
+    this.init();
   }
 
   /**
-   * Load data from JSON file
+   * Async initialization
    */
-  loadData() {
+  async init() {
+    await this.loadData();
+    this.initialized = true;
+  }
+
+  /**
+   * Load data from JSON file (with file locking)
+   */
+  async loadData() {
     try {
-      const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-      this.data = JSON.parse(raw);
+      await withFileLock(DATA_FILE, async () => {
+        const raw = fs.readFileSync(DATA_FILE, 'utf-8');
+        this.data = JSON.parse(raw);
+      });
       logger.info(`IPTV Users: Loaded ${Object.keys(this.data.users).length} users`);
     } catch (error) {
       logger.error('Failed to load IPTV users data:', error.message);
@@ -37,11 +49,13 @@ class IPTVUsersService {
   }
 
   /**
-   * Save data to JSON file
+   * Save data to JSON file (with file locking)
    */
-  saveData() {
+  async saveData() {
     try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(this.data, null, 2));
+      await withFileLock(DATA_FILE, async () => {
+        fs.writeFileSync(DATA_FILE, JSON.stringify(this.data, null, 2));
+      });
       logger.info('IPTV Users: Data saved');
       return true;
     } catch (error) {

@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import logger from '../utils/logger.js';
+import userService from '../services/user.service.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -96,7 +97,7 @@ router.get('/:username', async (req, res) => {
 // POST /api/packages/create - Create new package
 router.post('/create', async (req, res) => {
   try {
-    const { username, selectedCategories } = req.body;
+    const { username, selectedCategories, name = '', whatsapp = '' } = req.body;
 
     if (!username || !selectedCategories || !Array.isArray(selectedCategories)) {
       return res.status(400).json({ error: 'username and selectedCategories are required' });
@@ -116,16 +117,36 @@ router.post('/create', async (req, res) => {
       return sum + (category ? category.price : 0);
     }, 0);
 
-    const packages = await readPackages();
+    // Determine tier based on selection
+    const tier = userService.determineTier(selectedCategories, total);
 
-    // Check if user already has a package
+    // Get or create user
+    let user = userService.getUser(username);
+    if (!user) {
+      user = await userService.createOrUpdateUser({
+        username,
+        name,
+        whatsapp,
+        tier,
+        status: 'active'
+      });
+    }
+
+    // Update user package with tier
+    user = await userService.updatePackage(username, selectedCategories, total);
+
+    // Also save to legacy packages.json for backwards compatibility
+    const packages = await readPackages();
     const existingIndex = packages.findIndex(p => p.username === username);
 
     const newPackage = {
       username,
       selectedCategories,
       monthlyPrice: total,
-      createdAt: new Date().toISOString(),
+      tier, // Include tier in response
+      billingDate: user.package.billingDate,
+      nextBillingDate: user.package.nextBillingDate,
+      createdAt: user.package.createdAt,
       updatedAt: new Date().toISOString(),
       active: true
     };
@@ -138,11 +159,12 @@ router.post('/create', async (req, res) => {
 
     await writePackages(packages);
 
-    logger.info(`Package created/updated for ${username}: ${selectedCategories.join(', ')} - ${total} GNF`);
+    logger.info(`Package created/updated for ${username}: ${selectedCategories.join(', ')} - ${total} GNF - Tier: ${tier}`);
 
     res.json({
       success: true,
       package: newPackage,
+      tier, // Return tier to frontend
       message: existingIndex >= 0 ? 'Package updated' : 'Package created'
     });
   } catch (error) {

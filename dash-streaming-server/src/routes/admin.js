@@ -8,17 +8,32 @@
 
 import express from 'express';
 import iptvUsersService from '../services/iptv-users.service.js';
+import userService from '../services/user.service.js';
+import schedulerService from '../services/scheduler.service.js';
 import logger from '../utils/logger.js';
 
 const router = express.Router();
 
-// Simple admin auth (for now - enhance later)
-const ADMIN_KEY = process.env.ADMIN_KEY || 'dash-admin-2025';
+// Admin auth - requires ADMIN_API_KEY environment variable
+const ADMIN_KEY = process.env.ADMIN_API_KEY;
+
+if (!ADMIN_KEY) {
+  logger.error('CRITICAL: ADMIN_API_KEY environment variable is not set!');
+  logger.error('Admin routes will be disabled. Please set a strong random key.');
+}
 
 function requireAdmin(req, res, next) {
+  if (!ADMIN_KEY) {
+    return res.status(503).json({
+      error: 'Admin functionality disabled',
+      message: 'ADMIN_API_KEY not configured on server'
+    });
+  }
+
   const key = req.headers['x-admin-key'] || req.query.adminKey;
 
-  if (key !== ADMIN_KEY) {
+  if (!key || key !== ADMIN_KEY) {
+    logger.warn(`Unauthorized admin access attempt from ${req.ip}`);
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
@@ -222,6 +237,79 @@ router.get('/packages', (req, res) => {
   }
 });
 
+// ===== BILLING SCHEDULER =====
+
+/**
+ * POST /api/admin/billing/run
+ * Manually trigger billing run
+ */
+router.post('/billing/run', async (req, res) => {
+  try {
+    logger.info('Admin manually triggered billing run');
+    const result = await schedulerService.manualRun();
+
+    res.json({
+      success: true,
+      message: 'Billing run completed',
+      result
+    });
+  } catch (error) {
+    logger.error('Admin billing run error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * GET /api/admin/billing/status
+ * Get scheduler status and stats
+ */
+router.get('/billing/status', (req, res) => {
+  try {
+    const status = schedulerService.getStatus();
+    res.json({
+      success: true,
+      ...status
+    });
+  } catch (error) {
+    logger.error('Admin billing status error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/admin/billing/start
+ * Start the scheduler
+ */
+router.post('/billing/start', (req, res) => {
+  try {
+    schedulerService.start();
+    res.json({
+      success: true,
+      message: 'Billing scheduler started'
+    });
+  } catch (error) {
+    logger.error('Admin billing start error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/admin/billing/stop
+ * Stop the scheduler
+ */
+router.post('/billing/stop', (req, res) => {
+  try {
+    schedulerService.stop();
+    res.json({
+      success: true,
+      message: 'Billing scheduler stopped'
+    });
+  } catch (error) {
+    logger.error('Admin billing stop error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // ===== EXPORT =====
 
 /**
@@ -251,8 +339,39 @@ router.get('/export', (req, res) => {
  * This endpoint doesn't require admin key - it's for the customer app
  */
 router.get('/access/:username', (req, res) => {
-  // Remove admin auth for this specific route
-  // We want the customer app to be able to check access
+  try {
+    const { username } = req.params;
+    const user = iptvUsersService.getUser(username);
+
+    if (!user) {
+      return res.status(404).json({
+        error: 'User not found',
+        username
+      });
+    }
+
+    const pkg = iptvUsersService.getPackage(user.package);
+
+    const accessInfo = {
+      username: user.username || username,
+      name: user.name,
+      tier: user.tier,
+      package: user.package,
+      packageName: pkg?.name || user.package,
+      status: user.status,
+      canStream: user.status === 'active',
+      starshareEnabled: user.starshareEnabled,
+      features: pkg?.features || [],
+      endpoints: iptvUsersService.getTierEndpoints(user.tier)
+    };
+
+    logger.info(`Access check for user: ${username} - Status: ${user.status}`);
+
+    res.json(accessInfo);
+  } catch (error) {
+    logger.error('Admin access check error:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 export default router;

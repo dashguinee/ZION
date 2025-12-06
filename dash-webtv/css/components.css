@@ -86,6 +86,11 @@
   cursor: pointer;
   transition: all var(--transition-fast);
   border-radius: var(--radius-md);
+  min-width: 44px;
+  min-height: 44px;
+  background: none;
+  border: none;
+  color: inherit;
 }
 
 .nav-item-icon {
@@ -160,6 +165,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: var(--spacing-md);
+  max-width: 2400px;
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
@@ -1691,6 +1698,9 @@
   z-index: 10000;
   animation: slideUp 0.3s ease-out;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  max-width: calc(100vw - 32px);
+  margin: 0 16px;
+  word-wrap: break-word;
 }
 
 .toast-notification.toast-info {
@@ -1722,6 +1732,13 @@
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .toast-notification {
+    bottom: 80px;
+    font-size: 14px;
   }
 }
 
@@ -4108,5 +4125,163 @@
 
   .modal-content {
     padding: 1.5rem;
+  }
+}
+
+/* ============================================
+   FRENCH VOD STYLES
+   ============================================ */
+
+.french-vod-page {
+  padding: 20px;
+}
+
+.french-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-select {
+  background: rgba(30, 30, 50, 0.6);
+  color: var(--text-primary);
+  border: 1px solid rgba(157, 78, 221, 0.3);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-select:hover {
+  border-color: rgba(157, 78, 221, 0.6);
+  background: rgba(30, 30, 50, 0.8);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-purple);
+  box-shadow: 0 0 0 3px rgba(157, 78, 221, 0.2);
+}
+
+.filter-search {
+  flex: 1;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+.french-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.french-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(157, 78, 221, 0.3);
+}
+
+.live-badge {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state h3 {
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.poster-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(0, 212, 255, 0.1));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.movie-poster[data-src] {
+  opacity: 0.5;
+}
+
+.poster-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.content-card:hover .poster-overlay {
+  opacity: 1;
+}
+
+.play-btn {
+  background: rgba(157, 78, 221, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(157, 78, 221, 0.4);
+}
+
+.play-btn:hover {
+  background: var(--primary-purple);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(157, 78, 221, 0.6);
+}
+
+.play-icon {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
+
+@media (max-width: 768px) {
+  .french-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-search {
+    max-width: 100%;
+  }
+
+  .filter-select {
+    width: 100%;
   }
 }

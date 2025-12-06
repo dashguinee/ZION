@@ -12,14 +12,29 @@ import logger from '../utils/logger.js';
 
 const router = express.Router();
 
-// Admin auth middleware (reuse from admin.js)
-const ADMIN_KEY = process.env.ADMIN_KEY || 'dash-admin-2025';
+// Admin auth middleware - requires ADMIN_API_KEY environment variable
+const ADMIN_KEY = process.env.ADMIN_API_KEY;
+
+if (!ADMIN_KEY) {
+  logger.error('CRITICAL: ADMIN_API_KEY environment variable is not set!');
+  logger.error('Content health admin routes will be disabled. Please set a strong random key.');
+}
 
 function requireAdmin(req, res, next) {
+  if (!ADMIN_KEY) {
+    return res.status(503).json({
+      error: 'Admin functionality disabled',
+      message: 'ADMIN_API_KEY not configured on server'
+    });
+  }
+
   const key = req.headers['x-admin-key'] || req.query.adminKey;
-  if (key !== ADMIN_KEY) {
+
+  if (!key || key !== ADMIN_KEY) {
+    logger.warn(`Unauthorized content health admin access attempt from ${req.ip}`);
     return res.status(401).json({ error: 'Unauthorized' });
   }
+
   next();
 }
 

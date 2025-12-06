@@ -31,6 +31,22 @@ class DashApp {
       watchHistory: this.loadWatchHistory()
     }
 
+    // Security: HTML sanitization function
+    this.sanitizeHTML = this.sanitizeHTML.bind(this)
+  }
+
+  /**
+   * Sanitize user input to prevent XSS attacks
+   * @param {string} str - Unsanitized string
+   * @returns {string} - HTML-escaped string
+   */
+  sanitizeHTML(str) {
+    if (!str) return ''
+    const temp = document.createElement('div')
+    temp.textContent = str
+    return temp.innerHTML
+  }
+
     // DOM Elements
     this.elements = {
       loginOverlay: document.getElementById('login-overlay'),
@@ -738,8 +754,10 @@ class DashApp {
     this.elements.navItems.forEach(item => {
       if (item.dataset.page === page) {
         item.classList.add('active')
+        item.setAttribute('aria-selected', 'true')
       } else {
         item.classList.remove('active')
+        item.setAttribute('aria-selected', 'false')
       }
     })
 
@@ -3964,15 +3982,15 @@ class DashApp {
         }
       }
 
-      // Check buffer every 500ms
-      const bufferCheckInterval = setInterval(checkBufferAndPlay, 500)
+      // Check buffer every 500ms - store as instance property for cleanup
+      this.bufferCheckInterval = setInterval(checkBufferAndPlay, 500)
 
       // Also check on progress events
       video.addEventListener('progress', checkBufferAndPlay)
 
       // STREAM TIMEOUT - If no data after 20s, stream is dead
       const channelDisplayName = this.currentChannelName || 'This channel'
-      const streamTimeout = setTimeout(() => {
+      this.streamTimeout = setTimeout(() => {
         if (!hasStartedPlaying) {
           console.error('❌ Stream timeout - no data received in 20s')
           if (loadingEl) {
@@ -3984,14 +4002,14 @@ class DashApp {
               </div>
             `
           }
-          clearInterval(bufferCheckInterval)
+          clearInterval(this.bufferCheckInterval)
         }
       }, 20000)
 
       // Clear interval when playing or on error
       video.addEventListener('playing', () => {
-        clearInterval(bufferCheckInterval)
-        clearTimeout(streamTimeout)
+        clearInterval(this.bufferCheckInterval)
+        clearTimeout(this.streamTimeout)
         if (loadingEl) loadingEl.style.display = 'none'
       }, { once: true })
 
@@ -4093,8 +4111,8 @@ class DashApp {
               loadingEl.innerHTML = `<div class="spinner"></div><div>Rebuffering... ${bufferAhead.toFixed(1)}s</div>`
             }
 
-            // Check buffer until we have enough
-            const rebufferCheck = setInterval(() => {
+            // Check buffer until we have enough - store as instance property for cleanup
+            this.rebufferCheck = setInterval(() => {
               const nowBuffered = video.buffered
               if (nowBuffered.length > 0) {
                 const nowAhead = nowBuffered.end(nowBuffered.length - 1) - video.currentTime
@@ -4104,7 +4122,8 @@ class DashApp {
                 console.log(`📊 Rebuffering: ${nowAhead.toFixed(1)}s / ${REBUFFER_TARGET}s`)
 
                 if (nowAhead >= REBUFFER_TARGET) {
-                  clearInterval(rebufferCheck)
+                  clearInterval(this.rebufferCheck)
+                  this.rebufferCheck = null
                   isRebuffering = false
                   if (loadingEl) loadingEl.style.display = 'none'
                   console.log(`✅ Rebuffer complete - resuming playback`)
@@ -4161,6 +4180,13 @@ class DashApp {
 
       this.hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
         console.log('✅ HLS manifest loaded, starting playback')
+
+        // Detect and show quality selector if multiple qualities available
+        if (this.hlsInstance.levels && this.hlsInstance.levels.length > 1) {
+          console.log(`📊 Detected ${this.hlsInstance.levels.length} quality levels`)
+          this.showQualitySelector(this.hlsInstance)
+        }
+
         video.play().catch(err => {
           console.warn('⚠️ Autoplay blocked:', err.message)
           if (loadingEl) loadingEl.innerHTML = '<div>Click to play</div>'
@@ -4222,11 +4248,78 @@ class DashApp {
   }
 
   closeVideoPlayer() {
+    console.log('[Player] Starting cleanup...')
+
+    // ============================================
+    // 1. CLEAR ALL INTERVALS
+    // ============================================
+    const intervals = [
+      'bufferCheckInterval',
+      'rebufferCheck',
+      'rebufferInterval',
+      'statsInterval',
+      'healthCheckInterval',
+      'progressInterval',
+      'bitrateInterval'
+    ]
+
+    intervals.forEach(name => {
+      if (this[name]) {
+        clearInterval(this[name])
+        this[name] = null
+        console.log(`[Player] Cleared interval: ${name}`)
+      }
+    })
+
+    // ============================================
+    // 2. CLEAR ALL TIMEOUTS
+    // ============================================
+    const timeouts = [
+      'streamTimeout',
+      'seekTimeout',
+      'bufferTimeout',
+      'retryTimeout',
+      'searchTimeout'
+    ]
+
+    timeouts.forEach(name => {
+      if (this[name]) {
+        clearTimeout(this[name])
+        this[name] = null
+        console.log(`[Player] Cleared timeout: ${name}`)
+      }
+    })
+
+    // ============================================
+    // 3. REMOVE EVENT LISTENERS FROM VIDEO ELEMENT
+    // ============================================
+    const video = document.getElementById('videoPlayer') ||
+                   document.getElementById('frenchPlayer') ||
+                   document.getElementById('dashPlayer') ||
+                   this.elements.videoPlayerContainer.querySelector('video')
+
+    if (video) {
+      // Clone and replace to remove ALL event listeners
+      const newVideo = video.cloneNode(true)
+      video.parentNode.replaceChild(newVideo, video)
+      console.log('[Player] Removed all event listeners via clone')
+
+      // Pause and clear source
+      newVideo.pause()
+      newVideo.removeAttribute('src')
+      newVideo.load()
+    }
+
+    // ============================================
+    // 4. DESTROY PLAYER INSTANCES
+    // ============================================
+
     // Destroy dash.js instance if exists
     if (this._dashPlayer) {
       try {
         this._dashPlayer.reset()
         this._dashPlayer = null
+        console.log('[Player] Destroyed dash.js instance')
       } catch (e) {
         console.warn('DASH cleanup warning:', e)
       }
@@ -4240,6 +4333,7 @@ class DashApp {
         this.mpegtsPlayer.detachMediaElement()
         this.mpegtsPlayer.destroy()
         this.mpegtsPlayer = null
+        console.log('[Player] Destroyed mpegts.js instance')
       } catch (e) {
         console.warn('MPEG-TS cleanup warning:', e)
       }
@@ -4250,6 +4344,7 @@ class DashApp {
       try {
         this.hlsInstance.destroy()
         this.hlsInstance = null
+        console.log('[Player] Destroyed hls.js instance')
       } catch (e) {
         console.warn('HLS cleanup warning:', e)
       }
@@ -4260,6 +4355,7 @@ class DashApp {
       try {
         this._frenchHls.destroy()
         this._frenchHls = null
+        console.log('[Player] Destroyed French HLS instance')
       } catch (e) {
         console.warn('French HLS cleanup warning:', e)
       }
@@ -4270,12 +4366,15 @@ class DashApp {
       try {
         this.currentPlayer.dispose()
         this.currentPlayer = null
+        console.log('[Player] Destroyed Video.js instance')
       } catch (e) {
         console.warn('Video.js cleanup warning:', e)
       }
     }
 
-    // Clear container
+    // ============================================
+    // 5. CLEAR CONTAINER AND RESET STATE
+    // ============================================
     this.elements.videoPlayerContainer.innerHTML = ''
 
     // Reset stream info
@@ -4283,6 +4382,77 @@ class DashApp {
     this.currentStreamId = null
     this.currentStreamExtension = null
     this.currentStreamType = null
+    this.currentMetrics = null
+    this._proxyRetried = false
+
+    console.log('[Player] Cleanup complete')
+  }
+
+  /**
+   * Show quality selector when multiple quality levels are available
+   * Works with HLS.js adaptive streaming
+   */
+  showQualitySelector(hlsPlayer) {
+    if (!hlsPlayer || !hlsPlayer.levels || hlsPlayer.levels.length <= 1) {
+      console.log('[Quality] Only one quality level available, skipping selector')
+      return
+    }
+
+    // Create quality selector if not exists
+    let qualitySelector = this.elements.videoPlayerContainer.querySelector('.quality-selector')
+    if (!qualitySelector) {
+      qualitySelector = document.createElement('div')
+      qualitySelector.className = 'quality-selector'
+      qualitySelector.innerHTML = `
+        <label>Quality:</label>
+        <select id="qualitySelect">
+          <option value="-1">Auto</option>
+        </select>
+      `
+      this.elements.videoPlayerContainer.appendChild(qualitySelector)
+    }
+
+    const select = qualitySelector.querySelector('#qualitySelect')
+    if (!select) return
+
+    // Clear existing options except Auto
+    select.innerHTML = '<option value="-1">Auto</option>'
+
+    // Add quality options
+    hlsPlayer.levels.forEach((level, index) => {
+      const height = level.height || 'Unknown'
+      const bitrate = level.bitrate ? Math.round(level.bitrate / 1000) : 'Unknown'
+      const option = document.createElement('option')
+      option.value = index
+      option.textContent = `${height}p (${bitrate} kbps)`
+      select.appendChild(option)
+    })
+
+    // Set current selection
+    select.value = hlsPlayer.currentLevel
+
+    // Handle quality change
+    select.onchange = (e) => {
+      const newLevel = parseInt(e.target.value)
+      console.log(`[Quality] Switching to level ${newLevel}`)
+      hlsPlayer.currentLevel = newLevel
+
+      if (newLevel === -1) {
+        console.log('[Quality] Auto quality enabled')
+      } else {
+        console.log(`[Quality] Manual quality: ${hlsPlayer.levels[newLevel].height}p`)
+      }
+    }
+
+    // Update selector when HLS automatically changes level
+    hlsPlayer.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+      if (select.value === '-1') {
+        const currentLevel = hlsPlayer.levels[data.level]
+        console.log(`[Quality] Auto-switched to ${currentLevel.height}p`)
+      }
+    })
+
+    console.log('[Quality] Selector initialized with', hlsPlayer.levels.length, 'levels')
   }
 
   /**
@@ -4480,7 +4650,7 @@ class DashApp {
             <div class="browse-icon">
               <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
-            <h1 class="browse-title">Search: "${this.state.searchQuery}"</h1>
+            <h1 class="browse-title">Search: "${this.sanitizeHTML(this.state.searchQuery)}"</h1>
           </div>
           <div class="browse-stats">
             <div class="browse-stat">
@@ -6033,6 +6203,98 @@ class DashApp {
       </div>
     `
     document.body.insertAdjacentHTML('beforeend', modalHtml)
+  }
+
+  // French VOD Helper Functions
+  generateYearOptions() {
+    const currentYear = new Date().getFullYear()
+    const years = []
+    for (let year = currentYear; year >= 1980; year--) {
+      years.push(`<option value="${year}">${year}</option>`)
+    }
+    return years.join('')
+  }
+
+  async handleFrenchSearch(query) {
+    if (!this.state.french) return
+
+    this.state.french.searchQuery = query
+
+    // Debounce search
+    if (this.frenchSearchTimeout) {
+      clearTimeout(this.frenchSearchTimeout)
+    }
+
+    this.frenchSearchTimeout = setTimeout(async () => {
+      await this.navigate('french')
+    }, 300)
+  }
+
+  async handleFrenchYearFilter(year) {
+    if (!this.state.french) return
+
+    this.state.french.selectedYear = year
+    await this.navigate('french')
+  }
+
+  async clearFrenchFilters() {
+    if (!this.state.french) return
+
+    this.state.french.searchQuery = ''
+    this.state.french.selectedYear = ''
+    this.state.french.selectedGenre = ''
+    await this.navigate('french')
+  }
+
+  async loadMoreFrench() {
+    if (!this.state.french || !this.state.french.displayedMovies) return
+
+    const grid = document.getElementById('frenchMovieGrid')
+    if (!grid) return
+
+    const currentCount = grid.children.length
+    const movies = this.state.french.displayedMovies
+    const nextMovies = movies.slice(currentCount, currentCount + 50)
+
+    const newCards = nextMovies.map(movie => this.renderMovieCard(movie)).join('')
+    grid.insertAdjacentHTML('beforeend', newCards)
+
+    // Update or remove load more button
+    const loadMoreBtn = document.querySelector('.load-more-container button')
+    if (loadMoreBtn) {
+      const remaining = movies.length - (currentCount + nextMovies.length)
+      if (remaining > 0) {
+        loadMoreBtn.textContent = `Load More (${remaining} remaining)`
+      } else {
+        loadMoreBtn.parentElement.remove()
+      }
+    }
+
+    // Initialize lazy loading for new images
+    this.initPosterLazyLoad()
+  }
+
+  initPosterLazyLoad() {
+    // Intersection Observer for lazy loading posters
+    if (!this.posterObserver) {
+      this.posterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target
+            if (img.dataset.src) {
+              img.src = img.dataset.src
+              img.removeAttribute('data-src')
+              this.posterObserver.unobserve(img)
+            }
+          }
+        })
+      }, { rootMargin: '100px' })
+    }
+
+    // Observe all images with data-src
+    document.querySelectorAll('img[data-src]').forEach(img => {
+      this.posterObserver.observe(img)
+    })
   }
 
   showLoading() {

@@ -92,8 +92,8 @@
     <div id="app-container" style="display: none;">
 
     <!-- Top Navigation Bar -->
-    <nav class="navbar">
-        <div class="navbar-logo" id="logo">DASH⚡</div>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="navbar-logo" id="logo" role="button" tabindex="0" aria-label="DASH home">DASH⚡</div>
 
         <div class="navbar-search">
             <input
@@ -101,20 +101,21 @@
                 class="search-input"
                 placeholder="Search movies and series..."
                 id="searchInput"
+                aria-label="Search movies and series"
             >
         </div>
 
         <div class="navbar-actions">
-            <button class="btn btn-primary" id="installBtn" style="display: none;">
-                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="btn btn-primary" id="installBtn" style="display: none;" aria-label="Install DASH app">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                     <polyline points="7 10 12 15 17 10"/>
                     <line x1="12" y1="15" x2="12" y2="3"/>
                 </svg>
                 Install App
             </button>
-            <button class="btn btn-icon btn-outline" id="accountBtn">
-                <svg class="nav-icon" viewBox="0 0 24 24">
+            <button class="btn btn-icon btn-outline" id="accountBtn" aria-label="Account settings">
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                     <circle cx="12" cy="7" r="4"/>
                 </svg>
@@ -123,25 +124,25 @@
     </nav>
 
     <!-- Main Content Container -->
-    <main class="page-container" id="pageContainer">
+    <main class="page-container" id="pageContainer" role="main" aria-live="polite">
         <!-- Content will be dynamically loaded here -->
         <div class="loading-container">
-            <div class="spinner"></div>
+            <div class="spinner" aria-label="Loading"></div>
             <div class="loading-text">Loading DASH...</div>
         </div>
     </main>
 
     <!-- Bottom Navigation (Mobile) - PREMIUM SVG ICONS -->
-    <nav class="bottom-nav">
-        <div class="nav-item active" data-page="home">
-            <svg class="nav-icon" viewBox="0 0 24 24">
+    <nav class="bottom-nav" role="navigation" aria-label="Mobile navigation">
+        <button class="nav-item active" data-page="home" role="tab" aria-selected="true" aria-controls="pageContainer" aria-label="Home">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                 <polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
             <div class="nav-item-label">Home</div>
-        </div>
-        <div class="nav-item" data-page="movies">
-            <svg class="nav-icon" viewBox="0 0 24 24">
+        </button>
+        <button class="nav-item" data-page="movies" role="tab" aria-selected="false" aria-controls="pageContainer" aria-label="Movies">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
                 <line x1="7" y1="2" x2="7" y2="22"/>
                 <line x1="17" y1="2" x2="17" y2="22"/>
@@ -152,37 +153,45 @@
                 <line x1="17" y1="7" x2="22" y2="7"/>
             </svg>
             <div class="nav-item-label">Movies</div>
-        </div>
-        <div class="nav-item" data-page="series">
-            <svg class="nav-icon" viewBox="0 0 24 24">
+        </button>
+        <button class="nav-item" data-page="series" role="tab" aria-selected="false" aria-controls="pageContainer" aria-label="Series">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <rect x="2" y="7" width="20" height="15" rx="2" ry="2"/>
                 <polyline points="17 2 12 7 7 2"/>
             </svg>
             <div class="nav-item-label">Series</div>
-        </div>
-        <div class="nav-item" data-page="live">
-            <svg class="nav-icon" viewBox="0 0 24 24">
+        </button>
+        <button class="nav-item" data-page="live" role="tab" aria-selected="false" aria-controls="pageContainer" aria-label="Live TV">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="12" cy="12" r="2"/>
                 <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
             </svg>
             <div class="nav-item-label">Live TV</div>
-        </div>
-        <div class="nav-item" data-page="packages">
-            <svg class="nav-icon" viewBox="0 0 24 24">
+        </button>
+        <button class="nav-item" data-page="french" role="tab" aria-selected="false" aria-controls="pageContainer" aria-label="French TV">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="18" rx="1" fill="#0055A4"/>
+                <rect x="10" y="3" width="4" height="18" fill="white"/>
+                <rect x="14" y="3" width="7" height="18" rx="1" fill="#EF4135"/>
+            </svg>
+            <div class="nav-item-label">French</div>
+        </button>
+        <button class="nav-item" data-page="packages" role="tab" aria-selected="false" aria-controls="pageContainer" aria-label="Packages">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                 <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
                 <line x1="12" y1="22.08" x2="12" y2="12"/>
             </svg>
             <div class="nav-item-label">Package</div>
-        </div>
-        <div class="nav-item" data-page="downloads">
-            <svg class="nav-icon" viewBox="0 0 24 24">
+        </button>
+        <button class="nav-item" data-page="downloads" role="tab" aria-selected="false" aria-controls="pageContainer" aria-label="Downloads">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                 <polyline points="7 10 12 15 17 10"/>
                 <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
             <div class="nav-item-label" style="color: #ffd700;">Downloads</div>
-        </div>
+        </button>
     </nav>
 
     </div><!-- END APP CONTAINER -->

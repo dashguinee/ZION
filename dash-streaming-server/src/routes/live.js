@@ -3,6 +3,7 @@ import starshareService from '../services/starshare.service.js';
 import cacheService from '../services/cache.service.js';
 import logger from '../utils/logger.js';
 import axios from 'axios';
+import { requireAuth, requirePackageAccess } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const router = express.Router();
  * 3. Redirect URL contains token and points to actual streaming server
  * 4. We cache this token URL for 5 minutes
  */
-router.get('/:streamId', async (req, res) => {
+router.get('/:streamId', requireAuth, requirePackageAccess('live'), async (req, res) => {
   const { streamId } = req.params;
 
   try {
@@ -54,7 +55,7 @@ router.get('/:streamId', async (req, res) => {
  * 3. Rewrites all URLs in manifest to proxy through this server
  * 4. Returns modified manifest to client
  */
-router.get('/:streamId/proxy', async (req, res) => {
+router.get('/:streamId/proxy', requireAuth, requirePackageAccess('live'), async (req, res) => {
   const { streamId } = req.params;
 
   try {
@@ -121,7 +122,7 @@ router.get('/:streamId/proxy', async (req, res) => {
  *
  * The resource path is base64 encoded to preserve special characters
  */
-router.get('/:streamId/proxy/*', async (req, res) => {
+router.get('/:streamId/proxy/*', requireAuth, requirePackageAccess('live'), async (req, res) => {
   const { streamId } = req.params;
   const resourcePath = req.params[0]; // Everything after /proxy/
   const queryString = req.url.split('?')[1] || '';
@@ -254,7 +255,7 @@ function rewriteManifest(manifestContent, streamId, baseUrl) {
  * NOTE: This endpoint doesn't handle HLS properly and is kept only for compatibility.
  * Use /api/live/:streamId/proxy instead for HLS streams.
  */
-router.get('/:streamId/direct', async (req, res) => {
+router.get('/:streamId/direct', requireAuth, requirePackageAccess('live'), async (req, res) => {
   const { streamId } = req.params;
 
   try {
@@ -291,7 +292,7 @@ router.get('/:streamId/direct', async (req, res) => {
  * GET /api/live/:streamId/refresh
  * Force refresh the Live TV token (bypass cache)
  */
-router.get('/:streamId/refresh', async (req, res) => {
+router.get('/:streamId/refresh', requireAuth, requirePackageAccess('live'), async (req, res) => {
   const { streamId } = req.params;
 
   try {

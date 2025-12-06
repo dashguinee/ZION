@@ -3,12 +3,39 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import logger from '../utils/logger.js';
+import userService from '../services/user.service.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 const WALLETS_FILE = path.join(__dirname, '../../data/wallets.json');
+
+// Admin auth middleware
+const ADMIN_KEY = process.env.ADMIN_API_KEY;
+
+if (!ADMIN_KEY) {
+  logger.error('CRITICAL: ADMIN_API_KEY environment variable is not set!');
+  logger.error('Wallet admin routes will be disabled. Please set a strong random key.');
+}
+
+function requireAdmin(req, res, next) {
+  if (!ADMIN_KEY) {
+    return res.status(503).json({
+      error: 'Admin functionality disabled',
+      message: 'ADMIN_API_KEY not configured on server'
+    });
+  }
+
+  const key = req.headers['x-admin-key'] || req.query.adminKey;
+
+  if (!key || key !== ADMIN_KEY) {
+    logger.warn(`Unauthorized wallet admin access attempt from ${req.ip}`);
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  next();
+}
 
 // Initialize wallets file if it doesn't exist
 async function initWalletsFile() {
@@ -326,7 +353,7 @@ router.post('/:username/refund', async (req, res) => {
 });
 
 // GET /api/wallet/admin/all - Get all wallets (admin)
-router.get('/admin/all', async (req, res) => {
+router.get('/admin/all', requireAdmin, async (req, res) => {
   try {
     const wallets = await readWallets();
 
@@ -344,6 +371,124 @@ router.get('/admin/all', async (req, res) => {
     });
   } catch (error) {
     logger.error('Error fetching all wallets:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ===== TOP-UP CONFIRMATION FLOW (Admin Only) =====
+
+/**
+ * GET /api/wallet/admin/pending-topups
+ * Get all pending top-up transactions
+ */
+router.get('/admin/pending-topups', requireAdmin, async (req, res) => {
+  try {
+    const pendingTopups = await userService.getPendingTopups();
+
+    res.json({
+      success: true,
+      count: pendingTopups.length,
+      pendingTopups
+    });
+  } catch (error) {
+    logger.error('Error fetching pending top-ups:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/wallet/admin/confirm-topup
+ * Confirm a pending top-up transaction
+ * Body: { transactionId, adminUsername }
+ */
+router.post('/admin/confirm-topup', requireAdmin, async (req, res) => {
+  try {
+    const { transactionId, adminUsername = 'admin' } = req.body;
+
+    if (!transactionId) {
+      return res.status(400).json({ error: 'transactionId is required' });
+    }
+
+    const result = await userService.confirmTopup(transactionId, adminUsername);
+
+    // Also update legacy wallets.json
+    const wallets = await readWallets();
+    const walletIndex = wallets.findIndex(w => w.username === result.user.username);
+
+    if (walletIndex >= 0) {
+      const wallet = wallets[walletIndex];
+      wallet.balance = result.user.wallet.balance;
+      wallet.lastTopup = result.user.wallet.lastTopup;
+
+      // Update transaction status in wallet
+      const txnIndex = wallet.transactions.findIndex(t => t.id === transactionId);
+      if (txnIndex >= 0) {
+        wallet.transactions[txnIndex].confirmed = true;
+        wallet.transactions[txnIndex].pending = false;
+      }
+
+      wallets[walletIndex] = wallet;
+      await writeWallets(wallets);
+    }
+
+    logger.info(`✅ Top-up confirmed by ${adminUsername}: ${transactionId} - ${result.transaction.amount} GNF to ${result.user.username}`);
+
+    res.json({
+      success: true,
+      message: 'Top-up confirmed successfully',
+      user: {
+        username: result.user.username,
+        balance: result.user.wallet.balance,
+        balanceFormatted: `${(result.user.wallet.balance / 1000).toFixed(0)}K DMoney`
+      },
+      transaction: result.transaction
+    });
+  } catch (error) {
+    logger.error('Error confirming top-up:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/wallet/admin/reject-topup
+ * Reject a pending top-up transaction
+ * Body: { transactionId, reason }
+ */
+router.post('/admin/reject-topup', requireAdmin, async (req, res) => {
+  try {
+    const { transactionId, reason = 'Payment not received' } = req.body;
+
+    if (!transactionId) {
+      return res.status(400).json({ error: 'transactionId is required' });
+    }
+
+    // Get transaction from user service
+    await userService.init();
+    const transaction = userService.transactions.find(t => t.id === transactionId);
+
+    if (!transaction) {
+      return res.status(404).json({ error: 'Transaction not found' });
+    }
+
+    if (transaction.status !== 'pending') {
+      return res.status(400).json({ error: 'Transaction is not pending' });
+    }
+
+    // Update transaction status
+    transaction.status = 'rejected';
+    transaction.rejectedAt = new Date().toISOString();
+    transaction.rejectionReason = reason;
+    await userService.saveTransactions();
+
+    logger.info(`❌ Top-up rejected: ${transactionId} - Reason: ${reason}`);
+
+    res.json({
+      success: true,
+      message: 'Top-up rejected',
+      transaction
+    });
+  } catch (error) {
+    logger.error('Error rejecting top-up:', error);
     res.status(500).json({ error: error.message });
   }
 });

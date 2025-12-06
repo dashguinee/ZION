@@ -2,6 +2,22 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Validate required environment variables
+const requiredEnvVars = [
+  'STARSHARE_BASE_URL',
+  'STARSHARE_USERNAME',
+  'STARSHARE_PASSWORD'
+];
+
+const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingVars.length > 0) {
+  console.error('\n❌ CRITICAL: Missing required environment variables:');
+  missingVars.forEach(varName => console.error(`   - ${varName}`));
+  console.error('\nPlease set these variables in your .env file before starting the server.\n');
+  process.exit(1);
+}
+
 export default {
   // Server
   port: process.env.PORT || 3000,
@@ -9,9 +25,9 @@ export default {
 
   // Starshare Provider (Shared credentials for all users)
   starshare: {
-    baseUrl: process.env.STARSHARE_BASE_URL || 'https://starshare.cx',
-    username: process.env.STARSHARE_USERNAME || 'AzizTest1',
-    password: process.env.STARSHARE_PASSWORD || 'Test1'
+    baseUrl: process.env.STARSHARE_BASE_URL,
+    username: process.env.STARSHARE_USERNAME,
+    password: process.env.STARSHARE_PASSWORD
   },
 
   // Redis
