@@ -42,6 +42,7 @@ class StreamExtractorService {
 
     // Try providers in order of reliability
     const providers = [
+      () => this.extractFromMultiEmbed(tmdbId, type, season, episode), // BEST - has direct stream API
       () => this.extractFromAutoEmbed(tmdbId, type, season, episode),
       () => this.extractFromSmashy(tmdbId, type, season, episode),
       () => this.extractFromEmbedSu(tmdbId, type, season, episode),
@@ -319,6 +320,63 @@ class StreamExtractorService {
     }
 
     return response.json();
+  }
+
+  /**
+   * Extract from MultiEmbed - has direct stream API!
+   * https://multiembed.mov/directstream.php?video_id=TMDB_ID&tmdb=1
+   */
+  async extractFromMultiEmbed(tmdbId, type, season, episode) {
+    let url = type === 'movie'
+      ? `https://multiembed.mov/directstream.php?video_id=${tmdbId}&tmdb=1`
+      : `https://multiembed.mov/directstream.php?video_id=${tmdbId}&tmdb=1&s=${season}&e=${episode}`;
+
+    logger.info(`[MultiEmbed] Fetching direct stream: ${url}`);
+
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': this.userAgent,
+        'Accept': '*/*',
+        'Referer': 'https://multiembed.mov/',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`MultiEmbed returned ${response.status}`);
+    }
+
+    const html = await response.text();
+    logger.info(`[MultiEmbed] Response length: ${html.length}`);
+
+    // Look for HLS stream URL in response
+    const m3u8Match = html.match(/https?:\/\/[^\s"'<>]+\.m3u8[^\s"'<>]*/gi);
+    if (m3u8Match && m3u8Match.length > 0) {
+      // Get the best quality stream (usually the first or longest URL)
+      const streamUrl = m3u8Match[0];
+      logger.info(`[MultiEmbed] Found stream: ${streamUrl.substring(0, 80)}...`);
+      return {
+        url: streamUrl,
+        provider: 'multiembed',
+        format: 'hls',
+      };
+    }
+
+    // Try extracting from player config
+    const fileMatch = html.match(/["']?file["']?\s*[:=]\s*["']([^"']+\.m3u8[^"']*)/i);
+    if (fileMatch) {
+      return {
+        url: fileMatch[1],
+        provider: 'multiembed',
+        format: 'hls',
+      };
+    }
+
+    // Check if they returned an error or redirect
+    if (html.includes('not found') || html.includes('not available')) {
+      throw new Error('Content not available on MultiEmbed');
+    }
+
+    throw new Error('Could not extract stream from MultiEmbed');
   }
 
   /**
