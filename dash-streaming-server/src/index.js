@@ -24,6 +24,8 @@ import packagesRouter from './routes/packages.js';
 import walletRouter from './routes/wallet.js';
 import xtreamProxyRouter from './routes/xtream-proxy.js';
 import healthRouter from './routes/health.js';
+import userDataRouter from './routes/user-data.js';
+import proxyRouter from './routes/proxy.js';
 import contentHealthService from './services/content-health.service.js';
 
 const app = express();
@@ -130,6 +132,8 @@ app.use('/api/content-health', apiLimiter, timeout('10s'), contentHealthRouter);
 app.use('/api/packages', apiLimiter, timeout('10s'), packagesRouter);
 app.use('/api/wallet', apiLimiter, timeout('10s'), walletRouter);
 app.use('/api/xtream', apiLimiter, timeout('15s'), xtreamProxyRouter);
+app.use('/api/user-data', apiLimiter, timeout('5s'), userDataRouter);
+app.use('/api/proxy', streamLimiter, timeout('60s'), proxyRouter);
 
 // Root endpoint
 app.get('/', (req, res) => {
