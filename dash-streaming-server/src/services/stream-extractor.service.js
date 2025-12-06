@@ -2,6 +2,9 @@
  * Stream Extractor Service
  * Extracts direct video streams from embed providers
  * No ads, no redirects - just raw HLS/MP4 URLs
+ *
+ * Based on reverse engineering of vidsrc-me-resolver
+ * Handles hunter obfuscation and XOR decryption
  */
 
 import logger from '../utils/logger.js';
@@ -17,12 +20,116 @@ class StreamExtractorService {
     // Updated provider domains (Dec 2025)
     this.providers = {
       embedSu: 'https://embed.su',
-      vidsrcMe: 'https://vidsrc.xyz', // Still works for embeds
-      vidsrcTo: 'https://vidsrc.net',
+      vidsrcMe: 'https://vidsrc.me', // Primary
+      vidsrcStream: 'https://vidsrc.stream',
+      multiEmbed: 'https://multiembed.mov',
       autoembed: 'https://player.autoembed.cc',
-      twoembed: 'https://www.2embed.cc',
       smashystream: 'https://player.smashy.stream',
     };
+
+    // VidSrc.me RCP domain for source resolution
+    this.rcpUrl = 'https://vidsrc.stream/rcp';
+  }
+
+  /**
+   * Hunter decryption - decodes obfuscated JS from multiembed/superembed
+   * This is the key to extracting HLS URLs from their player
+   */
+  hunterDecode(h, u, n, t, e, r) {
+    const hunterDef = (d, e, f) => {
+      const charset = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/';
+      const sourceBase = charset.substring(0, e);
+      const targetBase = charset.substring(0, f);
+
+      const reversedInput = d.split('').reverse();
+      let result = 0;
+
+      for (let power = 0; power < reversedInput.length; power++) {
+        const digit = reversedInput[power];
+        if (sourceBase.includes(digit)) {
+          result += sourceBase.indexOf(digit) * Math.pow(e, power);
+        }
+      }
+
+      let convertedResult = '';
+      while (result > 0) {
+        convertedResult = targetBase[result % f] + convertedResult;
+        result = Math.floor((result - (result % f)) / f);
+      }
+
+      return parseInt(convertedResult) || 0;
+    };
+
+    let i = 0;
+    let resultStr = '';
+
+    while (i < h.length) {
+      let j = 0;
+      let s = '';
+
+      while (h[i] !== n[e]) {
+        s += h[i];
+        i++;
+      }
+
+      while (j < n.length) {
+        s = s.split(n[j]).join(j.toString());
+        j++;
+      }
+
+      resultStr += String.fromCharCode(hunterDef(s, e, 10) - t);
+      i++;
+    }
+
+    return resultStr;
+  }
+
+  /**
+   * Process hunter function arguments from eval()
+   */
+  processHunterArgs(argsStr) {
+    const match = argsStr.match(/^"(.*?)",(.*?),"(.*?)",(.*?),(.*?),(.*?)$/);
+    if (!match) return null;
+
+    return [
+      match[1],              // h (encoded string)
+      parseInt(match[2]),    // u (number)
+      match[3],              // n (charset)
+      parseInt(match[4]),    // t (offset)
+      parseInt(match[5]),    // e (base)
+      parseInt(match[6])     // r (number)
+    ];
+  }
+
+  /**
+   * XOR decode for vidsrc.me source URLs
+   */
+  decodeSource(encoded, seed) {
+    const encodedBuffer = Buffer.from(encoded, 'hex');
+    let decoded = '';
+    for (let i = 0; i < encodedBuffer.length; i++) {
+      decoded += String.fromCharCode(encodedBuffer[i] ^ seed.charCodeAt(i % seed.length));
+    }
+    return decoded;
+  }
+
+  /**
+   * Decode VidSrc PRO HLS URL (base64 with /@#@/ markers)
+   */
+  decodeVidsrcProHls(encodedUrl) {
+    const formatHlsB64 = (data) => {
+      const cleaned = data.replace(/\/@#@\/[^=\/]+==/, '');
+      if (/\/@#@\/[^=\/]+==/.test(cleaned)) {
+        return formatHlsB64(cleaned);
+      }
+      return cleaned;
+    };
+
+    const formatted = formatHlsB64(encodedUrl.substring(2));
+    // URL-safe base64 decode
+    const standardized = formatted.replace(/_/g, '/').replace(/-/g, '+');
+    const decoded = Buffer.from(standardized, 'base64').toString('utf-8');
+    return decoded;
   }
 
   /**
@@ -42,11 +149,12 @@ class StreamExtractorService {
 
     // Try providers in order of reliability
     const providers = [
-      () => this.extractFromMultiEmbed(tmdbId, type, season, episode), // BEST - has direct stream API
-      () => this.extractFromAutoEmbed(tmdbId, type, season, episode),
-      () => this.extractFromSmashy(tmdbId, type, season, episode),
+      () => this.extractFromVidSrcMe(tmdbId, type, season, episode), // VidSrc.me with RCP - proven method
+      () => this.extractFromMultiEmbed(tmdbId, type, season, episode),
       () => this.extractFromEmbedSu(tmdbId, type, season, episode),
       () => this.extractFromVidSrcRip(tmdbId, type, season, episode),
+      () => this.extractFromAutoEmbed(tmdbId, type, season, episode),
+      () => this.extractFromSmashy(tmdbId, type, season, episode),
       () => this.extractFromVidLink(tmdbId, type, season, episode),
     ];
 
@@ -64,6 +172,215 @@ class StreamExtractorService {
     }
 
     return null;
+  }
+
+  /**
+   * Extract from VidSrc.me using RCP flow
+   * This is the proven method from vidsrc-me-resolver
+   */
+  async extractFromVidSrcMe(tmdbId, type, season, episode) {
+    // Step 1: Get available sources from the embed page
+    let embedUrl = type === 'movie'
+      ? `${this.providers.vidsrcMe}/embed/${tmdbId}`
+      : `${this.providers.vidsrcMe}/embed/${tmdbId}/${season}-${episode}/`;
+
+    logger.info(`[VidSrcMe] Step 1 - Fetching sources: ${embedUrl}`);
+
+    const embedRes = await fetch(embedUrl, {
+      headers: {
+        'User-Agent': this.userAgent,
+        'Accept': 'text/html',
+      },
+    });
+
+    if (!embedRes.ok) {
+      throw new Error(`VidSrc.me returned ${embedRes.status}`);
+    }
+
+    const embedHtml = await embedRes.text();
+    const embedHostname = new URL(embedRes.url).hostname;
+    const sourcesReferrer = `https://${embedHostname}/`;
+
+    // Extract sources (server name -> hash)
+    const sourceMatches = embedHtml.matchAll(/<div[^>]*class="server"[^>]*data-hash="([^"]+)"[^>]*>([^<]*)<\/div>/gi);
+    const sources = {};
+    for (const match of sourceMatches) {
+      sources[match[2].trim()] = match[1];
+    }
+
+    // Also try simpler pattern
+    if (Object.keys(sources).length === 0) {
+      const simpleMatches = embedHtml.matchAll(/data-hash="([^"]+)"[^>]*>([^<]+)</gi);
+      for (const match of simpleMatches) {
+        sources[match[2].trim()] = match[1];
+      }
+    }
+
+    logger.info(`[VidSrcMe] Found ${Object.keys(sources).length} sources: ${Object.keys(sources).join(', ')}`);
+
+    if (Object.keys(sources).length === 0) {
+      throw new Error('No sources found');
+    }
+
+    // Step 2: Try sources in order (prefer VidSrc PRO, then Superembed)
+    const preferredOrder = ['VidSrc PRO', 'Superembed', 'Vidplay'];
+    const sortedSources = Object.keys(sources).sort((a, b) => {
+      const aIndex = preferredOrder.findIndex(p => a.toLowerCase().includes(p.toLowerCase()));
+      const bIndex = preferredOrder.findIndex(p => b.toLowerCase().includes(p.toLowerCase()));
+      return (aIndex === -1 ? 99 : aIndex) - (bIndex === -1 ? 99 : bIndex);
+    });
+
+    for (const sourceName of sortedSources) {
+      const sourceHash = sources[sourceName];
+      logger.info(`[VidSrcMe] Trying source: ${sourceName}`);
+
+      try {
+        // Step 3: Get source URL from RCP
+        const rcpUrl = `${this.rcpUrl}/${sourceHash}`;
+        const rcpRes = await fetch(rcpUrl, {
+          headers: {
+            'User-Agent': this.userAgent,
+            'Referer': sourcesReferrer,
+          },
+        });
+
+        if (!rcpRes.ok) continue;
+
+        const rcpHtml = await rcpRes.text();
+
+        // Extract encoded data and seed (IMDb ID)
+        const hiddenMatch = rcpHtml.match(/id="hidden"[^>]*data-h="([^"]+)"/);
+        const seedMatch = rcpHtml.match(/data-i="([^"]+)"/);
+
+        if (!hiddenMatch || !seedMatch) {
+          logger.warn(`[VidSrcMe] Could not extract hidden data from RCP`);
+          continue;
+        }
+
+        const encoded = hiddenMatch[1];
+        const seed = seedMatch[1];
+
+        // Decode the source URL
+        let sourceUrl = this.decodeSource(encoded, seed);
+        if (sourceUrl.startsWith('//')) {
+          sourceUrl = 'https:' + sourceUrl;
+        }
+
+        logger.info(`[VidSrcMe] Decoded source URL: ${sourceUrl.substring(0, 60)}...`);
+
+        // Step 4: Get redirect to final player
+        const redirectRes = await fetch(sourceUrl, {
+          headers: {
+            'User-Agent': this.userAgent,
+            'Referer': rcpUrl,
+          },
+          redirect: 'manual',
+        });
+
+        const finalUrl = redirectRes.headers.get('location') || sourceUrl;
+        logger.info(`[VidSrcMe] Final URL: ${finalUrl.substring(0, 60)}...`);
+
+        // Step 5: Extract stream based on final destination
+        if (finalUrl.includes('vidsrc.stream')) {
+          // VidSrc PRO path
+          const stream = await this.extractVidsrcProStream(sourceUrl, rcpUrl);
+          if (stream) {
+            return {
+              ...stream,
+              provider: 'vidsrc.me/pro',
+              server: sourceName,
+            };
+          }
+        } else if (finalUrl.includes('multiembed.mov')) {
+          // SuperEmbed path - use hunter decoder
+          const stream = await this.extractMultiembedStream(sourceUrl, rcpUrl);
+          if (stream) {
+            return {
+              ...stream,
+              provider: 'vidsrc.me/superembed',
+              server: sourceName,
+            };
+          }
+        }
+      } catch (e) {
+        logger.warn(`[VidSrcMe] Source ${sourceName} failed: ${e.message}`);
+      }
+    }
+
+    throw new Error('All VidSrc.me sources failed');
+  }
+
+  /**
+   * Extract stream from VidSrc PRO player
+   */
+  async extractVidsrcProStream(url, referrer) {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': this.userAgent,
+        'Referer': referrer,
+      },
+    });
+
+    if (!res.ok) return null;
+    const html = await res.text();
+
+    // Look for encoded HLS URL
+    const fileMatch = html.match(/file:"([^"]+)"/);
+    if (!fileMatch) return null;
+
+    const hlsUrl = this.decodeVidsrcProHls(fileMatch[1]);
+    logger.info(`[VidSrcPro] Decoded HLS: ${hlsUrl.substring(0, 60)}...`);
+
+    return {
+      url: hlsUrl,
+      format: 'hls',
+    };
+  }
+
+  /**
+   * Extract stream from MultiEmbed player using hunter decode
+   */
+  async extractMultiembedStream(url, referrer) {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': this.userAgent,
+        'Referer': referrer,
+      },
+    });
+
+    if (!res.ok) return null;
+    const html = await res.text();
+
+    // Look for hunter obfuscation
+    const hunterMatch = html.match(/eval\(function\(h,u,n,t,e,r\).*?\}\((".*?")\)\)/s);
+    if (!hunterMatch) return null;
+
+    const args = this.processHunterArgs(hunterMatch[1]);
+    if (!args) return null;
+
+    const unpacked = this.hunterDecode(...args);
+
+    // Extract HLS from decoded JS
+    const hlsMatch = unpacked.match(/file:"([^"]+)"/);
+    if (!hlsMatch) return null;
+
+    logger.info(`[MultiEmbed] Decoded HLS: ${hlsMatch[1].substring(0, 60)}...`);
+
+    // Extract subtitles
+    let subtitles = [];
+    const subtitleMatch = unpacked.match(/subtitle:"([^"]+)"/);
+    if (subtitleMatch) {
+      subtitles = subtitleMatch[1].split(',').map(sub => {
+        const m = sub.match(/^\[(.*?)\](.*)$/);
+        return m ? { label: m[1], url: m[2] } : null;
+      }).filter(Boolean);
+    }
+
+    return {
+      url: hlsMatch[1],
+      format: 'hls',
+      subtitles,
+    };
   }
 
   /**
@@ -323,20 +640,20 @@ class StreamExtractorService {
   }
 
   /**
-   * Extract from MultiEmbed - has direct stream API!
-   * https://multiembed.mov/directstream.php?video_id=TMDB_ID&tmdb=1
+   * Extract from MultiEmbed/SuperEmbed using hunter decryption
+   * This decodes their obfuscated player JS to get direct HLS URLs
    */
   async extractFromMultiEmbed(tmdbId, type, season, episode) {
     let url = type === 'movie'
       ? `https://multiembed.mov/directstream.php?video_id=${tmdbId}&tmdb=1`
       : `https://multiembed.mov/directstream.php?video_id=${tmdbId}&tmdb=1&s=${season}&e=${episode}`;
 
-    logger.info(`[MultiEmbed] Fetching direct stream: ${url}`);
+    logger.info(`[MultiEmbed] Fetching: ${url}`);
 
     const response = await fetch(url, {
       headers: {
         'User-Agent': this.userAgent,
-        'Accept': '*/*',
+        'Accept': 'text/html,application/xhtml+xml',
         'Referer': 'https://multiembed.mov/',
       },
     });
@@ -346,22 +663,53 @@ class StreamExtractorService {
     }
 
     const html = await response.text();
-    logger.info(`[MultiEmbed] Response length: ${html.length}`);
 
-    // Look for HLS stream URL in response
+    // Look for eval(function(h,u,n,t,e,r) obfuscated code
+    const hunterMatch = html.match(/eval\(function\(h,u,n,t,e,r\).*?\}\((".*?")\)\)/s);
+    if (hunterMatch) {
+      logger.info(`[MultiEmbed] Found hunter obfuscation, decoding...`);
+      const args = this.processHunterArgs(hunterMatch[1]);
+      if (args) {
+        const unpacked = this.hunterDecode(...args);
+        logger.info(`[MultiEmbed] Decoded JS length: ${unpacked.length}`);
+
+        // Extract HLS URLs from decoded JS
+        const hlsUrls = unpacked.match(/file:"([^"]*)"/g);
+        if (hlsUrls && hlsUrls.length > 0) {
+          const streamUrl = hlsUrls[0].replace('file:"', '').replace('"', '');
+          logger.info(`[MultiEmbed] Extracted stream: ${streamUrl.substring(0, 80)}...`);
+
+          // Also extract subtitles
+          const subtitleMatch = unpacked.match(/subtitle:"([^"]*)"/);
+          let subtitles = [];
+          if (subtitleMatch) {
+            subtitles = subtitleMatch[1].split(',').map(sub => {
+              const m = sub.match(/^\[(.*?)\](.*)$/);
+              return m ? { label: m[1], url: m[2] } : null;
+            }).filter(Boolean);
+          }
+
+          return {
+            url: streamUrl,
+            provider: 'multiembed',
+            format: 'hls',
+            subtitles,
+          };
+        }
+      }
+    }
+
+    // Fallback: Direct m3u8 match
     const m3u8Match = html.match(/https?:\/\/[^\s"'<>]+\.m3u8[^\s"'<>]*/gi);
     if (m3u8Match && m3u8Match.length > 0) {
-      // Get the best quality stream (usually the first or longest URL)
-      const streamUrl = m3u8Match[0];
-      logger.info(`[MultiEmbed] Found stream: ${streamUrl.substring(0, 80)}...`);
       return {
-        url: streamUrl,
+        url: m3u8Match[0],
         provider: 'multiembed',
         format: 'hls',
       };
     }
 
-    // Try extracting from player config
+    // Fallback: file: pattern
     const fileMatch = html.match(/["']?file["']?\s*[:=]\s*["']([^"']+\.m3u8[^"']*)/i);
     if (fileMatch) {
       return {
@@ -369,11 +717,6 @@ class StreamExtractorService {
         provider: 'multiembed',
         format: 'hls',
       };
-    }
-
-    // Check if they returned an error or redirect
-    if (html.includes('not found') || html.includes('not available')) {
-      throw new Error('Content not available on MultiEmbed');
     }
 
     throw new Error('Could not extract stream from MultiEmbed');
