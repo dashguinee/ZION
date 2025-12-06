@@ -603,16 +603,18 @@ const expiresMatch = html.match(/['"]?expires['"]?\s*:\s*['"]([^'"]+)['"]/);
 
 | Provider | Format | Decryption | Status |
 |----------|--------|------------|--------|
-| Vixsrc | HLS | Token-based | WORKING |
-| VidZee | HLS/MP4 | AES-256-CBC | Built (API issues) |
-| MP4Hydra | MP4 | None | WORKING |
-| VidSrcMe | HLS | RCP flow | Active |
-| MultiEmbed | HLS | Hunter decode | Active |
-| EmbedSu | HLS | - | Active |
-| VidSrcRip | HLS | - | Active |
-| AutoEmbed | HLS | - | Active |
-| Smashy | HLS | - | Active |
-| VidLink | HLS | - | Active |
+| Vixsrc | HLS | Token-based | **WORKING** ✅ |
+| MP4Hydra | MP4 | None | **WORKING** ✅ |
+| VidZee | HLS/MP4 | AES-256-CBC | Cloudflare blocked |
+| VidSrcMe | HLS | RCP flow | API changed |
+| MultiEmbed | HLS | Hunter decode | Timeout |
+| EmbedSu | HLS | Hash decode | API changed |
+| VidSrcRip | HLS | VRF token | Timeout |
+| AutoEmbed | HLS | - | Timeout |
+| Smashy | HLS | - | Timeout |
+| VidLink | HLS | - | Timeout |
+
+**Working Providers**: Vixsrc (HLS) + MP4Hydra (Direct MP4) = 3 streams per movie
 
 ### FRONTEND INTEGRATION
 

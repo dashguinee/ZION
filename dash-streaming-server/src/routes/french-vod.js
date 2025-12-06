@@ -344,17 +344,23 @@ router.get('/providers', (req, res) => {
   res.json({
     success: true,
     providers: [
-      { name: 'Vixsrc', status: 'active', format: 'hls', description: 'Primary - direct HLS extraction' },
-      { name: 'VidZee', status: 'active', format: 'hls/mp4', description: 'AES-256 encrypted, 10 servers' },
-      { name: 'MP4Hydra', status: 'active', format: 'mp4', description: 'Direct MP4 downloads with subs' },
-      { name: 'VidSrcMe', status: 'active', format: 'hls', description: 'Multiple embedded sources' },
-      { name: 'MultiEmbed', status: 'active', format: 'hls', description: 'Hunter decryption' },
-      { name: 'EmbedSu', status: 'active', format: 'hls', description: 'Alternative embed source' },
-      { name: 'VidSrcRip', status: 'active', format: 'hls', description: 'VidSrc mirror' },
-      { name: 'AutoEmbed', status: 'active', format: 'hls', description: 'Auto-selecting embed' },
-      { name: 'Smashy', status: 'active', format: 'hls', description: 'Smashy stream' },
-      { name: 'VidLink', status: 'active', format: 'hls', description: 'VidLink streams' },
-    ]
+      { name: 'Vixsrc', status: 'working', format: 'hls', description: 'Primary - direct HLS extraction' },
+      { name: 'MP4Hydra', status: 'working', format: 'mp4', description: 'Direct MP4 downloads (2 servers)' },
+      { name: 'VidZee', status: 'blocked', format: 'hls/mp4', description: 'Cloudflare protected - needs proxy' },
+      { name: 'VidSrcMe', status: 'unavailable', format: 'hls', description: 'API changed' },
+      { name: 'MultiEmbed', status: 'unavailable', format: 'hls', description: 'Timeout issues' },
+      { name: 'EmbedSu', status: 'unavailable', format: 'hls', description: 'API changed' },
+      { name: 'VidSrcRip', status: 'unavailable', format: 'hls', description: 'Timeout issues' },
+      { name: 'AutoEmbed', status: 'unavailable', format: 'hls', description: 'Timeout issues' },
+      { name: 'Smashy', status: 'unavailable', format: 'hls', description: 'Timeout issues' },
+      { name: 'VidLink', status: 'unavailable', format: 'hls', description: 'Timeout issues' },
+    ],
+    summary: {
+      working: 2,
+      blocked: 1,
+      unavailable: 7,
+      note: 'Vixsrc (HLS) and MP4Hydra (MP4) provide reliable streams'
+    }
   });
 });
 
