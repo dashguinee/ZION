@@ -270,6 +270,94 @@ router.get('/proxy', async (req, res) => {
   }
 });
 
+/**
+ * GET /api/french-vod/streams/all/movie/:id
+ * Get ALL available streams from ALL providers for a movie
+ */
+router.get('/streams/all/movie/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    logger.info(`[AllStreams] Movie request: ${id}`);
+
+    const streams = await streamExtractor.extractAllStreams(id, 'movie');
+
+    res.json({
+      success: true,
+      tmdb_id: id,
+      type: 'movie',
+      provider_count: new Set(streams.map(s => s.provider)).size,
+      stream_count: streams.length,
+      streams: streams.map(s => ({
+        url: s.url,
+        provider: s.provider,
+        server: s.server,
+        quality: s.quality || '720p',
+        format: s.format || 'hls',
+        subtitles: s.subtitles || []
+      }))
+    });
+  } catch (error) {
+    logger.error('[AllStreams] Movie error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/streams/all/tv/:id/:season/:episode
+ * Get ALL available streams from ALL providers for a TV episode
+ */
+router.get('/streams/all/tv/:id/:season/:episode', async (req, res) => {
+  try {
+    const { id, season, episode } = req.params;
+    logger.info(`[AllStreams] TV request: ${id} S${season}E${episode}`);
+
+    const streams = await streamExtractor.extractAllStreams(id, 'tv', season, episode);
+
+    res.json({
+      success: true,
+      tmdb_id: id,
+      type: 'tv',
+      season: parseInt(season),
+      episode: parseInt(episode),
+      provider_count: new Set(streams.map(s => s.provider)).size,
+      stream_count: streams.length,
+      streams: streams.map(s => ({
+        url: s.url,
+        provider: s.provider,
+        server: s.server,
+        quality: s.quality || '720p',
+        format: s.format || 'hls',
+        subtitles: s.subtitles || []
+      }))
+    });
+  } catch (error) {
+    logger.error('[AllStreams] TV error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/providers
+ * List all available stream providers
+ */
+router.get('/providers', (req, res) => {
+  res.json({
+    success: true,
+    providers: [
+      { name: 'Vixsrc', status: 'active', format: 'hls', description: 'Primary - direct HLS extraction' },
+      { name: 'VidZee', status: 'active', format: 'hls/mp4', description: 'AES-256 encrypted, 10 servers' },
+      { name: 'MP4Hydra', status: 'active', format: 'mp4', description: 'Direct MP4 downloads with subs' },
+      { name: 'VidSrcMe', status: 'active', format: 'hls', description: 'Multiple embedded sources' },
+      { name: 'MultiEmbed', status: 'active', format: 'hls', description: 'Hunter decryption' },
+      { name: 'EmbedSu', status: 'active', format: 'hls', description: 'Alternative embed source' },
+      { name: 'VidSrcRip', status: 'active', format: 'hls', description: 'VidSrc mirror' },
+      { name: 'AutoEmbed', status: 'active', format: 'hls', description: 'Auto-selecting embed' },
+      { name: 'Smashy', status: 'active', format: 'hls', description: 'Smashy stream' },
+      { name: 'VidLink', status: 'active', format: 'hls', description: 'VidLink streams' },
+    ]
+  });
+});
+
 // ============================================
 // FRENCH LIVE TV ENDPOINTS
 // ============================================

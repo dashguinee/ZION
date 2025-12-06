@@ -8,6 +8,8 @@
 
 import logger from '../utils/logger.js';
 import { extractFromVixsrc } from './vixsrc-provider.js';
+import { extractFromVidZee } from './vidzee-provider.js';
+import { extractFromMP4Hydra } from './mp4hydra-provider.js';
 
 // Use native fetch (Node 18+)
 
@@ -147,32 +149,124 @@ class StreamExtractorService {
 
     logger.info(`[Extractor] Extracting stream for ${type}/${tmdbId}`);
 
-    // Try providers in order of reliability - VIXSRC WORKS!
+    // Try providers in order of reliability
+    // Each provider is an EXTRA source - not fallbacks, more content options
     const providers = [
-      () => extractFromVixsrc(tmdbId, type, season, episode), // WORKING - direct HLS!
-      () => this.extractFromVidSrcMe(tmdbId, type, season, episode),
-      () => this.extractFromMultiEmbed(tmdbId, type, season, episode),
-      () => this.extractFromEmbedSu(tmdbId, type, season, episode),
-      () => this.extractFromVidSrcRip(tmdbId, type, season, episode),
-      () => this.extractFromAutoEmbed(tmdbId, type, season, episode),
-      () => this.extractFromSmashy(tmdbId, type, season, episode),
-      () => this.extractFromVidLink(tmdbId, type, season, episode),
+      { name: 'Vixsrc', fn: () => extractFromVixsrc(tmdbId, type, season, episode) },
+      { name: 'VidZee', fn: () => this.wrapVidZee(tmdbId, type, season, episode) },
+      { name: 'MP4Hydra', fn: () => this.wrapMP4Hydra(tmdbId, type, season, episode) },
+      { name: 'VidSrcMe', fn: () => this.extractFromVidSrcMe(tmdbId, type, season, episode) },
+      { name: 'MultiEmbed', fn: () => this.extractFromMultiEmbed(tmdbId, type, season, episode) },
+      { name: 'EmbedSu', fn: () => this.extractFromEmbedSu(tmdbId, type, season, episode) },
+      { name: 'VidSrcRip', fn: () => this.extractFromVidSrcRip(tmdbId, type, season, episode) },
+      { name: 'AutoEmbed', fn: () => this.extractFromAutoEmbed(tmdbId, type, season, episode) },
+      { name: 'Smashy', fn: () => this.extractFromSmashy(tmdbId, type, season, episode) },
+      { name: 'VidLink', fn: () => this.extractFromVidLink(tmdbId, type, season, episode) },
     ];
 
     for (const provider of providers) {
       try {
-        const result = await provider();
+        logger.debug(`[Extractor] Trying ${provider.name}...`);
+        const result = await provider.fn();
         if (result && result.url) {
+          logger.info(`[Extractor] Success from ${provider.name}`);
           // Cache successful result
           this.cache.set(cacheKey, { data: result, timestamp: Date.now() });
           return result;
         }
       } catch (error) {
-        logger.warn(`[Extractor] Provider failed: ${error.message}`);
+        logger.warn(`[Extractor] ${provider.name} failed: ${error.message}`);
       }
     }
 
     return null;
+  }
+
+  /**
+   * Wrapper for VidZee - returns first working stream
+   */
+  async wrapVidZee(tmdbId, type, season, episode) {
+    const streams = await extractFromVidZee(tmdbId, type, season, episode);
+    if (streams && streams.length > 0) {
+      // Return the best quality stream
+      const sorted = streams.sort((a, b) => {
+        const aQ = parseInt(a.quality) || 0;
+        const bQ = parseInt(b.quality) || 0;
+        return bQ - aQ;
+      });
+      return sorted[0];
+    }
+    return null;
+  }
+
+  /**
+   * Wrapper for MP4Hydra - returns first working stream
+   */
+  async wrapMP4Hydra(tmdbId, type, season, episode) {
+    const streams = await extractFromMP4Hydra(tmdbId, type, season, episode);
+    if (streams && streams.length > 0) {
+      // Return the best quality stream
+      const sorted = streams.sort((a, b) => {
+        const aQ = parseInt(a.quality) || 0;
+        const bQ = parseInt(b.quality) || 0;
+        return bQ - aQ;
+      });
+      return sorted[0];
+    }
+    return null;
+  }
+
+  /**
+   * Get ALL available streams from ALL providers (for provider selection UI)
+   */
+  async extractAllStreams(tmdbId, type = 'movie', season = null, episode = null) {
+    logger.info(`[Extractor] Getting ALL streams for ${type}/${tmdbId}`);
+
+    const allStreams = [];
+
+    // Define all provider extractors
+    const extractors = [
+      { name: 'Vixsrc', fn: () => extractFromVixsrc(tmdbId, type, season, episode), single: true },
+      { name: 'VidZee', fn: () => extractFromVidZee(tmdbId, type, season, episode), single: false },
+      { name: 'MP4Hydra', fn: () => extractFromMP4Hydra(tmdbId, type, season, episode), single: false },
+      { name: 'VidSrcMe', fn: () => this.extractFromVidSrcMe(tmdbId, type, season, episode), single: true },
+      { name: 'MultiEmbed', fn: () => this.extractFromMultiEmbed(tmdbId, type, season, episode), single: true },
+      { name: 'EmbedSu', fn: () => this.extractFromEmbedSu(tmdbId, type, season, episode), single: true },
+      { name: 'VidSrcRip', fn: () => this.extractFromVidSrcRip(tmdbId, type, season, episode), single: true },
+      { name: 'AutoEmbed', fn: () => this.extractFromAutoEmbed(tmdbId, type, season, episode), single: true },
+      { name: 'Smashy', fn: () => this.extractFromSmashy(tmdbId, type, season, episode), single: true },
+      { name: 'VidLink', fn: () => this.extractFromVidLink(tmdbId, type, season, episode), single: true },
+    ];
+
+    // Run all extractors in parallel
+    const results = await Promise.allSettled(
+      extractors.map(async (ext) => {
+        try {
+          const result = await ext.fn();
+          if (!result) return null;
+
+          // Handle array vs single stream
+          if (ext.single) {
+            return result.url ? [{ ...result, provider: ext.name }] : null;
+          } else {
+            return Array.isArray(result) ? result.map(s => ({ ...s, provider: ext.name })) : null;
+          }
+        } catch (e) {
+          logger.debug(`[Extractor] ${ext.name} error: ${e.message}`);
+          return null;
+        }
+      })
+    );
+
+    // Collect all successful streams
+    for (const result of results) {
+      if (result.status === 'fulfilled' && result.value) {
+        allStreams.push(...result.value);
+      }
+    }
+
+    logger.info(`[Extractor] Total streams found: ${allStreams.length}`);
+    return allStreams;
   }
 
   /**
