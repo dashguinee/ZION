@@ -13,6 +13,16 @@ class StreamExtractorService {
     this.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
     this.cache = new Map(); // Simple in-memory cache
     this.cacheTTL = 3600000; // 1 hour
+
+    // Updated provider domains (Dec 2025)
+    this.providers = {
+      embedSu: 'https://embed.su',
+      vidsrcMe: 'https://vidsrc.xyz', // Still works for embeds
+      vidsrcTo: 'https://vidsrc.net',
+      autoembed: 'https://player.autoembed.cc',
+      twoembed: 'https://www.2embed.cc',
+      smashystream: 'https://player.smashy.stream',
+    };
   }
 
   /**
@@ -32,6 +42,8 @@ class StreamExtractorService {
 
     // Try providers in order of reliability
     const providers = [
+      () => this.extractFromAutoEmbed(tmdbId, type, season, episode),
+      () => this.extractFromSmashy(tmdbId, type, season, episode),
       () => this.extractFromEmbedSu(tmdbId, type, season, episode),
       () => this.extractFromVidSrcRip(tmdbId, type, season, episode),
       () => this.extractFromVidLink(tmdbId, type, season, episode),
@@ -307,6 +319,99 @@ class StreamExtractorService {
     }
 
     return response.json();
+  }
+
+  /**
+   * Extract from AutoEmbed - simpler API
+   */
+  async extractFromAutoEmbed(tmdbId, type, season, episode) {
+    const baseUrl = this.providers.autoembed;
+    let url = type === 'movie'
+      ? `${baseUrl}/embed/movie/${tmdbId}`
+      : `${baseUrl}/embed/tv/${tmdbId}/${season}/${episode}`;
+
+    logger.info(`[AutoEmbed] Fetching: ${url}`);
+
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': this.userAgent,
+        'Accept': 'text/html',
+        'Referer': 'https://www.google.com/',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`AutoEmbed returned ${response.status}`);
+    }
+
+    const html = await response.text();
+
+    // AutoEmbed usually has the stream in a player config
+    const m3u8Match = html.match(/(?:file|source|src)["'\s:]+["']?(https?:\/\/[^"'\s]+\.m3u8[^"'\s]*)/i);
+    if (m3u8Match) {
+      return {
+        url: m3u8Match[1],
+        provider: 'autoembed',
+        format: 'hls',
+      };
+    }
+
+    // Try iframe src for nested player
+    const iframeMatch = html.match(/iframe[^>]+src=["']([^"']+)/i);
+    if (iframeMatch) {
+      // Follow the iframe
+      const iframeRes = await fetch(iframeMatch[1], {
+        headers: { 'User-Agent': this.userAgent, 'Referer': url },
+      });
+      const iframeHtml = await iframeRes.text();
+      const nestedM3u8 = iframeHtml.match(/(?:file|source|src)["'\s:]+["']?(https?:\/\/[^"'\s]+\.m3u8[^"'\s]*)/i);
+      if (nestedM3u8) {
+        return {
+          url: nestedM3u8[1],
+          provider: 'autoembed',
+          format: 'hls',
+        };
+      }
+    }
+
+    throw new Error('Stream not found in AutoEmbed');
+  }
+
+  /**
+   * Extract from Smashy Stream
+   */
+  async extractFromSmashy(tmdbId, type, season, episode) {
+    const baseUrl = this.providers.smashystream;
+    let url = type === 'movie'
+      ? `${baseUrl}/movie/${tmdbId}`
+      : `${baseUrl}/tv/${tmdbId}/${season}/${episode}`;
+
+    logger.info(`[Smashy] Fetching: ${url}`);
+
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': this.userAgent,
+        'Accept': 'text/html',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Smashy returned ${response.status}`);
+    }
+
+    const html = await response.text();
+
+    // Smashy embeds stream URLs in their player
+    const streamMatch = html.match(/["']?(https?:\/\/[^"'\s]+\.m3u8[^"'\s]*)["']?/i);
+    if (streamMatch) {
+      return {
+        url: streamMatch[1],
+        provider: 'smashystream',
+        format: 'hls',
+      };
+    }
+
+    throw new Error('Stream not found in Smashy');
   }
 
   /**
