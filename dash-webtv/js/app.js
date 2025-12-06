@@ -2179,30 +2179,37 @@ class DashApp {
 
     // Apply proxy if needed (for CORS/HTTP issues)
     // Use Railway backend proxy instead of Cloudflare (more reliable)
+    // ALWAYS proxy HTTP URLs - mixed content is blocked by browsers
     let finalUrl = streamUrl
-    if (useProxy) {
+    const isHttpUrl = streamUrl.startsWith('http://')
+
+    if (useProxy || isHttpUrl) {
       finalUrl = `${this.backendUrl}/api/french-vod/proxy?url=${encodeURIComponent(streamUrl)}`
       console.log(`[FrenchTV] Proxied URL: ${finalUrl}`)
+      if (isHttpUrl) {
+        console.log('[FrenchTV] HTTP URL auto-proxied to avoid mixed content')
+      }
     }
 
     // Detect format and use appropriate player
     const isHLS = streamUrl.includes('.m3u8')
     const isDash = streamUrl.includes('.mpd')
     const isTS = streamUrl.includes('.ts') || streamUrl.includes(':8080') || streamUrl.includes(':8000')
+    const isProxied = useProxy || isHttpUrl  // Track if we're already using proxy
 
     if (isDash) {
       // DASH streams need dash.js - use our DASH player
       console.log('[FrenchTV] DASH stream detected, using dash.js')
       this.playDashStream(finalUrl, channelName)
     } else if (isHLS) {
-      // HLS streams - try direct first, retry with proxy on CORS error
-      this.playFrenchHLS(finalUrl, streamUrl, channelName, useProxy)
+      // HLS streams - use hls.js with proxy if needed
+      this.playFrenchHLS(finalUrl, streamUrl, channelName, isProxied)
     } else if (isTS) {
       // MPEG-TS streams - use mpegts.js
       this.showVideoPlayer(finalUrl, 'live', 'mpegts', channelName)
     } else {
       // Default to HLS (most common)
-      this.playFrenchHLS(finalUrl, streamUrl, channelName, useProxy)
+      this.playFrenchHLS(finalUrl, streamUrl, channelName, isProxied)
     }
   }
 
