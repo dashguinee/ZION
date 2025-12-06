@@ -8,6 +8,7 @@
 
 import express from 'express';
 import frenchVOD from '../services/french-vod.service.js';
+import streamExtractor from '../services/stream-extractor.service.js';
 import logger from '../utils/logger.js';
 
 const router = express.Router();
@@ -164,6 +165,106 @@ router.get('/curated', async (req, res) => {
     });
   } catch (error) {
     logger.error('Error in /french-vod/curated:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/stream/movie/:id
+ * Extract direct stream URL for a movie (bypasses ads)
+ */
+router.get('/stream/movie/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    logger.info(`[StreamExtract] Movie request: ${id}`);
+
+    const stream = await streamExtractor.extractStream(id, 'movie');
+
+    if (!stream) {
+      return res.status(404).json({
+        success: false,
+        error: 'Could not extract stream - try again later'
+      });
+    }
+
+    res.json({
+      success: true,
+      tmdb_id: id,
+      type: 'movie',
+      stream: {
+        url: stream.url,
+        provider: stream.provider,
+        server: stream.server,
+        format: stream.format || 'hls',
+        subtitles: stream.subtitles || []
+      }
+    });
+  } catch (error) {
+    logger.error('[StreamExtract] Movie error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/stream/tv/:id/:season/:episode
+ * Extract direct stream URL for a TV episode
+ */
+router.get('/stream/tv/:id/:season/:episode', async (req, res) => {
+  try {
+    const { id, season, episode } = req.params;
+    logger.info(`[StreamExtract] TV request: ${id} S${season}E${episode}`);
+
+    const stream = await streamExtractor.extractStream(id, 'tv', season, episode);
+
+    if (!stream) {
+      return res.status(404).json({
+        success: false,
+        error: 'Could not extract stream - try again later'
+      });
+    }
+
+    res.json({
+      success: true,
+      tmdb_id: id,
+      type: 'tv',
+      season: parseInt(season),
+      episode: parseInt(episode),
+      stream: {
+        url: stream.url,
+        provider: stream.provider,
+        server: stream.server,
+        format: stream.format || 'hls',
+        subtitles: stream.subtitles || []
+      }
+    });
+  } catch (error) {
+    logger.error('[StreamExtract] TV error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/proxy
+ * Proxy stream with proper headers (for CORS issues)
+ */
+router.get('/proxy', async (req, res) => {
+  try {
+    const { url, referer } = req.query;
+
+    if (!url) {
+      return res.status(400).json({ success: false, error: 'URL required' });
+    }
+
+    const proxyRes = await streamExtractor.proxyStream(url, referer);
+
+    // Forward headers
+    res.set('Content-Type', proxyRes.headers.get('content-type') || 'application/vnd.apple.mpegurl');
+    res.set('Access-Control-Allow-Origin', '*');
+
+    // Pipe response
+    proxyRes.body.pipe(res);
+  } catch (error) {
+    logger.error('[Proxy] Error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
