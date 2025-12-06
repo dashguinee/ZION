@@ -4,8 +4,9 @@
  * No ads, no redirects - just raw HLS/MP4 URLs
  */
 
-import fetch from 'node-fetch';
 import logger from '../utils/logger.js';
+
+// Use native fetch (Node 18+)
 
 class StreamExtractorService {
   constructor() {
