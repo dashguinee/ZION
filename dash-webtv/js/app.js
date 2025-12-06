@@ -2344,9 +2344,35 @@ class DashApp {
     this.currentChannelName = channelName
     this._proxyRetried = false
 
-    // Build stream URL
+    // Find the channel in localLive to check if it's a free channel
+    const channel = (this.localLive || []).find(c => String(c.stream_id) === String(id))
+
+    // Check if this is a FREE channel (has direct URL)
+    if (channel && channel.url && channel.is_free) {
+      console.log(`🆓 Free channel detected: ${channelName}`)
+      console.log(`📡 Direct URL: ${channel.url}`)
+      console.log(`📺 Stream type: ${channel.stream_type || 'hls'}`)
+
+      // Free channels have direct HLS URLs - usually work without proxy
+      // But non-Safari browsers may still need CORS proxy
+      const streamType = channel.stream_type || 'hls'
+      let streamUrl = channel.url
+
+      // For HLS streams on non-Safari browsers, we might need proxy
+      if (streamType === 'hls' && !this.client.hasNativeHLS()) {
+        // Check if URL needs proxy (some HLS streams have CORS issues)
+        // Most iptv-org streams have proper CORS, so try direct first
+        console.log(`📡 Free HLS on non-Safari browser - trying direct first`)
+      }
+
+      this.closeModal()
+      this.showVideoPlayer(streamUrl, 'live', 'hls-native', channelName)
+      return
+    }
+
+    // StarShare channel - use credential-based URL building
     const liveStream = this.client.buildLiveStreamUrl(id, 'ts')
-    console.log(`📡 Live stream type: ${liveStream.type}`)
+    console.log(`📡 StarShare live stream type: ${liveStream.type}`)
 
     this.closeModal()
     this.showVideoPlayer(liveStream.url, 'live', liveStream.type, channelName)
