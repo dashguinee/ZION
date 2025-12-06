@@ -3697,7 +3697,8 @@ class DashApp {
     if (streamType === 'hls-native') {
       // hls-native means "try native first, fall back to hls.js"
       // Safari has native HLS support, other browsers need hls.js
-      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      const testVideo = document.createElement('video')
+      if (testVideo.canPlayType('application/vnd.apple.mpegurl')) {
         isSafariNativeHLS = true
         console.log('🍎 Using Safari native HLS playback')
       } else {
