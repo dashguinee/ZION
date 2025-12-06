@@ -788,6 +788,9 @@ class DashApp {
       case 'french':
         content = await this.renderFrenchPage()
         break
+      case 'packages':
+        content = await this.renderPackageBuilderPage()
+        break
       default:
         content = '<div class="empty-state"><h2>Page not found</h2></div>'
     }
@@ -1710,7 +1713,7 @@ class DashApp {
     `
   }
 
-  renderAccountPage() {
+  async renderAccountPage() {
     const username = localStorage.getItem('dash_user') || 'User'
     const userTier = this.getUserTier()
     const hasStarshare = this.hasStarshareAccess()
@@ -1723,6 +1726,9 @@ class DashApp {
       PREMIUM: { color: '#7c3aed', label: 'Premium', desc: 'Unlimited access' }
     }
     const tier = tierConfig[userTier] || tierConfig.BASIC
+
+    // Load wallet section
+    const walletSection = await this.renderWalletSection()
 
     return `
       <div class="fade-in">
@@ -1778,6 +1784,8 @@ class DashApp {
             </svg>
           </div>
         </div>
+
+        ${walletSection}
 
         <div class="card glass p-lg mt-md">
           <div class="account-section">
@@ -5572,6 +5580,459 @@ class DashApp {
         </div>
       </div>
     `
+  }
+
+  // ============================================
+  // NORTH STAR FEATURES - Package Builder, Wallet, Content Gating
+  // ============================================
+
+  /**
+   * FEATURE 1: Package Builder Page
+   */
+  async renderPackageBuilderPage() {
+    const username = localStorage.getItem('dash_user') || 'User'
+
+    // Load user's current package
+    let currentPackage = null
+    let selectedCategories = []
+
+    try {
+      const res = await fetch(`${this.backendUrl}/api/packages/${username}`)
+      const data = await res.json()
+      if (data.success && data.package) {
+        currentPackage = data.package
+        selectedCategories = data.package.selectedCategories || []
+      }
+    } catch (error) {
+      console.error('Error loading package:', error)
+    }
+
+    // Get available categories
+    const categories = [
+      { id: 'sports', name: 'Sports', price: 20000, icon: '⚽', description: 'Live sports, SuperSport, ESPN' },
+      { id: 'french', name: 'French', price: 15000, icon: '🇫🇷', description: 'French channels, movies, series' },
+      { id: 'nollywood', name: 'Nollywood', price: 15000, icon: '🎬', description: 'Nigerian/African movies' },
+      { id: 'kdrama', name: 'K-Drama', price: 10000, icon: '🇰🇷', description: 'Korean dramas' },
+      { id: 'kids', name: 'Kids', price: 10000, icon: '👶', description: "Children's content" },
+      { id: 'music', name: 'Music/VOYO', price: 10000, icon: '🎵', description: 'Music streaming' },
+      { id: 'livetv', name: 'Live TV Basic', price: 10000, icon: '📺', description: 'Basic live channels' },
+      { id: 'premium', name: 'Premium Movies', price: 15000, icon: '🎥', description: 'Latest releases' }
+    ]
+
+    return `
+      <div class="fade-in">
+        <div class="page-title-row">
+          <svg class="page-title-icon" viewBox="0 0 24 24" fill="none" stroke="var(--primary-purple)" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+          <h1>Build Your Package</h1>
+        </div>
+
+        <div class="card glass p-lg mt-md">
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+            Choose the content categories you want. Pay only for what you watch!
+          </p>
+
+          <!-- Package Grid -->
+          <div id="packageGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+            ${categories.map(cat => {
+              const isSelected = selectedCategories.includes(cat.id)
+              return `
+                <div class="package-category-card ${isSelected ? 'selected' : ''}"
+                     data-category-id="${cat.id}"
+                     data-price="${cat.price}"
+                     onclick="dashApp.toggleCategory('${cat.id}', ${cat.price})">
+                  <div class="package-category-icon">${cat.icon}</div>
+                  <div class="package-category-name">${cat.name}</div>
+                  <div class="package-category-price">${(cat.price / 1000).toFixed(0)}K GNF/mo</div>
+                  <div class="package-category-desc">${cat.description}</div>
+                  <div class="package-category-checkmark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </div>
+                </div>
+              `
+            }).join('')}
+          </div>
+
+          <!-- Package Summary -->
+          <div class="package-summary">
+            <div style="flex: 1;">
+              <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                <span id="selectedCount">${selectedCategories.length}</span> categories selected
+              </div>
+              <div style="font-size: 2rem; font-weight: bold; color: var(--primary-purple);">
+                <span id="totalPrice">${currentPackage ? (currentPackage.monthlyPrice / 1000).toFixed(0) : 0}</span>K GNF
+                <span style="font-size: 0.9rem; color: var(--text-secondary); font-weight: normal;">/month</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-ripple" onclick="dashApp.savePackage()" style="padding: 1rem 2rem;">
+              Save Package
+            </button>
+          </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="card glass p-lg mt-md" style="background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(52, 211, 153, 0.1));">
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            How it works
+          </h3>
+          <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.5rem;">
+            <li>Select the content categories you want to watch</li>
+            <li>Your monthly cost is calculated automatically</li>
+            <li>Top up your DASH Wallet (minimum 100,000 GNF)</li>
+            <li>Your subscription renews automatically each month</li>
+            <li>No surprise bills - you control your budget!</li>
+          </ul>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Toggle category selection
+   */
+  toggleCategory(categoryId, price) {
+    const card = document.querySelector(`[data-category-id="${categoryId}"]`)
+    if (!card) return
+
+    const isSelected = card.classList.contains('selected')
+
+    if (isSelected) {
+      card.classList.remove('selected')
+    } else {
+      card.classList.add('selected')
+    }
+
+    // Update totals
+    this.updatePackageTotals()
+  }
+
+  /**
+   * Update package totals display
+   */
+  updatePackageTotals() {
+    const selectedCards = document.querySelectorAll('.package-category-card.selected')
+    const total = Array.from(selectedCards).reduce((sum, card) => {
+      return sum + parseInt(card.dataset.price)
+    }, 0)
+
+    const countEl = document.getElementById('selectedCount')
+    const priceEl = document.getElementById('totalPrice')
+
+    if (countEl) countEl.textContent = selectedCards.length
+    if (priceEl) priceEl.textContent = (total / 1000).toFixed(0)
+  }
+
+  /**
+   * Save package to backend
+   */
+  async savePackage() {
+    const username = localStorage.getItem('dash_user')
+    if (!username) {
+      this.showToast('Please login first', 'error')
+      return
+    }
+
+    const selectedCards = document.querySelectorAll('.package-category-card.selected')
+    const selectedCategories = Array.from(selectedCards).map(card => card.dataset.categoryId)
+
+    if (selectedCategories.length === 0) {
+      this.showToast('Please select at least one category', 'warning')
+      return
+    }
+
+    try {
+      const res = await fetch(`${this.backendUrl}/api/packages/create`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, selectedCategories })
+      })
+
+      const data = await res.json()
+
+      if (data.success) {
+        this.showToast('Package saved successfully!', 'success')
+
+        // Store package locally for quick access
+        localStorage.setItem('dash_package', JSON.stringify(data.package))
+      } else {
+        this.showToast('Failed to save package', 'error')
+      }
+    } catch (error) {
+      console.error('Error saving package:', error)
+      this.showToast('Error saving package', 'error')
+    }
+  }
+
+  /**
+   * FEATURE 2: Wallet UI (Added to Account Page)
+   */
+  async renderWalletSection() {
+    const username = localStorage.getItem('dash_user') || 'User'
+
+    let walletData = null
+    try {
+      const res = await fetch(`${this.backendUrl}/api/wallet/${username}`)
+      const data = await res.json()
+      if (data.success) {
+        walletData = data.wallet
+      }
+    } catch (error) {
+      console.error('Error loading wallet:', error)
+    }
+
+    const balance = walletData?.balance || 0
+    const balanceFormatted = walletData?.balanceFormatted || '0K DMoney'
+    const balanceStatus = walletData?.balanceStatus || 'low'
+
+    const statusColors = {
+      good: 'var(--accent-green)',
+      warning: '#f59e0b',
+      low: '#ef4444'
+    }
+
+    return `
+      <!-- DASH Wallet Card -->
+      <div class="card glass p-lg mt-md">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="M7 15h0M2 9.5h20"/>
+            </svg>
+            DASH Wallet
+          </h3>
+          <button class="btn btn-sm btn-primary btn-ripple" onclick="dashApp.showTopupModal()">
+            Top Up
+          </button>
+        </div>
+
+        <!-- Balance Display -->
+        <div style="text-align: center; padding: 2rem 0; background: rgba(255,255,255,0.02); border-radius: 12px; margin-bottom: 1rem;">
+          <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+            Current Balance
+          </div>
+          <div style="font-size: 3rem; font-weight: bold; color: ${statusColors[balanceStatus]};">
+            ${balanceFormatted}
+          </div>
+          ${balance < 100000 ? `
+            <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; color: #ef4444;">
+              ⚠️ Low balance - Top up to continue enjoying DASH
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <button class="btn btn-outline btn-ripple" onclick="dashApp.showTransactionHistory()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            History
+          </button>
+          <button class="btn btn-outline btn-ripple" onclick="dashApp.navigate('packages')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+            My Package
+          </button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Show top-up modal
+   */
+  showTopupModal() {
+    const modalHtml = `
+      <div class="modal-overlay" id="topupModal" onclick="if(event.target === this) this.remove()">
+        <div class="modal-content" style="max-width: 500px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <h2 style="margin: 0;">Top Up DASH Wallet</h2>
+            <button onclick="document.getElementById('topupModal').remove()" style="background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer;">×</button>
+          </div>
+
+          <div class="card" style="background: rgba(157, 78, 221, 0.1); padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              Payment Instructions
+            </h3>
+            <ol style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.5rem; margin: 0;">
+              <li>Send via <strong style="color: var(--text-primary);">Orange Money</strong> or <strong style="color: var(--text-primary);">MTN Mobile Money</strong></li>
+              <li>Payment number: <strong style="color: var(--primary-cyan); font-size: 1.2rem;">611361300</strong></li>
+              <li>Minimum amount: <strong style="color: var(--accent-green);">100,000 GNF</strong></li>
+              <li>Reference: <strong style="color: var(--primary-purple);">DASH-${localStorage.getItem('dash_user')}</strong></li>
+              <li>Your balance will update within 1 hour</li>
+            </ol>
+          </div>
+
+          <div style="background: rgba(52, 211, 153, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <p style="margin: 0; color: var(--accent-green); display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <strong>No chasing for payments!</strong> Control your entertainment budget.
+            </p>
+          </div>
+
+          <button class="btn btn-primary btn-ripple" onclick="document.getElementById('topupModal').remove()" style="width: 100%;">
+            Got it!
+          </button>
+        </div>
+      </div>
+    `
+    document.body.insertAdjacentHTML('beforeend', modalHtml)
+  }
+
+  /**
+   * Show transaction history modal
+   */
+  async showTransactionHistory() {
+    const username = localStorage.getItem('dash_user')
+    if (!username) return
+
+    let transactions = []
+    try {
+      const res = await fetch(`${this.backendUrl}/api/wallet/${username}/history?limit=10`)
+      const data = await res.json()
+      if (data.success) {
+        transactions = data.transactions
+      }
+    } catch (error) {
+      console.error('Error loading history:', error)
+    }
+
+    const modalHtml = `
+      <div class="modal-overlay" id="historyModal" onclick="if(event.target === this) this.remove()">
+        <div class="modal-content" style="max-width: 600px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <h2 style="margin: 0;">Transaction History</h2>
+            <button onclick="document.getElementById('historyModal').remove()" style="background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer;">×</button>
+          </div>
+
+          ${transactions.length === 0 ? `
+            <div class="empty-state">
+              <div class="empty-state-icon">📭</div>
+              <div class="empty-state-title">No transactions yet</div>
+              <div class="empty-state-description">Your transaction history will appear here</div>
+            </div>
+          ` : `
+            <div style="max-height: 400px; overflow-y: auto;">
+              ${transactions.map(txn => {
+                const typeIcons = {
+                  topup: { icon: '⬆️', color: 'var(--accent-green)' },
+                  deduction: { icon: '⬇️', color: '#ef4444' },
+                  refund: { icon: '↩️', color: 'var(--primary-cyan)' }
+                }
+                const config = typeIcons[txn.type] || typeIcons.topup
+                const date = new Date(txn.date).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })
+
+                return `
+                  <div class="card" style="padding: 1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 1rem;">
+                    <div style="font-size: 1.5rem;">${config.icon}</div>
+                    <div style="flex: 1;">
+                      <div style="font-weight: 600; color: var(--text-primary);">${txn.note}</div>
+                      <div style="font-size: 0.85rem; color: var(--text-secondary);">${date}</div>
+                    </div>
+                    <div style="font-size: 1.1rem; font-weight: bold; color: ${config.color};">
+                      ${txn.type === 'deduction' ? '-' : '+'}${(txn.amount / 1000).toFixed(0)}K
+                    </div>
+                  </div>
+                `
+              }).join('')}
+            </div>
+          `}
+
+          <button class="btn btn-outline btn-ripple" onclick="document.getElementById('historyModal').remove()" style="width: 100%; margin-top: 1rem;">
+            Close
+          </button>
+        </div>
+      </div>
+    `
+    document.body.insertAdjacentHTML('beforeend', modalHtml)
+  }
+
+  /**
+   * FEATURE 3: Content Gating - Check if user has access to category
+   */
+  async hasPackageAccess(contentCategory) {
+    const username = localStorage.getItem('dash_user')
+    if (!username) return false
+
+    // Check local cache first
+    const cachedPackage = localStorage.getItem('dash_package')
+    if (cachedPackage) {
+      try {
+        const pkg = JSON.parse(cachedPackage)
+        return pkg.selectedCategories?.includes(contentCategory) || false
+      } catch (e) {
+        console.error('Error parsing cached package:', e)
+      }
+    }
+
+    // Fetch from backend
+    try {
+      const res = await fetch(`${this.backendUrl}/api/packages/${username}`)
+      const data = await res.json()
+      if (data.success && data.package) {
+        localStorage.setItem('dash_package', JSON.stringify(data.package))
+        return data.package.selectedCategories?.includes(contentCategory) || false
+      }
+    } catch (error) {
+      console.error('Error checking package access:', error)
+    }
+
+    return false
+  }
+
+  /**
+   * Show upgrade prompt for locked content
+   */
+  showUpgradePrompt(contentTitle, category) {
+    const modalHtml = `
+      <div class="modal-overlay" id="upgradeModal" onclick="if(event.target === this) this.remove()">
+        <div class="modal-content" style="max-width: 500px;">
+          <div style="text-align: center; padding: 2rem 1rem;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
+            <h2 style="margin: 0 0 1rem 0;">Unlock "${contentTitle}"</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+              This content requires the <strong style="color: var(--primary-purple);">${category}</strong> package.
+            </p>
+
+            <div style="display: flex; gap: 1rem;">
+              <button class="btn btn-outline btn-ripple" onclick="document.getElementById('upgradeModal').remove()" style="flex: 1;">
+                Maybe Later
+              </button>
+              <button class="btn btn-primary btn-ripple" onclick="dashApp.navigate('packages'); document.getElementById('upgradeModal').remove();" style="flex: 1;">
+                Upgrade Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+    document.body.insertAdjacentHTML('beforeend', modalHtml)
   }
 
   showLoading() {

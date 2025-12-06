@@ -3918,3 +3918,195 @@
     flex-direction: column;
   }
 }
+
+/* ============================================
+   NORTH STAR FEATURES - Package Builder & Wallet
+   ============================================ */
+
+/* Package Category Cards */
+.package-category-card {
+  position: relative;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 2px solid rgba(157, 78, 221, 0.2);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  overflow: hidden;
+}
+
+.package-category-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-cosmic);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.package-category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(157, 78, 221, 0.3);
+  border-color: var(--primary-purple);
+}
+
+.package-category-card.selected {
+  border-color: var(--primary-purple);
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(52, 211, 153, 0.05));
+}
+
+.package-category-card.selected::before {
+  opacity: 0.05;
+}
+
+.package-category-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.package-category-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.package-category-price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--gradient-cosmic);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.package-category-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  position: relative;
+  z-index: 1;
+}
+
+.package-category-checkmark {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: var(--primary-purple);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.package-category-checkmark svg {
+  width: 18px;
+  height: 18px;
+  color: white;
+}
+
+.package-category-card.selected .package-category-checkmark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Package Summary */
+.package-summary {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(52, 211, 153, 0.1));
+  border-radius: var(--radius-lg);
+  border: 2px solid rgba(157, 78, 221, 0.3);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 2px solid rgba(157, 78, 221, 0.3);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* Responsive Package Grid */
+@media (max-width: 768px) {
+  .package-summary {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .package-category-card {
+    padding: 1rem;
+  }
+
+  .package-category-icon {
+    font-size: 2.5rem;
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+  }
+}
