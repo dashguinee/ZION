@@ -41,6 +41,12 @@ class FrenchLiveTVService {
       'wilmaa.com',      // Swiss streaming - geo-blocked
     ];
 
+    // Domains with CORS issues (manifest loads but segments blocked)
+    this.corsBlockedDomains = [
+      'nextradiotv.com', // BFM channels - CORS blocks segments
+      'bfmb.bct',        // BFM Business origin
+    ];
+
     // Cache
     this.cache = new Map();
     this.cacheExpiry = 30 * 60 * 1000; // 30 minutes (playlists change)
@@ -161,11 +167,21 @@ class FrenchLiveTVService {
       const content = await response.text();
       let channels = this.parseM3U(content);
 
-      // Filter out geo-blocked domains
+      // Filter out problematic streams
       channels = channels.filter(ch => {
         if (!ch.url) return false;
         const urlLower = ch.url.toLowerCase();
-        return !this.geoBlockedDomains.some(domain => urlLower.includes(domain));
+
+        // Block geo-restricted domains
+        if (this.geoBlockedDomains.some(domain => urlLower.includes(domain))) return false;
+
+        // Block CORS-problematic domains
+        if (this.corsBlockedDomains.some(domain => urlLower.includes(domain))) return false;
+
+        // Block HTTP streams (mixed content blocked by browsers)
+        if (urlLower.startsWith('http://')) return false;
+
+        return true;
       });
 
       // Filter for quality - remove [Not 24/7] and [Geo-blocked] markers
