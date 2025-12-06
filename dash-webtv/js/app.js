@@ -782,6 +782,9 @@ class DashApp {
       case 'mylist':
         content = this.renderMyListPage()
         break
+      case 'french':
+        content = this.renderFrenchPage()
+        break
       default:
         content = '<div class="empty-state"><h2>Page not found</h2></div>'
     }
@@ -1258,6 +1261,61 @@ class DashApp {
         <div class="content-grid">
           ${this.renderContentGrid(series, 'series')}
         </div>
+      </div>
+    `
+  }
+
+  renderFrenchPage() {
+    // Get French Cinema movies from local data
+    let movies = (this.localMovies || []).filter(m =>
+      m.category_name === 'FRENCH CINEMA' ||
+      m.category_id === 'french_cinema' ||
+      String(m.stream_id).startsWith('french_')
+    )
+
+    // Filter adult content
+    movies = this.filterAdultContent(movies)
+
+    // Sort by rating
+    movies.sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+
+    const totalMovies = movies.length
+
+    return `
+      <div class="fade-in">
+        <div class="browse-header">
+          <div class="browse-title-row">
+            <div class="browse-icon" style="font-size: 28px;">🇫🇷</div>
+            <h1 class="browse-title">French Cinema</h1>
+          </div>
+          <div class="browse-stats">
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${totalMovies.toLocaleString()}</span>
+                <span class="browse-stat-label">French Movies</span>
+              </div>
+            </div>
+          </div>
+          <p class="browse-subtitle">Films français - French movies and international films</p>
+        </div>
+
+        <div class="browse-notice" style="background: rgba(255,165,0,0.1); border: 1px solid rgba(255,165,0,0.3); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 18px;">⚠️</span>
+          <span style="color: #ffa500; font-size: 14px;">Free content from external sources - quality may vary</span>
+        </div>
+
+        <div class="content-grid movies-grid">
+          ${movies.slice(0, 100).map(movie => this.renderMovieCard(movie)).join('')}
+        </div>
+
+        ${movies.length > 100 ? `
+          <div class="load-more-container">
+            <button class="btn btn-primary" onclick="dashApp.loadMoreFrench()">Load More</button>
+          </div>
+        ` : ''}
       </div>
     `
   }
