@@ -246,7 +246,7 @@ router.get('/stream/tv/:id/:season/:episode', async (req, res) => {
 
 /**
  * GET /api/french-vod/proxy
- * Proxy stream with proper headers (for CORS issues)
+ * Proxy stream with proper headers (for CORS and HTTP->HTTPS issues)
  */
 router.get('/proxy', async (req, res) => {
   try {
@@ -256,16 +256,38 @@ router.get('/proxy', async (req, res) => {
       return res.status(400).json({ success: false, error: 'URL required' });
     }
 
-    const proxyRes = await streamExtractor.proxyStream(url, referer);
+    logger.info(`[Proxy] Fetching: ${url}`);
+
+    // Fetch with proper headers
+    const proxyRes = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': '*/*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': referer || '',
+      },
+    });
+
+    if (!proxyRes.ok) {
+      logger.error(`[Proxy] Upstream error: ${proxyRes.status}`);
+      return res.status(proxyRes.status).json({
+        success: false,
+        error: `Upstream returned ${proxyRes.status}`
+      });
+    }
 
     // Forward headers
-    res.set('Content-Type', proxyRes.headers.get('content-type') || 'application/vnd.apple.mpegurl');
+    const contentType = proxyRes.headers.get('content-type') || 'application/vnd.apple.mpegurl';
+    res.set('Content-Type', contentType);
     res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.set('Access-Control-Allow-Headers', '*');
 
-    // Pipe response
-    proxyRes.body.pipe(res);
+    // Get response as text/buffer and send
+    const data = await proxyRes.text();
+    res.send(data);
   } catch (error) {
-    logger.error('[Proxy] Error:', error);
+    logger.error('[Proxy] Error:', error.message);
     res.status(500).json({ success: false, error: error.message });
   }
 });

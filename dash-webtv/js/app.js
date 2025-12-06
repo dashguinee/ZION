@@ -2177,10 +2177,11 @@ class DashApp {
       return
     }
 
-    // Apply proxy if needed (for CORS issues)
+    // Apply proxy if needed (for CORS/HTTP issues)
+    // Use Railway backend proxy instead of Cloudflare (more reliable)
     let finalUrl = streamUrl
     if (useProxy) {
-      finalUrl = `https://dash-webtv-proxy.dash-webtv.workers.dev/?url=${encodeURIComponent(streamUrl)}`
+      finalUrl = `${this.backendUrl}/api/french-vod/proxy?url=${encodeURIComponent(streamUrl)}`
       console.log(`[FrenchTV] Proxied URL: ${finalUrl}`)
     }
 
