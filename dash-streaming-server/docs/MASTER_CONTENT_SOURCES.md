@@ -350,5 +350,240 @@ https://iptv-org.github.io/iptv/index.m3u
 
 ---
 
-*Research compiled by ZION SYNAPSE - December 5, 2025*
-*Total sources: 50+ platforms, APIs, and repositories*
+---
+
+## PART 11: NEW SOURCES DISCOVERED (December 6, 2025)
+
+### VOD PROVIDERS (WORKING - Ready to Integrate)
+
+**1. Vixsrc (CURRENTLY ACTIVE)** ✅
+- URL: https://vixsrc.to
+- Status: WORKING - extracts direct HLS m3u8 streams
+- Method: `window.masterPlaylist` token extraction
+- Already integrated in: `/src/services/vixsrc-provider.js`
+
+**2. VidZee** (From TMDB-Embed-API)
+- API: `https://player.vidzee.wtf/api/server`
+- 10 servers available (sr=1-10)
+- AES-CBC decryption with key: `qrincywincyspider`
+- File: `/tmp/TMDB-Embed-API/providers/VidZee.js`
+
+**3. MP4Hydra** (Direct MP4 Downloads)
+- API: `https://mp4hydra.org/info2?v=8`
+- Provides direct MP4 video files
+- Multiple quality options (480p-1080p)
+- File: `/tmp/TMDB-Embed-API/providers/MP4Hydra.js`
+
+**4. MoviesMod** (Premium Quality)
+- Domain fetched from: `https://raw.githubusercontent.com/phisher98/TVVVV/refs/heads/main/domains.json`
+- Supports: driveseed.org, driveleech.net links
+- SID resolution for tech.unblockedgames.world
+- File: `/tmp/TMDB-Embed-API/providers/moviesmod.js`
+
+**5. UHDMovies** (4K Content)
+- Similar architecture to MoviesMod
+- SID link resolution
+- 4K/HDR/DV content
+- File: `/tmp/TMDB-Embed-API/providers/uhdmovies.js`
+
+**6. VidSrc Scraper** (Multi-domain)
+- GitHub: https://github.com/DivineChile/vidsrc-scraper
+- Domains: vidsrc.xyz, vidsrc.in, vidsrc.pm, vidsrc.net
+- Uses Playwright for extraction
+- Returns HLS m3u8 + subtitles
+
+**7. vidsrc-bypass** (TypeScript)
+- GitHub: https://github.com/Gradleless/vidsrc-bypass
+- Supports: Embed.su, VidSrc.rip, Vidlink.pro, VidSrc.icu
+
+### FRENCH LIVE TV M3U SOURCES (VERIFIED WORKING)
+
+**1. iptv-org France** ✅ (HTTP 200)
+```
+https://iptv-org.github.io/iptv/countries/fr.m3u
+```
+Channels: 100+ French channels (BFM TV, Arte, France 24, Canal+)
+
+**2. ipstreet312/freeiptv** ✅ (HTTP 200)
+```
+https://raw.githubusercontent.com/ipstreet312/freeiptv/master/all.m3u
+```
+Includes: BFM, CNEWS, France 24, Euronews, TV5MONDE
+
+**3. IPTV Scraper Zilla** ✅ (WORKING)
+- GitHub: https://github.com/abusaeeidx/IPTV-Scraper-Zilla
+- Combined playlist: https://raw.githubusercontent.com/abusaeeidx/IPTV-Scraper-Zilla/main/combined-playlist.m3u
+- Auto-updates hourly via GitHub Actions
+- Includes: SamsungTVPlus, PlutoTV, Plex, Roku channels
+
+**4. XTVZ_ (French IPTV)** 🇫🇷
+- GitHub: https://github.com/LeBazarDeBryan/XTVZ_
+- French-specific playlists
+- External sources:
+  - K-NET: `http://v.ktv.zone/l.m3u`
+  - K-NET API: `https://api-tv.k-sys.ch/m3u8`
+  - PlutoTV FR: `https://i.mjh.nz/PlutoTV/fr.m3u8`
+  - SamsungTV+ FR: `https://i.mjh.nz/SamsungTVPlus/fr.m3u8`
+
+### npm PACKAGES FOR STREAMING
+
+**@movie-web/providers**
+- npm: https://www.npmjs.com/package/@movie-web/providers
+- Install: `npm i @movie-web/providers`
+- Multi-platform (browser + server)
+- Used by Stremio addons
+
+### VERIFIED PLAYLIST STATUS
+
+| Source | Status | Channels |
+|--------|--------|----------|
+| iptv-org/fr.m3u | ✅ 200 | 100+ French |
+| ipstreet312/all.m3u | ✅ 200 | Multi-region |
+| PlutoTV/fr.m3u8 | ❌ 404 | - |
+| SamsungTVPlus/fr.m3u8 | ❌ 404 | - |
+| IPTV-Scraper-Zilla | ✅ Working | 1000+ channels |
+
+### INTEGRATION PRIORITY (Updated)
+
+**Immediate (Ready to integrate)**:
+1. VidZee - multiple servers, AES decryption ready
+2. MP4Hydra - direct MP4 downloads
+3. French Live TV from iptv-org (verified working)
+4. IPTV Scraper Zilla combined playlist
+
+**Short-term**:
+1. MoviesMod/UHDMovies - for premium 4K content
+2. VidSrc Scraper (requires Playwright)
+
+---
+
+## PART 12: COMPLETE PROVIDER INVENTORY (TMDB-Embed-API)
+
+All providers found in `/tmp/TMDB-Embed-API/providers/`:
+
+### 1. **Showbox.js** (FebBox Integration)
+- Multi-region cookie management (USA5, USA6, USA7)
+- Stream from febbox.com
+- Cookie rotation with quota awareness
+- Caches stream sizes for efficiency
+- File size reporting (KB/MB/GB)
+
+### 2. **4khdhub.js** (Premium 4K Content)
+- Domains: fetched from `phisher98/TVVVV` repo
+- Extractors: HubCloud, HubDrive, BuzzServer, FSL Server, Pixeldrain, S3 Server, 10Gbps Server
+- Decoding: Base64 + ROT13 chain
+- URL validation with trusted hosts (pixeldrain.dev)
+- Levenshtein + Jaccard similarity for title matching
+
+### 3. **vidsrcextractor.js** (VidSrc.xyz)
+- Source: vidsrc.xyz/embed
+- Servers parsed from `.serversList .server`
+- PRORCPhandler: extracts `file: 'url'` from script
+- SRCRCPhandler: iframe-based extraction
+- Master M3U8 parsing with quality sorting
+
+### 4. **vixsrc.js** ✅ ACTIVE
+- URL: vixsrc.to
+- Extraction: `window.masterPlaylist` with token/expires
+- Subtitles: sub.wyzie.ru API
+
+### 5. **VidZee.js**
+- API: `player.vidzee.wtf/api/server`
+- 10 servers (sr=1-10)
+- AES-CBC decryption: key=`qrincywincyspider` (padded to 32 bytes)
+- Format: Base64(iv:cipher)
+
+### 6. **MP4Hydra.js**
+- API: `mp4hydra.org/info2?v=8`
+- FormData with slug/type/season/episode
+- Servers: Beta, Beta#3
+- Returns direct MP4 URLs with subtitles
+
+### 7. **moviesmod.js**
+- Domain: dynamic from phisher98 repo
+- Search + fuzzy matching with string-similarity
+- Resolvers: dramadrip, cinematickit, modrefer.in, driveseed
+- Cookie jar session management
+- WorkerSeed resolution
+
+### 8. **uhdmovies.js**
+- Similar to moviesmod architecture
+- Supports 4K/HDR/Dolby Vision content
+- SID link resolution (tech.unblockedgames.world)
+- Resume Cloud + Instant Download methods
+
+### 9. **registry.js**
+- Provider registry/configuration
+
+---
+
+## PART 13: GITHUB SOURCES INVENTORY
+
+### VOD Stream Extractors
+
+| Repo | Stars | What it does |
+|------|-------|--------------|
+| [TMDB-Embed-API](https://github.com/Inside4ndroid/TMDB-Embed-API) | Active | Multi-provider VOD API |
+| [vidsrc-scraper](https://github.com/DivineChile/vidsrc-scraper) | Active | Playwright-based VidSrc extraction |
+| [vidsrc-bypass](https://github.com/Gradleless/vidsrc-bypass) | TypeScript | Embed.su, VidSrc.rip, Vidlink.pro |
+| [vidsrc-me-resolver](https://github.com/Ciarands/vidsrc-me-resolver) | Python | M3u8 resolver for vidsrc.me |
+| [movie-web-providers](https://github.com/jonbarrow/movie-web-providers) | NPM | @movie-web/providers package |
+
+### IPTV Playlists
+
+| Repo | Channels | French Content |
+|------|----------|----------------|
+| [iptv-org/iptv](https://github.com/iptv-org/iptv) | 10,000+ | ✅ fr.m3u |
+| [IPTV-Scraper-Zilla](https://github.com/abusaeeidx/IPTV-Scraper-Zilla) | 1000+ | ✅ via combined |
+| [ipstreet312/freeiptv](https://github.com/ipstreet312/freeiptv) | Multi | ✅ BFM, CNEWS |
+| [XTVZ_](https://github.com/LeBazarDeBryan/XTVZ_) | French-only | ✅ TNT, Streaming |
+
+### French-Specific Resources
+
+| Source | Type | Status |
+|--------|------|--------|
+| iptv-org France playlist | Live TV | ✅ 100+ channels |
+| K-NET | Live TV | Needs verification |
+| xmltvfr.fr | EPG | Available |
+
+---
+
+## PART 14: DECRYPTION METHODS REFERENCE
+
+### VidZee AES Decryption
+```javascript
+// Key: "qrincywincyspider" padded to 32 bytes
+// Mode: AES-256-CBC
+// Input: Base64(Base64(iv):Base64(cipher))
+const keyStr = 'qrincywincyspider'.padEnd(32, '\0');
+const iv = CryptoJS.enc.Base64.parse(ivB64);
+const decrypted = CryptoJS.AES.decrypt(cipherB64, keyUtf8, {
+  iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7
+});
+```
+
+### 4KHDHub Decode Chain
+```javascript
+// Pattern: Base64 -> Base64 -> ROT13 -> Base64
+const decoded = base64Decode(rot13(base64Decode(base64Decode(encoded))));
+```
+
+### VidSrc PRO HLS
+```javascript
+// Look for: file: 'URL' in script
+const regex = /file:\s*'([^']*)'/gm;
+```
+
+### Vixsrc Token Extraction
+```javascript
+// window.masterPlaylist extraction
+const urlMatch = html.match(/url:\s*['"]([^'"]+)['"]/);
+const tokenMatch = html.match(/['"]?token['"]?\s*:\s*['"]([^'"]+)['"]/);
+const expiresMatch = html.match(/['"]?expires['"]?\s*:\s*['"]([^'"]+)['"]/);
+```
+
+---
+
+*Research compiled by ZION SYNAPSE - December 5-6, 2025*
+*Total sources: 70+ platforms, APIs, and repositories*
+*Providers cataloged: 9 VOD providers + 4 IPTV sources*

@@ -9,6 +9,7 @@
 import express from 'express';
 import frenchVOD from '../services/french-vod.service.js';
 import streamExtractor from '../services/stream-extractor.service.js';
+import frenchLiveTV from '../services/french-livetv.service.js';
 import logger from '../utils/logger.js';
 
 const router = express.Router();
@@ -265,6 +266,123 @@ router.get('/proxy', async (req, res) => {
     proxyRes.body.pipe(res);
   } catch (error) {
     logger.error('[Proxy] Error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// FRENCH LIVE TV ENDPOINTS
+// ============================================
+
+/**
+ * GET /api/french-vod/livetv/channels
+ * Get all French live TV channels
+ */
+router.get('/livetv/channels', async (req, res) => {
+  try {
+    const channels = await frenchLiveTV.getFrenchChannels();
+
+    res.json({
+      success: true,
+      count: channels.length,
+      source: 'iptv-org',
+      channels
+    });
+  } catch (error) {
+    logger.error('Error in /french-vod/livetv/channels:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/livetv/featured
+ * Get featured/popular French channels
+ */
+router.get('/livetv/featured', async (req, res) => {
+  try {
+    const { featured, rest } = await frenchLiveTV.getFeaturedChannels();
+
+    res.json({
+      success: true,
+      featured: {
+        count: featured.length,
+        channels: featured
+      },
+      other: {
+        count: rest.length,
+        channels: rest.slice(0, 50) // First 50 others
+      }
+    });
+  } catch (error) {
+    logger.error('Error in /french-vod/livetv/featured:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/livetv/groups
+ * Get channel categories/groups
+ */
+router.get('/livetv/groups', async (req, res) => {
+  try {
+    const groups = await frenchLiveTV.getGroups();
+
+    res.json({
+      success: true,
+      count: groups.length,
+      groups
+    });
+  } catch (error) {
+    logger.error('Error in /french-vod/livetv/groups:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/livetv/search
+ * Search French channels
+ */
+router.get('/livetv/search', async (req, res) => {
+  try {
+    const { q } = req.query;
+
+    if (!q) {
+      return res.status(400).json({ success: false, error: 'Query "q" required' });
+    }
+
+    const channels = await frenchLiveTV.searchChannels(q);
+
+    res.json({
+      success: true,
+      query: q,
+      count: channels.length,
+      channels
+    });
+  } catch (error) {
+    logger.error('Error in /french-vod/livetv/search:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * GET /api/french-vod/livetv/channel/:id
+ * Get single channel by ID
+ */
+router.get('/livetv/channel/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const channel = await frenchLiveTV.getChannel(id);
+
+    if (!channel) {
+      return res.status(404).json({ success: false, error: 'Channel not found' });
+    }
+
+    res.json({
+      success: true,
+      channel
+    });
+  } catch (error) {
+    logger.error('Error in /french-vod/livetv/channel:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });

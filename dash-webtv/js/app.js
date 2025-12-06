@@ -783,7 +783,7 @@ class DashApp {
         content = this.renderMyListPage()
         break
       case 'french':
-        content = this.renderFrenchPage()
+        content = await this.renderFrenchPage()
         break
       default:
         content = '<div class="empty-state"><h2>Page not found</h2></div>'
@@ -1265,7 +1265,7 @@ class DashApp {
     `
   }
 
-  renderFrenchPage() {
+  async renderFrenchPage() {
     // Get French Cinema movies from local data
     let movies = (this.localMovies || []).filter(m =>
       m.category_name === 'FRENCH CINEMA' ||
@@ -1281,12 +1281,26 @@ class DashApp {
 
     const totalMovies = movies.length
 
+    // Fetch French Live TV channels
+    let liveChannels = []
+    try {
+      const res = await fetch(`${this.backendUrl}/api/french-vod/livetv/featured`)
+      if (res.ok) {
+        const data = await res.json()
+        if (data.success) {
+          liveChannels = [...(data.featured?.channels || []), ...(data.other?.channels || []).slice(0, 30)]
+        }
+      }
+    } catch (e) {
+      console.warn('[French] Failed to fetch live TV:', e.message)
+    }
+
     return `
       <div class="fade-in">
         <div class="browse-header">
           <div class="browse-title-row">
             <div class="browse-icon" style="font-size: 28px;">🇫🇷</div>
-            <h1 class="browse-title">French Cinema</h1>
+            <h1 class="browse-title">French Hub</h1>
           </div>
           <div class="browse-stats">
             <div class="browse-stat">
@@ -1298,8 +1312,17 @@ class DashApp {
                 <span class="browse-stat-label">French Movies</span>
               </div>
             </div>
+            <div class="browse-stat">
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/></svg>
+              </div>
+              <div class="browse-stat-info">
+                <span class="browse-stat-value">${liveChannels.length}</span>
+                <span class="browse-stat-label">Live Channels</span>
+              </div>
+            </div>
           </div>
-          <p class="browse-subtitle">Films français - French movies and international films</p>
+          <p class="browse-subtitle">Films français et chaines TV en direct - French movies & Live TV</p>
         </div>
 
         <div class="browse-notice" style="background: rgba(255,165,0,0.1); border: 1px solid rgba(255,165,0,0.3); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
@@ -1307,13 +1330,56 @@ class DashApp {
           <span style="color: #ffa500; font-size: 14px;">Free content from external sources - quality may vary</span>
         </div>
 
+        ${liveChannels.length > 0 ? `
+          <!-- French Live TV Section -->
+          <div class="section-header" style="margin-bottom: 16px;">
+            <div class="section-title-row">
+              <svg class="section-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px; stroke: #ef4444;">
+                <circle cx="12" cy="12" r="2"/>
+                <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/>
+              </svg>
+              <h2 style="color: white; font-size: 1.25rem; font-weight: 600;">French Live TV</h2>
+              <div class="live-indicator" style="margin-left: 8px;">
+                <span class="live-dot-pulse"></span>
+                LIVE
+              </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.875rem; margin-top: 4px;">Free French channels - TF1, France 2, Arte, BFM & more</p>
+          </div>
+
+          <div class="live-grid" style="margin-bottom: 40px;">
+            ${this.renderFrenchLiveGrid(liveChannels.slice(0, 20))}
+          </div>
+
+          ${liveChannels.length > 20 ? `
+            <div class="load-more-container" style="margin-bottom: 40px;">
+              <button class="btn btn-primary" onclick="dashApp.showAllFrenchTV()">View All ${liveChannels.length} Channels</button>
+            </div>
+          ` : ''}
+
+          <div class="section-divider" style="border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0 30px;"></div>
+
+          <!-- French Movies Section -->
+          <div class="section-header" style="margin-bottom: 16px;">
+            <div class="section-title-row">
+              <svg class="section-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px; stroke: #3b82f6;">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+                <line x1="7" y1="2" x2="7" y2="22"/>
+                <line x1="17" y1="2" x2="17" y2="22"/>
+              </svg>
+              <h2 style="color: white; font-size: 1.25rem; font-weight: 600;">French Cinema</h2>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.875rem; margin-top: 4px;">Films français - French movies from TMDB</p>
+          </div>
+        ` : ''}
+
         <div class="content-grid movies-grid">
           ${movies.slice(0, 100).map(movie => this.renderMovieCard(movie)).join('')}
         </div>
 
         ${movies.length > 100 ? `
           <div class="load-more-container">
-            <button class="btn btn-primary" onclick="dashApp.loadMoreFrench()">Load More</button>
+            <button class="btn btn-primary" onclick="dashApp.loadMoreFrench()">Load More Movies</button>
           </div>
         ` : ''}
       </div>
@@ -2029,6 +2095,140 @@ class DashApp {
         ${year ? `<div class="neon-year">${year}</div>` : ''}
       </div>
     `
+  }
+
+  // French Live TV Grid (from iptv-org free playlist)
+  renderFrenchLiveGrid(channels) {
+    if (!channels || channels.length === 0) {
+      return `<div class="empty-state"><div class="empty-state-title">No French channels available</div></div>`
+    }
+
+    return channels.map(channel => {
+      const logo = channel.logo || null
+      const name = channel.name || 'Unknown Channel'
+      const id = channel.id
+      const hasLogo = logo && logo.length > 5
+      const group = channel.group || ''
+
+      // Generate deterministic colors
+      const colors = [
+        ['#0055a4', '#ef4135'],  // French blue to red
+        ['#9d4edd', '#3a86ff'],
+        ['#00d9ff', '#9d4edd'],
+        ['#48dbfb', '#10ac84'],
+        ['#ff9f43', '#ee5a24'],
+      ]
+      const colorIndex = name.charCodeAt(0) % colors.length
+      const [color1, color2] = colors[colorIndex]
+
+      const escapedName = name.replace(/'/g, "\\'")
+      const escapedUrl = (channel.url || '').replace(/'/g, "\\'")
+
+      return `
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'}"
+             onclick="dashApp.playFrenchLiveChannel('${escapedUrl}', '${escapedName}')"
+             style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
+          ${hasLogo ? `
+            <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
+                 onerror="this.parentElement.classList.add('live-card-glow');this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="live-card-fallback" style="display:none;">
+              <div class="live-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="2"/>
+                  <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/>
+                </svg>
+              </div>
+            </div>
+          ` : `
+            <div class="live-card-fallback">
+              <div class="live-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="2"/>
+                  <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/>
+                </svg>
+              </div>
+            </div>
+          `}
+          <div class="live-card-overlay">
+            <div class="live-badge">
+              <span class="live-dot"></span>
+              LIVE
+            </div>
+          </div>
+          <div class="live-card-name-bar">${name}</div>
+        </div>
+      `
+    }).join('')
+  }
+
+  // Play French Live TV channel (direct HLS from iptv-org)
+  playFrenchLiveChannel(streamUrl, channelName) {
+    console.log(`[FrenchTV] Playing: ${channelName}`)
+    console.log(`[FrenchTV] URL: ${streamUrl}`)
+
+    if (!streamUrl) {
+      this.showToast('Stream URL not available', 'error')
+      return
+    }
+
+    // Detect format
+    const isHLS = streamUrl.includes('.m3u8')
+    const isDash = streamUrl.includes('.mpd')
+    const isTS = streamUrl.includes('.ts') || streamUrl.includes(':8080') || streamUrl.includes(':8000')
+
+    // Use our player
+    this.openVideoPlayer({
+      url: streamUrl,
+      title: channelName,
+      type: 'live',
+      format: isHLS ? 'hls' : (isDash ? 'dash' : (isTS ? 'ts' : 'hls')),
+      isLive: true,
+      source: 'french-free'
+    })
+  }
+
+  // Show all French TV channels
+  async showAllFrenchTV() {
+    try {
+      const res = await fetch(`${this.backendUrl}/api/french-vod/livetv/channels`)
+      if (!res.ok) throw new Error('Failed to fetch channels')
+
+      const data = await res.json()
+      if (!data.success) throw new Error(data.error)
+
+      // Store channels and render full grid
+      this.frenchLiveChannels = data.channels
+
+      // Re-render page with all channels
+      const container = document.getElementById('pageContainer')
+      container.innerHTML = `
+        <div class="fade-in">
+          <div class="browse-header">
+            <div class="browse-title-row">
+              <button class="btn btn-icon btn-outline" onclick="dashApp.navigate('french')" style="margin-right: 12px;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 18l-6-6 6-6"/>
+                </svg>
+              </button>
+              <div class="browse-icon" style="font-size: 28px;">🇫🇷</div>
+              <h1 class="browse-title">French Live TV</h1>
+              <div class="live-indicator" style="margin-left: 8px;">
+                <span class="live-dot-pulse"></span>
+                LIVE
+              </div>
+            </div>
+            <p class="browse-subtitle">${data.count} free French channels from iptv-org</p>
+          </div>
+
+          <div class="live-grid">
+            ${this.renderFrenchLiveGrid(data.channels)}
+          </div>
+        </div>
+      `
+    } catch (error) {
+      console.error('[FrenchTV] Error:', error)
+      this.showToast('Failed to load channels', 'error')
+    }
   }
 
   // Premium Live TV Grid with Glow Cards
