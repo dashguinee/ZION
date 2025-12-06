@@ -2126,10 +2126,11 @@ class DashApp {
 
       const escapedName = name.replace(/'/g, "\\'")
       const escapedUrl = (channel.url || '').replace(/'/g, "\\'")
+      const needsProxy = channel.needsProxy || false
 
       return `
         <div class="live-card ${hasLogo ? '' : 'live-card-glow'}"
-             onclick="dashApp.playFrenchLiveChannel('${escapedUrl}', '${escapedName}')"
+             onclick="dashApp.playFrenchLiveChannel('${escapedUrl}', '${escapedName}', ${needsProxy})"
              style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
           ${hasLogo ? `
             <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
@@ -2165,13 +2166,22 @@ class DashApp {
   }
 
   // Play French Live TV channel (direct HLS from iptv-org)
-  playFrenchLiveChannel(streamUrl, channelName) {
+  // Uses proxy for CORS issues, detects format automatically
+  playFrenchLiveChannel(streamUrl, channelName, useProxy = false) {
     console.log(`[FrenchTV] Playing: ${channelName}`)
     console.log(`[FrenchTV] URL: ${streamUrl}`)
+    console.log(`[FrenchTV] Using proxy: ${useProxy}`)
 
     if (!streamUrl) {
       this.showToast('Stream URL not available', 'error')
       return
+    }
+
+    // Apply proxy if needed (for CORS issues)
+    let finalUrl = streamUrl
+    if (useProxy) {
+      finalUrl = `https://dash-webtv-proxy.dash-webtv.workers.dev/?url=${encodeURIComponent(streamUrl)}`
+      console.log(`[FrenchTV] Proxied URL: ${finalUrl}`)
     }
 
     // Detect format and use appropriate player
@@ -2182,16 +2192,95 @@ class DashApp {
     if (isDash) {
       // DASH streams need dash.js - use our DASH player
       console.log('[FrenchTV] DASH stream detected, using dash.js')
-      this.playDashStream(streamUrl, channelName)
+      this.playDashStream(finalUrl, channelName)
     } else if (isHLS) {
-      // HLS streams - use hls.js or native
-      this.showVideoPlayer(streamUrl, 'live', 'hls', channelName)
+      // HLS streams - try direct first, retry with proxy on CORS error
+      this.playFrenchHLS(finalUrl, streamUrl, channelName, useProxy)
     } else if (isTS) {
       // MPEG-TS streams - use mpegts.js
-      this.showVideoPlayer(streamUrl, 'live', 'mpegts', channelName)
+      this.showVideoPlayer(finalUrl, 'live', 'mpegts', channelName)
     } else {
       // Default to HLS (most common)
-      this.showVideoPlayer(streamUrl, 'live', 'hls', channelName)
+      this.playFrenchHLS(finalUrl, streamUrl, channelName, useProxy)
+    }
+  }
+
+  // Play French HLS with automatic CORS retry
+  playFrenchHLS(url, originalUrl, channelName, alreadyProxied) {
+    console.log(`[FrenchTV] Playing HLS: ${url}`)
+
+    this.closeVideoPlayer()
+
+    const channelOverlay = channelName ? `
+      <div class="channel-overlay">
+        <div class="channel-name">${channelName}</div>
+      </div>
+    ` : ''
+
+    const playerHTML = `
+      <div class="video-player-container">
+        <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
+        ${channelOverlay}
+        <div class="video-loading">
+          <div class="spinner"></div>
+          <div>Loading stream...</div>
+        </div>
+        <video id="frenchPlayer" controls autoplay playsinline style="width:100%;height:100%;background:#000;"></video>
+      </div>
+    `
+    this.elements.videoPlayerContainer.innerHTML = playerHTML
+
+    const video = document.getElementById('frenchPlayer')
+    const loadingEl = this.elements.videoPlayerContainer.querySelector('.video-loading')
+
+    video.addEventListener('playing', () => {
+      if (loadingEl) loadingEl.style.display = 'none'
+    })
+
+    if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+      const hls = new Hls({
+        enableWorker: true,
+        lowLatencyMode: true,
+        xhrSetup: (xhr) => {
+          xhr.timeout = 15000
+        }
+      })
+
+      hls.loadSource(url)
+      hls.attachMedia(video)
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        console.log('[FrenchTV] ✅ Manifest loaded')
+        video.play().catch(e => console.log('[FrenchTV] Autoplay blocked:', e))
+      })
+
+      hls.on(Hls.Events.ERROR, (event, data) => {
+        console.log(`[FrenchTV] ❌ HLS Error: ${data.type} ${data.details}`)
+
+        // If CORS error and not already proxied, retry with proxy
+        if (!alreadyProxied && (data.details === 'manifestLoadError' || data.type === 'networkError')) {
+          console.log('[FrenchTV] 🔄 Retrying with proxy...')
+          hls.destroy()
+          this.playFrenchLiveChannel(originalUrl, channelName, true)
+          return
+        }
+
+        // Fatal error
+        if (data.fatal) {
+          if (loadingEl) loadingEl.innerHTML = '<div>Stream unavailable. Try another channel.</div>'
+        }
+      })
+
+      this._frenchHls = hls
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // Safari native HLS
+      video.src = url
+      video.addEventListener('error', () => {
+        if (!alreadyProxied) {
+          console.log('[FrenchTV] 🔄 Safari error, retrying with proxy...')
+          this.playFrenchLiveChannel(originalUrl, channelName, true)
+        }
+      })
     }
   }
 
@@ -4139,6 +4228,16 @@ class DashApp {
         this.hlsInstance = null
       } catch (e) {
         console.warn('HLS cleanup warning:', e)
+      }
+    }
+
+    // Destroy French HLS instance if exists
+    if (this._frenchHls) {
+      try {
+        this._frenchHls.destroy()
+        this._frenchHls = null
+      } catch (e) {
+        console.warn('French HLS cleanup warning:', e)
       }
     }
 

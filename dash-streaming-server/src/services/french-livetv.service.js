@@ -167,21 +167,25 @@ class FrenchLiveTVService {
       const content = await response.text();
       let channels = this.parseM3U(content);
 
-      // Filter out problematic streams
+      // Filter out geo-blocked streams and mark others for proxy
       channels = channels.filter(ch => {
         if (!ch.url) return false;
         const urlLower = ch.url.toLowerCase();
 
-        // Block geo-restricted domains
+        // Block geo-restricted domains (can't be proxied)
         if (this.geoBlockedDomains.some(domain => urlLower.includes(domain))) return false;
 
-        // Block CORS-problematic domains
-        if (this.corsBlockedDomains.some(domain => urlLower.includes(domain))) return false;
-
-        // Block HTTP streams (mixed content blocked by browsers)
-        if (urlLower.startsWith('http://')) return false;
-
         return true;
+      });
+
+      // Mark streams that need proxy (HTTP or CORS issues)
+      channels = channels.map(ch => {
+        const urlLower = ch.url.toLowerCase();
+        const needsProxy =
+          urlLower.startsWith('http://') || // HTTP needs proxy for HTTPS page
+          this.corsBlockedDomains.some(domain => urlLower.includes(domain));
+
+        return { ...ch, needsProxy };
       });
 
       // Filter for quality - remove [Not 24/7] and [Geo-blocked] markers
