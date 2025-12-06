@@ -19,6 +19,7 @@ import frenchVodRouter from './routes/french-vod.js';
 import contentHealthRouter from './routes/content-health.js';
 import packagesRouter from './routes/packages.js';
 import walletRouter from './routes/wallet.js';
+import xtreamProxyRouter from './routes/xtream-proxy.js';
 import contentHealthService from './services/content-health.service.js';
 
 const app = express();
@@ -76,6 +77,7 @@ app.use('/api/french-vod', frenchVodRouter);  // French VOD (Frembed, VidSrc emb
 app.use('/api/health', contentHealthRouter);  // Content health, user reports, duplicates (Elite Tier)
 app.use('/api/packages', packagesRouter);  // Custom package builder
 app.use('/api/wallet', walletRouter);  // DASH Wallet system
+app.use('/api/xtream', xtreamProxyRouter);  // Xtream API proxy (for series info, vod info)
 
 // Root endpoint
 app.get('/', (req, res) => {

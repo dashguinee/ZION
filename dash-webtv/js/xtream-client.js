@@ -121,8 +121,8 @@ class XtreamClient {
       return null
     }
 
-    // Use Vercel serverless proxy for API metadata calls
-    const url = new URL('/api/proxy', window.location.origin)
+    // Use Railway backend proxy for API metadata calls (works from any frontend)
+    const url = new URL('/api/xtream', this.backendUrl)
     url.searchParams.set('username', this.username)
     url.searchParams.set('password', this.password)
 
