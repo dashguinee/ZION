@@ -3,11 +3,11 @@
  * Extracts direct video streams from embed providers
  * No ads, no redirects - just raw HLS/MP4 URLs
  *
- * Based on reverse engineering of vidsrc-me-resolver
- * Handles hunter obfuscation and XOR decryption
+ * WORKING: Vixsrc (primary), with fallbacks to other providers
  */
 
 import logger from '../utils/logger.js';
+import { extractFromVixsrc } from './vixsrc-provider.js';
 
 // Use native fetch (Node 18+)
 
@@ -147,9 +147,10 @@ class StreamExtractorService {
 
     logger.info(`[Extractor] Extracting stream for ${type}/${tmdbId}`);
 
-    // Try providers in order of reliability
+    // Try providers in order of reliability - VIXSRC WORKS!
     const providers = [
-      () => this.extractFromVidSrcMe(tmdbId, type, season, episode), // VidSrc.me with RCP - proven method
+      () => extractFromVixsrc(tmdbId, type, season, episode), // WORKING - direct HLS!
+      () => this.extractFromVidSrcMe(tmdbId, type, season, episode),
       () => this.extractFromMultiEmbed(tmdbId, type, season, episode),
       () => this.extractFromEmbedSu(tmdbId, type, season, episode),
       () => this.extractFromVidSrcRip(tmdbId, type, season, episode),
