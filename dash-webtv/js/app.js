@@ -2365,8 +2365,36 @@ class DashApp {
 
       // Check if this is EMBED content (French Cinema, free movies with embed_url)
       if (extension.toLowerCase() === 'embed' || movie?.embed_url || movie?.embeds) {
-        console.log(`🎬 Embed content detected - using iframe player`)
-        // Get the best embed URL
+        console.log(`🎬 Embed content detected - extracting direct stream...`)
+
+        // Try to extract direct stream from our backend API
+        const tmdbId = movie?.tmdb_id || String(id).replace('french_', '')
+        try {
+          const streamResp = await fetch(`https://zion-production-39d8.up.railway.app/api/french-vod/stream/movie/${tmdbId}`)
+          const streamData = await streamResp.json()
+
+          if (streamData.success && streamData.stream?.url) {
+            console.log(`🎬 Got direct HLS stream from ${streamData.stream.provider}`)
+
+            // Save to watch history
+            if (movie) {
+              this.saveToWatchHistory(id, 'movie', {
+                name: movie.name,
+                image: movie.stream_icon || movie.cover
+              }, 0)
+            }
+
+            this.closeModal()
+            // Use our native video player with the direct HLS URL
+            // Note: HLS.js handles the stream, vixsrc provides direct m3u8
+            this.showVideoPlayer(streamData.stream.url, 'movie', 'hls')
+            return
+          }
+        } catch (extractErr) {
+          console.warn('Stream extraction failed, falling back to embed:', extractErr)
+        }
+
+        // Fallback to embed iframe if extraction fails
         const embedUrl = movie?.embed_url || movie?.embeds?.[0]?.url
         if (embedUrl) {
           // Save to watch history before showing embed
