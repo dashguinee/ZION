@@ -3695,9 +3695,16 @@ class DashApp {
     let isSafariNativeHLS = false
 
     if (streamType === 'hls-native') {
-      // Safari native HLS - direct video.src assignment
-      isSafariNativeHLS = true
-      console.log('🍎 Using Safari native HLS playback')
+      // hls-native means "try native first, fall back to hls.js"
+      // Safari has native HLS support, other browsers need hls.js
+      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        isSafariNativeHLS = true
+        console.log('🍎 Using Safari native HLS playback')
+      } else {
+        // Non-Safari browser - use hls.js
+        isHLS = true
+        console.log('📡 Using hls.js for HLS playback (non-Safari)')
+      }
     } else if (streamType === 'mpegts') {
       isMpegTS = true
       console.log('📡 Using MPEG-TS with mpegts.js')
