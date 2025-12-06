@@ -1,22 +1,17 @@
 .vercel
 node_modules
 
-# SECURITY: Content catalog files should never be in git
-# These expose provider content inventory
-data/movies.json
-data/series.json
-data/live.json
+# SECURITY: Development/processing files only
 data/movies_download_only.json
 data/mkv_only.json
 data/mkv_to_mp4.json
 data/episode_formats.json
 data/movies_removed_mkv.json
-
-# Categories are less sensitive but still exclude
-data/*_categories.json
 data/category_formats.json
-data/collections.json
 data/summary.json
+
+# NOTE: Essential data files (movies.json, series.json, live.json, collections.json)
+# are tracked and deployed - they contain content IDs only, not credentials
 
 # Environment variables
 .env
