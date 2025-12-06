@@ -25,12 +25,7 @@ class DashApp {
       selectedCategory: null,
       searchQuery: '',
       favorites: this.loadFavorites(),
-      watchHistory: this.loadWatchHistory(),
-      // User tier info from DASH admin system
-      userTier: null,
-      userPackage: null,
-      tierEndpoints: null,
-      starshareEnabled: false
+      watchHistory: this.loadWatchHistory()
     }
 
     // DOM Elements
@@ -138,268 +133,9 @@ class DashApp {
 
       // Build season groupings for series
       this.buildSeriesGroups()
-
-      // Load FREE channels from backend
-      await this.loadFreeChannels()
     } catch (err) {
       console.error('❌ Failed to load local data:', err)
-      // Try to load free channels even if local data fails
-      await this.loadFreeChannels()
     }
-  }
-
-  /**
-   * Load FREE channels from backend (iptv-org + direct sources)
-   * These are legal, free streams available to all users
-   */
-  async loadFreeChannels() {
-    console.log('🆓 Loading FREE channels from backend...')
-    try {
-      const backendUrl = this.client.backendUrl || 'https://zion-production-39d8.up.railway.app'
-      const response = await fetch(`${backendUrl}/api/free/channels`)
-
-      if (!response.ok) {
-        console.warn('⚠️ Free channels API not available')
-        return
-      }
-
-      const data = await response.json()
-      if (!data.success || !data.channels) {
-        console.warn('⚠️ No free channels returned')
-        return
-      }
-
-      // Transform free channels to match local format
-      this.freeChannels = data.channels.map((ch, index) => ({
-        stream_id: `free_${index}_${ch.id || index}`,
-        name: ch.name,
-        stream_icon: ch.logo || '',
-        category_id: this.getFreeChannelCategory(ch),
-        isFree: true,
-        freeSource: ch.source,
-        streamUrl: ch.url,
-        streamType: ch.type || 'hls',
-        group: ch.group
-      }))
-
-      // Create free channel categories
-      this.freeCategories = [
-        { category_id: 'free_all', category_name: '🆓 All Free', isFree: true },
-        { category_id: 'free_guinea', category_name: '🇬🇳 Guinea', isFree: true },
-        { category_id: 'free_sports', category_name: '⚽ Sports', isFree: true },
-        { category_id: 'free_french', category_name: '🇫🇷 French', isFree: true },
-        { category_id: 'free_news', category_name: '📰 News', isFree: true }
-      ]
-
-      console.log(`🆓 Loaded ${this.freeChannels.length} FREE channels!`)
-
-      // Merge with existing live channels (free channels first for visibility)
-      if (!this.localLive) this.localLive = []
-      this.localLive = [...this.freeChannels, ...this.localLive]
-
-    } catch (err) {
-      console.warn('⚠️ Could not load free channels:', err.message)
-      this.freeChannels = []
-      this.freeCategories = []
-    }
-  }
-
-  /**
-   * Determine category for free channel based on its group/name
-   */
-  getFreeChannelCategory(channel) {
-    const name = (channel.name || '').toLowerCase()
-    const group = (channel.group || '').toLowerCase()
-
-    if (name.includes('guinea') || name.includes('gn') || group.includes('guinea')) {
-      return 'free_guinea'
-    }
-    if (group.includes('sport') || name.includes('sport') || name.includes('football')) {
-      return 'free_sports'
-    }
-    if (group.includes('news') || name.includes('news') || name.includes('info')) {
-      return 'free_news'
-    }
-    // Default to french for francophone channels
-    return 'free_french'
-  }
-
-  /**
-   * Load French VOD content from backend API
-   * Uses Frembed + VidSrc embed providers (90,000+ French content)
-   */
-  async loadFrenchVOD() {
-    console.log('🇫🇷 Loading French VOD content...')
-    try {
-      const backendUrl = this.client.backendUrl || 'https://zion-production-39d8.up.railway.app'
-      const [statsRes, moviesRes] = await Promise.all([
-        fetch(`${backendUrl}/api/french-vod/stats`),
-        fetch(`${backendUrl}/api/french-vod/curated`)
-      ])
-
-      const stats = await statsRes.json()
-      const curated = await moviesRes.json()
-
-      this.frenchVODStats = stats
-      this.frenchVODMovies = curated.movies || []
-
-      console.log(`🇫🇷 French VOD ready: ${this.frenchVODMovies.length} curated movies`)
-      console.log(`📊 Providers: ${stats.providers?.map(p => p.name).join(', ')}`)
-    } catch (err) {
-      console.warn('⚠️ Could not load French VOD:', err.message)
-      this.frenchVODStats = null
-      this.frenchVODMovies = []
-    }
-  }
-
-  /**
-   * Render French VOD page with embed-based movies
-   */
-  async renderFrenchVODPage() {
-    // Load if not already loaded
-    if (!this.frenchVODStats) {
-      await this.loadFrenchVOD()
-    }
-
-    const stats = this.frenchVODStats || {}
-    const movies = this.frenchVODMovies || []
-    const estimated = stats.estimated_content || {}
-
-    return `
-      <div class="page-content french-vod-page">
-        <!-- French VOD Header -->
-        <div class="french-header" style="background: linear-gradient(135deg, #002395 0%, #FFFFFF 50%, #ED2939 100%); padding: 30px 20px; border-radius: 16px; margin-bottom: 24px;">
-          <h1 style="font-size: 2rem; margin: 0 0 8px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">🇫🇷 French Cinema</h1>
-          <p style="opacity: 0.9; margin: 0;">24,000+ French Movies • 80,000+ Episodes • Free Streaming</p>
-        </div>
-
-        <!-- Stats Cards -->
-        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px;">
-          <div class="stat-card" style="background: rgba(157, 78, 221, 0.2); padding: 20px; border-radius: 12px; text-align: center;">
-            <div style="font-size: 1.5rem; font-weight: bold; color: #9D4EDD;">${estimated.french_movies || '24,000+'}</div>
-            <div style="opacity: 0.7; font-size: 0.85rem;">French Movies</div>
-          </div>
-          <div class="stat-card" style="background: rgba(59, 130, 246, 0.2); padding: 20px; border-radius: 12px; text-align: center;">
-            <div style="font-size: 1.5rem; font-weight: bold; color: #3B82F6;">${estimated.french_episodes || '80,000+'}</div>
-            <div style="opacity: 0.7; font-size: 0.85rem;">French Episodes</div>
-          </div>
-          <div class="stat-card" style="background: rgba(34, 197, 94, 0.2); padding: 20px; border-radius: 12px; text-align: center;">
-            <div style="font-size: 1.5rem; font-weight: bold; color: #22C55E;">${estimated.international_movies || '66,000+'}</div>
-            <div style="opacity: 0.7; font-size: 0.85rem;">International</div>
-          </div>
-        </div>
-
-        <!-- How It Works -->
-        <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin-bottom: 24px;">
-          <h3 style="margin: 0 0 8px; font-size: 1rem;">💡 How It Works</h3>
-          <p style="margin: 0; opacity: 0.8; font-size: 0.9rem;">Click any movie to open the embed player. Multiple sources available (Frembed, VidSrc) - if one doesn't work, try another!</p>
-        </div>
-
-        <!-- Curated French Movies -->
-        <h2 class="section-title" style="margin-bottom: 16px;">🎬 Curated French Cinema</h2>
-        <div class="content-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px;">
-          ${movies.length > 0 ? movies.map(movie => `
-            <div class="content-card french-movie-card" onclick="dashApp.openFrenchMovie(${movie.id})" style="cursor: pointer;">
-              <div class="card-poster" style="aspect-ratio: 2/3; overflow: hidden; border-radius: 8px; background: #1a1a2e;">
-                ${movie.poster ? `<img src="${movie.poster}" alt="${movie.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;">🎬</div>`}
-              </div>
-              <div class="card-info" style="padding: 8px 0;">
-                <div class="card-title" style="font-size: 0.9rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${movie.title}</div>
-                <div style="display: flex; gap: 8px; font-size: 0.75rem; opacity: 0.7;">
-                  ${movie.year ? `<span>${movie.year}</span>` : ''}
-                  ${movie.rating ? `<span>⭐ ${movie.rating.toFixed(1)}</span>` : ''}
-                </div>
-              </div>
-            </div>
-          `).join('') : '<p style="opacity: 0.6; grid-column: 1/-1;">Loading French movies... Try refreshing the page.</p>'}
-        </div>
-
-        <!-- Search Any Movie -->
-        <div style="margin-top: 32px; padding: 20px; background: rgba(157, 78, 221, 0.1); border-radius: 12px; border: 1px solid rgba(157, 78, 221, 0.3);">
-          <h3 style="margin: 0 0 12px;">🔍 Search Any Movie by IMDB/TMDB ID</h3>
-          <p style="opacity: 0.8; margin-bottom: 16px; font-size: 0.9rem;">Enter an IMDB ID (like tt0137523) or TMDB ID (like 550) to watch any movie:</p>
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="frenchSearchInput" placeholder="tt0137523 or 550" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white;">
-            <button onclick="dashApp.searchFrenchById()" style="padding: 12px 24px; background: #9D4EDD; border: none; border-radius: 8px; color: white; cursor: pointer; font-weight: 500;">Watch</button>
-          </div>
-        </div>
-      </div>
-    `
-  }
-
-  /**
-   * Open French movie embed player
-   */
-  openFrenchMovie(tmdbId) {
-    const backendUrl = this.client.backendUrl || 'https://zion-production-39d8.up.railway.app'
-
-    // Fetch embed URLs
-    fetch(`${backendUrl}/api/french-vod/embed/movie/${tmdbId}`)
-      .then(res => res.json())
-      .then(data => {
-        if (!data.success) {
-          alert('Could not load movie embed')
-          return
-        }
-
-        const embeds = data.all_embeds || []
-        this.showFrenchEmbedPlayer(data.id, embeds)
-      })
-      .catch(err => {
-        console.error('Failed to get embed:', err)
-        alert('Failed to load movie. Please try again.')
-      })
-  }
-
-  /**
-   * Search French movie by ID
-   */
-  searchFrenchById() {
-    const input = document.getElementById('frenchSearchInput')
-    const id = input?.value?.trim()
-
-    if (!id) {
-      alert('Please enter an IMDB ID (tt1234567) or TMDB ID (12345)')
-      return
-    }
-
-    this.openFrenchMovie(id)
-  }
-
-  /**
-   * Show French embed player with source selection
-   */
-  showFrenchEmbedPlayer(id, embeds) {
-    const container = this.elements.videoPlayerContainer
-
-    const embedHTML = embeds.map((e, i) => `
-      <button onclick="dashApp.switchFrenchEmbed('${e.url}')" class="embed-source-btn" style="padding: 8px 16px; margin: 4px; background: ${i === 0 ? '#9D4EDD' : 'rgba(255,255,255,0.1)'}; border: none; border-radius: 4px; color: white; cursor: pointer;">
-        ${e.provider}
-      </button>
-    `).join('')
-
-    container.innerHTML = `
-      <div class="video-player-overlay" style="position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; flex-direction: column;">
-        <div style="padding: 16px; display: flex; justify-content: space-between; align-items: center;">
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            ${embedHTML}
-          </div>
-          <button onclick="dashApp.closeFrenchPlayer()" style="padding: 8px 16px; background: #ef4444; border: none; border-radius: 4px; color: white; cursor: pointer;">✕ Close</button>
-        </div>
-        <div style="flex: 1; padding: 0 16px 16px;">
-          <iframe id="frenchEmbedFrame" src="${embeds[0]?.url || ''}" style="width: 100%; height: 100%; border: none; border-radius: 8px;" allowfullscreen></iframe>
-        </div>
-      </div>
-    `
-  }
-
-  switchFrenchEmbed(url) {
-    const frame = document.getElementById('frenchEmbedFrame')
-    if (frame) frame.src = url
-  }
-
-  closeFrenchPlayer() {
-    this.elements.videoPlayerContainer.innerHTML = ''
   }
 
   /**
@@ -681,49 +417,29 @@ class DashApp {
       }
     }
 
-    // Deduplicate by base movie name (remove year, quality, language markers)
-    const deduped = []
-    const seenNames = new Set()
-    movies.forEach(m => {
-      if (!m || !m.name) return
-      // Normalize name: remove (2023), [Hindi], .720p. etc
-      const baseName = m.name
-        .replace(/\s*\([^)]*\)\s*/g, '')  // Remove (2023), (Hindi), etc
-        .replace(/\s*\[[^\]]*\]\s*/g, '') // Remove [Tam, Tel], etc
-        .replace(/\.\d{3,4}p\./gi, '')    // Remove .720p., .1080p.
-        .replace(/[\.\,\s]+$/g, '')       // Remove trailing dots/commas
-        .trim()
-        .toLowerCase()
-      if (!seenNames.has(baseName)) {
-        seenNames.add(baseName)
-        deduped.push(m)
-      }
-    })
-
     // Sort by rating and return limited results
-    return deduped
+    return movies
       .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
       .slice(0, limit)
   }
 
-  // Get search terms for a collection (strict matching to avoid unrelated content)
+  // Get search terms for a collection
   getCollectionSearchTerms(collectionKey) {
     const searchMap = {
-      // Strict terms - must match exact franchise names
-      'fast_furious': ['fast and furious', 'fast & furious', 'furious 7', 'furious 8', 'fate of the furious', 'f9', 'f10', 'hobbs and shaw', 'hobbs & shaw', 'tokyo drift'],
-      'marvel': ['marvel', 'avengers', 'spider-man', 'spiderman', 'iron man', 'thor:', 'hulk', 'captain america', 'guardians of the galaxy', 'black panther', 'ant-man', 'doctor strange', 'black widow', 'eternals', 'shang-chi'],
-      'dc': ['batman', 'superman', 'wonder woman', 'justice league', 'aquaman', 'the flash', 'shazam', 'joker', 'dc:'],
-      'wizarding_world': ['harry potter', 'fantastic beasts', 'secrets of dumbledore'],
-      'star_wars': ['star wars', 'a new hope', 'empire strikes', 'return of the jedi', 'phantom menace', 'attack of the clones', 'revenge of the sith', 'force awakens', 'last jedi', 'rise of skywalker', 'rogue one', 'solo:', 'mandalorian', 'book of boba', 'obi-wan', 'ahsoka', 'andor'],
-      'john_wick': ['john wick'],
-      'james_bond': ['james bond', 'bond:', 'no time to die', 'spectre', 'skyfall', 'quantum of solace', 'casino royale 2006', 'die another day', 'goldeneye', 'tomorrow never dies', 'the world is not enough', 'licence to kill', 'living daylights', 'a view to a kill', 'octopussy', 'for your eyes only', 'moonraker', 'the spy who loved me', 'goldfinger', 'thunderball', 'dr. no', 'from russia with love'],
-      'horror': ['conjuring', 'annabelle', 'insidious', 'paranormal activity', 'saw', 'scream', 'halloween', 'nightmare on elm', 'friday the 13th', 'exorcist', 'it chapter', 'hereditary', 'midsommar', 'get out', 'us 2019'],
-      'comedy': ['comedy', 'hangover', 'superbad', 'bridesmaids', 'step brothers', 'anchorman', 'ted 2', 'bad boys'],
-      'romance': ['romantic', 'notebook', 'titanic', 'pride and prejudice', 'me before you', 'fault in our stars', 'crazy rich asians', 'to all the boys'],
-      'bollywood': ['bollywood', 'shah rukh khan', 'salman khan', 'aamir khan', 'hrithik roshan', 'akshay kumar', 'deepika padukone'],
-      'african_stories': ['nollywood', 'nigeria', 'lagos', 'johannesburg', 'nairobi', 'ghana', 'south africa'],
-      'kdrama': ['korean drama', 'k-drama', 'kdrama', '(korean)'],
-      'turkish_drama': ['turkish drama', 'dizi', 'turkish series']
+      'fast_furious': ['fast', 'furious', 'f9', 'f10', 'hobbs', 'shaw'],
+      'marvel': ['marvel', 'avengers', 'spider-man', 'iron man', 'thor', 'hulk', 'captain america', 'guardians galaxy', 'black panther', 'ant-man', 'doctor strange'],
+      'dc': ['batman', 'superman', 'wonder woman', 'justice league', 'aquaman', 'flash', 'shazam', 'joker', 'dc'],
+      'wizarding_world': ['harry potter', 'fantastic beasts', 'hogwarts', 'dumbledore', 'voldemort'],
+      'star_wars': ['star wars', 'jedi', 'skywalker', 'mandalorian', 'boba fett', 'force awakens', 'rogue one'],
+      'john_wick': ['john wick', 'wick'],
+      'james_bond': ['bond', '007', 'skyfall', 'spectre', 'casino royale'],
+      'horror': ['horror', 'scary', 'nightmare', 'haunted', 'conjuring', 'annabelle', 'exorcist'],
+      'comedy': ['comedy', 'funny', 'laugh'],
+      'romance': ['romance', 'love story', 'romantic'],
+      'bollywood': ['bollywood', 'hindi', 'shah rukh', 'salman khan', 'aamir khan'],
+      'african_stories': ['nigeria', 'nollywood', 'africa', 'lagos', 'johannesburg', 'kenya', 'ghana'],
+      'kdrama': ['korean', 'k-drama', 'kdrama'],
+      'turkish_drama': ['turkish', 'turkey']
     }
     return searchMap[collectionKey] || []
   }
@@ -798,10 +514,6 @@ class DashApp {
       localStorage.setItem('dash_pass', password)
 
       console.log('✅ Login successful!')
-
-      // Check user tier from DASH admin system
-      await this.loadUserTier(username)
-
       this.showAppUI()
     } else {
       const errorMsg = result.error || 'Invalid username or password'
@@ -830,79 +542,8 @@ class DashApp {
     if (confirm('Are you sure you want to logout?')) {
       localStorage.removeItem('dash_user')
       localStorage.removeItem('dash_pass')
-      localStorage.removeItem('dash_tier')
       location.reload()
     }
-  }
-
-  /**
-   * Load user tier info from DASH admin system
-   * This determines what content the user can access
-   */
-  async loadUserTier(username) {
-    try {
-      console.log('🎫 Checking user tier for:', username)
-      const response = await fetch(`${this.client.backendUrl}/api/iptv-access/${username}`)
-      const data = await response.json()
-
-      if (data.success && data.found && data.active) {
-        this.state.userTier = data.tier
-        this.state.userPackage = data.packageName
-        this.state.tierEndpoints = data.endpoints
-        this.state.starshareEnabled = data.starshareEnabled
-
-        // Cache tier info
-        localStorage.setItem('dash_tier', JSON.stringify({
-          tier: data.tier,
-          package: data.packageName,
-          endpoints: data.endpoints,
-          starshare: data.starshareEnabled,
-          features: data.features
-        }))
-
-        console.log(`✅ User tier loaded: ${data.tier} (${data.packageName})`)
-        console.log(`📺 StarShare: ${data.starshareEnabled ? 'Enabled' : 'Disabled'}`)
-        console.log(`🎬 Endpoints:`, data.endpoints)
-      } else if (data.found && !data.active) {
-        console.warn('⚠️ User account is suspended')
-        // Could show a message or limit access
-      } else {
-        // User not in our system - default to BASIC tier
-        console.log('ℹ️ User not in admin system, defaulting to BASIC tier')
-        this.state.userTier = 'BASIC'
-        this.state.userPackage = 'Basic'
-        this.state.starshareEnabled = true // They logged in with StarShare
-        this.state.tierEndpoints = data.endpoints // Default endpoints
-      }
-    } catch (error) {
-      console.error('❌ Failed to load user tier:', error)
-      // On error, assume StarShare-only access (they logged in successfully)
-      this.state.userTier = 'BASIC'
-      this.state.starshareEnabled = true
-    }
-  }
-
-  /**
-   * Check if user has access to a specific tier
-   */
-  hasTierAccess(requiredTier) {
-    const tierLevels = { 'BASIC': 1, 'STANDARD': 2, 'PREMIUM': 3 }
-    const userLevel = tierLevels[this.state.userTier] || 1
-    const requiredLevel = tierLevels[requiredTier] || 1
-    return userLevel >= requiredLevel
-  }
-
-  /**
-   * Get user's tier badge HTML
-   */
-  getTierBadge() {
-    const tier = this.state.userTier || 'BASIC'
-    const colors = {
-      'BASIC': '#6b7280',
-      'STANDARD': '#3b82f6',
-      'PREMIUM': '#f59e0b'
-    }
-    return `<span style="background:${colors[tier]};color:white;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:bold;">${tier}</span>`
   }
 
   async loadAppContent() {
@@ -1038,9 +679,6 @@ class DashApp {
       case 'downloads':
         content = this.renderDownloadsPage()
         break
-      case 'french':
-        content = await this.renderFrenchVODPage()
-        break
       case 'continue_watching':
         content = this.renderContinueWatchingPage()
         break
@@ -1081,24 +719,24 @@ class DashApp {
     // Build collection rows - WESTERN FOCUSED with blockbusters
     const collectionRows = [
       { key: 'african_stories', title: '🌍 African Stories', icon: 'globe', featured: true },
-      { key: 'marvel', title: '🦸 Marvel Universe', icon: 'zap', tagline: 'ASSEMBLE' },
-      { key: 'dc', title: '🦇 DC Universe', icon: 'zap', tagline: 'JUSTICE AWAITS' },
-      { key: 'fast_furious', title: '🏎️ Fast & Furious', icon: 'car', tagline: 'FAMILY. SPEED. ACTION.' },
-      { key: 'wizarding_world', title: '⚡ Wizarding World', icon: 'magic', tagline: 'MAGIC AWAITS' },
-      { key: 'star_wars', title: '⭐ Galactic Legends', icon: 'star', tagline: 'MAY THE FORCE BE WITH YOU' },
-      { key: 'john_wick', title: '🎯 The Continental', icon: 'target', tagline: 'BABA YAGA RETURNS' },
-      { key: 'james_bond', title: '🍸 007 Collection', icon: 'target', tagline: 'SHAKEN, NOT STIRRED' },
+      { key: 'marvel', title: '🦸 Marvel Universe', icon: 'zap' },
+      { key: 'dc', title: '🦇 DC Universe', icon: 'zap' },
+      { key: 'fast_furious', title: '🏎️ Fast & Furious', icon: 'car' },
+      { key: 'wizarding_world', title: '⚡ Wizarding World', icon: 'magic' },
+      { key: 'star_wars', title: '✨ Star Wars', icon: 'star' },
+      { key: 'john_wick', title: '🔫 John Wick', icon: 'target' },
+      { key: 'james_bond', title: '🎯 James Bond 007', icon: 'target' },
       { key: 'kids_family', title: '👨‍👩‍👧‍👦 Kids & Family', icon: 'smile' },
       { key: 'kdrama', title: '🇰🇷 K-Drama', icon: 'heart' },
-      { key: 'netflix', title: '🎬 Netflix Originals', icon: 'play', tagline: 'BINGE-WORTHY' },
-      { key: '4k_quality', title: '📺 4K Ultra HD', icon: 'monitor', tagline: 'CRYSTAL CLEAR' },
-      { key: 'horror', title: '👻 Horror', icon: 'moon', tagline: 'DARE TO WATCH' },
-      { key: 'comedy', title: '😂 Comedy', icon: 'smile', tagline: 'LOL GUARANTEED' },
-      { key: 'romance', title: '💕 Romance', icon: 'heart', tagline: 'LOVE STORIES' },
-      { key: 'documentary', title: '📚 Documentaries', icon: 'award', tagline: 'TRUE STORIES' },
-      { key: 'bollywood', title: '🎭 Bollywood', icon: 'gem', tagline: 'NAACH GAANA' },
-      { key: 'turkish_drama', title: '🇹🇷 Turkish Drama', icon: 'palette', tagline: 'DIZI MAGIC' },
-      { key: 'award_winners', title: '🏆 Award Winners', icon: 'award', tagline: 'CRITICALLY ACCLAIMED' },
+      { key: 'netflix', title: '🎬 Netflix Originals', icon: 'play' },
+      { key: '4k_quality', title: '📺 4K Ultra HD', icon: 'monitor' },
+      { key: 'horror', title: '👻 Horror', icon: 'moon' },
+      { key: 'comedy', title: '😂 Comedy', icon: 'smile' },
+      { key: 'romance', title: '💕 Romance', icon: 'heart' },
+      { key: 'documentary', title: '📚 Documentaries', icon: 'award' },
+      { key: 'bollywood', title: '🎭 Bollywood', icon: 'gem' },
+      { key: 'turkish_drama', title: '🇹🇷 Turkish Drama', icon: 'palette' },
+      { key: 'award_winners', title: '🏆 Award Winners', icon: 'award' },
     ]
 
     // Schedule hero rotation after render
@@ -1180,14 +818,6 @@ class DashApp {
           if (row.key === 'african_stories') {
             return this.renderAfricanStoriesRow()
           }
-          // Special Kids & Family row with playful bubble style
-          if (row.key === 'kids_family') {
-            return this.renderKidsRow()
-          }
-          // Special K-Drama row with elegant Korean aesthetic
-          if (row.key === 'kdrama') {
-            return this.renderKDramaRow()
-          }
           // Handle mixed collections (series + movies)
           const collection = this.collections?.[row.key]
           if (collection?.type === 'mixed' || collection?.type === 'series') {
@@ -1196,12 +826,11 @@ class DashApp {
           const movies = this.filterAdultContent(this.getCollectionMovies(row.key, 20))
           if (movies.length === 0) return ''
           return `
-            <div class="collection-row ${row.featured ? 'featured-row' : ''}" data-franchise="${row.key}">
+            <div class="collection-row ${row.featured ? 'featured-row' : ''}">
               <div class="collection-header">
                 <h2 class="collection-title">
                   ${this.getCollectionIcon(row.icon)}
                   ${row.title}
-                  ${row.tagline ? `<span class="franchise-tagline">${row.tagline}</span>` : ''}
                 </h2>
                 <span class="collection-see-all" onclick="dashApp.showCollection('${row.key}')">
                   See All
@@ -1720,28 +1349,19 @@ class DashApp {
 
   async renderLiveTVPage() {
     const categories = this.state.categories.live || []
-    const freeCategories = this.freeCategories || []
 
     // Use local JSON data instead of API
     let channels = this.localLive || []
 
     // Filter by category if selected
     if (this.state.selectedCategory) {
-      // Handle free category filtering
-      if (this.state.selectedCategory === 'free_all') {
-        channels = channels.filter(c => c.isFree === true)
-      } else if (this.state.selectedCategory.startsWith('free_')) {
-        channels = channels.filter(c => c.isFree === true && String(c.category_id) === String(this.state.selectedCategory))
-      } else {
-        channels = channels.filter(c => String(c.category_id) === String(this.state.selectedCategory))
-      }
+      channels = channels.filter(c => String(c.category_id) === String(this.state.selectedCategory))
     }
 
     // Filter adult content
     channels = this.filterAdultContent(channels)
 
     const totalChannels = this.localLive?.length || 0
-    const freeCount = this.freeChannels?.length || 0
     const categoryCount = categories.length
 
     return `
@@ -1773,12 +1393,12 @@ class DashApp {
               </div>
             </div>
             <div class="browse-stat">
-              <div class="browse-stat-icon free-stat-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <div class="browse-stat-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
               </div>
               <div class="browse-stat-info">
-                <span class="browse-stat-value free-value">${freeCount}</span>
-                <span class="browse-stat-label">Free Channels</span>
+                <span class="browse-stat-value">${categoryCount}</span>
+                <span class="browse-stat-label">Countries</span>
               </div>
             </div>
             <div class="browse-stat">
@@ -1793,20 +1413,14 @@ class DashApp {
           </div>
         </div>
 
-        <!-- Premium Category Tabs with FREE tabs first -->
+        <!-- Premium Category Tabs -->
         <div class="category-tabs-container">
           <div class="category-tabs">
             <div class="category-tab ${!this.state.selectedCategory ? 'active' : ''}"
                  onclick="dashApp.filterByCategory(null, 'live')">
               All Channels
             </div>
-            ${freeCategories.map(cat => `
-              <div class="category-tab free-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
-                   onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
-                ${cat.category_name}
-              </div>
-            `).join('')}
-            ${categories.slice(0, 35).map(cat => `
+            ${categories.slice(0, 40).map(cat => `
               <div class="category-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
                    onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
                 ${cat.category_name}
@@ -2216,7 +1830,6 @@ class DashApp {
       const name = channel.name || 'Unknown Channel'
       const id = channel.stream_id
       const hasLogo = channel.stream_icon && !channel.stream_icon.includes('placeholder')
-      const isFree = channel.isFree === true
 
       // Generate a deterministic color based on channel name
       const colors = [
@@ -2233,13 +1846,8 @@ class DashApp {
       // Escape name for safe onclick
       const escapedName = name.replace(/'/g, "\\'")
 
-      // For free channels, use special playback
-      const onclick = isFree
-        ? `dashApp.playFreeChannel('${id}', '${escapedName}')`
-        : `dashApp.playLiveChannel('${id}', '${escapedName}')`
-
       return `
-        <div class="live-card ${hasLogo ? '' : 'live-card-glow'} ${isFree ? 'free-channel-card' : ''}" onclick="${onclick}"
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'}" onclick="dashApp.playLiveChannel('${id}', '${escapedName}')"
              style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
           ${hasLogo ? `
             <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
@@ -2267,7 +1875,6 @@ class DashApp {
               <span class="live-dot"></span>
               LIVE
             </div>
-            ${isFree ? `<span class="free-indicator" title="Free channel"></span>` : ''}
           </div>
           <div class="live-card-name-bar">${name}</div>
         </div>
@@ -2283,8 +1890,7 @@ class DashApp {
     console.log(`📖 Showing details for ${type}:`, id)
 
     // Check if this is a grouped series (multiple seasons combined)
-    // Skip season picker if we're coming from a season card click (lastGroupedSeries was nulled)
-    if (type === 'series' && this.lastGroupedSeries !== null) {
+    if (type === 'series') {
       const groupedInfo = this.groupedSeries?.find(s => String(s.series_id) === String(id))
       if (groupedInfo?.is_grouped && groupedInfo.seasons?.length > 1) {
         // Show season picker for grouped series
@@ -2292,8 +1898,6 @@ class DashApp {
         return
       }
     }
-    // Reset the flag for next time
-    this.lastGroupedSeries = undefined
 
     // Show loading in modal
     this.elements.modalContainer.innerHTML = `
@@ -2485,7 +2089,7 @@ class DashApp {
       const episodeCount = season.episode_count || '?'
 
       return `
-        <div class="season-picker-card" onclick="dashApp.lastGroupedSeries = null; dashApp.showDetails('${season.series_id}', 'series');">
+        <div class="season-picker-card" onclick="dashApp.showDetails('${season.series_id}', 'series'); dashApp.lastGroupedSeries = null;">
           <div class="season-picker-poster">
             <img src="${seasonCover}" alt="${seasonName}" loading="lazy"
                  onerror="this.src='${cover}'">
@@ -2581,36 +2185,6 @@ class DashApp {
 
     this.closeModal()
     this.showVideoPlayer(liveStream.url, 'live', liveStream.type, channelName)
-  }
-
-  /**
-   * Play a FREE channel (from iptv-org or direct sources)
-   * These have their stream URL already stored, no need to build
-   */
-  playFreeChannel(id, channelName) {
-    console.log(`🆓 Playing FREE channel: ${channelName} (ID: ${id})`)
-
-    // Find the channel in our free channels list
-    const channel = this.freeChannels?.find(c => c.stream_id === id)
-
-    if (!channel || !channel.streamUrl) {
-      console.error('❌ Free channel not found:', id)
-      return
-    }
-
-    // Store channel info for UI
-    this.currentLiveStreamId = id
-    this.currentChannelName = channelName
-    this._proxyRetried = false
-
-    // Free channels have their URL directly stored
-    const streamUrl = channel.streamUrl
-    const streamType = channel.streamType || 'hls'
-
-    console.log(`📡 Free stream: ${streamUrl} (type: ${streamType})`)
-
-    this.closeModal()
-    this.showVideoPlayer(streamUrl, 'live', streamType === 'hls' ? 'hls-native' : 'mpegts', channelName)
   }
 
   playEpisode(episodeId, extension = 'mp4', seriesInfo = null) {
@@ -4546,201 +4120,6 @@ class DashApp {
             <div class="story-title">${item.name || 'Unknown'}</div>
             ${rating ? `<div class="story-rating">★ ${rating}</div>` : ''}
           </div>
-        </div>
-      </div>
-    `
-  }
-
-  /**
-   * Render Kids & Family row with playful bubble style
-   * Fun, colorful cards with bouncy animations - Disney/Pixar vibes
-   */
-  renderKidsRow() {
-    const collection = this.collections?.kids_family
-    if (!collection) return ''
-
-    // Get both series and movies for kids content
-    let items = []
-
-    // Get series by category keywords
-    const kidsKeywords = ['kids', 'children', 'family', 'animation', 'cartoon', 'animated', 'disney', 'pixar', 'dreamworks', 'nickelodeon']
-    const kidsSeries = (this.localSeries || []).filter(s => {
-      const name = (s.name || '').toLowerCase()
-      const category = (s.category_name || '').toLowerCase()
-      return kidsKeywords.some(kw => name.includes(kw) || category.includes(kw))
-    }).map(s => ({ ...s, itemType: 'series' }))
-    items.push(...kidsSeries)
-
-    // Get kids movies
-    const kidsMovies = (this.localMovies || []).filter(m => {
-      const name = (m.name || '').toLowerCase()
-      const category = (m.category_name || '').toLowerCase()
-      return kidsKeywords.some(kw => name.includes(kw) || category.includes(kw))
-    }).map(m => ({ ...m, itemType: 'movie' }))
-    items.push(...kidsMovies)
-
-    // Prioritize items with images and good ratings
-    items = items
-      .filter(i => {
-        const hasImage = i.itemType === 'series' ? (i.cover || i.stream_icon) : i.stream_icon
-        return hasImage
-      })
-      .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
-      .slice(0, 25)
-
-    if (items.length === 0) return ''
-
-    return `
-      <div class="collection-row featured-row kids-row">
-        <div class="collection-header">
-          <h2 class="collection-title kids-title">
-            <span class="kids-stars">✨</span>
-            <span class="kids-emoji">🎈</span>
-            Kids & Family
-            <span class="kids-emoji">🎠</span>
-            <span class="kids-stars">✨</span>
-            <span class="kids-tagline">FUN FOR EVERYONE!</span>
-          </h2>
-          <span class="collection-see-all" onclick="dashApp.showCollection('kids_family')">
-            See All
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </div>
-        <div class="collection-carousel" data-collection="kids_family">
-          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('kids_family', -1)">‹</button>
-          <div class="carousel-track">
-            ${items.map((item, idx) => this.renderKidsCard(item, idx)).join('')}
-          </div>
-          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('kids_family', 1)">›</button>
-        </div>
-      </div>
-    `
-  }
-
-  /**
-   * Render a single Kids card (playful bubble style)
-   */
-  renderKidsCard(item, index) {
-    const isSeries = item.itemType === 'series'
-    const id = isSeries ? item.series_id : item.stream_id
-    const image = isSeries ? (item.cover || item.stream_icon) : item.stream_icon
-    const rating = item.rating ? parseFloat(item.rating).toFixed(1) : ''
-    const onClick = isSeries
-      ? `dashApp.showDetails('${id}', 'series')`
-      : `dashApp.showDetails('${id}', 'movie')`
-
-    // Fun rainbow colors that cycle
-    const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#95E1D3', '#F38181', '#AA96DA', '#FCBAD3', '#A8D8EA']
-    const accentColor = colors[index % colors.length]
-
-    return `
-      <div class="kids-card" onclick="${onClick}" style="--kids-accent: ${accentColor}">
-        <div class="kids-card-bubble">
-          <img class="kids-card-image" src="${this.fixImageUrl(image)}" alt="${item.name}"
-               onerror="this.onerror=null; this.src='/assets/placeholder.svg'">
-          <div class="kids-card-sparkle">✨</div>
-          <div class="kids-card-overlay">
-            <div class="kids-card-play">▶</div>
-          </div>
-        </div>
-        <div class="kids-card-info">
-          <div class="kids-card-title">${item.name || 'Fun Time!'}</div>
-          ${rating ? `<div class="kids-card-rating">⭐ ${rating}</div>` : ''}
-        </div>
-      </div>
-    `
-  }
-
-  /**
-   * Render K-Drama row with elegant Korean aesthetic
-   * Romantic, soft gradients, heart elements - Hallyu wave style
-   */
-  renderKDramaRow() {
-    const collection = this.collections?.kdrama
-    if (!collection) return ''
-
-    // Get both series and movies for K-Drama content
-    let items = []
-
-    // Get series by category keywords
-    const kdramaKeywords = ['korean', 'korea', 'k-drama', 'kdrama', 'seoul', 'hangul']
-    const kdramaSeries = (this.localSeries || []).filter(s => {
-      const name = (s.name || '').toLowerCase()
-      const category = (s.category_name || '').toLowerCase()
-      return kdramaKeywords.some(kw => name.includes(kw) || category.includes(kw))
-    }).map(s => ({ ...s, itemType: 'series' }))
-    items.push(...kdramaSeries)
-
-    // Get Korean movies
-    const kdramaMovies = (this.localMovies || []).filter(m => {
-      const name = (m.name || '').toLowerCase()
-      const category = (m.category_name || '').toLowerCase()
-      return kdramaKeywords.some(kw => name.includes(kw) || category.includes(kw))
-    }).map(m => ({ ...m, itemType: 'movie' }))
-    items.push(...kdramaMovies)
-
-    // Prioritize items with images and good ratings
-    items = items
-      .filter(i => {
-        const hasImage = i.itemType === 'series' ? (i.cover || i.stream_icon) : i.stream_icon
-        return hasImage
-      })
-      .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
-      .slice(0, 25)
-
-    if (items.length === 0) return ''
-
-    return `
-      <div class="collection-row featured-row kdrama-row">
-        <div class="collection-header">
-          <h2 class="collection-title kdrama-title">
-            <span class="kdrama-hangul">한국</span>
-            K-Drama
-            <span class="kdrama-heart">💕</span>
-            <span class="kdrama-tagline">HALLYU WAVE 한류</span>
-          </h2>
-          <span class="collection-see-all" onclick="dashApp.showCollection('kdrama')">
-            See All
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </div>
-        <div class="collection-carousel" data-collection="kdrama">
-          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('kdrama', -1)">‹</button>
-          <div class="carousel-track">
-            ${items.map(item => this.renderKDramaCard(item)).join('')}
-          </div>
-          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('kdrama', 1)">›</button>
-        </div>
-      </div>
-    `
-  }
-
-  /**
-   * Render a single K-Drama card (elegant romantic style)
-   */
-  renderKDramaCard(item) {
-    const isSeries = item.itemType === 'series'
-    const id = isSeries ? item.series_id : item.stream_id
-    const image = isSeries ? (item.cover || item.stream_icon) : item.stream_icon
-    const rating = item.rating ? parseFloat(item.rating).toFixed(1) : ''
-    const badge = isSeries ? '드라마' : '영화'  // Drama / Movie in Korean
-    const onClick = isSeries
-      ? `dashApp.showDetails('${id}', 'series')`
-      : `dashApp.showDetails('${id}', 'movie')`
-
-    return `
-      <div class="kdrama-card" onclick="${onClick}">
-        <div class="kdrama-card-container">
-          <img class="kdrama-card-image" src="${this.fixImageUrl(image)}" alt="${item.name}"
-               onerror="this.onerror=null; this.src='/assets/placeholder.svg'">
-          <div class="kdrama-card-petals"></div>
-          <span class="kdrama-badge">${badge}</span>
-          <div class="kdrama-card-gradient"></div>
-          <div class="kdrama-card-info">
-            <div class="kdrama-card-title">${item.name || 'Unknown'}</div>
-            ${rating ? `<div class="kdrama-card-rating">★ ${rating}</div>` : ''}
-          </div>
-          <div class="kdrama-card-heart">♡</div>
         </div>
       </div>
     `
