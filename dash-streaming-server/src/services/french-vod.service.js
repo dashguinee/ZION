@@ -1,12 +1,13 @@
 /**
  * French VOD Service
  *
- * Integrates multiple FREE French movie/series embed APIs:
- * - Frembed: 24,000+ French movies, 80,000+ episodes
- * - VidSrc: 66,000+ movies (international with French subtitles)
- * - FrWatch: French movies in 4K
+ * Uses TMDB for metadata + our stream extractor for direct HLS/MP4 streams
+ * NO EMBED IFRAMES - they redirect to sketchy ad sites (1xbet, etc.)
+ *
+ * Working providers: Vixsrc (HLS), MP4Hydra (MP4)
  *
  * Created: December 5, 2025
+ * Updated: December 6, 2025 - Removed sketchy embed providers
  * Author: ZION SYNAPSE for DASH
  */
 
@@ -14,27 +15,10 @@ import logger from '../utils/logger.js';
 
 class FrenchVODService {
   constructor() {
-    // Embed API endpoints
-    this.providers = {
-      frembed: {
-        name: 'Frembed',
-        movie: 'https://frembed.pro/api/film.php?id={imdb}',
-        series: 'https://frembed.pro/api/serie.php?id={imdb}&sa={season}&epi={episode}',
-        description: '24,000+ French movies, 80,000+ episodes'
-      },
-      vidsrc: {
-        name: 'VidSrc',
-        movie: 'https://vidsrc.to/embed/movie/{id}',
-        series: 'https://vidsrc.to/embed/tv/{id}/{season}/{episode}',
-        description: '66,000+ movies, 320,000+ episodes'
-      },
-      vidsrcPro: {
-        name: 'VidSrc Pro',
-        movie: 'https://vidsrc.pro/embed/movie/{id}',
-        series: 'https://vidsrc.pro/embed/tv/{id}/{season}/{episode}',
-        description: 'Alternative VidSrc mirror'
-      }
-    };
+    // NOTE: We no longer use embed iframes (frembed, vidsrc.to, etc.)
+    // They redirect to 1xbet and other sketchy sites
+    // All streams now go through our backend stream extractor
+    // which extracts direct HLS/MP4 URLs from Vixsrc and MP4Hydra
 
     // TMDB API for metadata
     this.tmdbApiKey = process.env.TMDB_API_KEY || '632e644be9521013bdac3661ae65494e';
@@ -46,49 +30,8 @@ class FrenchVODService {
     this.cacheExpiry = 6 * 60 * 60 * 1000; // 6 hours
   }
 
-  /**
-   * Get embed URL for a movie
-   * @param {string} id - IMDB ID (tt1234567) or TMDB ID (12345)
-   * @param {string} provider - Provider name (frembed, vidsrc)
-   */
-  getMovieEmbed(id, provider = 'frembed') {
-    const p = this.providers[provider] || this.providers.frembed;
-
-    // Frembed needs IMDB ID
-    if (provider === 'frembed' && !id.startsWith('tt')) {
-      // If TMDB ID provided, we'd need to convert - for now just use as-is
-      return p.movie.replace('{imdb}', id);
-    }
-
-    return p.movie.replace('{id}', id).replace('{imdb}', id);
-  }
-
-  /**
-   * Get embed URL for a TV series episode
-   * @param {string} id - IMDB ID or TMDB ID
-   * @param {number} season - Season number
-   * @param {number} episode - Episode number
-   * @param {string} provider - Provider name
-   */
-  getSeriesEmbed(id, season, episode, provider = 'frembed') {
-    const p = this.providers[provider] || this.providers.frembed;
-
-    return p.series
-      .replace('{id}', id)
-      .replace('{imdb}', id)
-      .replace('{season}', season)
-      .replace('{episode}', episode);
-  }
-
-  /**
-   * Get all available embed URLs for a movie (for fallback)
-   */
-  getAllMovieEmbeds(id) {
-    return Object.keys(this.providers).map(key => ({
-      provider: this.providers[key].name,
-      url: this.getMovieEmbed(id, key)
-    }));
-  }
+  // DEPRECATED: Embed methods removed - we use direct stream extraction now
+  // See /api/french-vod/stream/movie/:id for direct HLS/MP4 streams
 
   /**
    * Fetch popular French movies from TMDB
@@ -119,7 +62,7 @@ class FrenchVODService {
 
       const movies = data.results.map(movie => ({
         id: movie.id,
-        imdb_id: null, // Would need separate call to get IMDB ID
+        tmdb_id: movie.id,
         title: movie.title,
         original_title: movie.original_title,
         overview: movie.overview,
@@ -129,8 +72,8 @@ class FrenchVODService {
         year: movie.release_date ? movie.release_date.split('-')[0] : null,
         rating: movie.vote_average,
         language: 'fr',
-        embed_url: this.getMovieEmbed(movie.id.toString(), 'vidsrc'), // Use TMDB ID with VidSrc
-        embeds: this.getAllMovieEmbeds(movie.id.toString())
+        // Use stream extractor endpoint - NO sketchy embed iframes
+        stream_url: `/api/french-vod/stream/movie/${movie.id}`
       }));
 
       const result = {
@@ -222,6 +165,7 @@ class FrenchVODService {
         .filter(movie => movie.original_language === 'fr' || movie.poster_path)
         .map(movie => ({
           id: movie.id,
+          tmdb_id: movie.id,
           title: movie.title,
           original_title: movie.original_title,
           overview: movie.overview,
@@ -231,8 +175,8 @@ class FrenchVODService {
           year: movie.release_date ? movie.release_date.split('-')[0] : null,
           rating: movie.vote_average,
           language: movie.original_language,
-          embed_url: this.getMovieEmbed(movie.id.toString(), 'vidsrc'),
-          embeds: this.getAllMovieEmbeds(movie.id.toString())
+          // Use stream extractor endpoint - NO sketchy embed iframes
+          stream_url: `/api/french-vod/stream/movie/${movie.id}`
         }));
 
       return {
@@ -249,7 +193,7 @@ class FrenchVODService {
   }
 
   /**
-   * Get movie details with IMDB ID (needed for Frembed)
+   * Get movie details from TMDB
    */
   async getMovieDetails(tmdbId) {
     try {
@@ -263,6 +207,7 @@ class FrenchVODService {
 
       return {
         id: movie.id,
+        tmdb_id: movie.id,
         imdb_id: movie.imdb_id,
         title: movie.title,
         original_title: movie.original_title,
@@ -289,12 +234,9 @@ class FrenchVODService {
         director: movie.credits?.crew?.find(c => c.job === 'Director')?.name,
         // Trailer
         trailer: movie.videos?.results?.find(v => v.type === 'Trailer' && v.site === 'YouTube')?.key,
-        // Embed URLs
-        embeds: {
-          frembed: movie.imdb_id ? this.getMovieEmbed(movie.imdb_id, 'frembed') : null,
-          vidsrc: this.getMovieEmbed(movie.id.toString(), 'vidsrc'),
-          vidsrcPro: this.getMovieEmbed(movie.id.toString(), 'vidsrcPro')
-        }
+        // Use stream extractor endpoint - NO sketchy embed iframes
+        stream_url: `/api/french-vod/stream/movie/${movie.id}`,
+        all_streams_url: `/api/french-vod/streams/all/movie/${movie.id}`
       };
 
     } catch (error) {
@@ -345,18 +287,18 @@ class FrenchVODService {
    */
   getProviderStats() {
     return {
-      providers: Object.keys(this.providers).map(key => ({
-        name: this.providers[key].name,
-        description: this.providers[key].description
-      })),
+      working_providers: [
+        { name: 'Vixsrc', format: 'HLS', description: 'Direct HLS extraction - 1080p' },
+        { name: 'MP4Hydra', format: 'MP4', description: 'Direct MP4 downloads - 2 servers' }
+      ],
+      metadata_source: 'TMDB',
       estimated_content: {
-        french_movies: '24,000+',
-        french_series: '3,000+',
-        french_episodes: '80,000+',
-        international_movies: '66,000+',
-        international_episodes: '320,000+'
+        french_movies: 'Unlimited (TMDB)',
+        live_channels: '169 French channels',
+        providers_working: 2,
+        providers_blocked: 8
       },
-      note: 'Content is embedded from third-party providers. No hosting costs.'
+      note: 'Direct HLS/MP4 streams - no sketchy embed iframes (no 1xbet redirects)'
     };
   }
 }

@@ -2178,16 +2178,10 @@ class DashApp {
     const isHLS = streamUrl.includes('.m3u8')
     const isDash = streamUrl.includes('.mpd')
     const isTS = streamUrl.includes('.ts') || streamUrl.includes(':8080') || streamUrl.includes(':8000')
+    const format = isHLS ? 'hls' : (isDash ? 'dash' : (isTS ? 'ts' : 'hls'))
 
-    // Use our player
-    this.openVideoPlayer({
-      url: streamUrl,
-      title: channelName,
-      type: 'live',
-      format: isHLS ? 'hls' : (isDash ? 'dash' : (isTS ? 'ts' : 'hls')),
-      isLive: true,
-      source: 'french-free'
-    })
+    // Use our native video player (same as playLiveChannel for free channels)
+    this.showVideoPlayer(streamUrl, 'live', format, channelName)
   }
 
   // Show all French TV channels
