@@ -9,20 +9,48 @@ class CacheService {
   }
 
   async connect() {
+    // Skip Redis entirely if REDIS_URL is not set or is localhost in production
+    const redisUrl = config.redis.url;
+    if (!redisUrl || redisUrl === 'redis://localhost:6379') {
+      logger.info('⚠️ Redis URL not configured - running without cache');
+      this.connected = false;
+      return;
+    }
+
     try {
       this.client = createClient({
-        url: config.redis.url
+        url: redisUrl,
+        socket: {
+          connectTimeout: 5000,  // 5 second timeout
+          reconnectStrategy: (retries) => {
+            if (retries > 3) {
+              logger.warn('Redis: Max reconnection attempts reached, running without cache');
+              return false; // Stop reconnecting
+            }
+            return Math.min(retries * 100, 3000);
+          }
+        }
       });
 
-      this.client.on('error', (err) => logger.error('Redis Client Error', err));
+      this.client.on('error', (err) => {
+        logger.error('Redis Client Error', err.message);
+        this.connected = false;
+      });
       this.client.on('connect', () => logger.info('Redis Client Connected'));
 
-      await this.client.connect();
+      // Wrap connect in a timeout promise
+      const connectPromise = this.client.connect();
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Redis connection timeout')), 5000)
+      );
+
+      await Promise.race([connectPromise, timeoutPromise]);
       this.connected = true;
       logger.info('✅ Redis cache connected');
     } catch (error) {
-      logger.error('❌ Redis connection failed:', error);
+      logger.warn('⚠️ Redis connection failed, running without cache:', error.message);
       this.connected = false;
+      // Don't throw - server continues without cache
     }
   }
 
