@@ -14,10 +14,11 @@ import logger from '../utils/logger.js';
 class FrenchLiveTVService {
   constructor() {
     // Verified working sources (Dec 6, 2025)
+    // Using languages/fra.m3u for global French-language channels (not geo-restricted)
     this.sources = {
-      iptvOrg: {
-        name: 'IPTV-Org France',
-        url: 'https://iptv-org.github.io/iptv/countries/fr.m3u',
+      iptvOrgFrench: {
+        name: 'IPTV-Org French Language',
+        url: 'https://iptv-org.github.io/iptv/languages/fra.m3u',
         priority: 1
       },
       scraperZilla: {
@@ -31,6 +32,14 @@ class FrenchLiveTVService {
         priority: 3
       }
     };
+
+    // Domains that are geo-blocked (Swiss ISP streams, etc.)
+    this.geoBlockedDomains = [
+      'netplus.ch',      // Swiss ISP - geo-blocked
+      'rts.ch',          // Swiss Radio TV - geo-blocked
+      'srgssr.ch',       // Swiss Broadcasting - geo-blocked
+      'wilmaa.com',      // Swiss streaming - geo-blocked
+    ];
 
     // Cache
     this.cache = new Map();
@@ -136,9 +145,9 @@ class FrenchLiveTVService {
     }
 
     try {
-      logger.info('[FrenchLiveTV] Fetching French channels from iptv-org...');
+      logger.info('[FrenchLiveTV] Fetching French channels from iptv-org (languages/fra.m3u)...');
 
-      const response = await fetch(this.sources.iptvOrg.url, {
+      const response = await fetch(this.sources.iptvOrgFrench.url, {
         headers: {
           'User-Agent': 'DASH-WebTV/1.0'
         },
@@ -152,7 +161,14 @@ class FrenchLiveTVService {
       const content = await response.text();
       let channels = this.parseM3U(content);
 
-      // Filter for quality - remove [Not 24/7] and [Geo-blocked] unless we have no choice
+      // Filter out geo-blocked domains
+      channels = channels.filter(ch => {
+        if (!ch.url) return false;
+        const urlLower = ch.url.toLowerCase();
+        return !this.geoBlockedDomains.some(domain => urlLower.includes(domain));
+      });
+
+      // Filter for quality - remove [Not 24/7] and [Geo-blocked] markers
       const qualityChannels = channels.filter(ch => {
         const name = ch.name.toLowerCase();
         return !name.includes('[not 24/7]') && !name.includes('[geo-blocked]');
