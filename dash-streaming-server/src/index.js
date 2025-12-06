@@ -17,6 +17,7 @@ import adminRouter from './routes/admin.js';
 import iptvAccessRouter from './routes/iptv-access.js';
 import frenchVodRouter from './routes/french-vod.js';
 import contentHealthRouter from './routes/content-health.js';
+import contentHealthService from './services/content-health.service.js';
 
 const app = express();
 
@@ -159,7 +160,7 @@ async function start() {
     // Start Express server
     const port = config.port;
     app.listen(port, () => {
-      logger.info(`🚀 DASH Streaming Server v2.3 running on port ${port}`);
+      logger.info(`🚀 DASH Streaming Server v3.0 (Elite) running on port ${port}`);
       logger.info(`📺 Environment: ${config.env}`);
       logger.info(`🔒 Secure API: /api/secure/* (provider hidden)`);
       logger.info(`📺 Free IPTV: /api/free/* (iptv-org + direct)`);
@@ -174,6 +175,10 @@ async function start() {
       hlsService.cleanupOldStreams(24);
     }, 6 * 60 * 60 * 1000);
 
+    // Start automated content health checks (every 30 minutes)
+    contentHealthService.startAutomatedChecks(30);
+    logger.info(`🏥 Health checks: Automated checks enabled (every 30 min)`);
+
   } catch (error) {
     logger.error('Failed to start server:', error);
     process.exit(1);
@@ -183,12 +188,14 @@ async function start() {
 // Graceful shutdown
 process.on('SIGTERM', async () => {
   logger.info('SIGTERM received, shutting down gracefully...');
+  contentHealthService.stopAutomatedChecks();
   await cacheService.disconnect();
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
   logger.info('SIGINT received, shutting down gracefully...');
+  contentHealthService.stopAutomatedChecks();
   await cacheService.disconnect();
   process.exit(0);
 });

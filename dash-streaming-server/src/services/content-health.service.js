@@ -435,6 +435,205 @@ class ContentHealthService {
   }
 
   // =====================
+  // AUTOMATED HEALTH CHECKS
+  // =====================
+
+  /**
+   * Start automated health checking (call once on server start)
+   * Checks a sample of content every interval
+   */
+  startAutomatedChecks(intervalMinutes = 30) {
+    // Check every 30 minutes by default
+    const intervalMs = intervalMinutes * 60 * 1000;
+
+    logger.info(`Starting automated health checks every ${intervalMinutes} minutes`);
+
+    // Initial check after 5 minutes
+    setTimeout(() => this.runHealthCheckCycle(), 5 * 60 * 1000);
+
+    // Recurring checks
+    this.healthCheckInterval = setInterval(() => {
+      this.runHealthCheckCycle();
+    }, intervalMs);
+  }
+
+  /**
+   * Stop automated health checks
+   */
+  stopAutomatedChecks() {
+    if (this.healthCheckInterval) {
+      clearInterval(this.healthCheckInterval);
+      this.healthCheckInterval = null;
+      logger.info('Stopped automated health checks');
+    }
+  }
+
+  /**
+   * Run a health check cycle
+   * Prioritizes: reported content, degraded content, then random sample
+   */
+  async runHealthCheckCycle() {
+    logger.info('Running health check cycle...');
+
+    const checkList = [];
+
+    // Priority 1: Content with unresolved reports
+    const reportedContent = this.getPendingReports(20);
+    reportedContent.forEach(report => {
+      const key = `${report.contentType}_${report.contentId}`;
+      if (!checkList.find(c => c.key === key)) {
+        checkList.push({
+          key,
+          contentId: report.contentId,
+          contentType: report.contentType,
+          priority: 1,
+          reason: 'user_reported'
+        });
+      }
+    });
+
+    // Priority 2: Degraded content
+    this.healthData.degradedContent.slice(0, 10).forEach(key => {
+      if (!checkList.find(c => c.key === key)) {
+        const [type, id] = key.split('_');
+        checkList.push({
+          key,
+          contentId: id,
+          contentType: type,
+          priority: 2,
+          reason: 'degraded'
+        });
+      }
+    });
+
+    // Priority 3: Random sample of healthy content (spot check)
+    const healthyKeys = Object.entries(this.healthData.healthChecks)
+      .filter(([_, h]) => h.status === 'healthy')
+      .map(([k]) => k)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5);
+
+    healthyKeys.forEach(key => {
+      if (!checkList.find(c => c.key === key)) {
+        const [type, id] = key.split('_');
+        checkList.push({
+          key,
+          contentId: id,
+          contentType: type,
+          priority: 3,
+          reason: 'spot_check'
+        });
+      }
+    });
+
+    logger.info(`Health check list: ${checkList.length} items`);
+
+    // Run checks (limit concurrent)
+    const results = { checked: 0, healthy: 0, degraded: 0, offline: 0 };
+
+    for (const item of checkList) {
+      try {
+        const status = await this.performHealthCheck(item.contentId, item.contentType);
+        results.checked++;
+
+        if (status.healthy) {
+          results.healthy++;
+        } else if (status.degraded) {
+          results.degraded++;
+        } else {
+          results.offline++;
+        }
+      } catch (err) {
+        logger.error(`Health check failed for ${item.key}:`, err.message);
+      }
+
+      // Small delay between checks to avoid overwhelming sources
+      await new Promise(r => setTimeout(r, 500));
+    }
+
+    logger.info(`Health check cycle complete: ${JSON.stringify(results)}`);
+
+    return results;
+  }
+
+  /**
+   * Perform a health check on specific content
+   * Returns { healthy, degraded, latency, error }
+   */
+  async performHealthCheck(contentId, contentType) {
+    const providerUrl = process.env.XTREAM_PROVIDER_URL || 'https://starshare.cx';
+    const username = process.env.XTREAM_USERNAME;
+    const password = process.env.XTREAM_PASSWORD;
+
+    if (!username || !password) {
+      // Can't check without credentials - mark as unknown
+      return { healthy: false, degraded: true, error: 'No credentials configured' };
+    }
+
+    try {
+      let checkUrl;
+      const startTime = Date.now();
+
+      switch (contentType) {
+        case 'live':
+          // For live streams, try to get info
+          checkUrl = `${providerUrl}/player_api.php?username=${username}&password=${password}&action=get_live_streams&category_id=${contentId}`;
+          break;
+        case 'movie':
+          // For movies, get VOD info
+          checkUrl = `${providerUrl}/player_api.php?username=${username}&password=${password}&action=get_vod_info&vod_id=${contentId}`;
+          break;
+        case 'series':
+        case 'episode':
+          // For series, get series info
+          checkUrl = `${providerUrl}/player_api.php?username=${username}&password=${password}&action=get_series_info&series_id=${contentId}`;
+          break;
+        default:
+          return { healthy: false, degraded: true, error: 'Unknown content type' };
+      }
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+
+      const response = await fetch(checkUrl, {
+        signal: controller.signal,
+        headers: { 'User-Agent': 'DASH-HealthCheck/1.0' }
+      });
+
+      clearTimeout(timeout);
+
+      const latency = Date.now() - startTime;
+
+      if (!response.ok) {
+        this.updateHealthStatus(contentId, contentType, { success: false, latency });
+        return { healthy: false, degraded: true, latency, error: `HTTP ${response.status}` };
+      }
+
+      const data = await response.json();
+
+      // Check if response indicates valid content
+      const hasContent =
+        (data && (data.info || data.episodes || (Array.isArray(data) && data.length > 0)));
+
+      if (hasContent) {
+        this.updateHealthStatus(contentId, contentType, { success: true, latency });
+        return { healthy: true, degraded: false, latency };
+      } else {
+        this.updateHealthStatus(contentId, contentType, { success: false, latency });
+        return { healthy: false, degraded: true, latency, error: 'Empty response' };
+      }
+    } catch (error) {
+      const isTimeout = error.name === 'AbortError';
+      this.updateHealthStatus(contentId, contentType, { success: false });
+      return {
+        healthy: false,
+        degraded: !isTimeout,
+        error: isTimeout ? 'Timeout' : error.message
+      };
+    }
+  }
+
+  // =====================
   // HEALTH DASHBOARD
   // =====================
 
