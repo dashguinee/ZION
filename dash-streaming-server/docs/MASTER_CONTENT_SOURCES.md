@@ -592,9 +592,27 @@ const expiresMatch = html.match(/['"]?expires['"]?\s*:\s*['"]([^'"]+)['"]/);
 |---------|--------------|--------------|--------|
 | **French VOD Movies** | `french-vod.service.js` | `/api/french-vod/movies` | LIVE |
 | **Vixsrc HLS Extraction** | `vixsrc-provider.js` | `/api/french-vod/stream/movie/:id` | LIVE |
-| **Stream Extractor** | `stream-extractor.service.js` | (internal) | LIVE |
+| **VidZee Provider** | `vidzee-provider.js` | (via stream extractor) | LIVE |
+| **MP4Hydra Provider** | `mp4hydra-provider.js` | (via stream extractor) | LIVE |
+| **Multi-Provider API** | `stream-extractor.service.js` | `/api/french-vod/streams/all/movie/:id` | LIVE |
+| **Provider List** | - | `/api/french-vod/providers` | LIVE |
 | **French Live TV** | `french-livetv.service.js` | `/api/french-vod/livetv/channels` | LIVE |
 | **Free IPTV Channels** | `free-iptv.service.js` | `/api/free-channels` | LIVE |
+
+### ACTIVE PROVIDERS (10 Total)
+
+| Provider | Format | Decryption | Status |
+|----------|--------|------------|--------|
+| Vixsrc | HLS | Token-based | WORKING |
+| VidZee | HLS/MP4 | AES-256-CBC | Built (API issues) |
+| MP4Hydra | MP4 | None | WORKING |
+| VidSrcMe | HLS | RCP flow | Active |
+| MultiEmbed | HLS | Hunter decode | Active |
+| EmbedSu | HLS | - | Active |
+| VidSrcRip | HLS | - | Active |
+| AutoEmbed | HLS | - | Active |
+| Smashy | HLS | - | Active |
+| VidLink | HLS | - | Active |
 
 ### FRONTEND INTEGRATION
 
@@ -614,17 +632,16 @@ const expiresMatch = html.match(/['"]?expires['"]?\s*:\s*['"]([^'"]+)['"]/);
 | TMDB French | Metadata | Unlimited | - |
 | Free IPTV (various) | Live TV | 10,000+ | Mixed |
 
-### NOT YET IMPLEMENTED (Extra Providers - Future)
+### REMAINING PROVIDERS (Not Yet Implemented)
 
 | Provider | Why Not Yet | Priority |
 |----------|-------------|----------|
-| VidZee | AES decryption complexity | Low |
-| 4KHDHub | Multi-extractor chain | Low |
-| MP4Hydra | Direct MP4 (already have HLS) | Low |
-| MoviesModz | Fuzzy matching complexity | Low |
-| UHDMovies | 4K/HDR niche | Low |
+| 4KHDHub | Multi-extractor chain (7 servers) | Medium |
+| MoviesModz | Fuzzy matching + dynamic domain | Low |
+| UHDMovies | 4K/HDR niche content | Low |
+| Showbox/FebBox | Cookie rotation complexity | Low |
 
-**Note**: These are EXTRAS, not fallbacks. Current Vixsrc + iptv-org provides solid coverage.
+**Note**: Core providers working (Vixsrc, MP4Hydra). VidZee built but API returning empty.
 
 ---
 
