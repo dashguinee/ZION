@@ -16,6 +16,7 @@ import curatedChannelsRouter from './routes/curated-channels.js';
 import adminRouter from './routes/admin.js';
 import iptvAccessRouter from './routes/iptv-access.js';
 import frenchVodRouter from './routes/french-vod.js';
+import contentHealthRouter from './routes/content-health.js';
 
 const app = express();
 
@@ -69,13 +70,14 @@ app.use('/api/curated', curatedChannelsRouter);  // Curated channels with tier-b
 app.use('/api/admin', adminRouter);  // Admin panel API
 app.use('/api/iptv-access', iptvAccessRouter);  // User access check (for customer app)
 app.use('/api/french-vod', frenchVodRouter);  // French VOD (Frembed, VidSrc embeds)
+app.use('/api/health', contentHealthRouter);  // Content health, user reports, duplicates (Elite Tier)
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'DASH Streaming Server',
-    version: '2.4.0',
-    description: 'Secure streaming server with French VOD + tiered access',
+    version: '3.0.0',
+    description: 'Elite Tier streaming server with health monitoring, user reports, and fallback system',
     endpoints: {
       // Secure API (recommended - hides provider)
       categories: '/api/secure/categories/:type',
@@ -115,7 +117,14 @@ app.get('/', (req, res) => {
       frenchSeries: '/api/french-vod/series',
       frenchSearch: '/api/french-vod/search?q=:query',
       frenchMovieDetail: '/api/french-vod/movie/:id',
-      frenchEmbed: '/api/french-vod/embed/movie/:id'
+      frenchEmbed: '/api/french-vod/embed/movie/:id',
+      // Content Health & Reporting (Elite Tier)
+      healthReport: '/api/health/report',
+      healthStatus: '/api/health/status/:type/:id',
+      healthFallback: '/api/health/fallback/:type/:id',
+      healthOffline: '/api/health/offline',
+      healthDashboard: '/api/health/admin/dashboard',
+      healthReports: '/api/health/admin/reports'
     },
     qualities: Object.keys(config.qualities),
     formats: ['mp4', 'hls']

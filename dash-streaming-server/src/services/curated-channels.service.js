@@ -263,10 +263,13 @@ class CuratedChannelsService {
         all: result
       };
 
-      // Group by category
-      const categoryGroups = ['sports', 'news', 'entertainment', 'movies', 'guinea', 'french'];
+      // Group by category (includes West Africa for African content focus)
+      const categoryGroups = ['sports', 'news', 'entertainment', 'movies', 'guinea', 'west-africa', 'french'];
       categoryGroups.forEach(cat => {
-        organized.categories[cat] = this.filterByCategory(result, cat);
+        const filtered = this.filterByCategory(result, cat);
+        if (filtered.length > 0) {
+          organized.categories[cat] = filtered;
+        }
       });
 
       // Cache result

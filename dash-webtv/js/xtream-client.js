@@ -396,6 +396,128 @@ class XtreamClient {
     if (!this.isAuthenticated) return ''
     return `${this.baseUrl}/get.php?username=${this.username}&password=${this.password}&type=${type}&output=${output}`
   }
+
+  // ============================================
+  // CONTENT HEALTH & REPORTING (Elite Tier)
+  // ============================================
+
+  /**
+   * Report a broken/problematic stream
+   * @param {string} contentId - ID of the content
+   * @param {string} contentType - 'movie', 'series', 'live', 'episode'
+   * @param {string} contentName - Display name
+   * @param {string} issueType - Type of issue
+   * @param {string} description - Optional description
+   */
+  async reportStream(contentId, contentType, contentName, issueType, description = '') {
+    try {
+      const response = await fetch(`${this.backendUrl}/api/health/report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contentId,
+          contentType,
+          contentName,
+          issueType,
+          description,
+          username: this.username || 'anonymous'
+        })
+      })
+      return await response.json()
+    } catch (error) {
+      console.error('Failed to submit report:', error)
+      return { success: false, error: error.message }
+    }
+  }
+
+  /**
+   * Get health status for content
+   */
+  async getContentHealth(contentId, contentType) {
+    try {
+      const response = await fetch(`${this.backendUrl}/api/health/status/${contentType}/${contentId}`)
+      return await response.json()
+    } catch (error) {
+      console.error('Failed to get health status:', error)
+      return { success: false, status: 'unknown' }
+    }
+  }
+
+  /**
+   * Get fallback sources for content (if primary fails)
+   */
+  async getFallbackSources(contentId, contentType) {
+    try {
+      const response = await fetch(`${this.backendUrl}/api/health/fallback/${contentType}/${contentId}`)
+      return await response.json()
+    } catch (error) {
+      console.error('Failed to get fallback sources:', error)
+      return { success: false, hasFallback: false, fallbacks: [] }
+    }
+  }
+
+  /**
+   * Report stream health check result (called after play success/failure)
+   */
+  async reportHealthCheck(contentId, contentType, success, latency = null) {
+    try {
+      const response = await fetch(`${this.backendUrl}/api/health/check`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contentId, contentType, success, latency })
+      })
+      return await response.json()
+    } catch (error) {
+      console.error('Failed to report health check:', error)
+      return { success: false }
+    }
+  }
+
+  /**
+   * Get list of offline/degraded content (for UI indicators)
+   * Caches result for 5 minutes to avoid excessive API calls
+   */
+  async getOfflineContent() {
+    const cacheKey = 'dash_offline_cache'
+    const cacheTime = 'dash_offline_cache_time'
+    const cached = localStorage.getItem(cacheKey)
+    const cachedTime = parseInt(localStorage.getItem(cacheTime) || '0')
+
+    // Use cache if less than 5 minutes old
+    if (cached && Date.now() - cachedTime < 5 * 60 * 1000) {
+      return JSON.parse(cached)
+    }
+
+    try {
+      const response = await fetch(`${this.backendUrl}/api/health/offline`)
+      const data = await response.json()
+
+      // Cache the result
+      localStorage.setItem(cacheKey, JSON.stringify(data))
+      localStorage.setItem(cacheTime, Date.now().toString())
+
+      return data
+    } catch (error) {
+      console.error('Failed to get offline content:', error)
+      return { offline: [], degraded: [] }
+    }
+  }
+
+  /**
+   * Check if specific content is marked as offline
+   */
+  isContentOffline(contentId, contentType, offlineData) {
+    if (!offlineData || !offlineData.offline) return false
+    return offlineData.offline.some(c => c.id === String(contentId) && c.type === contentType)
+  }
+
+  /**
+   * Check if specific content is marked as degraded
+   */
+  isContentDegraded(contentId, contentType, offlineData) {
+    if (!offlineData || !offlineData.degraded) return false
+    return offlineData.degraded.some(c => c.id === String(contentId) && c.type === contentType)
+  }
 }
 
 // Export for use in other modules

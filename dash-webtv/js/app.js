@@ -2338,6 +2338,302 @@ class DashApp {
   }
 
   // ============================================
+  // CONTENT HEALTH & REPORTING (Elite Tier)
+  // ============================================
+
+  /**
+   * Show report dialog for current content
+   */
+  showReportDialog() {
+    const contentId = this.currentStreamId
+    const contentType = this.currentStreamType || 'movie'
+    const contentName = this.currentChannelName || 'Unknown Content'
+
+    const issueTypes = [
+      { value: 'not_playing', label: 'Not Playing', icon: '🚫' },
+      { value: 'buffering', label: 'Constant Buffering', icon: '⏳' },
+      { value: 'offline', label: 'Stream Offline', icon: '📴' },
+      { value: 'audio_issue', label: 'Audio Problem', icon: '🔇' },
+      { value: 'wrong_content', label: 'Wrong Content', icon: '❓' },
+      { value: 'low_quality', label: 'Low Quality', icon: '📉' },
+      { value: 'other', label: 'Other Issue', icon: '🔧' }
+    ]
+
+    const dialogHTML = `
+      <div class="report-dialog-overlay" onclick="dashApp.closeReportDialog(event)">
+        <div class="report-dialog" onclick="event.stopPropagation()">
+          <div class="report-dialog-header">
+            <h3>🚩 Report an Issue</h3>
+            <button class="report-dialog-close" onclick="dashApp.closeReportDialog()">&times;</button>
+          </div>
+          <div class="report-dialog-content">
+            <p class="report-dialog-info">Help us improve by reporting issues with:</p>
+            <p class="report-dialog-title">${contentName}</p>
+            <div class="report-issue-types">
+              ${issueTypes.map(t => `
+                <button class="report-issue-btn" data-type="${t.value}" onclick="dashApp.selectIssueType('${t.value}')">
+                  <span class="report-issue-icon">${t.icon}</span>
+                  <span class="report-issue-label">${t.label}</span>
+                </button>
+              `).join('')}
+            </div>
+            <textarea id="reportDescription" class="report-description" placeholder="Additional details (optional)..."></textarea>
+            <button class="report-submit-btn" onclick="dashApp.submitReport()">
+              Submit Report
+            </button>
+          </div>
+        </div>
+      </div>
+    `
+
+    // Remove existing dialog
+    const existing = document.querySelector('.report-dialog-overlay')
+    if (existing) existing.remove()
+
+    document.body.insertAdjacentHTML('beforeend', dialogHTML)
+    this.selectedIssueType = null
+  }
+
+  /**
+   * Select issue type in report dialog
+   */
+  selectIssueType(type) {
+    this.selectedIssueType = type
+
+    // Update button states
+    document.querySelectorAll('.report-issue-btn').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.type === type)
+    })
+  }
+
+  /**
+   * Submit the report
+   */
+  async submitReport() {
+    if (!this.selectedIssueType) {
+      this.showToast('Please select an issue type', 'error')
+      return
+    }
+
+    const description = document.getElementById('reportDescription')?.value || ''
+    const contentId = this.currentStreamId
+    const contentType = this.currentStreamType || 'movie'
+    const contentName = this.currentChannelName || 'Unknown Content'
+
+    // Show loading state
+    const submitBtn = document.querySelector('.report-submit-btn')
+    if (submitBtn) {
+      submitBtn.disabled = true
+      submitBtn.textContent = 'Submitting...'
+    }
+
+    const result = await this.client.reportStream(
+      contentId,
+      contentType,
+      contentName,
+      this.selectedIssueType,
+      description
+    )
+
+    if (result.success) {
+      this.showToast('Report submitted! Thank you for helping improve DASH.', 'success')
+      this.closeReportDialog()
+    } else {
+      this.showToast('Failed to submit report. Please try again.', 'error')
+      if (submitBtn) {
+        submitBtn.disabled = false
+        submitBtn.textContent = 'Submit Report'
+      }
+    }
+  }
+
+  /**
+   * Close report dialog
+   */
+  closeReportDialog(event) {
+    if (event && event.target !== event.currentTarget) return
+    const dialog = document.querySelector('.report-dialog-overlay')
+    if (dialog) dialog.remove()
+  }
+
+  /**
+   * Load offline content status for UI indicators
+   */
+  async loadOfflineStatus() {
+    this.offlineData = await this.client.getOfflineContent()
+    console.log(`📊 Loaded offline status: ${this.offlineData.offline?.length || 0} offline, ${this.offlineData.degraded?.length || 0} degraded`)
+  }
+
+  /**
+   * Check if content should show health warning
+   */
+  getContentHealthClass(contentId, contentType) {
+    if (!this.offlineData) return ''
+
+    if (this.client.isContentOffline(contentId, contentType, this.offlineData)) {
+      return 'content-offline'
+    }
+    if (this.client.isContentDegraded(contentId, contentType, this.offlineData)) {
+      return 'content-degraded'
+    }
+    return ''
+  }
+
+  // ============================================
+  // ENHANCED ACTIVITY-BASED RECOMMENDATIONS
+  // ============================================
+
+  /**
+   * Get user's language preferences based on watch history
+   */
+  getLanguagePreferences() {
+    const history = this.loadWatchHistory()
+    if (history.length === 0) return {}
+
+    const langCounts = {}
+
+    history.forEach(item => {
+      const content = item.type === 'movie'
+        ? (this.localMovies || []).find(m => String(m.stream_id) === String(item.id))
+        : (this.localSeries || []).find(s => String(s.series_id) === String(item.id))
+
+      if (content?.category_name) {
+        // Extract language from category name
+        const cat = content.category_name.toUpperCase()
+
+        // Common language patterns
+        const languages = ['ENGLISH', 'HINDI', 'TAMIL', 'TELUGU', 'FRENCH', 'ARABIC', 'TURKISH', 'KOREAN', 'SPANISH', 'GERMAN', 'ITALIAN', 'PORTUGUESE', 'JAPANESE', 'CHINESE', 'RUSSIAN', 'THAI', 'VIETNAMESE', 'INDONESIAN', 'MALAY', 'FILIPINO', 'BENGALI', 'PUNJABI', 'GUJARATI', 'MARATHI', 'KANNADA', 'MALAYALAM', 'URDU']
+
+        for (const lang of languages) {
+          if (cat.includes(lang)) {
+            langCounts[lang] = (langCounts[lang] || 0) + 1
+            break
+          }
+        }
+      }
+    })
+
+    // Sort by count and return top 3
+    return Object.entries(langCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .reduce((acc, [lang, count]) => {
+        acc[lang] = count
+        return acc
+      }, {})
+  }
+
+  /**
+   * Get "Popular in Your Language" recommendations
+   */
+  getLanguageBasedRecommendations() {
+    const langPrefs = this.getLanguagePreferences()
+    const topLang = Object.keys(langPrefs)[0]
+
+    if (!topLang) return []
+
+    const history = this.loadWatchHistory()
+    const watchedIds = new Set(history.map(h => String(h.id)))
+
+    return (this.localMovies || [])
+      .filter(m => {
+        const cat = (m.category_name || '').toUpperCase()
+        return cat.includes(topLang) &&
+               !watchedIds.has(String(m.stream_id)) &&
+               m.stream_icon &&
+               parseFloat(m.rating) >= 5
+      })
+      .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+      .slice(0, 20)
+  }
+
+  /**
+   * Render "Popular in [Language]" row
+   */
+  renderLanguageRow() {
+    const langPrefs = this.getLanguagePreferences()
+    const topLang = Object.keys(langPrefs)[0]
+
+    if (!topLang) return ''
+
+    const recommendations = this.getLanguageBasedRecommendations()
+    if (recommendations.length < 5) return ''
+
+    // Format language name nicely
+    const langDisplay = topLang.charAt(0) + topLang.slice(1).toLowerCase()
+
+    return `
+      <div class="collection-row language-row">
+        <div class="collection-header">
+          <h2 class="collection-title">
+            <svg class="collection-title-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+            </svg>
+            Popular in ${langDisplay}
+          </h2>
+        </div>
+        <div class="collection-carousel" data-collection="language_${topLang.toLowerCase()}">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('language_${topLang.toLowerCase()}', -1)">‹</button>
+          <div class="carousel-track">
+            ${recommendations.map(movie => this.renderMovieCard(movie)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('language_${topLang.toLowerCase()}', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Get trending content (most recently watched by users)
+   * For now, uses recently added content with high ratings
+   */
+  getTrendingContent() {
+    const currentYear = new Date().getFullYear()
+
+    return (this.localMovies || [])
+      .filter(m =>
+        m.stream_icon &&
+        parseInt(m.year) >= currentYear - 1 &&
+        parseFloat(m.rating) >= 6
+      )
+      .sort((a, b) => {
+        // Sort by year (newest first) then rating
+        const yearDiff = (parseInt(b.year) || 0) - (parseInt(a.year) || 0)
+        if (yearDiff !== 0) return yearDiff
+        return (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0)
+      })
+      .slice(0, 20)
+  }
+
+  /**
+   * Render "Trending Now" row
+   */
+  renderTrendingRow() {
+    const trending = this.getTrendingContent()
+    if (trending.length < 5) return ''
+
+    return `
+      <div class="collection-row trending-row">
+        <div class="collection-header">
+          <h2 class="collection-title">
+            <svg class="collection-title-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+            </svg>
+            Trending Now
+          </h2>
+        </div>
+        <div class="collection-carousel" data-collection="trending">
+          <button class="carousel-btn carousel-btn-left" onclick="dashApp.scrollCarousel('trending', -1)">‹</button>
+          <div class="carousel-track">
+            ${trending.map(movie => this.renderMovieCard(movie)).join('')}
+          </div>
+          <button class="carousel-btn carousel-btn-right" onclick="dashApp.scrollCarousel('trending', 1)">›</button>
+        </div>
+      </div>
+    `
+  }
+
+  // ============================================
   // DOWNLOAD LIBRARY SYSTEM
   // ============================================
 
@@ -2803,6 +3099,12 @@ class DashApp {
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
         ${channelOverlay}
         ${qualitySelector}
+        <div class="player-report-btn" onclick="dashApp.showReportDialog()" title="Report an issue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+            <line x1="4" y1="22" x2="4" y2="15"/>
+          </svg>
+        </div>
         <div class="video-loading">
           <div class="spinner"></div>
           <div>Loading stream...</div>
