@@ -48,6 +48,10 @@ class DashApp {
 
     // Current stream info for quality changes
     this.currentStreamNeedsTranscode = false
+
+    // Load user tier from localStorage (set after login)
+    this.userTier = localStorage.getItem('dash_tier') || 'BASIC'
+    this.starshareEnabled = localStorage.getItem('dash_starshare') === 'true'
     this.currentStreamId = null
     this.currentStreamExtension = null
     this.currentStreamType = null
@@ -513,6 +517,9 @@ class DashApp {
       localStorage.setItem('dash_user', username)
       localStorage.setItem('dash_pass', password)
 
+      // Fetch user's tier from DASH backend
+      await this.fetchUserTier(username)
+
       console.log('✅ Login successful!')
       this.showAppUI()
     } else {
@@ -542,7 +549,94 @@ class DashApp {
     if (confirm('Are you sure you want to logout?')) {
       localStorage.removeItem('dash_user')
       localStorage.removeItem('dash_pass')
+      localStorage.removeItem('dash_tier')
+      localStorage.removeItem('dash_starshare')
+      localStorage.removeItem('dash_endpoints')
       location.reload()
+    }
+  }
+
+  /**
+   * Fetch user's tier from DASH backend
+   * Stores: tier (BASIC/STANDARD/PREMIUM), starshareEnabled, endpoints
+   */
+  async fetchUserTier(username) {
+    try {
+      const backendUrl = this.client.serverUrl || 'https://zion-production-39d8.up.railway.app'
+      const res = await fetch(`${backendUrl}/api/iptv-access/${encodeURIComponent(username)}`)
+      const data = await res.json()
+
+      if (data.success) {
+        // Store tier info
+        localStorage.setItem('dash_tier', data.tier || 'BASIC')
+        localStorage.setItem('dash_starshare', data.starshareEnabled ? 'true' : 'false')
+        localStorage.setItem('dash_endpoints', JSON.stringify(data.endpoints || {}))
+
+        console.log(`🎫 User tier: ${data.tier}, StarShare: ${data.starshareEnabled}`)
+
+        // Store in app state for quick access
+        this.userTier = data.tier || 'BASIC'
+        this.starshareEnabled = data.starshareEnabled || false
+        this.tierEndpoints = data.endpoints || {}
+      } else {
+        // Default to BASIC if not found
+        console.log('ℹ️ User not in DASH system, defaulting to BASIC tier')
+        localStorage.setItem('dash_tier', 'BASIC')
+        localStorage.setItem('dash_starshare', 'true') // StarShare login worked
+        this.userTier = 'BASIC'
+        this.starshareEnabled = true
+      }
+    } catch (err) {
+      console.warn('⚠️ Could not fetch tier info:', err.message)
+      // Default to BASIC
+      localStorage.setItem('dash_tier', 'BASIC')
+      this.userTier = 'BASIC'
+      this.starshareEnabled = true
+    }
+  }
+
+  /**
+   * Get user's current tier (from memory or localStorage)
+   */
+  getUserTier() {
+    return this.userTier || localStorage.getItem('dash_tier') || 'BASIC'
+  }
+
+  /**
+   * Check if user has StarShare access
+   */
+  hasStarshareAccess() {
+    return this.starshareEnabled || localStorage.getItem('dash_starshare') === 'true'
+  }
+
+  /**
+   * Check if content is accessible for user's tier
+   * @param {string} contentSource - 'starshare', 'iptv-org', 'free-tv', etc.
+   */
+  canAccessContent(contentSource) {
+    // Free content always accessible
+    if (['iptv-org', 'free-tv', 'pluto', 'movies-library'].includes(contentSource)) {
+      return true
+    }
+
+    // StarShare content requires starshareEnabled
+    if (contentSource === 'starshare') {
+      return this.hasStarshareAccess()
+    }
+
+    return true
+  }
+
+  /**
+   * Get max channels allowed for current tier
+   */
+  getMaxChannels() {
+    const tier = this.getUserTier()
+    switch (tier) {
+      case 'BASIC': return 50
+      case 'STANDARD': return 200
+      case 'PREMIUM': return Infinity
+      default: return 50
     }
   }
 
@@ -803,8 +897,14 @@ class DashApp {
         <!-- Continue Watching Row (Priority 1) -->
         ${this.renderContinueWatchingRow()}
 
+        <!-- Trending Now (Activity-Based) -->
+        ${this.renderTrendingRow()}
+
         <!-- My List Row (Priority 2) -->
         ${this.renderMyListRow()}
+
+        <!-- Popular in [Language] (Activity-Based) -->
+        ${this.renderLanguageRow()}
 
         <!-- Top 10 Today (Netflix Style) -->
         ${this.renderTop10Row()}
@@ -1369,6 +1469,19 @@ class DashApp {
     // Filter adult content
     channels = this.filterAdultContent(channels)
 
+    // Apply tier-based channel limit
+    const maxChannels = this.getMaxChannels()
+    const userTier = this.getUserTier()
+    const isLimited = channels.length > maxChannels && maxChannels !== Infinity
+
+    // For limited tiers, prioritize popular/high-quality channels
+    if (isLimited) {
+      // Sort by stream_icon presence (channels with logos are usually more popular)
+      channels = channels
+        .sort((a, b) => (b.stream_icon ? 1 : 0) - (a.stream_icon ? 1 : 0))
+        .slice(0, maxChannels)
+    }
+
     const totalChannels = this.localLive?.length || 0
     const categoryCount = categories.length
 
@@ -1390,14 +1503,26 @@ class DashApp {
             </div>
           </div>
 
+          ${isLimited ? `
+            <div class="tier-upgrade-banner">
+              <div class="tier-info">
+                <span class="tier-badge tier-${userTier.toLowerCase()}">${userTier}</span>
+                <span class="tier-text">Your plan includes ${maxChannels} channels of ${totalChannels.toLocaleString()} available</span>
+              </div>
+              <button class="btn-upgrade" onclick="dashApp.navigate('account')">
+                Upgrade Plan
+              </button>
+            </div>
+          ` : ''}
+
           <div class="browse-stats">
             <div class="browse-stat">
               <div class="browse-stat-icon">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/></svg>
               </div>
               <div class="browse-stat-info">
-                <span class="browse-stat-value">${totalChannels.toLocaleString()}</span>
-                <span class="browse-stat-label">Channels</span>
+                <span class="browse-stat-value">${isLimited ? channels.length : totalChannels.toLocaleString()}</span>
+                <span class="browse-stat-label">${isLimited ? 'Your Channels' : 'Channels'}</span>
               </div>
             </div>
             <div class="browse-stat">
@@ -1455,6 +1580,17 @@ class DashApp {
 
   renderAccountPage() {
     const username = localStorage.getItem('dash_user') || 'User'
+    const userTier = this.getUserTier()
+    const hasStarshare = this.hasStarshareAccess()
+    const maxChannels = this.getMaxChannels()
+
+    // Tier display config
+    const tierConfig = {
+      BASIC: { color: '#64748b', label: 'Basic', desc: `${maxChannels} live channels` },
+      STANDARD: { color: '#0ea5e9', label: 'Standard', desc: `${maxChannels} live channels` },
+      PREMIUM: { color: '#7c3aed', label: 'Premium', desc: 'Unlimited access' }
+    }
+    const tier = tierConfig[userTier] || tierConfig.BASIC
 
     return `
       <div class="fade-in">
@@ -1475,6 +1611,23 @@ class DashApp {
             <div>
               <h3>Logged in as</h3>
               <p style="color: var(--primary-purple); font-size: 1.5rem; font-weight: bold;">${username}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscription Tier Card -->
+        <div class="card glass p-lg mt-md">
+          <div class="account-section">
+            <svg class="account-icon" viewBox="0 0 24 24" fill="none" stroke="${tier.color}" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <div style="flex:1;">
+              <h3>Your Plan</h3>
+              <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+                <span class="tier-badge tier-${userTier.toLowerCase()}">${tier.label}</span>
+                ${hasStarshare ? '<span class="badge" style="background: linear-gradient(135deg, #f97316, #fb923c); font-size: 0.7rem;">+ StarShare VOD</span>' : ''}
+              </div>
+              <p style="color: var(--text-secondary); margin-top: 8px; font-size: 0.9rem;">${tier.desc}</p>
             </div>
           </div>
         </div>
@@ -1503,7 +1656,6 @@ class DashApp {
             <div>
               <h3>Subscription Status</h3>
               <p style="color: var(--accent-green); font-weight: 600;">Active</p>
-              <div class="badge badge-new mt-sm">Premium Access</div>
             </div>
           </div>
         </div>

@@ -3840,3 +3840,81 @@
   width: 10px;
   height: 10px;
 }
+
+/* ============================================
+   TIER UPGRADE BANNER
+   ============================================ */
+
+.tier-upgrade-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(139, 92, 246, 0.1));
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+}
+
+.tier-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tier-badge {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tier-badge.tier-basic {
+  background: linear-gradient(135deg, #475569, #64748b);
+  color: white;
+}
+
+.tier-badge.tier-standard {
+  background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+  color: white;
+}
+
+.tier-badge.tier-premium {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+}
+
+.tier-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.btn-upgrade {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-upgrade:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+}
+
+@media (max-width: 768px) {
+  .tier-upgrade-banner {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .tier-info {
+    flex-direction: column;
+  }
+}
