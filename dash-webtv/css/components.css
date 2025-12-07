@@ -4919,3 +4919,65 @@
     padding: 10px 16px;
   }
 }
+
+/* ============================================
+   FREE CHANNEL STYLING - Green indicator
+   ============================================ */
+
+/* Free category tabs - green accent */
+.category-tab.free-tab {
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.category-tab.free-tab.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-color: #10b981;
+}
+
+.category-tab.free-tab:hover:not(.active) {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+}
+
+/* Free channel card glow */
+.live-card.free-channel {
+  --glow-color-1: #10b981;
+  --glow-color-2: #34d399;
+}
+
+/* Free badge - green instead of red */
+.live-badge.free-badge {
+  background: rgba(16, 185, 129, 0.9);
+  border: 1px solid #34d399;
+}
+
+/* Free dot - blinking green like Claude Code status */
+.free-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: freePulse 2s ease-in-out infinite;
+  box-shadow: 0 0 6px #10b981;
+}
+
+@keyframes freePulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 10px #10b981; }
+}
+
+/* Free channel card border accent */
+.live-card.free-channel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, rgba(16,185,129,0.3), transparent) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+

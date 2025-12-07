@@ -198,10 +198,94 @@ class DashApp {
 
       // Build season groupings for series
       this.buildSeriesGroups()
+
+      // Load free channels from backend (Guinea, Sports, French)
+      await this.loadFreeChannels()
     } catch (err) {
       console.error('❌ Failed to load local data:', err)
       this.showToastEnhanced('Failed to load content library. Please refresh the page.', 'error')
     }
+  }
+
+  /**
+   * Load FREE channels from iptv-org (Guinea, Sports, French, News)
+   * These are legal free-to-air streams
+   */
+  async loadFreeChannels() {
+    try {
+      const response = await fetch(`${this.backendUrl}/api/free/verified`)
+      if (!response.ok) {
+        console.warn('⚠️ Free channels API not available')
+        return
+      }
+
+      const data = await response.json()
+      if (!data.success || !data.channels) {
+        console.warn('⚠️ No free channels returned')
+        return
+      }
+
+      // Transform free channels to match local format
+      this.freeChannels = data.channels.map((ch, index) => ({
+        stream_id: `free_${index}_${ch.id || index}`,
+        name: ch.name,
+        stream_icon: ch.logo || '',
+        category_id: this.getFreeChannelCategory(ch),
+        category_name: ch.group || 'Free Channels',
+        is_free: true,
+        free_source: ch.source,
+        url: ch.url,
+        stream_type: ch.format || 'hls',
+        group: ch.group
+      }))
+
+      // Create free channel categories
+      this.freeCategories = [
+        { category_id: 'free_all', category_name: '🆓 All Free', is_free: true },
+        { category_id: 'free_guinea', category_name: '🇬🇳 Guinea', is_free: true },
+        { category_id: 'free_sports', category_name: '⚽ Sports', is_free: true },
+        { category_id: 'free_french', category_name: '🇫🇷 French', is_free: true },
+        { category_id: 'free_news', category_name: '📰 News', is_free: true }
+      ]
+
+      console.log(`🆓 Loaded ${this.freeChannels.length} FREE channels!`)
+
+      // Merge with existing live channels (free channels first for visibility)
+      if (!this.localLive) this.localLive = []
+      this.localLive = [...this.freeChannels, ...this.localLive]
+
+    } catch (err) {
+      console.warn('⚠️ Could not load free channels:', err.message)
+      this.freeChannels = []
+      this.freeCategories = []
+    }
+  }
+
+  /**
+   * Determine category for free channel based on its group/name
+   */
+  getFreeChannelCategory(channel) {
+    const name = (channel.name || '').toLowerCase()
+    const group = (channel.group || '').toLowerCase()
+    const country = (channel.country || '').toLowerCase()
+
+    // Guinea channels
+    if (country === 'gn' || name.includes('guinea') || name.includes('guinée') ||
+        name.includes('kalac') || name.includes('rtg') || name.includes('espace tv')) {
+      return 'free_guinea'
+    }
+    // Sports
+    if (group.includes('sport') || name.includes('sport') || name.includes('football') ||
+        name.includes('soccer') || name.includes('match')) {
+      return 'free_sports'
+    }
+    // News
+    if (group.includes('news') || name.includes('news') || name.includes('info') ||
+        name.includes('24') || name.includes('journal')) {
+      return 'free_news'
+    }
+    // Default to French for francophone channels
+    return 'free_french'
   }
 
   /**
@@ -1773,9 +1857,18 @@ class DashApp {
     // Use local JSON data instead of API
     let channels = this.localLive || []
 
-    // Filter by category if selected
+    // Filter by category if selected (including free categories)
     if (this.state.selectedCategory) {
-      channels = channels.filter(c => String(c.category_id) === String(this.state.selectedCategory))
+      if (this.state.selectedCategory === 'free_all') {
+        // Show all free channels
+        channels = channels.filter(c => c.is_free)
+      } else if (this.state.selectedCategory.startsWith('free_')) {
+        // Show specific free category
+        channels = channels.filter(c => c.is_free && c.category_id === this.state.selectedCategory)
+      } else {
+        // Regular category filter
+        channels = channels.filter(c => String(c.category_id) === String(this.state.selectedCategory))
+      }
     }
 
     // Filter adult content
@@ -1865,6 +1958,12 @@ class DashApp {
                  onclick="dashApp.filterByCategory(null, 'live')">
               All Channels
             </div>
+            ${(this.freeCategories || []).map(cat => `
+              <div class="category-tab free-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
+                   onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
+                ${cat.category_name}
+              </div>
+            `).join('')}
             ${categories.slice(0, 40).map(cat => `
               <div class="category-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
                    onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
@@ -2725,9 +2824,13 @@ class DashApp {
       const id = channel.stream_id
       const hasLogo = channel.stream_icon && !channel.stream_icon.includes('placeholder')
       const healthClass = this.getContentHealthClass(id, 'live')
+      const isFree = channel.is_free
 
       // Generate a deterministic color based on channel name
-      const colors = [
+      const colors = isFree ? [
+        ['#10b981', '#34d399'],  // Free channels get green gradient
+        ['#059669', '#10b981'],
+      ] : [
         ['#9d4edd', '#3a86ff'],  // Purple to Blue
         ['#ff6b6b', '#feca57'],  // Red to Yellow
         ['#00d9ff', '#9d4edd'],  // Cyan to Purple
@@ -2742,7 +2845,7 @@ class DashApp {
       const escapedName = name.replace(/'/g, "\\'")
 
       return `
-        <div class="live-card ${hasLogo ? '' : 'live-card-glow'} ${healthClass}" onclick="dashApp.playLiveChannel('${id}', '${escapedName}')"
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'} ${healthClass} ${isFree ? 'free-channel' : ''}" onclick="dashApp.playLiveChannel('${id}', '${escapedName}')"
              style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
           ${hasLogo ? `
             <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
@@ -2766,9 +2869,9 @@ class DashApp {
             </div>
           `}
           <div class="live-card-overlay">
-            <div class="live-badge">
-              <span class="live-dot"></span>
-              LIVE
+            <div class="live-badge ${isFree ? 'free-badge' : ''}">
+              <span class="${isFree ? 'free-dot' : 'live-dot'}"></span>
+              ${isFree ? 'FREE' : 'LIVE'}
             </div>
           </div>
           <div class="live-card-name-bar">${name}</div>
