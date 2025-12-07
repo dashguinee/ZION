@@ -4678,12 +4678,28 @@ class DashApp {
         debug: false,
         enableWorker: true,
         lowLatencyMode: false,
+        startLevel: -1, // Auto quality
+        // Live stream sync settings (optimized for stability)
+        liveSyncDurationCount: 3,
+        liveMaxLatencyDurationCount: 10,
+        liveDurationInfinity: true,
+        // Buffer settings - large for stability
         backBufferLength: 90,
         maxBufferLength: 30,
         maxMaxBufferLength: 600,
-        startLevel: -1, // Auto quality
+        maxBufferSize: 60 * 1000 * 1000, // 60MB
+        maxBufferHole: 0.5,
+        // Retry settings - critical for unreliable streams
+        manifestLoadingMaxRetry: 4,
+        levelLoadingMaxRetry: 4,
+        fragLoadingMaxRetry: 6,
+        manifestLoadingRetryDelay: 1000,
+        levelLoadingRetryDelay: 1000,
+        fragLoadingRetryDelay: 1000,
+        // Timeout settings
         xhrSetup: (xhr, url) => {
           xhr.withCredentials = false
+          xhr.timeout = 30000
         }
       })
 
