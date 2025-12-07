@@ -1,0 +1,56 @@
+{
+  "testuser": {
+    "favorites": [
+      {
+        "id": "456",
+        "type": "series",
+        "addedAt": 9999
+      }
+    ],
+    "history": [
+      {
+        "id": "789",
+        "type": "movie",
+        "timestamp": 8888,
+        "name": "Test Movie"
+      }
+    ],
+    "watchlist": [
+      {
+        "id": "111",
+        "type": "movie",
+        "name": "My Movie"
+      }
+    ],
+    "lastSync": "2025-12-06T20:58:13.144Z"
+  },
+  "AzizTest1": {
+    "favorites": [],
+    "history": [
+      {
+        "id": "french_101",
+        "type": "movie",
+        "timestamp": 1765056264180,
+        "progress": 0,
+        "name": "Léon: The Professional",
+        "image": "https://image.tmdb.org/t/p/w500/bxB2q91nKYp8JNzqE7t7TWBVupB.jpg",
+        "episodeId": null,
+        "episodeName": "",
+        "seasonNum": null
+      },
+      {
+        "id": "french_1246049",
+        "type": "movie",
+        "timestamp": 1765056225978,
+        "progress": 0,
+        "name": "Dracula",
+        "image": "https://image.tmdb.org/t/p/w500/ykyRfv7JDofLxXLAwtLXaSuaFfM.jpg",
+        "episodeId": null,
+        "episodeName": "",
+        "seasonNum": null
+      }
+    ],
+    "watchlist": [],
+    "lastSync": "2025-12-07T12:16:50.863Z"
+  }
+}

@@ -69,7 +69,7 @@ const corsOptions = {
         'https://dash-webtv-admin.vercel.app',
         process.env.FRONTEND_URL
       ].filter(Boolean)
-    : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174'],
+    : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5500'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-admin-key'],
   credentials: true

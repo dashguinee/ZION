@@ -18,6 +18,8 @@ class StreamExtractorService {
     this.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
     this.cache = new Map(); // Simple in-memory cache
     this.cacheTTL = 3600000; // 1 hour
+    this.maxRetries = 3; // Maximum retry attempts
+    this.retryDelay = 1000; // Initial retry delay in ms
 
     // Updated provider domains (Dec 2025)
     this.providers = {
@@ -31,6 +33,36 @@ class StreamExtractorService {
 
     // VidSrc.me RCP domain for source resolution
     this.rcpUrl = 'https://vidsrc.stream/rcp';
+  }
+
+  /**
+   * Retry helper with exponential backoff
+   * @param {Function} fn - Async function to retry
+   * @param {string} providerName - Provider name for logging
+   * @param {number} maxRetries - Maximum retry attempts (default: 3)
+   * @returns {Promise} - Result of the function
+   */
+  async retryWithBackoff(fn, providerName, maxRetries = this.maxRetries) {
+    let lastError;
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        return await fn();
+      } catch (error) {
+        lastError = error;
+        const isLastAttempt = attempt === maxRetries - 1;
+
+        if (isLastAttempt) {
+          logger.warn(`[${providerName}] All ${maxRetries} attempts failed: ${error.message}`);
+          throw error;
+        }
+
+        // Exponential backoff: 1s, 2s, 4s
+        const delay = this.retryDelay * Math.pow(2, attempt);
+        logger.info(`[${providerName}] Attempt ${attempt + 1} failed: ${error.message}. Retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+    throw lastError;
   }
 
   /**
@@ -274,6 +306,12 @@ class StreamExtractorService {
    * This is the proven method from vidsrc-me-resolver
    */
   async extractFromVidSrcMe(tmdbId, type, season, episode) {
+    return this.retryWithBackoff(async () => {
+      return this._extractFromVidSrcMeInternal(tmdbId, type, season, episode);
+    }, 'VidSrcMe');
+  }
+
+  async _extractFromVidSrcMeInternal(tmdbId, type, season, episode) {
     // Step 1: Get available sources from the embed page
     let embedUrl = type === 'movie'
       ? `${this.providers.vidsrcMe}/embed/${tmdbId}`
@@ -497,7 +535,7 @@ class StreamExtractorService {
         'Accept-Language': 'en-US,en;q=0.9',
         'Referer': 'https://www.google.com/',
       },
-      timeout: 15000,
+      timeout: 30000,
     });
 
     if (!response.ok) {
@@ -577,7 +615,7 @@ class StreamExtractorService {
         'Accept': 'application/json',
         'Referer': 'https://embed.su/',
       },
-      timeout: 10000,
+      timeout: 30000,
     });
 
     if (!response.ok) {
@@ -592,6 +630,12 @@ class StreamExtractorService {
    * Extract from vidsrc.rip using their VRF system
    */
   async extractFromVidSrcRip(tmdbId, type, season, episode) {
+    return this.retryWithBackoff(async () => {
+      return this._extractFromVidSrcRipInternal(tmdbId, type, season, episode);
+    }, 'VidSrcRip');
+  }
+
+  async _extractFromVidSrcRipInternal(tmdbId, type, season, episode) {
     const baseUrl = 'https://vidsrc.rip';
     let url = type === 'movie'
       ? `${baseUrl}/embed/movie/${tmdbId}`
@@ -604,7 +648,7 @@ class StreamExtractorService {
         'User-Agent': this.userAgent,
         'Accept': 'text/html',
       },
-      timeout: 15000,
+      timeout: 30000,
     });
 
     if (!response.ok) {
@@ -682,7 +726,7 @@ class StreamExtractorService {
   async getVidSrcKey(baseUrl) {
     const response = await fetch(`${baseUrl}/images/skip-button.png`, {
       headers: { 'User-Agent': this.userAgent },
-      timeout: 10000,
+      timeout: 30000,
     });
     return response.text();
   }
@@ -724,7 +768,7 @@ class StreamExtractorService {
         'Accept': 'application/json',
         'Referer': `${baseUrl}/`,
       },
-      timeout: 10000,
+      timeout: 30000,
     });
 
     if (!response.ok) {
@@ -739,6 +783,12 @@ class StreamExtractorService {
    * This decodes their obfuscated player JS to get direct HLS URLs
    */
   async extractFromMultiEmbed(tmdbId, type, season, episode) {
+    return this.retryWithBackoff(async () => {
+      return this._extractFromMultiEmbedInternal(tmdbId, type, season, episode);
+    }, 'MultiEmbed');
+  }
+
+  async _extractFromMultiEmbedInternal(tmdbId, type, season, episode) {
     let url = type === 'movie'
       ? `https://multiembed.mov/directstream.php?video_id=${tmdbId}&tmdb=1`
       : `https://multiembed.mov/directstream.php?video_id=${tmdbId}&tmdb=1&s=${season}&e=${episode}`;
@@ -926,7 +976,7 @@ class StreamExtractorService {
         'User-Agent': this.userAgent,
         'Accept': 'text/html',
       },
-      timeout: 15000,
+      timeout: 30000,
     });
 
     if (!response.ok) {

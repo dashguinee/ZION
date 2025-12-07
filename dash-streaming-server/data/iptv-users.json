@@ -1,5 +1,15 @@
 {
   "users": {
+    "AzizTest1": {
+      "name": "DASH Test Account",
+      "whatsapp": "611361300",
+      "package": "premium_plus",
+      "tier": "PREMIUM",
+      "starshareEnabled": true,
+      "status": "active",
+      "createdAt": "2025-12-01T00:00:00Z",
+      "features": ["Everything", "StarShare VOD", "StarShare Series", "French VOD", "All Live TV", "Downloads", "Premium support"]
+    },
     "demo_basic": {
       "name": "Demo Basic User",
       "whatsapp": "000000000",

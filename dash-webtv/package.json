@@ -7,6 +7,14 @@
     "deploy:vercel": "vercel --prod",
     "deploy:netlify": "netlify deploy --prod"
   },
-  "keywords": ["pwa", "iptv", "streaming", "webtv"],
-  "author": "DASH Entertainment"
+  "keywords": [
+    "pwa",
+    "iptv",
+    "streaming",
+    "webtv"
+  ],
+  "author": "DASH Entertainment",
+  "devDependencies": {
+    "playwright": "^1.57.0"
+  }
 }

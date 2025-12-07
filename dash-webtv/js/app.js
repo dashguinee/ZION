@@ -6,7 +6,10 @@
 class DashApp {
   constructor() {
     // Backend URL for API calls
-    this.backendUrl = 'https://zion-production-39d8.up.railway.app'
+    // DEV: Use localhost for testing, switch to Railway for production
+    this.backendUrl = window.location.hostname === 'localhost'
+      ? 'http://localhost:3001'
+      : 'https://zion-production-39d8.up.railway.app'
 
     // Initialize Xtream Client (no credentials until login)
     this.client = new XtreamClient()
@@ -33,19 +36,6 @@ class DashApp {
 
     // Security: HTML sanitization function
     this.sanitizeHTML = this.sanitizeHTML.bind(this)
-  }
-
-  /**
-   * Sanitize user input to prevent XSS attacks
-   * @param {string} str - Unsanitized string
-   * @returns {string} - HTML-escaped string
-   */
-  sanitizeHTML(str) {
-    if (!str) return ''
-    const temp = document.createElement('div')
-    temp.textContent = str
-    return temp.innerHTML
-  }
 
     // DOM Elements
     this.elements = {
@@ -96,7 +86,50 @@ class DashApp {
     this.heroProgressTimer = null
     this.heroSlideDuration = 8000 // 8 seconds per slide
 
+    // Debounced history sync (don't spam API)
+    this.debouncedSyncHistory = this.debounce(async (history) => {
+      const username = localStorage.getItem('dash_user')
+      if (!username) return
+
+      try {
+        await fetch(`${this.backendUrl}/api/user-data/${username}/history`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ history })
+        })
+      } catch (error) {
+        console.warn('Failed to sync history:', error)
+      }
+    }, 5000) // Sync every 5 seconds max
+
     this.init()
+  }
+
+  /**
+   * Debounce utility - delays function execution until after wait period
+   */
+  debounce(func, wait) {
+    let timeout
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout)
+        func(...args)
+      }
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+    }
+  }
+
+  /**
+   * Sanitize user input to prevent XSS attacks
+   * @param {string} str - Unsanitized string
+   * @returns {string} - HTML-escaped string
+   */
+  sanitizeHTML(str) {
+    if (!str) return ''
+    const temp = document.createElement('div')
+    temp.textContent = str
+    return temp.innerHTML
   }
 
   // ============================================
@@ -119,6 +152,9 @@ class DashApp {
 
   async init() {
     console.log('🚀 DASH WebTV initializing...')
+
+    // Initialize network monitor
+    this.initNetworkMonitor()
 
     // Force service worker update if needed
     await this.ensureLatestServiceWorker()
@@ -158,6 +194,7 @@ class DashApp {
       this.buildSeriesGroups()
     } catch (err) {
       console.error('❌ Failed to load local data:', err)
+      this.showToastEnhanced('Failed to load content library. Please refresh the page.', 'error')
     }
   }
 
@@ -539,6 +576,9 @@ class DashApp {
       // Fetch user's tier from DASH backend
       await this.fetchUserTier(username)
 
+      // Sync user data (favorites, history, watchlist)
+      await this.syncUserDataOnLogin(username)
+
       console.log('✅ Login successful!')
       this.showAppUI()
     } else {
@@ -581,8 +621,8 @@ class DashApp {
    */
   async fetchUserTier(username) {
     try {
-      const backendUrl = this.client.serverUrl || 'https://zion-production-39d8.up.railway.app'
-      const res = await fetch(`${backendUrl}/api/iptv-access/${encodeURIComponent(username)}`)
+      // Use this.backendUrl which is set correctly for dev/prod
+      const res = await fetch(`${this.backendUrl}/api/iptv-access/${encodeURIComponent(username)}`)
       const data = await res.json()
 
       if (data.success) {
@@ -611,6 +651,96 @@ class DashApp {
       localStorage.setItem('dash_tier', 'BASIC')
       this.userTier = 'BASIC'
       this.starshareEnabled = true
+    }
+  }
+
+  /**
+   * Sync user data on login - merge local and server data
+   */
+  async syncUserDataOnLogin(username) {
+    try {
+      const response = await fetch(`${this.backendUrl}/api/user-data/${username}/all`)
+      const serverData = await response.json()
+
+      // Merge with local data
+      this.mergeUserData(serverData)
+
+      console.log('✅ User data synced from server')
+    } catch (error) {
+      console.warn('⚠️ Failed to load user data from server:', error)
+      // Continue with localStorage data
+    }
+  }
+
+  /**
+   * Merge server and local user data (union, keep most recent)
+   */
+  mergeUserData(serverData) {
+    const localFavorites = JSON.parse(localStorage.getItem('dash_favorites') || '[]')
+    const localHistory = JSON.parse(localStorage.getItem('dash_watch_history') || '[]')
+    const localWatchlist = JSON.parse(localStorage.getItem('dash_my_list') || '[]')
+
+    // Merge favorites (union, no duplicates by id+type)
+    const mergedFavorites = this.mergeArrays(localFavorites, serverData.favorites || [], 'id', 'type')
+
+    // Merge history (union, sorted by timestamp, limit 100)
+    const mergedHistory = this.mergeArrays(localHistory, serverData.history || [], 'id', 'type')
+      .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+      .slice(0, 100)
+
+    // Merge watchlist (union, no duplicates)
+    const mergedWatchlist = this.mergeArrays(localWatchlist, serverData.watchlist || [], 'id', 'type')
+
+    // Save merged data locally
+    localStorage.setItem('dash_favorites', JSON.stringify(mergedFavorites))
+    localStorage.setItem('dash_watch_history', JSON.stringify(mergedHistory))
+    localStorage.setItem('dash_my_list', JSON.stringify(mergedWatchlist))
+
+    // Update state
+    this.state.favorites = mergedFavorites
+    this.state.watchHistory = mergedHistory
+
+    // Sync merged data back to server
+    this.syncAllUserData(mergedFavorites, mergedHistory, mergedWatchlist)
+
+    console.log(`📊 Merged: ${mergedFavorites.length} favorites, ${mergedHistory.length} history, ${mergedWatchlist.length} watchlist`)
+  }
+
+  /**
+   * Merge two arrays with deduplication based on multiple keys
+   */
+  mergeArrays(arr1, arr2, ...keys) {
+    const map = new Map()
+
+    // Add all items from both arrays
+    for (const item of [...arr1, ...arr2]) {
+      // Create composite key from all specified keys
+      const key = keys.map(k => item[k]).join('|')
+
+      // Keep the item with most recent timestamp, or first seen
+      if (!map.has(key) || (item.timestamp > (map.get(key).timestamp || 0))) {
+        map.set(key, item)
+      }
+    }
+
+    return Array.from(map.values())
+  }
+
+  /**
+   * Sync all user data to backend at once
+   */
+  async syncAllUserData(favorites, history, watchlist) {
+    const username = localStorage.getItem('dash_user')
+    if (!username) return
+
+    try {
+      await fetch(`${this.backendUrl}/api/user-data/${username}/sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ favorites, history, watchlist })
+      })
+    } catch (error) {
+      console.warn('Failed to sync user data:', error)
     }
   }
 
@@ -2203,25 +2333,21 @@ class DashApp {
       return
     }
 
-    // Apply proxy if needed (for CORS/HTTP issues)
-    // Use Railway backend proxy instead of Cloudflare (more reliable)
-    // ALWAYS proxy HTTP URLs - mixed content is blocked by browsers
+    // Check if URL needs proxying (HTTP, CORS-blocked domains)
+    const needsProxy = useProxy || this.checkIfNeedsProxy(streamUrl)
     let finalUrl = streamUrl
-    const isHttpUrl = streamUrl.startsWith('http://')
 
-    if (useProxy || isHttpUrl) {
-      finalUrl = `${this.backendUrl}/api/french-vod/proxy?url=${encodeURIComponent(streamUrl)}`
+    if (needsProxy) {
+      // Use the new HLS proxy that rewrites URLs properly
+      finalUrl = `${this.backendUrl}/api/proxy/hls?url=${encodeURIComponent(streamUrl)}`
       console.log(`[FrenchTV] Proxied URL: ${finalUrl}`)
-      if (isHttpUrl) {
-        console.log('[FrenchTV] HTTP URL auto-proxied to avoid mixed content')
-      }
     }
 
     // Detect format and use appropriate player
     const isHLS = streamUrl.includes('.m3u8')
     const isDash = streamUrl.includes('.mpd')
     const isTS = streamUrl.includes('.ts') || streamUrl.includes(':8080') || streamUrl.includes(':8000')
-    const isProxied = useProxy || isHttpUrl  // Track if we're already using proxy
+    const isProxied = needsProxy  // Track if we're already using proxy
 
     if (isDash) {
       // DASH streams need dash.js - use our DASH player
@@ -2276,7 +2402,7 @@ class DashApp {
         enableWorker: true,
         lowLatencyMode: true,
         xhrSetup: (xhr) => {
-          xhr.timeout = 15000
+          xhr.timeout = 30000
         }
       })
 
@@ -2760,7 +2886,7 @@ class DashApp {
         // Extract direct stream from our backend API - NO EMBEDS (they redirect to 1xbet crap)
         const tmdbId = movie?.tmdb_id || String(id).replace('french_', '')
         try {
-          const streamResp = await fetch(`https://zion-production-39d8.up.railway.app/api/french-vod/stream/movie/${tmdbId}`)
+          const streamResp = await fetch(`${this.backendUrl}/api/french-vod/stream/movie/${tmdbId}`)
           const streamData = await streamResp.json()
 
           if (streamData.success && streamData.stream?.url) {
@@ -2780,12 +2906,14 @@ class DashApp {
             return
           } else {
             // No direct stream available - show error, DON'T use sketchy embeds
-            this.showNotification('Stream temporarily unavailable. Please try again later.', 'error')
+            this.showToastEnhanced('Stream temporarily unavailable. Please try again later.', 'error')
+            this.showStreamError(id, 'movie', 'Stream temporarily unavailable. Please try again later.')
             return
           }
         } catch (extractErr) {
           console.error('Stream extraction failed:', extractErr)
-          this.showNotification('Could not load stream. Please try again.', 'error')
+          this.showToastEnhanced('Could not load stream. Please try again.', 'error')
+          this.showStreamError(id, 'movie', 'Could not load stream. Please try again.')
           return
         }
       }
@@ -2826,6 +2954,43 @@ class DashApp {
   // All content now uses direct HLS streams via our backend extractor
 
   /**
+   * Check if a stream URL needs to be proxied
+   * - HTTP URLs need proxy (mixed content blocked on HTTPS)
+   * - Pluto TV URLs need proxy (CORS issues)
+   * - Some other providers also have CORS issues
+   */
+  checkIfNeedsProxy(url) {
+    if (!url) return false
+
+    // HTTP URLs on HTTPS page - must proxy
+    if (url.startsWith('http://')) {
+      console.log('🔒 HTTP URL detected - needs proxy for mixed content')
+      return true
+    }
+
+    // Known CORS-problematic domains
+    const corsBlockedDomains = [
+      'pluto.tv',
+      'prd.pluto.tv',
+      'cfd-v4-service-channel-stitcher',  // Pluto CDN
+      'fl1.moveonjoy.com',  // Some sports streams
+      '69.64.57.208',  // Direct IP streams
+      '51.254.199.122',  // Another IP
+      '78.130.250.2',  // Another IP
+    ]
+
+    const urlLower = url.toLowerCase()
+    for (const domain of corsBlockedDomains) {
+      if (urlLower.includes(domain)) {
+        console.log(`🔒 CORS-blocked domain detected (${domain}) - needs proxy`)
+        return true
+      }
+    }
+
+    return false
+  }
+
+  /**
    * Play a live TV channel with channel name for overlay
    */
   playLiveChannel(id, channelName) {
@@ -2845,16 +3010,16 @@ class DashApp {
       console.log(`📡 Direct URL: ${channel.url}`)
       console.log(`📺 Stream type: ${channel.stream_type || 'hls'}`)
 
-      // Free channels have direct HLS URLs - usually work without proxy
-      // But non-Safari browsers may still need CORS proxy
       const streamType = channel.stream_type || 'hls'
       let streamUrl = channel.url
 
-      // For HLS streams on non-Safari browsers, we might need proxy
-      if (streamType === 'hls' && !this.client.hasNativeHLS()) {
-        // Check if URL needs proxy (some HLS streams have CORS issues)
-        // Most iptv-org streams have proper CORS, so try direct first
-        console.log(`📡 Free HLS on non-Safari browser - trying direct first`)
+      // Check if URL needs proxying
+      const needsProxy = this.checkIfNeedsProxy(streamUrl)
+
+      if (needsProxy) {
+        // Route through backend proxy
+        streamUrl = `${this.backendUrl}/api/proxy/hls?url=${encodeURIComponent(channel.url)}`
+        console.log(`🔄 Proxying through backend: ${streamUrl}`)
       }
 
       this.closeModal()
@@ -4696,11 +4861,7 @@ class DashApp {
         ` : ''}
 
         ${totalResults === 0 ? `
-          <div class="empty-state">
-            <div class="empty-state-icon">😕</div>
-            <div class="empty-state-title">No results found</div>
-            <div class="empty-state-description">Try a different search term</div>
-          </div>
+          ${this.renderEmptyState(`No results found for "${this.sanitizeHTML(this.state.searchQuery)}". Try a different search term.`, '😕')}
         ` : ''}
       </div>
     `
@@ -4744,11 +4905,9 @@ class DashApp {
         </div>
 
         ${totalFavorites === 0 ? `
-          <div class="empty-state">
-            <div class="empty-state-icon">❤️</div>
-            <div class="empty-state-title">No favorites yet</div>
-            <div class="empty-state-description">Start adding movies and series to your favorites!</div>
-            <button class="btn btn-primary" onclick="dashApp.navigate('movies')" style="margin-top: 1.5rem;">
+          ${this.renderEmptyState('Start adding movies and series to your favorites!', '❤️')}
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <button class="btn btn-primary" onclick="dashApp.navigate('movies')">
               Browse Movies
             </button>
           </div>
@@ -4792,22 +4951,43 @@ class DashApp {
     this.renderPage(page)
   }
 
-  addToFavorites(id, type) {
+  async addToFavorites(id, type) {
     const favorites = this.loadFavorites()
     const exists = favorites.find(f => f.id === id && f.type === type)
 
+    let updated
     if (exists) {
       // Remove from favorites
-      const updated = favorites.filter(f => !(f.id === id && f.type === type))
+      updated = favorites.filter(f => !(f.id === id && f.type === type))
       localStorage.setItem('dash_favorites', JSON.stringify(updated))
       console.log('💔 Removed from favorites:', id, type)
       this.showToast('Removed from favorites', 'info')
     } else {
       // Add to favorites
       favorites.push({ id, type, addedAt: Date.now() })
-      localStorage.setItem('dash_favorites', JSON.stringify(favorites))
+      updated = favorites
+      localStorage.setItem('dash_favorites', JSON.stringify(updated))
       console.log('❤️ Added to favorites:', id, type)
       this.showToast('Added to favorites!', 'success')
+    }
+
+    // Sync to backend
+    await this.syncFavoritesToBackend(updated)
+  }
+
+  async syncFavoritesToBackend(favorites) {
+    const username = localStorage.getItem('dash_user')
+    if (!username) return
+
+    try {
+      await fetch(`${this.backendUrl}/api/user-data/${username}/favorites`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ favorites })
+      })
+    } catch (error) {
+      console.warn('Failed to sync favorites:', error)
+      // Silent fail - localStorage still has data
     }
   }
 
@@ -4887,6 +5067,9 @@ class DashApp {
     this.state.watchHistory = trimmedHistory
 
     console.log(`📝 Added to watch history: ${metadata.name || id} (${type})`)
+
+    // Sync to backend (debounced)
+    this.debouncedSyncHistory(trimmedHistory)
   }
 
   /**
@@ -4938,7 +5121,7 @@ class DashApp {
   /**
    * Add/Remove item from My List
    */
-  toggleMyList(id, type, metadata = {}) {
+  async toggleMyList(id, type, metadata = {}) {
     const myList = this.loadMyList()
     const existingIndex = myList.findIndex(item =>
       String(item.id) === String(id) && item.type === type
@@ -4962,8 +5145,27 @@ class DashApp {
 
     localStorage.setItem('dash_my_list', JSON.stringify(myList))
 
+    // Sync to backend
+    await this.syncWatchlistToBackend(myList)
+
     // Update button state if on detail modal
     this.updateMyListButton(id, type)
+  }
+
+  async syncWatchlistToBackend(watchlist) {
+    const username = localStorage.getItem('dash_user')
+    if (!username) return
+
+    try {
+      await fetch(`${this.backendUrl}/api/user-data/${username}/watchlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ watchlist })
+      })
+    } catch (error) {
+      console.warn('Failed to sync watchlist:', error)
+      // Silent fail - localStorage still has data
+    }
   }
 
   /**
@@ -5948,6 +6150,7 @@ class DashApp {
    */
   async renderWalletSection() {
     const username = localStorage.getItem('dash_user') || 'User'
+    let pendingTransactions = []
 
     let walletData = null
     try {
@@ -5955,6 +6158,13 @@ class DashApp {
       const data = await res.json()
       if (data.success) {
         walletData = data.wallet
+        // Extract pending transactions
+        if (walletData?.transactions) {
+          pendingTransactions = walletData.transactions
+            .filter(t => t.pending && !t.confirmed)
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .slice(0, 3) // Show max 3 pending
+        }
       }
     } catch (error) {
       console.error('Error loading wallet:', error)
@@ -6002,6 +6212,37 @@ class DashApp {
         </div>
 
         <!-- Quick Actions -->
+
+        <!-- Pending Transactions -->
+        ${pendingTransactions.length > 0 ? `
+          <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border-left: 3px solid #f59e0b;">
+            <h4 style="margin: 0 0 0.75rem 0; color: #f59e0b; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              Pending Top-Ups
+            </h4>
+            ${pendingTransactions.map(t => {
+              const date = new Date(t.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+              const amount = (t.amount / 1000).toFixed(0) + 'K GNF'
+              return `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <div>
+                    <div style="color: var(--text-primary); font-weight: 500;">+${amount}</div>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem;">${date}</div>
+                  </div>
+                  <div style="color: #f59e0b; font-size: 0.85rem; background: rgba(245, 158, 11, 0.2); padding: 0.25rem 0.5rem; border-radius: 4px;">
+                    Awaiting Confirmation
+                  </div>
+                </div>
+              `
+            }).join('')}
+            <div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+              Admin typically confirms within 24 hours
+            </div>
+          </div>
+        ` : ''}
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <button class="btn btn-outline btn-ripple" onclick="dashApp.showTransactionHistory()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
@@ -6022,7 +6263,7 @@ class DashApp {
   }
 
   /**
-   * Show top-up modal
+   * Show top-up modal with 3-step flow
    */
   showTopupModal() {
     const modalHtml = `
@@ -6033,36 +6274,104 @@ class DashApp {
             <button onclick="document.getElementById('topupModal').remove()" style="background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer;">×</button>
           </div>
 
-          <div class="card" style="background: rgba(157, 78, 221, 0.1); padding: 1.5rem; margin-bottom: 1.5rem;">
-            <h3 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2">
+          <!-- Step 1: Amount Selection -->
+          <div id="step-amount">
+            <h3 style="margin-top: 0;">Select Amount</h3>
+
+            <!-- Preset amounts -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1rem;">
+              <button class="btn btn-outline btn-ripple" onclick="dashApp.setTopUpAmount(100000)" style="padding: 1rem;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">100K</div>
+                <div style="font-weight: bold; color: var(--primary-purple);">1 Month</div>
+              </button>
+              <button class="btn btn-outline btn-ripple" onclick="dashApp.setTopUpAmount(200000)" style="padding: 1rem;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">200K</div>
+                <div style="font-weight: bold; color: var(--primary-cyan);">2 Months</div>
+              </button>
+              <button class="btn btn-outline btn-ripple" onclick="dashApp.setTopUpAmount(300000)" style="padding: 1rem;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">300K</div>
+                <div style="font-weight: bold; color: var(--accent-green);">3 Months</div>
+              </button>
+            </div>
+
+            <!-- Custom amount input -->
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Or enter custom amount:</label>
+              <input
+                type="number"
+                id="topup-amount"
+                placeholder="Enter amount (GNF)"
+                min="100000"
+                step="10000"
+                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-primary); font-size: 1rem;"
+              >
+              <div style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                Minimum: 100,000 GNF
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-ripple" onclick="dashApp.showPaymentInstructions()" style="width: 100%;">
+              Continue to Payment
+            </button>
+          </div>
+
+          <!-- Step 2: Payment Instructions (hidden initially) -->
+          <div id="step-payment" style="display: none;">
+            <div class="card" style="background: rgba(157, 78, 221, 0.1); padding: 1.5rem; margin-bottom: 1.5rem;">
+              <h3 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                Payment Instructions
+              </h3>
+              <ol style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.5rem; margin: 0;">
+                <li>Send <strong style="color: var(--accent-green); font-size: 1.1rem;" id="payment-amount-display">100,000 GNF</strong> via <strong style="color: var(--text-primary);">Orange Money</strong> or <strong style="color: var(--text-primary);">MTN Mobile Money</strong></li>
+                <li>Payment number: <strong style="color: var(--primary-cyan); font-size: 1.2rem;">611361300</strong></li>
+                <li>Reference: <strong style="color: var(--primary-purple);">DASH-${localStorage.getItem('dash_user')}</strong></li>
+                <li>After sending, click "I've Sent Payment" below</li>
+              </ol>
+            </div>
+
+            <div style="background: rgba(52, 211, 153, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+              <p style="margin: 0; color: var(--accent-green); display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <strong>Admin will confirm within 24 hours</strong>
+              </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <button class="btn btn-outline btn-ripple" onclick="dashApp.backToAmount()" style="width: 100%;">
+                Back
+              </button>
+              <button class="btn btn-primary btn-ripple" onclick="dashApp.confirmTopUpPayment()" style="width: 100%;">
+                I've Sent Payment
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Confirmation (hidden initially) -->
+          <div id="step-confirmed" style="display: none;">
+            <div style="text-align: center; padding: 2rem 1rem;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2" style="margin: 0 auto 1rem;">
                 <circle cx="12" cy="12" r="10"/>
-                <line x1="12" y1="16" x2="12" y2="12"/>
-                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                <polyline points="9 12 11 14 15 10"/>
               </svg>
-              Payment Instructions
-            </h3>
-            <ol style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.5rem; margin: 0;">
-              <li>Send via <strong style="color: var(--text-primary);">Orange Money</strong> or <strong style="color: var(--text-primary);">MTN Mobile Money</strong></li>
-              <li>Payment number: <strong style="color: var(--primary-cyan); font-size: 1.2rem;">611361300</strong></li>
-              <li>Minimum amount: <strong style="color: var(--accent-green);">100,000 GNF</strong></li>
-              <li>Reference: <strong style="color: var(--primary-purple);">DASH-${localStorage.getItem('dash_user')}</strong></li>
-              <li>Your balance will update within 1 hour</li>
-            </ol>
+              <h3 style="color: var(--accent-green); margin-bottom: 1rem;">Payment Recorded!</h3>
+              <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+                Your payment of <strong id="confirmed-amount-display" style="color: var(--text-primary);">100,000 GNF</strong> has been recorded.
+              </p>
+              <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                Admin will confirm within 24 hours and your balance will be updated.
+              </p>
+              <button class="btn btn-primary btn-ripple" onclick="document.getElementById('topupModal').remove(); dashApp.refreshWalletBalance();" style="width: 100%;">
+                Done
+              </button>
+            </div>
           </div>
-
-          <div style="background: rgba(52, 211, 153, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-            <p style="margin: 0; color: var(--accent-green); display: flex; align-items: center; gap: 0.5rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              <strong>No chasing for payments!</strong> Control your entertainment budget.
-            </p>
-          </div>
-
-          <button class="btn btn-primary btn-ripple" onclick="document.getElementById('topupModal').remove()" style="width: 100%;">
-            Got it!
-          </button>
         </div>
       </div>
     `
@@ -6070,8 +6379,107 @@ class DashApp {
   }
 
   /**
+   * Set top-up amount from preset buttons
+   */
+  setTopUpAmount(amount) {
+    const input = document.getElementById('topup-amount')
+    if (input) {
+      input.value = amount
+    }
+  }
+
+  /**
+   * Show payment instructions step
+   */
+  showPaymentInstructions() {
+    const amount = parseInt(document.getElementById('topup-amount').value)
+
+    if (!amount || amount < 100000) {
+      this.showToast('Please enter a valid amount (minimum 100,000 GNF)', 'error')
+      return
+    }
+
+    // Format amount for display
+    const formattedAmount = amount.toLocaleString('fr-GN') + ' GNF'
+
+    // Update payment display
+    const paymentDisplay = document.getElementById('payment-amount-display')
+    if (paymentDisplay) {
+      paymentDisplay.textContent = formattedAmount
+    }
+
+    // Hide step 1, show step 2
+    document.getElementById('step-amount').style.display = 'none'
+    document.getElementById('step-payment').style.display = 'block'
+  }
+
+  /**
+   * Go back to amount selection
+   */
+  backToAmount() {
+    document.getElementById('step-payment').style.display = 'none'
+    document.getElementById('step-amount').style.display = 'block'
+  }
+
+  /**
+   * Confirm top-up payment and create transaction
+   */
+  async confirmTopUpPayment() {
+    const username = localStorage.getItem('dash_user')
+    const amount = parseInt(document.getElementById('topup-amount').value)
+
+    if (!amount || amount < 100000) {
+      this.showToast('Invalid amount', 'error')
+      return
+    }
+
+    try {
+      const response = await fetch(`${this.backendUrl}/api/wallet/${username}/topup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: amount,
+          note: 'Mobile money top-up',
+          adminConfirmed: false
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        // Update confirmation display
+        const confirmedDisplay = document.getElementById('confirmed-amount-display')
+        if (confirmedDisplay) {
+          confirmedDisplay.textContent = amount.toLocaleString('fr-GN') + ' GNF'
+        }
+
+        // Hide step 2, show step 3
+        document.getElementById('step-payment').style.display = 'none'
+        document.getElementById('step-confirmed').style.display = 'block'
+
+        // Show success toast
+        this.showToast('Payment recorded! Awaiting admin confirmation.', 'success')
+      } else {
+        throw new Error(data.error || 'Failed to record payment')
+      }
+    } catch (error) {
+      this.showToast('Error recording payment. Please contact support.', 'error')
+      console.error('Top-up error:', error)
+    }
+  }
+
+  /**
    * Show transaction history modal
    */
+  /**
+   * Refresh wallet balance display
+   */
+  async refreshWalletBalance() {
+    if (this.state.currentPage === 'account') {
+      await this.showAccountPage()
+    }
+  }
+
   async showTransactionHistory() {
     const username = localStorage.getItem('dash_user')
     if (!username) return
@@ -6176,125 +6584,327 @@ class DashApp {
     return false
   }
 
-  /**
-   * Show upgrade prompt for locked content
-   */
-  showUpgradePrompt(contentTitle, category) {
-    const modalHtml = `
-      <div class="modal-overlay" id="upgradeModal" onclick="if(event.target === this) this.remove()">
-        <div class="modal-content" style="max-width: 500px;">
-          <div style="text-align: center; padding: 2rem 1rem;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
-            <h2 style="margin: 0 0 1rem 0;">Unlock "${contentTitle}"</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-              This content requires the <strong style="color: var(--primary-purple);">${category}</strong> package.
-            </p>
+  // ============================================
+  // ERROR HANDLING & UI POLISH COMPONENTS
+  // ============================================
 
-            <div style="display: flex; gap: 1rem;">
-              <button class="btn btn-outline btn-ripple" onclick="document.getElementById('upgradeModal').remove()" style="flex: 1;">
-                Maybe Later
-              </button>
-              <button class="btn btn-primary btn-ripple" onclick="dashApp.navigate('packages'); document.getElementById('upgradeModal').remove();" style="flex: 1;">
-                Upgrade Now
-              </button>
-            </div>
-          </div>
+  /**
+   * Render loading skeleton for content grids
+   * @param {number} count - Number of skeleton cards to show
+   * @returns {string} HTML string
+   */
+  renderLoadingSkeleton(count = 6) {
+    const skeletons = Array(count).fill(0).map(() => `
+      <div class="content-card skeleton">
+        <div class="skeleton-poster"></div>
+        <div class="skeleton-title"></div>
+        <div class="skeleton-subtitle"></div>
+      </div>
+    `).join('')
+
+    return `<div class="content-grid">${skeletons}</div>`
+  }
+
+  /**
+   * Render empty state component
+   * @param {string} message - Message to display
+   * @param {string} icon - Emoji icon
+   * @returns {string} HTML string
+   */
+  renderEmptyState(message, icon = '📭') {
+    return `
+      <div class="empty-state">
+        <div class="empty-icon">${icon}</div>
+        <h3>Nothing here yet</h3>
+        <p>${message}</p>
+      </div>
+    `
+  }
+
+  /**
+   * Show stream error with retry options
+   * @param {string} contentId - Content ID
+   * @param {string} contentType - Content type (movie/series/live)
+   * @param {string} errorMessage - Error message
+   */
+  showStreamError(contentId, contentType, errorMessage) {
+    const errorHtml = `
+      <div class="stream-error">
+        <div class="error-icon">⚠️</div>
+        <h3>Playback Error</h3>
+        <p>${errorMessage || 'Unable to play this content'}</p>
+        <div class="error-actions">
+          <button onclick="dashApp.retryStream('${contentId}', '${contentType}')" class="btn-primary">
+            Try Again
+          </button>
+          <button onclick="dashApp.closeErrorModals()" class="btn-outline">
+            Close
+          </button>
         </div>
       </div>
     `
-    document.body.insertAdjacentHTML('beforeend', modalHtml)
+
+    // Create modal overlay
+    const modal = document.createElement('div')
+    modal.id = 'stream-error-modal'
+    modal.className = 'modal-overlay'
+    modal.innerHTML = `
+      <div class="modal-content">
+        ${errorHtml}
+      </div>
+    `
+    document.body.appendChild(modal)
   }
 
-  // French VOD Helper Functions
-  generateYearOptions() {
-    const currentYear = new Date().getFullYear()
-    const years = []
-    for (let year = currentYear; year >= 1980; year--) {
-      years.push(`<option value="${year}">${year}</option>`)
-    }
-    return years.join('')
-  }
+  /**
+   * Retry stream playback
+   * @param {string} contentId - Content ID
+   * @param {string} contentType - Content type
+   */
+  async retryStream(contentId, contentType) {
+    this.closeErrorModals()
 
-  async handleFrenchSearch(query) {
-    if (!this.state.french) return
-
-    this.state.french.searchQuery = query
-
-    // Debounce search
-    if (this.frenchSearchTimeout) {
-      clearTimeout(this.frenchSearchTimeout)
-    }
-
-    this.frenchSearchTimeout = setTimeout(async () => {
-      await this.navigate('french')
-    }, 300)
-  }
-
-  async handleFrenchYearFilter(year) {
-    if (!this.state.french) return
-
-    this.state.french.selectedYear = year
-    await this.navigate('french')
-  }
-
-  async clearFrenchFilters() {
-    if (!this.state.french) return
-
-    this.state.french.searchQuery = ''
-    this.state.french.selectedYear = ''
-    this.state.french.selectedGenre = ''
-    await this.navigate('french')
-  }
-
-  async loadMoreFrench() {
-    if (!this.state.french || !this.state.french.displayedMovies) return
-
-    const grid = document.getElementById('frenchMovieGrid')
-    if (!grid) return
-
-    const currentCount = grid.children.length
-    const movies = this.state.french.displayedMovies
-    const nextMovies = movies.slice(currentCount, currentCount + 50)
-
-    const newCards = nextMovies.map(movie => this.renderMovieCard(movie)).join('')
-    grid.insertAdjacentHTML('beforeend', newCards)
-
-    // Update or remove load more button
-    const loadMoreBtn = document.querySelector('.load-more-container button')
-    if (loadMoreBtn) {
-      const remaining = movies.length - (currentCount + nextMovies.length)
-      if (remaining > 0) {
-        loadMoreBtn.textContent = `Load More (${remaining} remaining)`
-      } else {
-        loadMoreBtn.parentElement.remove()
+    if (contentType === 'movie') {
+      const movie = this.localMovies?.find(m => m.stream_id === parseInt(contentId))
+      if (movie) {
+        await this.playMovie(movie)
+      }
+    } else if (contentType === 'series') {
+      const episode = this.localSeries?.find(e => e.id === parseInt(contentId))
+      if (episode) {
+        await this.playEpisode(episode)
+      }
+    } else if (contentType === 'live') {
+      const channel = this.localLive?.find(c => c.stream_id === parseInt(contentId))
+      if (channel) {
+        await this.playChannel(channel)
       }
     }
-
-    // Initialize lazy loading for new images
-    this.initPosterLazyLoad()
   }
 
-  initPosterLazyLoad() {
-    // Intersection Observer for lazy loading posters
-    if (!this.posterObserver) {
-      this.posterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target
-            if (img.dataset.src) {
-              img.src = img.dataset.src
-              img.removeAttribute('data-src')
-              this.posterObserver.unobserve(img)
-            }
-          }
-        })
-      }, { rootMargin: '100px' })
+  /**
+   * Close error/confirmation modals (stream-error-modal, confirm-modal)
+   * NOTE: Main content modal is closed via closeModal() defined earlier in class
+   */
+  closeErrorModals() {
+    const modal = document.getElementById('stream-error-modal')
+    if (modal) modal.remove()
+
+    const confirmModal = document.getElementById('confirm-modal')
+    if (confirmModal) confirmModal.remove()
+  }
+
+  /**
+   * Initialize network monitor
+   */
+  initNetworkMonitor() {
+    window.addEventListener('online', () => {
+      this.showToastEnhanced('You\'re back online!', 'success')
+      this.dismissOfflineBanner()
+    })
+
+    window.addEventListener('offline', () => {
+      this.showOfflineBanner()
+    })
+
+    // Check initial state
+    if (!navigator.onLine) {
+      this.showOfflineBanner()
+    }
+  }
+
+  /**
+   * Show offline banner
+   */
+  showOfflineBanner() {
+    // Remove existing banner first
+    this.dismissOfflineBanner()
+
+    const banner = document.createElement('div')
+    banner.id = 'offline-banner'
+    banner.innerHTML = `
+      <span>📡</span>
+      <span>You're offline. Some features may not work.</span>
+    `
+    document.body.prepend(banner)
+  }
+
+  /**
+   * Dismiss offline banner
+   */
+  dismissOfflineBanner() {
+    const banner = document.getElementById('offline-banner')
+    if (banner) banner.remove()
+  }
+
+  /**
+   * Enhanced toast notification with better styling
+   * @param {string} message - Message to display
+   * @param {string} type - Type: success, error, warning, info
+   * @param {number} duration - Duration in ms
+   */
+  showToastEnhanced(message, type = 'info', duration = 4000) {
+    const icons = {
+      success: '✓',
+      error: '✕',
+      warning: '⚠',
+      info: 'ℹ'
     }
 
-    // Observe all images with data-src
-    document.querySelectorAll('img[data-src]').forEach(img => {
-      this.posterObserver.observe(img)
+    const toast = document.createElement('div')
+    toast.className = `toast toast-${type}`
+    toast.innerHTML = `
+      <span class="toast-icon">${icons[type]}</span>
+      <span class="toast-message">${message}</span>
+      <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+    `
+
+    // Get or create toast container
+    let container = document.getElementById('toast-container')
+    if (!container) {
+      container = document.createElement('div')
+      container.id = 'toast-container'
+      document.body.appendChild(container)
+    }
+
+    container.appendChild(toast)
+
+    // Animate in
+    requestAnimationFrame(() => toast.classList.add('toast-visible'))
+
+    // Auto-dismiss
+    setTimeout(() => {
+      toast.classList.remove('toast-visible')
+      setTimeout(() => toast.remove(), 300)
+    }, duration)
+  }
+
+  /**
+   * Show progress indicator for long operations
+   * @param {string} message - Progress message
+   * @param {number|null} percent - Progress percentage (0-100)
+   */
+  showProgress(message, percent = null) {
+    let progressBar = document.getElementById('progress-overlay')
+
+    if (!progressBar) {
+      progressBar = document.createElement('div')
+      progressBar.id = 'progress-overlay'
+      document.body.appendChild(progressBar)
+    }
+
+    progressBar.innerHTML = `
+      <div class="progress-content">
+        <div class="progress-spinner"></div>
+        <p class="progress-message">${message}</p>
+        ${percent !== null ? `
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${percent}%"></div>
+          </div>
+          <span class="progress-percent">${percent}%</span>
+        ` : ''}
+      </div>
+    `
+  }
+
+  /**
+   * Hide progress overlay
+   */
+  hideProgress() {
+    const overlay = document.getElementById('progress-overlay')
+    if (overlay) overlay.remove()
+  }
+
+  /**
+   * Show confirmation dialog
+   * @param {string} title - Dialog title
+   * @param {string} message - Dialog message
+   * @param {string} confirmText - Confirm button text
+   * @returns {Promise<boolean>} - True if confirmed
+   */
+  async confirmAction(title, message, confirmText = 'Confirm') {
+    return new Promise((resolve) => {
+      const modal = document.createElement('div')
+      modal.id = 'confirm-modal'
+      modal.className = 'modal-overlay'
+      modal.innerHTML = `
+        <div class="modal-content">
+          <div class="confirm-dialog">
+            <h3>${title}</h3>
+            <p>${message}</p>
+            <div class="dialog-actions">
+              <button onclick="dashApp.resolveConfirm(false)" class="btn-outline">Cancel</button>
+              <button onclick="dashApp.resolveConfirm(true)" class="btn-primary">${confirmText}</button>
+            </div>
+          </div>
+        </div>
+      `
+      document.body.appendChild(modal)
+      this.confirmResolver = resolve
     })
+  }
+
+  /**
+   * Resolve confirmation dialog
+   * @param {boolean} result - Confirmation result
+   */
+  resolveConfirm(result) {
+    this.closeErrorModals()
+    if (this.confirmResolver) {
+      this.confirmResolver(result)
+      this.confirmResolver = null
+    }
+  }
+
+  /**
+   * Validate top-up amount
+   * @param {number} amount - Amount to validate
+   * @returns {object} Validation result
+   */
+  validateTopUpAmount(amount) {
+    if (!amount || isNaN(amount)) {
+      return { valid: false, message: 'Please enter a valid amount' }
+    }
+    if (amount < 10000) {
+      return { valid: false, message: 'Minimum top-up is 10,000 GNF' }
+    }
+    if (amount > 1000000) {
+      return { valid: false, message: 'Maximum top-up is 1,000,000 GNF' }
+    }
+    return { valid: true }
+  }
+
+  /**
+   * Safe fetch wrapper with error handling
+   * @param {string} url - URL to fetch
+   * @param {object} options - Fetch options
+   * @returns {Promise<any>} Response data or null on error
+   */
+  async safeFetch(url, options = {}) {
+    try {
+      const response = await fetch(url, options)
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error('Fetch error:', error)
+
+      // Show user-friendly error message
+      if (error.message.includes('Failed to fetch')) {
+        this.showToastEnhanced('Network error. Please check your connection.', 'error')
+      } else if (error.message.includes('404')) {
+        this.showToastEnhanced('Content not found.', 'error')
+      } else if (error.message.includes('500')) {
+        this.showToastEnhanced('Server error. Please try again later.', 'error')
+      } else {
+        this.showToastEnhanced('An error occurred. Please try again.', 'error')
+      }
+      return null
+    }
   }
 
   showLoading() {
