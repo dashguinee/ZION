@@ -51,6 +51,17 @@ const streamLimiter = rateLimit({
   legacyHeaders: false
 });
 
+// HLS Proxy rate limiter (very permissive - HLS needs many segment requests)
+// 500 requests per minute per IP for segment fetching
+const proxyLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 500,
+  message: { error: 'Proxy rate limit exceeded' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => req.ip // Rate limit per IP
+});
+
 // Admin endpoints rate limiter (30 requests per 15 minutes)
 const adminLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -133,7 +144,7 @@ app.use('/api/packages', apiLimiter, timeout('10s'), packagesRouter);
 app.use('/api/wallet', apiLimiter, timeout('10s'), walletRouter);
 app.use('/api/xtream', apiLimiter, timeout('15s'), xtreamProxyRouter);
 app.use('/api/user-data', apiLimiter, timeout('5s'), userDataRouter);
-app.use('/api/proxy', streamLimiter, timeout('60s'), proxyRouter);
+app.use('/api/proxy', proxyLimiter, timeout('60s'), proxyRouter);
 
 // Root endpoint
 app.get('/', (req, res) => {

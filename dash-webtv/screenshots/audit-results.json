@@ -1,0 +1,219 @@
+{
+  "timestamp": "2025-12-07T11:59:43.918Z",
+  "tests": [
+    {
+      "name": "Backend responds",
+      "passed": false,
+      "details": "",
+      "timestamp": "2025-12-07T11:59:44.079Z"
+    },
+    {
+      "name": "Backend status",
+      "passed": true,
+      "details": "degraded",
+      "timestamp": "2025-12-07T11:59:44.079Z"
+    },
+    {
+      "name": "Data files accessible",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T11:59:44.079Z"
+    },
+    {
+      "name": "Login form present",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T11:59:45.590Z"
+    },
+    {
+      "name": "Login successful",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T11:59:52.931Z"
+    },
+    {
+      "name": "Nav: Movies",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T11:59:53.769Z"
+    },
+    {
+      "name": "Nav: Series",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T11:59:53.775Z"
+    },
+    {
+      "name": "Nav: Live TV",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T11:59:53.781Z"
+    },
+    {
+      "name": "Nav: French",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T11:59:53.787Z"
+    },
+    {
+      "name": "Movies content loaded",
+      "passed": false,
+      "details": "Element not found: .content-grid, .movie-grid, .movies-container, .card",
+      "timestamp": "2025-12-07T12:00:17.758Z"
+    },
+    {
+      "name": "Movie categories present",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T12:00:17.764Z"
+    },
+    {
+      "name": "Movies displayed",
+      "passed": false,
+      "details": "Found 0 items",
+      "timestamp": "2025-12-07T12:00:17.769Z"
+    },
+    {
+      "name": "Live TV channels loaded",
+      "passed": false,
+      "details": "Element not found: .channel-grid, .live-channels, .channels, .card",
+      "timestamp": "2025-12-07T12:00:31.670Z"
+    },
+    {
+      "name": "Channels displayed",
+      "passed": false,
+      "details": "Found 0 channels",
+      "timestamp": "2025-12-07T12:00:31.693Z"
+    },
+    {
+      "name": "Channel categories present",
+      "passed": false,
+      "details": "Found 0 categories",
+      "timestamp": "2025-12-07T12:00:31.700Z"
+    },
+    {
+      "name": "French VOD loaded",
+      "passed": true,
+      "details": "",
+      "timestamp": "2025-12-07T12:00:35.377Z"
+    },
+    {
+      "name": "Wallet balance displayed",
+      "passed": false,
+      "details": "",
+      "timestamp": "2025-12-07T12:01:09.956Z"
+    },
+    {
+      "name": "Top-up option available",
+      "passed": false,
+      "details": "",
+      "timestamp": "2025-12-07T12:01:09.961Z"
+    },
+    {
+      "name": "Search works",
+      "passed": false,
+      "details": "",
+      "timestamp": "2025-12-07T12:01:14.629Z"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "home-initial",
+      "filename": "1765108784623-home-initial.png",
+      "description": "Initial home page load"
+    },
+    {
+      "name": "login-filled",
+      "filename": "1765108785731-login-filled.png",
+      "description": "Login form filled"
+    },
+    {
+      "name": "login-result",
+      "filename": "1765108788974-login-result.png",
+      "description": "After login attempt"
+    },
+    {
+      "name": "after-login-loaded",
+      "filename": "1765108792931-after-login-loaded.png",
+      "description": "After login with content"
+    },
+    {
+      "name": "navigation",
+      "filename": "1765108793787-navigation.png",
+      "description": "Main navigation"
+    },
+    {
+      "name": "movies-section",
+      "filename": "1765108807429-movies-section.png",
+      "description": "Movies section"
+    },
+    {
+      "name": "livetv-section",
+      "filename": "1765108820959-livetv-section.png",
+      "description": "Live TV section"
+    },
+    {
+      "name": "french-section",
+      "filename": "1765108834890-french-section.png",
+      "description": "French VOD section"
+    },
+    {
+      "name": "wallet-section",
+      "filename": "1765108869290-wallet-section.png",
+      "description": "Wallet section"
+    },
+    {
+      "name": "search-results",
+      "filename": "1765108873958-search-results.png",
+      "description": "Search results"
+    },
+    {
+      "name": "audit-complete",
+      "filename": "1765108874629-audit-complete.png",
+      "description": "Audit complete state"
+    }
+  ],
+  "errors": [
+    {
+      "type": "console",
+      "message": "Access to fetch at 'https://zion-production-39d8.up.railway.app/api/iptv-access/AzizTest1' from origin 'http://localhost:5500' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+    },
+    {
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "type": "console",
+      "message": "Access to fetch at 'http://localhost:3001/api/user-data/AzizTest1/all' from origin 'http://localhost:5500' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+    },
+    {
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "type": "console",
+      "message": "Access to fetch at 'https://zion-production-39d8.up.railway.app/api/health/offline' from origin 'http://localhost:5500' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+    },
+    {
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "type": "console",
+      "message": "Failed to get offline content: TypeError: Failed to fetch\n    at XtreamClient.getOfflineContent (http://localhost:5500/js/xtream-client.js:492:30)\n    at DashApp.loadOfflineStatus (http://localhost:5500/js/app.js:3304:42)\n    at DashApp.loadAppContent (http://localhost:5500/js/app.js:802:16)"
+    },
+    {
+      "type": "console",
+      "message": "Access to fetch at 'http://localhost:3001/api/french-vod/livetv/featured' from origin 'http://localhost:5500' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+    },
+    {
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 9,
+    "warnings": 2
+  }
+}

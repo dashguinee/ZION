@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "username": "AzizTest1",
+    "balance": 0,
+    "lastTopup": null,
+    "lastDeduction": null,
+    "transactions": [],
+    "autoRenew": true,
+    "createdAt": "2025-12-07T12:08:41.606Z"
+  }
+]
