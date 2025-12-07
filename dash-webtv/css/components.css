@@ -4981,3 +4981,83 @@
   pointer-events: none;
 }
 
+/* ============================================
+   OFFLINE / DEGRADED CHANNEL INDICATORS
+   ============================================ */
+
+/* Offline channel - grayed out with reduced opacity */
+.live-card.content-offline,
+.movie-card.content-offline,
+.content-card.content-offline {
+  filter: grayscale(0.85);
+  opacity: 0.55;
+  position: relative;
+}
+
+.live-card.content-offline:hover,
+.movie-card.content-offline:hover,
+.content-card.content-offline:hover {
+  filter: grayscale(0.6);
+  opacity: 0.7;
+}
+
+/* Degraded channel - slightly dimmed with warning */
+.live-card.content-degraded,
+.movie-card.content-degraded,
+.content-card.content-degraded {
+  filter: sepia(0.2) brightness(0.9);
+  position: relative;
+}
+
+/* Offline overlay - dark semi-transparent with badge */
+.offline-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  z-index: 15;
+  backdrop-filter: blur(2px);
+}
+
+/* OFFLINE badge - bold red */
+.offline-badge {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  padding: 6px 14px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+  text-transform: uppercase;
+  animation: offlinePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes offlinePulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Degraded overlay - subtle warning */
+.degraded-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 15;
+}
+
+/* UNSTABLE badge - orange warning */
+.degraded-badge {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+}
+

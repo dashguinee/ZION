@@ -2401,6 +2401,7 @@ class DashApp {
       // Health status from cache (updated when playback fails/succeeds)
       const healthStatus = this.channelHealthCache?.[id] || 'unknown'
       const isOffline = healthStatus === 'offline'
+      const isDegraded = healthStatus === 'degraded'
 
       // Generate deterministic colors
       const colors = [
@@ -2416,15 +2417,12 @@ class DashApp {
       const escapedName = name.replace(/'/g, "\\'")
       const escapedUrl = (channel.url || '').replace(/'/g, "\\'")
       const needsProxy = channel.needsProxy || false
-      // Offline styling: grayed, blurred
-      const offlineStyle = isOffline ? 'opacity: 0.5; filter: grayscale(0.8);' : ''
-      const offlineClass = isOffline ? 'channel-offline' : ''
 
       return `
-        <div class="live-card ${hasLogo ? '' : 'live-card-glow'} ${offlineClass}"
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'} ${isOffline ? 'content-offline' : isDegraded ? 'content-degraded' : ''}"
              data-channel-id="${id}"
              onclick="dashApp.playFrenchLiveChannel('${escapedUrl}', '${escapedName}', ${needsProxy}, '${id}')"
-             style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''} ${offlineStyle}">
+             style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
           ${hasLogo ? `
             <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
                  onerror="this.parentElement.classList.add('live-card-glow');this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -2446,6 +2444,15 @@ class DashApp {
               </div>
             </div>
           `}
+          ${isOffline ? `
+            <div class="offline-overlay">
+              <div class="offline-badge">OFFLINE</div>
+            </div>
+          ` : isDegraded ? `
+            <div class="degraded-overlay">
+              <div class="degraded-badge">⚠️ UNSTABLE</div>
+            </div>
+          ` : ''}
           <div class="live-card-overlay">
             <div class="live-badge">
               <span class="live-dot"></span>
@@ -2825,6 +2832,8 @@ class DashApp {
       const hasLogo = channel.stream_icon && !channel.stream_icon.includes('placeholder')
       const healthClass = this.getContentHealthClass(id, 'live')
       const isFree = channel.is_free
+      const isOffline = healthClass === 'content-offline'
+      const isDegraded = healthClass === 'content-degraded'
 
       // Generate a deterministic color based on channel name
       const colors = isFree ? [
@@ -2868,6 +2877,15 @@ class DashApp {
               </div>
             </div>
           `}
+          ${isOffline ? `
+            <div class="offline-overlay">
+              <div class="offline-badge">OFFLINE</div>
+            </div>
+          ` : isDegraded ? `
+            <div class="degraded-overlay">
+              <div class="degraded-badge">⚠️ UNSTABLE</div>
+            </div>
+          ` : ''}
           <div class="live-card-overlay">
             <div class="live-badge ${isFree ? 'free-badge' : ''}">
               <span class="${isFree ? 'free-dot' : 'live-dot'}"></span>
