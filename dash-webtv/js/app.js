@@ -2400,7 +2400,24 @@ class DashApp {
     if (typeof Hls !== 'undefined' && Hls.isSupported()) {
       const hls = new Hls({
         enableWorker: true,
-        lowLatencyMode: true,
+        lowLatencyMode: false, // Disable for stability with live streams
+        // Buffer settings for live streams
+        liveSyncDurationCount: 3,
+        liveMaxLatencyDurationCount: 10,
+        liveDurationInfinity: true,
+        // Larger buffer for stability
+        maxBufferLength: 30,
+        maxMaxBufferLength: 60,
+        maxBufferSize: 60 * 1000 * 1000, // 60MB
+        maxBufferHole: 0.5,
+        // Retry settings
+        manifestLoadingMaxRetry: 4,
+        levelLoadingMaxRetry: 4,
+        fragLoadingMaxRetry: 6,
+        manifestLoadingRetryDelay: 1000,
+        levelLoadingRetryDelay: 1000,
+        fragLoadingRetryDelay: 1000,
+        // Timeout settings
         xhrSetup: (xhr) => {
           xhr.timeout = 30000
         }
@@ -2417,6 +2434,13 @@ class DashApp {
       hls.on(Hls.Events.ERROR, (event, data) => {
         console.log(`[FrenchTV] ❌ HLS Error: ${data.type} ${data.details}`)
 
+        // Handle buffer stalled errors - try to recover
+        if (data.details === 'bufferStalledError') {
+          console.log('[FrenchTV] 🔄 Buffer stalled, attempting recovery...')
+          hls.startLoad()
+          return
+        }
+
         // If CORS error and not already proxied, retry with proxy
         if (!alreadyProxied && (data.details === 'manifestLoadError' || data.type === 'networkError')) {
           console.log('[FrenchTV] 🔄 Retrying with proxy...')
@@ -2425,9 +2449,22 @@ class DashApp {
           return
         }
 
-        // Fatal error
+        // Handle fatal errors with recovery attempts
         if (data.fatal) {
-          if (loadingEl) loadingEl.innerHTML = '<div>Stream unavailable. Try another channel.</div>'
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              console.log('[FrenchTV] 🔄 Network error, trying to recover...')
+              hls.startLoad()
+              break
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              console.log('[FrenchTV] 🔄 Media error, trying to recover...')
+              hls.recoverMediaError()
+              break
+            default:
+              console.log('[FrenchTV] ❌ Fatal error, cannot recover')
+              if (loadingEl) loadingEl.innerHTML = '<div>Stream unavailable. Try another channel.</div>'
+              break
+          }
         }
       })
 
