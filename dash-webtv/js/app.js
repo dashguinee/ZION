@@ -55,6 +55,12 @@ class DashApp {
     // Video player instance (for proper cleanup)
     this.currentPlayer = null
 
+    // Channel health cache (tracks working/offline status for dynamic display)
+    // Stored in localStorage to persist across sessions
+    this.channelHealthCache = this.loadChannelHealthCache()
+    this.frenchLiveChannels = []  // All French channels
+    this.frenchChannelsLoaded = 0  // Count of channels currently displayed
+
     // Current stream info for quality changes
     this.currentStreamNeedsTranscode = false
 
@@ -1435,19 +1441,37 @@ class DashApp {
 
     const totalMovies = movies.length
 
-    // Fetch French Live TV channels
-    let liveChannels = []
+    // Fetch ALL French Live TV channels upfront (store for progressive loading)
+    let allChannels = []
+    let featuredChannels = []
     try {
-      const res = await fetch(`${this.backendUrl}/api/french-vod/livetv/featured`)
+      const res = await fetch(`${this.backendUrl}/api/french-vod/livetv/channels`)
       if (res.ok) {
         const data = await res.json()
         if (data.success) {
-          liveChannels = [...(data.featured?.channels || []), ...(data.other?.channels || []).slice(0, 30)]
+          allChannels = data.channels || []
+          // Store ALL channels for progressive loading
+          this.frenchLiveChannels = allChannels
+          this.frenchChannelsLoaded = 24 // Start with 24 visible
+
+          // Separate featured (priority French networks) from rest
+          const priorityNames = ['tf1', 'france 2', 'france 3', 'france 5', 'm6', 'arte', 'canal', 'bfm', 'cnews', 'lci', 'france 24', 'tv5monde']
+          featuredChannels = allChannels.filter(ch =>
+            priorityNames.some(p => ch.name.toLowerCase().includes(p))
+          ).slice(0, 12)
+
+          console.log(`[French] Loaded ${allChannels.length} total channels, ${featuredChannels.length} featured`)
         }
       }
     } catch (e) {
       console.warn('[French] Failed to fetch live TV:', e.message)
     }
+
+    // Combine: featured first, then rest (no duplicates)
+    const featuredIds = new Set(featuredChannels.map(c => c.id))
+    const otherChannels = allChannels.filter(c => !featuredIds.has(c.id))
+    const liveChannels = [...featuredChannels, ...otherChannels]
+    this.frenchLiveChannels = liveChannels // Store unified sorted list
 
     return `
       <div class="fade-in">
@@ -1501,13 +1525,18 @@ class DashApp {
             <p style="color: #94a3b8; font-size: 0.875rem; margin-top: 4px;">Free French channels - TF1, France 2, Arte, BFM & more</p>
           </div>
 
-          <div class="live-grid" style="margin-bottom: 40px;">
-            ${this.renderFrenchLiveGrid(liveChannels.slice(0, 20))}
+          <div class="live-grid" id="frenchLiveGrid" style="margin-bottom: 20px;">
+            ${this.renderFrenchLiveGrid(liveChannels.slice(0, 24))}
           </div>
 
-          ${liveChannels.length > 20 ? `
-            <div class="load-more-container" style="margin-bottom: 40px;">
-              <button class="btn btn-primary" onclick="dashApp.showAllFrenchTV()">View All ${liveChannels.length} Channels</button>
+          ${liveChannels.length > 24 ? `
+            <div class="load-more-container" id="frenchLoadMoreContainer" style="margin-bottom: 40px;">
+              <button class="btn btn-primary" id="frenchLoadMoreBtn" onclick="dashApp.loadMoreFrenchChannels()">
+                Load More (${liveChannels.length - 24} remaining)
+              </button>
+              <span style="color: #64748b; font-size: 12px; margin-left: 12px;">
+                Showing 24 of ${liveChannels.length} channels
+              </span>
             </div>
           ` : ''}
 
@@ -2268,6 +2297,11 @@ class DashApp {
       const id = channel.id
       const hasLogo = logo && logo.length > 5
       const group = channel.group || ''
+      const format = channel.format || 'hls'
+
+      // Health status from cache (updated when playback fails/succeeds)
+      const healthStatus = this.channelHealthCache?.[id] || 'unknown'
+      const isOffline = healthStatus === 'offline'
 
       // Generate deterministic colors
       const colors = [
@@ -2283,11 +2317,15 @@ class DashApp {
       const escapedName = name.replace(/'/g, "\\'")
       const escapedUrl = (channel.url || '').replace(/'/g, "\\'")
       const needsProxy = channel.needsProxy || false
+      // Offline styling: grayed, blurred
+      const offlineStyle = isOffline ? 'opacity: 0.5; filter: grayscale(0.8);' : ''
+      const offlineClass = isOffline ? 'channel-offline' : ''
 
       return `
-        <div class="live-card ${hasLogo ? '' : 'live-card-glow'}"
-             onclick="dashApp.playFrenchLiveChannel('${escapedUrl}', '${escapedName}', ${needsProxy})"
-             style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''}">
+        <div class="live-card ${hasLogo ? '' : 'live-card-glow'} ${offlineClass}"
+             data-channel-id="${id}"
+             onclick="dashApp.playFrenchLiveChannel('${escapedUrl}', '${escapedName}', ${needsProxy}, '${id}')"
+             style="${!hasLogo ? `--glow-color-1: ${color1}; --glow-color-2: ${color2};` : ''} ${offlineStyle}">
           ${hasLogo ? `
             <img src="${logo}" alt="${name}" class="live-card-logo" loading="lazy"
                  onerror="this.parentElement.classList.add('live-card-glow');this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -2323,10 +2361,11 @@ class DashApp {
 
   // Play French Live TV channel (direct HLS from iptv-org)
   // Uses proxy for CORS issues, detects format automatically
-  playFrenchLiveChannel(streamUrl, channelName, useProxy = false) {
+  playFrenchLiveChannel(streamUrl, channelName, useProxy = false, channelId = null) {
     console.log(`[FrenchTV] Playing: ${channelName}`)
     console.log(`[FrenchTV] URL: ${streamUrl}`)
     console.log(`[FrenchTV] Using proxy: ${useProxy}`)
+    console.log(`[FrenchTV] Channel ID: ${channelId}`)
 
     if (!streamUrl) {
       this.showToast('Stream URL not available', 'error')
@@ -2352,22 +2391,23 @@ class DashApp {
     if (isDash) {
       // DASH streams need dash.js - use our DASH player
       console.log('[FrenchTV] DASH stream detected, using dash.js')
-      this.playDashStream(finalUrl, channelName)
+      this.playDashStream(finalUrl, channelName, channelId)
     } else if (isHLS) {
       // HLS streams - use hls.js with proxy if needed
-      this.playFrenchHLS(finalUrl, streamUrl, channelName, isProxied)
+      this.playFrenchHLS(finalUrl, streamUrl, channelName, isProxied, channelId)
     } else if (isTS) {
       // MPEG-TS streams - use mpegts.js
-      this.showVideoPlayer(finalUrl, 'live', 'mpegts', channelName)
+      this.showVideoPlayer(finalUrl, 'live', 'mpegts', channelName, channelId)
     } else {
       // Default to HLS (most common)
-      this.playFrenchHLS(finalUrl, streamUrl, channelName, isProxied)
+      this.playFrenchHLS(finalUrl, streamUrl, channelName, isProxied, channelId)
     }
   }
 
   // Play French HLS with automatic CORS retry
-  playFrenchHLS(url, originalUrl, channelName, alreadyProxied) {
+  playFrenchHLS(url, originalUrl, channelName, alreadyProxied, channelId = null) {
     console.log(`[FrenchTV] Playing HLS: ${url}`)
+    console.log(`[FrenchTV] Tracking health for channel: ${channelId}`)
 
     this.closeVideoPlayer()
 
@@ -2395,6 +2435,11 @@ class DashApp {
 
     video.addEventListener('playing', () => {
       if (loadingEl) loadingEl.style.display = 'none'
+      // Mark channel as healthy when playback starts
+      if (channelId) {
+        console.log(`[FrenchTV] ✅ Channel ${channelId} is healthy`)
+        this.markChannelHealthy(channelId)
+      }
     })
 
     if (typeof Hls !== 'undefined' && Hls.isSupported()) {
@@ -2445,7 +2490,7 @@ class DashApp {
         if (!alreadyProxied && (data.details === 'manifestLoadError' || data.type === 'networkError')) {
           console.log('[FrenchTV] 🔄 Retrying with proxy...')
           hls.destroy()
-          this.playFrenchLiveChannel(originalUrl, channelName, true)
+          this.playFrenchLiveChannel(originalUrl, channelName, true, channelId)
           return
         }
 
@@ -2463,6 +2508,11 @@ class DashApp {
             default:
               console.log('[FrenchTV] ❌ Fatal error, cannot recover')
               if (loadingEl) loadingEl.innerHTML = '<div>Stream unavailable. Try another channel.</div>'
+              // Mark channel as offline on unrecoverable error
+              if (channelId) {
+                console.log(`[FrenchTV] ❌ Marking channel ${channelId} as offline`)
+                this.markChannelOffline(channelId)
+              }
               break
           }
         }
@@ -2475,15 +2525,20 @@ class DashApp {
       video.addEventListener('error', () => {
         if (!alreadyProxied) {
           console.log('[FrenchTV] 🔄 Safari error, retrying with proxy...')
-          this.playFrenchLiveChannel(originalUrl, channelName, true)
+          this.playFrenchLiveChannel(originalUrl, channelName, true, channelId)
+        } else if (channelId) {
+          // Already tried proxy, mark as offline
+          console.log(`[FrenchTV] ❌ Safari: Marking channel ${channelId} as offline`)
+          this.markChannelOffline(channelId)
         }
       })
     }
   }
 
   // Play DASH stream using dash.js
-  playDashStream(streamUrl, channelName) {
+  playDashStream(streamUrl, channelName, channelId = null) {
     console.log('📡 Playing DASH stream:', streamUrl)
+    console.log(`[DASH] Tracking health for channel: ${channelId}`)
 
     // Clean up any existing player
     this.closeVideoPlayer()
@@ -2511,9 +2566,13 @@ class DashApp {
     const video = document.getElementById('dashPlayer')
     const loadingEl = this.elements.videoPlayerContainer.querySelector('.video-loading')
 
-    // Hide loading when playing
+    // Hide loading when playing and mark channel healthy
     video.addEventListener('playing', () => {
       if (loadingEl) loadingEl.style.display = 'none'
+      if (channelId) {
+        console.log(`[DASH] ✅ Channel ${channelId} is healthy`)
+        this.markChannelHealthy(channelId)
+      }
     })
 
     // Check if dash.js is available
@@ -2525,6 +2584,10 @@ class DashApp {
       player.on(dashjs.MediaPlayer.events.ERROR, (e) => {
         console.error('❌ DASH error:', e)
         if (loadingEl) loadingEl.innerHTML = '<div>DASH stream error. Try another channel.</div>'
+        if (channelId) {
+          console.log(`[DASH] ❌ Marking channel ${channelId} as offline`)
+          this.markChannelOffline(channelId)
+        }
       })
 
       // Store for cleanup
@@ -2536,12 +2599,84 @@ class DashApp {
       video.addEventListener('error', () => {
         console.error('❌ Native DASH playback failed')
         if (loadingEl) loadingEl.innerHTML = '<div>DASH not supported. Try HLS channel.</div>'
+        if (channelId) {
+          console.log(`[DASH] ❌ Marking channel ${channelId} as offline`)
+          this.markChannelOffline(channelId)
+        }
       })
     }
   }
 
-  // Show all French TV channels
+  // Progressive load more French channels (adds to existing grid)
+  loadMoreFrenchChannels() {
+    if (!this.frenchLiveChannels || !this.frenchLiveChannels.length) {
+      console.warn('[French] No channels loaded')
+      return
+    }
+
+    const batchSize = 24
+    const currentLoaded = this.frenchChannelsLoaded || 24
+    const totalChannels = this.frenchLiveChannels.length
+    const newLoaded = Math.min(currentLoaded + batchSize, totalChannels)
+
+    // Get next batch
+    const nextBatch = this.frenchLiveChannels.slice(currentLoaded, newLoaded)
+
+    if (nextBatch.length === 0) {
+      this.showToast('All channels loaded!', 'success')
+      return
+    }
+
+    // Append to existing grid
+    const grid = document.getElementById('frenchLiveGrid')
+    if (grid) {
+      const newCards = this.renderFrenchLiveGrid(nextBatch)
+      grid.insertAdjacentHTML('beforeend', newCards)
+    }
+
+    // Update counter
+    this.frenchChannelsLoaded = newLoaded
+    const remaining = totalChannels - newLoaded
+
+    // Update button
+    const btn = document.getElementById('frenchLoadMoreBtn')
+    const container = document.getElementById('frenchLoadMoreContainer')
+
+    if (remaining <= 0) {
+      // All loaded - remove button
+      if (container) container.remove()
+      this.showToast(`All ${totalChannels} channels loaded!`, 'success')
+    } else if (btn && container) {
+      // Update button text
+      btn.textContent = `Load More (${remaining} remaining)`
+      container.querySelector('span').textContent = `Showing ${newLoaded} of ${totalChannels} channels`
+    }
+
+    console.log(`[French] Loaded ${newLoaded}/${totalChannels} channels`)
+  }
+
+  // Show all French TV channels (legacy - now redirects to progressive load)
   async showAllFrenchTV() {
+    // Load all remaining at once
+    if (this.frenchLiveChannels && this.frenchLiveChannels.length) {
+      const totalChannels = this.frenchLiveChannels.length
+      this.frenchChannelsLoaded = totalChannels
+
+      const grid = document.getElementById('frenchLiveGrid')
+      if (grid) {
+        // Replace with all channels
+        grid.innerHTML = this.renderFrenchLiveGrid(this.frenchLiveChannels)
+      }
+
+      // Remove load more button
+      const container = document.getElementById('frenchLoadMoreContainer')
+      if (container) container.remove()
+
+      this.showToast(`Loaded all ${totalChannels} channels`, 'success')
+      return
+    }
+
+    // Fallback: fetch fresh if not cached
     try {
       const res = await fetch(`${this.backendUrl}/api/french-vod/livetv/channels`)
       if (!res.ok) throw new Error('Failed to fetch channels')
@@ -2549,35 +2684,18 @@ class DashApp {
       const data = await res.json()
       if (!data.success) throw new Error(data.error)
 
-      // Store channels and render full grid
       this.frenchLiveChannels = data.channels
+      this.frenchChannelsLoaded = data.channels.length
 
-      // Re-render page with all channels
-      const container = document.getElementById('pageContainer')
-      container.innerHTML = `
-        <div class="fade-in">
-          <div class="browse-header">
-            <div class="browse-title-row">
-              <button class="btn btn-icon btn-outline" onclick="dashApp.navigate('french')" style="margin-right: 12px;">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M15 18l-6-6 6-6"/>
-                </svg>
-              </button>
-              <div class="browse-icon" style="font-size: 28px;">🇫🇷</div>
-              <h1 class="browse-title">French Live TV</h1>
-              <div class="live-indicator" style="margin-left: 8px;">
-                <span class="live-dot-pulse"></span>
-                LIVE
-              </div>
-            </div>
-            <p class="browse-subtitle">${data.count} free French channels from iptv-org</p>
-          </div>
+      const grid = document.getElementById('frenchLiveGrid')
+      if (grid) {
+        grid.innerHTML = this.renderFrenchLiveGrid(data.channels)
+      }
 
-          <div class="live-grid">
-            ${this.renderFrenchLiveGrid(data.channels)}
-          </div>
-        </div>
-      `
+      const container = document.getElementById('frenchLoadMoreContainer')
+      if (container) container.remove()
+
+      this.showToast(`Loaded all ${data.count} channels`, 'success')
     } catch (error) {
       console.error('[FrenchTV] Error:', error)
       this.showToast('Failed to load channels', 'error')
@@ -3038,8 +3156,16 @@ class DashApp {
     this.currentChannelName = channelName
     this._proxyRetried = false
 
-    // Find the channel in localLive to check if it's a free channel
+    // Find the channel in localLive to get full info
     const channel = (this.localLive || []).find(c => String(c.stream_id) === String(id))
+
+    // Build channel info object for enhanced UI
+    const channelInfo = {
+      name: channelName,
+      category: channel?.category_name || '',
+      logo: channel?.stream_icon || '',
+      id: id
+    }
 
     // Check if this is a FREE channel (has direct URL)
     if (channel && channel.url && channel.is_free) {
@@ -3060,7 +3186,7 @@ class DashApp {
       }
 
       this.closeModal()
-      this.showVideoPlayer(streamUrl, 'live', 'hls-native', channelName)
+      this.showVideoPlayer(streamUrl, 'live', 'hls-native', channelInfo)
       return
     }
 
@@ -3069,7 +3195,59 @@ class DashApp {
     console.log(`📡 StarShare live stream type: ${liveStream.type}`)
 
     this.closeModal()
-    this.showVideoPlayer(liveStream.url, 'live', liveStream.type, channelName)
+    this.showVideoPlayer(liveStream.url, 'live', liveStream.type, channelInfo)
+  }
+
+  /**
+   * Play next channel in the current category
+   * YouTube-style smooth channel hopping
+   */
+  playNextChannel() {
+    this._navigateChannel(1)
+  }
+
+  /**
+   * Play previous channel in the current category
+   */
+  playPrevChannel() {
+    this._navigateChannel(-1)
+  }
+
+  /**
+   * Navigate channels by direction (+1 for next, -1 for prev)
+   */
+  _navigateChannel(direction) {
+    if (!this.currentLiveStreamId || !this.localLive) {
+      console.log('[Nav] No current channel or live data')
+      return
+    }
+
+    // Find current channel and its category
+    const currentChannel = this.localLive.find(c => String(c.stream_id) === String(this.currentLiveStreamId))
+    if (!currentChannel) {
+      console.log('[Nav] Current channel not found')
+      return
+    }
+
+    // Get all channels in same category
+    const categoryChannels = this.localLive.filter(c =>
+      c.category_id === currentChannel.category_id && !c.is_adult
+    )
+
+    let channels = categoryChannels
+    if (categoryChannels.length <= 1) {
+      // Fall back to all live channels if category is small
+      channels = this.localLive.filter(c => !c.is_adult)
+    }
+
+    // Find current index and navigate
+    const currentIndex = channels.findIndex(c => String(c.stream_id) === String(this.currentLiveStreamId))
+    const newIndex = (currentIndex + direction + channels.length) % channels.length
+    const newChannel = channels[newIndex]
+
+    const dirLabel = direction > 0 ? 'Next' : 'Prev'
+    console.log(`[${dirLabel}] Playing ${newIndex + 1}/${channels.length}: ${newChannel.name}`)
+    this.playLiveChannel(newChannel.stream_id, newChannel.name)
   }
 
   playEpisode(episodeId, extension = 'mp4', seriesInfo = null) {
@@ -3918,11 +4096,19 @@ class DashApp {
     }
   }
 
-  showVideoPlayer(streamUrl, type = 'movie', streamType = null, channelName = null) {
+  showVideoPlayer(streamUrl, type = 'movie', streamType = null, channelInfo = null) {
     console.log('🎬 Playing stream:', streamUrl)
 
-    // Store channel name for offline message
+    // Handle both string (legacy) and object (enhanced) channelInfo
+    const isEnhancedInfo = channelInfo && typeof channelInfo === 'object'
+    const channelName = isEnhancedInfo ? channelInfo.name : channelInfo
+    const channelCategory = isEnhancedInfo ? channelInfo.category : ''
+    const channelLogo = isEnhancedInfo ? channelInfo.logo : ''
+    const channelId = isEnhancedInfo ? channelInfo.id : null
+
+    // Store channel info for UI and navigation
     this.currentChannelName = channelName
+    this.currentChannelInfo = channelInfo
 
     // Detect stream type - streamType overrides URL detection for live
     let isMpegTS = false
@@ -3954,10 +4140,14 @@ class DashApp {
     // Clean up any existing player
     this.closeVideoPlayer()
 
-    // Create player HTML with optional channel overlay
+    // Create enhanced channel overlay with logo and programme info
     const channelOverlay = channelName ? `
       <div class="channel-overlay">
-        <div class="channel-name">${channelName}</div>
+        ${channelLogo ? `<img src="${channelLogo}" alt="" class="channel-overlay-logo" onerror="this.style.display='none'">` : ''}
+        <div class="channel-overlay-info">
+          <div class="channel-name">${this.sanitizeHTML(channelName)}</div>
+          ${channelCategory ? `<div class="channel-programme">${this.sanitizeHTML(channelCategory)}</div>` : ''}
+        </div>
       </div>
     ` : ''
 
@@ -3979,11 +4169,28 @@ class DashApp {
       </div>
     ` : ''
 
+    // Navigation buttons for Live TV channel hopping
+    const navButtons = type === 'live' ? `
+      <div class="player-nav-buttons">
+        <button class="player-prev-btn" onclick="dashApp.playPrevChannel()" title="Previous Channel">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+          </svg>
+        </button>
+        <button class="player-next-btn" onclick="dashApp.playNextChannel()" title="Next Channel">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+          </svg>
+        </button>
+      </div>
+    ` : ''
+
     const playerHTML = `
-      <div class="video-player-container">
+      <div class="video-player-container" data-type="${type}">
         <button class="modal-close" onclick="dashApp.closeVideoPlayer()">×</button>
         ${channelOverlay}
         ${qualitySelector}
+        ${navButtons}
         <div class="player-report-btn" onclick="dashApp.showReportDialog()" title="Report an issue">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
@@ -5059,6 +5266,75 @@ class DashApp {
   loadWatchHistory() {
     const saved = localStorage.getItem('dash_watch_history')
     return saved ? JSON.parse(saved) : []
+  }
+
+  // ============================================
+  // CHANNEL HEALTH TRACKING
+  // ============================================
+
+  // Load health cache from localStorage
+  loadChannelHealthCache() {
+    const saved = localStorage.getItem('dash_channel_health')
+    if (!saved) return {}
+    try {
+      const data = JSON.parse(saved)
+      // Expire entries older than 24 hours
+      const now = Date.now()
+      const expiry = 24 * 60 * 60 * 1000
+      const valid = {}
+      for (const [id, entry] of Object.entries(data)) {
+        if (now - (entry.timestamp || 0) < expiry) {
+          valid[id] = entry.status
+        }
+      }
+      return valid
+    } catch {
+      return {}
+    }
+  }
+
+  // Save health cache to localStorage
+  saveChannelHealthCache() {
+    const data = {}
+    const now = Date.now()
+    for (const [id, status] of Object.entries(this.channelHealthCache || {})) {
+      data[id] = { status, timestamp: now }
+    }
+    localStorage.setItem('dash_channel_health', JSON.stringify(data))
+  }
+
+  // Mark a channel as offline (called when playback fails)
+  markChannelOffline(channelId) {
+    if (!channelId) return
+    this.channelHealthCache = this.channelHealthCache || {}
+    this.channelHealthCache[channelId] = 'offline'
+    this.saveChannelHealthCache()
+
+    // Update the card in the DOM to show offline state
+    const card = document.querySelector(`[data-channel-id="${channelId}"]`)
+    if (card) {
+      card.classList.add('channel-offline')
+      card.style.opacity = '0.5'
+      card.style.filter = 'grayscale(0.8)'
+    }
+    console.log(`[Health] Marked channel ${channelId} as offline`)
+  }
+
+  // Mark a channel as healthy (called when playback succeeds)
+  markChannelHealthy(channelId) {
+    if (!channelId) return
+    this.channelHealthCache = this.channelHealthCache || {}
+    this.channelHealthCache[channelId] = 'healthy'
+    this.saveChannelHealthCache()
+
+    // Update the card in the DOM to show healthy state
+    const card = document.querySelector(`[data-channel-id="${channelId}"]`)
+    if (card) {
+      card.classList.remove('channel-offline')
+      card.style.opacity = ''
+      card.style.filter = ''
+    }
+    console.log(`[Health] Marked channel ${channelId} as healthy`)
   }
 
   // ============================================
