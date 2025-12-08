@@ -477,9 +477,263 @@ class DashApp {
       this.africaPlaylists = data.playlists || {}
       console.log(`📋 ${Object.keys(this.africaPlaylists).length} playlist URLs available for expansion`)
 
+      // Initialize Experiences (dynamic playlists)
+      this.initializeExperiences()
+
     } catch (err) {
       console.warn('⚠️ Could not load Africa channels:', err.message)
     }
+  }
+
+  /**
+   * Initialize Experiences - Dynamic playlist categories
+   * These are loaded on-demand when user clicks them
+   */
+  initializeExperiences() {
+    this.experiences = [
+      {
+        id: 'news',
+        name: 'World News',
+        icon: '📰',
+        playlist: 'news',
+        estChannels: 865,
+        estLive: 631,
+        rate: 73,
+        description: 'France24, Al Jazeera, BBC & more',
+        loaded: false
+      },
+      {
+        id: 'french',
+        name: 'French TV',
+        icon: '🇫🇷',
+        playlist: 'french',
+        estChannels: 492,
+        estLive: 197,
+        rate: 40,
+        description: 'Francophone channels worldwide',
+        loaded: false
+      },
+      {
+        id: 'nigeria',
+        name: 'Nigerian TV',
+        icon: '🇳🇬',
+        playlist: 'nigeria',
+        estChannels: 64,
+        estLive: 38,
+        rate: 60,
+        description: 'Local Nigerian channels',
+        loaded: false
+      },
+      {
+        id: 'english',
+        name: 'English TV',
+        icon: '🌍',
+        playlist: 'english',
+        estChannels: 2362,
+        estLive: 827,
+        rate: 35,
+        description: 'Global English channels',
+        loaded: false
+      },
+      {
+        id: 'freeTvHd',
+        name: 'Free TV HD',
+        icon: '📺',
+        playlist: 'freeTvHd',
+        estChannels: 1851,
+        estLive: 463,
+        rate: 25,
+        description: 'HD quality free streams',
+        loaded: false
+      },
+      {
+        id: 'arabic',
+        name: 'Arabic TV',
+        icon: '🌙',
+        playlist: 'arabic',
+        estChannels: 366,
+        estLive: 146,
+        rate: 40,
+        description: 'Arabic language channels',
+        loaded: false
+      },
+      {
+        id: 'kids',
+        name: 'Kids TV',
+        icon: '🧸',
+        playlist: 'kids',
+        estChannels: 247,
+        estLive: 99,
+        rate: 40,
+        description: 'Children entertainment',
+        loaded: false
+      },
+      {
+        id: 'music',
+        name: 'Music TV',
+        icon: '🎵',
+        playlist: 'music',
+        estChannels: 630,
+        estLive: 252,
+        rate: 40,
+        description: 'Music channels 24/7',
+        loaded: false
+      },
+      {
+        id: 'movies',
+        name: 'Movies',
+        icon: '🎬',
+        playlist: 'movies',
+        estChannels: 379,
+        estLive: 152,
+        rate: 40,
+        description: 'Movie channels',
+        loaded: false
+      },
+      {
+        id: 'entertainment',
+        name: 'Entertainment',
+        icon: '🎭',
+        playlist: 'entertainment',
+        estChannels: 610,
+        estLive: 244,
+        rate: 40,
+        description: 'General entertainment',
+        loaded: false
+      }
+    ]
+
+    // Track loaded experience channels
+    this.experienceChannels = {}
+    this.experienceCategories = []
+
+    console.log(`🔵 ${this.experiences.length} Experiences ready (${this.experiences.reduce((a,e) => a + e.estLive, 0)} est. live channels)`)
+  }
+
+  /**
+   * Load an Experience playlist dynamically
+   */
+  async loadExperience(experienceId) {
+    const experience = this.experiences.find(e => e.id === experienceId)
+    if (!experience) {
+      console.warn(`Experience '${experienceId}' not found`)
+      return
+    }
+
+    if (experience.loaded) {
+      console.log(`Experience '${experienceId}' already loaded`)
+      this.showToast(`${experience.name} already loaded!`, 'info')
+      return
+    }
+
+    const playlistUrl = this.africaPlaylists?.[experience.playlist]
+    if (!playlistUrl) {
+      console.warn(`Playlist '${experience.playlist}' not found`)
+      return
+    }
+
+    // Show loading state
+    experience.loading = true
+    this.render()
+    this.showToast(`Loading ${experience.name}...`, 'info')
+
+    try {
+      const categoryId = `experience_${experienceId}`
+      const categoryName = `🔵 ${experience.name}`
+
+      const channels = await this.parseM3UPlaylist(playlistUrl, categoryId, categoryName)
+
+      if (channels.length > 0) {
+        // Mark channels as experience channels
+        channels.forEach(ch => {
+          ch.isExperience = true
+          ch.experienceId = experienceId
+        })
+
+        // Store experience channels
+        this.experienceChannels[experienceId] = channels
+
+        // Add to localLive at the beginning (after other free/africa channels)
+        this.localLive = [...channels, ...this.localLive]
+
+        // Add category
+        if (!this.experienceCategories.find(c => c.category_id === categoryId)) {
+          this.experienceCategories.push({
+            category_id: categoryId,
+            category_name: categoryName,
+            is_experience: true
+          })
+        }
+
+        experience.loaded = true
+        experience.actualChannels = channels.length
+
+        console.log(`🔵 Loaded ${channels.length} channels from ${experience.name}`)
+        this.showToast(`Loaded ${channels.length} channels from ${experience.name}!`, 'success')
+      } else {
+        this.showToast(`No channels found in ${experience.name}`, 'warning')
+      }
+    } catch (err) {
+      console.error(`Failed to load experience '${experienceId}':`, err)
+      this.showToast(`Failed to load ${experience.name}`, 'error')
+    } finally {
+      experience.loading = false
+      this.render()
+    }
+  }
+
+  /**
+   * Render Experiences section HTML
+   */
+  renderExperiencesSection() {
+    if (!this.experiences || this.experiences.length === 0) return ''
+
+    const totalEstLive = this.experiences.reduce((a, e) => a + e.estLive, 0)
+    const totalLoaded = this.experiences.filter(e => e.loaded).length
+
+    return `
+      <div class="experiences-section">
+        <div class="experiences-header">
+          <div class="experiences-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+            Experiences
+          </div>
+          <div class="experiences-subtitle">
+            ${totalLoaded > 0 ? `${totalLoaded} loaded • ` : ''}~${totalEstLive.toLocaleString()} channels available
+          </div>
+        </div>
+        <div class="experiences-scroll">
+          ${this.experiences.map(exp => `
+            <div class="experience-card ${exp.loading ? 'loading' : ''} ${exp.loaded ? 'loaded' : ''}"
+                 onclick="dashApp.loadExperience('${exp.id}')">
+              <div class="experience-icon">${exp.icon}</div>
+              <div class="experience-name">${exp.name}</div>
+              <div class="experience-channels">
+                ${exp.loaded ? `${exp.actualChannels || exp.estLive} channels` : `~${exp.estLive} live`}
+              </div>
+              <div class="experience-status">
+                ${exp.loading ? `
+                  <div class="experience-spinner"></div>
+                  Loading...
+                ` : exp.loaded ? `
+                  <span style="color: var(--accent-green);">✓ Loaded</span>
+                ` : `
+                  <div class="neon-dot"></div>
+                  ${exp.rate}% working
+                `}
+              </div>
+              <div class="experience-preview">
+                ${[1,2,3,4,5].map(i => `<div class="experience-preview-dot ${i <= 3 ? 'live' : ''}"></div>`).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `
   }
 
   /**
@@ -2350,6 +2604,9 @@ class DashApp {
           </div>
         </div>
 
+        <!-- Experiences Section - Dynamic Playlists -->
+        ${this.renderExperiencesSection()}
+
         <!-- Premium Category Tabs -->
         <div class="category-tabs-container">
           <div class="category-tabs">
@@ -2359,6 +2616,12 @@ class DashApp {
             </div>
             ${(this.freeCategories || []).map(cat => `
               <div class="category-tab free-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
+                   onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
+                ${cat.category_name}
+              </div>
+            `).join('')}
+            ${(this.experienceCategories || []).map(cat => `
+              <div class="category-tab experience-tab ${this.state.selectedCategory === cat.category_id ? 'active' : ''}"
                    onclick="dashApp.filterByCategory('${cat.category_id}', 'live')">
                 ${cat.category_name}
               </div>

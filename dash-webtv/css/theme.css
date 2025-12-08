@@ -27,6 +27,9 @@
   --accent-gold: #FFD700;
   --accent-red: #FF006E;
   --accent-green: #06FFA5;
+  --accent-neon-blue: #00D4FF;
+  --accent-neon-blue-dark: #0099CC;
+  --accent-neon-blue-glow: rgba(0, 212, 255, 0.4);
 
   /* Borders */
   --border: rgba(255, 255, 255, 0.1);

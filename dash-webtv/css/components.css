@@ -5061,3 +5061,232 @@
   box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
 }
 
+
+/* ============================================
+   EXPERIENCES - Neon Blue Dynamic Playlists
+   ============================================ */
+
+/* Experiences Section Container */
+.experiences-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(0, 153, 204, 0.02));
+  border-radius: 16px;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+.experiences-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.experiences-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--accent-neon-blue);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.experiences-title svg {
+  width: 24px;
+  height: 24px;
+}
+
+.experiences-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Experience Cards Horizontal Scroll */
+.experiences-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-neon-blue) transparent;
+}
+
+.experiences-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.experiences-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.experiences-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-neon-blue);
+  border-radius: 3px;
+}
+
+/* Experience Card */
+.experience-card {
+  flex-shrink: 0;
+  width: 180px;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 204, 0.05));
+  border-radius: 12px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-neon-blue), var(--accent-neon-blue-dark));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-neon-blue);
+  box-shadow: 0 8px 24px var(--accent-neon-blue-glow);
+}
+
+.experience-card:hover::before {
+  opacity: 1;
+}
+
+.experience-card.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.experience-card.loaded {
+  border-color: var(--accent-green);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+}
+
+.experience-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.experience-name {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.experience-channels {
+  color: var(--accent-neon-blue);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.experience-status {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.experience-status .neon-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-neon-blue);
+  animation: neonPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 6px var(--accent-neon-blue);
+}
+
+@keyframes neonPulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 12px var(--accent-neon-blue); }
+}
+
+/* Experience Tab for category tabs */
+.category-tab.experience-tab {
+  border-color: var(--accent-neon-blue);
+  color: var(--accent-neon-blue);
+}
+
+.category-tab.experience-tab.active {
+  background: linear-gradient(135deg, var(--accent-neon-blue), var(--accent-neon-blue-dark));
+  color: white;
+  border-color: var(--accent-neon-blue);
+  box-shadow: 0 4px 12px var(--accent-neon-blue-glow);
+}
+
+.category-tab.experience-tab:hover:not(.active) {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: var(--accent-neon-blue);
+}
+
+/* Experience channel card glow */
+.live-card.experience-channel {
+  --glow-color-1: var(--accent-neon-blue);
+  --glow-color-2: var(--accent-neon-blue-dark);
+}
+
+.live-card.experience-channel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), transparent) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Loading spinner for experience */
+.experience-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  color: var(--accent-neon-blue);
+}
+
+.experience-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 212, 255, 0.2);
+  border-top-color: var(--accent-neon-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Channels preview in experience card */
+.experience-preview {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.experience-preview-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: rgba(0, 212, 255, 0.3);
+}
+
+.experience-preview-dot.live {
+  background: var(--accent-neon-blue);
+  animation: neonPulse 2s ease-in-out infinite;
+}
