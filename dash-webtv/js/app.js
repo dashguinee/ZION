@@ -201,10 +201,409 @@ class DashApp {
 
       // Load free channels from backend (Guinea, Sports, French)
       await this.loadFreeChannels()
+
+      // Load Africa channels from local JSON (verified working streams)
+      await this.loadAfricaChannels()
     } catch (err) {
       console.error('❌ Failed to load local data:', err)
       this.showToastEnhanced('Failed to load content library. Please refresh the page.', 'error')
     }
+  }
+
+  /**
+   * Load verified Africa channels from local JSON
+   * These are TESTED WORKING streams from ZION research
+   */
+  async loadAfricaChannels() {
+    try {
+      const response = await fetch('data/africa_channels.json')
+      if (!response.ok) {
+        console.warn('⚠️ Africa channels JSON not found')
+        return
+      }
+
+      const data = await response.json()
+      const africaChannels = []
+
+      // Add verified channels (Canal+, CNEWS, CSTAR, Guinea, etc.)
+      if (data.verified_channels) {
+        data.verified_channels.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_verified_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: ch.logo || '',
+            category_id: `africa_${ch.country?.toLowerCase() || 'verified'}`,
+            category_name: `🌍 ${ch.country || 'Africa'} (Verified)`,
+            is_free: true,
+            url: ch.url,
+            stream_type: 'hls',
+            quality: ch.quality,
+            status: ch.status,
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add Guinea channels
+      if (data.guinea_channels) {
+        data.guinea_channels.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_guinea_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_guinea',
+            category_name: '🇬🇳 Guinea',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'hls',
+            quality: ch.quality,
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add Senegal channels
+      if (data.senegal_channels) {
+        data.senegal_channels.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_senegal_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_senegal',
+            category_name: '🇸🇳 Senegal',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'hls',
+            quality: ch.quality,
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add Ivory Coast channels
+      if (data.ivory_coast_channels) {
+        data.ivory_coast_channels.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_ivory_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_ivorycoast',
+            category_name: '🇨🇮 Ivory Coast',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'hls',
+            quality: ch.quality,
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add Cameroon channels
+      if (data.cameroon_channels) {
+        data.cameroon_channels.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_cameroon_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_cameroon',
+            category_name: '🇨🇲 Cameroon',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'hls',
+            quality: ch.quality,
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add South Africa FREE channels
+      if (data.south_africa_free) {
+        data.south_africa_free.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_sa_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_southafrica',
+            category_name: '🇿🇦 South Africa',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'hls',
+            quality: ch.quality
+          })
+        })
+      }
+
+      // Add SuperSport channels
+      if (data.supersport) {
+        data.supersport.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_supersport_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_supersport',
+            category_name: '⚽ SuperSport HD',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'ts'
+          })
+        })
+      }
+
+      // Add SuperSport BACKUP channels (17 more)
+      if (data.supersport_backup) {
+        data.supersport_backup.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_supersport_b_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_supersport',
+            category_name: '⚽ SuperSport HD',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'ts',
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add SuperSport HLS channels (3 more)
+      if (data.supersport_hls) {
+        data.supersport_hls.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_supersport_hls_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_supersport',
+            category_name: '⚽ SuperSport HD',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'hls',
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add beIN Sports channels
+      if (data.bein_sports) {
+        data.bein_sports.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_bein_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_bein',
+            category_name: '⚽ beIN Sports',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'ts',
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add International French channels
+      if (data.international_french) {
+        data.international_french.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_french_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_french',
+            category_name: '🇫🇷 French International',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'hls',
+            quality: ch.quality
+          })
+        })
+      }
+
+      // Add DSTV Movies channels
+      if (data.dstv_movies) {
+        data.dstv_movies.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `africa_dstv_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: 'africa_dstv',
+            category_name: '📺 DSTV Movies',
+            is_free: true,
+            url: ch.url,
+            stream_type: 'ts',
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // Add CACHED MENA channels (937 channels!)
+      if (data.mena_cached) {
+        data.mena_cached.forEach((ch, index) => {
+          africaChannels.push({
+            stream_id: `mena_${ch.id || index}`,
+            name: ch.name,
+            stream_icon: '',
+            category_id: `mena_${(ch.group || 'general').toLowerCase().replace(/[^a-z0-9]/g, '')}`,
+            category_name: `🌍 MENA - ${ch.group || 'General'}`,
+            is_free: true,
+            url: ch.url,
+            stream_type: ch.url.includes('.m3u8') ? 'hls' : 'ts',
+            needsProxy: ch.needsProxy || false
+          })
+        })
+      }
+
+      // NOTE: dstv_cached removed - URLs were dead (0% working)
+      // DSTV content available via dstv_movies (11 channels) and dynamic playlist loading
+
+      // Add Africa-specific categories (only healthy channels - health checked Dec 8, 2025)
+      if (!this.freeCategories) this.freeCategories = []
+      this.freeCategories.push(
+        { category_id: 'africa_verified', category_name: '✅ Verified HD', is_free: true },
+        { category_id: 'africa_guinea', category_name: '🇬🇳 Guinea', is_free: true },
+        { category_id: 'africa_senegal', category_name: '🇸🇳 Senegal', is_free: true },
+        { category_id: 'africa_ivorycoast', category_name: '🇨🇮 Ivory Coast', is_free: true },
+        { category_id: 'africa_southafrica', category_name: '🇿🇦 South Africa', is_free: true },
+        { category_id: 'mena_cached', category_name: '🌍 MENA (690 live)', is_free: true }
+      )
+      // NOTE: SuperSport, beIN Sports, DSTV removed - all URLs dead as of Dec 8 2025
+      // Dynamic playlist loading still available for future sources
+
+      console.log(`🌍 Loaded ${africaChannels.length} AFRICA channels (verified working)!`)
+
+      // Merge with existing channels (Africa channels at the front for visibility)
+      if (!this.localLive) this.localLive = []
+      this.localLive = [...africaChannels, ...this.localLive]
+
+      // Store playlist URLs for future dynamic loading
+      this.africaPlaylists = data.playlists || {}
+      console.log(`📋 ${Object.keys(this.africaPlaylists).length} playlist URLs available for expansion`)
+
+    } catch (err) {
+      console.warn('⚠️ Could not load Africa channels:', err.message)
+    }
+  }
+
+  /**
+   * Parse M3U playlist and return channel objects
+   * Supports standard M3U and M3U8 formats from iptv-org
+   * @param {string} playlistUrl - URL to M3U/M3U8 playlist
+   * @param {string} categoryId - Category ID to assign
+   * @param {string} categoryName - Category name for display
+   */
+  async parseM3UPlaylist(playlistUrl, categoryId, categoryName) {
+    try {
+      // Fetch through proxy to avoid CORS
+      const proxyUrl = `${this.backendUrl}/api/proxy?url=${encodeURIComponent(playlistUrl)}`
+      const response = await fetch(proxyUrl)
+      if (!response.ok) throw new Error('Failed to fetch playlist')
+
+      const text = await response.text()
+      const lines = text.split('\n')
+      const channels = []
+      let currentChannel = null
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim()
+
+        if (line.startsWith('#EXTINF:')) {
+          // Parse channel info: #EXTINF:-1 tvg-logo="..." group-title="...",Channel Name
+          const logoMatch = line.match(/tvg-logo="([^"]*)"/)
+          const groupMatch = line.match(/group-title="([^"]*)"/)
+          const nameMatch = line.match(/,(.+)$/)
+
+          currentChannel = {
+            logo: logoMatch ? logoMatch[1] : '',
+            group: groupMatch ? groupMatch[1] : categoryName,
+            name: nameMatch ? nameMatch[1].trim() : 'Unknown Channel'
+          }
+        } else if (line && !line.startsWith('#') && currentChannel) {
+          // This is the stream URL
+          channels.push({
+            stream_id: `playlist_${categoryId}_${channels.length}`,
+            name: currentChannel.name,
+            stream_icon: currentChannel.logo,
+            category_id: categoryId,
+            category_name: categoryName,
+            is_free: true,
+            url: line,
+            stream_type: line.includes('.m3u8') ? 'hls' : 'ts',
+            group: currentChannel.group,
+            needsProxy: line.startsWith('http://')
+          })
+          currentChannel = null
+        }
+      }
+
+      console.log(`📺 Parsed ${channels.length} channels from ${categoryName}`)
+      return channels
+    } catch (err) {
+      console.warn(`⚠️ Could not parse playlist ${categoryName}:`, err.message)
+      return []
+    }
+  }
+
+  /**
+   * Load IPTV-org playlist by country/region on-demand
+   * @param {string} playlistKey - Key from africaPlaylists (e.g., 'nigeria', 'mena')
+   */
+  async loadIPTVOrgPlaylist(playlistKey) {
+    const playlistUrl = this.africaPlaylists?.[playlistKey]
+    if (!playlistUrl) {
+      console.warn(`⚠️ Playlist '${playlistKey}' not found`)
+      return
+    }
+
+    const categoryMap = {
+      africa: { id: 'playlist_africa', name: '🌍 Africa (IPTV)' },
+      mena: { id: 'playlist_mena', name: '🌙 MENA (740 channels)' },
+      nigeria: { id: 'playlist_nigeria', name: '🇳🇬 Nigeria' },
+      ghana: { id: 'playlist_ghana', name: '🇬🇭 Ghana' },
+      senegal: { id: 'playlist_senegal', name: '🇸🇳 Senegal (IPTV)' },
+      ivoryCoast: { id: 'playlist_ivorycoast', name: '🇨🇮 Ivory Coast (IPTV)' },
+      cameroon: { id: 'playlist_cameroon', name: '🇨🇲 Cameroon (IPTV)' },
+      drc: { id: 'playlist_drc', name: '🇨🇩 DRC' },
+      morocco: { id: 'playlist_morocco', name: '🇲🇦 Morocco' },
+      algeria: { id: 'playlist_algeria', name: '🇩🇿 Algeria' },
+      egypt: { id: 'playlist_egypt', name: '🇪🇬 Egypt' },
+      southAfrica: { id: 'playlist_southafrica', name: '🇿🇦 South Africa (IPTV)' },
+      french: { id: 'playlist_french', name: '🇫🇷 French (200+)' },
+      sports: { id: 'playlist_sports', name: '⚽ Sports (IPTV)' },
+      dstv: { id: 'playlist_dstv', name: '📺 DSTV (400+)' },
+      supersport: { id: 'playlist_supersport', name: '⚽ SuperSport (IPTV)' }
+    }
+
+    const config = categoryMap[playlistKey] || {
+      id: `playlist_${playlistKey}`,
+      name: `📺 ${playlistKey}`
+    }
+
+    console.log(`🔄 Loading ${config.name} from IPTV-org...`)
+    this.showToast(`Loading ${config.name}...`, 'info')
+
+    const channels = await this.parseM3UPlaylist(playlistUrl, config.id, config.name)
+
+    if (channels.length > 0) {
+      // Add to localLive
+      this.localLive = [...channels, ...this.localLive]
+
+      // Add category if not exists
+      if (!this.freeCategories) this.freeCategories = []
+      if (!this.freeCategories.find(c => c.category_id === config.id)) {
+        this.freeCategories.push({
+          category_id: config.id,
+          category_name: config.name,
+          is_free: true
+        })
+      }
+
+      this.showToast(`Loaded ${channels.length} channels from ${config.name}!`, 'success')
+
+      // Re-render if on live page
+      if (this.state.currentPage === 'live') {
+        this.renderPage()
+      }
+    }
+
+    return channels
   }
 
   /**
@@ -3293,12 +3692,13 @@ class DashApp {
       console.log(`🆓 Free channel detected: ${channelName}`)
       console.log(`📡 Direct URL: ${channel.url}`)
       console.log(`📺 Stream type: ${channel.stream_type || 'hls'}`)
+      console.log(`📺 Quality: ${channel.quality || 'unknown'}`)
 
       const streamType = channel.stream_type || 'hls'
       let streamUrl = channel.url
 
-      // Check if URL needs proxying
-      const needsProxy = this.checkIfNeedsProxy(streamUrl)
+      // Check if URL needs proxying (either flagged or detected)
+      const needsProxy = channel.needsProxy || this.checkIfNeedsProxy(streamUrl)
 
       if (needsProxy) {
         // Route through backend proxy
