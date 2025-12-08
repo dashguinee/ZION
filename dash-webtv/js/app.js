@@ -491,6 +491,7 @@ class DashApp {
    */
   initializeExperiences() {
     this.experiences = [
+      // === FEATURED EXPERIENCES ===
       {
         id: 'news',
         name: 'World News',
@@ -503,30 +504,19 @@ class DashApp {
         loaded: false
       },
       {
-        id: 'french',
-        name: 'French TV',
-        icon: '🇫🇷',
-        playlist: 'french',
-        estChannels: 492,
-        estLive: 197,
-        rate: 40,
-        description: 'Francophone channels worldwide',
-        loaded: false
-      },
-      {
-        id: 'nigeria',
-        name: 'Nigerian TV',
-        icon: '🇳🇬',
-        playlist: 'nigeria',
-        estChannels: 64,
-        estLive: 38,
-        rate: 60,
-        description: 'Local Nigerian channels',
+        id: 'freeTvHd',
+        name: 'Free TV HD',
+        icon: '📺',
+        playlist: 'freeTvHd',
+        estChannels: 1851,
+        estLive: 463,
+        rate: 25,
+        description: 'Premium HD quality streams',
         loaded: false
       },
       {
         id: 'english',
-        name: 'English TV',
+        name: 'English Global',
         icon: '🌍',
         playlist: 'english',
         estChannels: 2362,
@@ -535,15 +525,183 @@ class DashApp {
         description: 'Global English channels',
         loaded: false
       },
+      // === AFRICAN EXPERIENCES ===
       {
-        id: 'freeTvHd',
-        name: 'Free TV HD',
-        icon: '📺',
-        playlist: 'freeTvHd',
-        estChannels: 1851,
-        estLive: 463,
-        rate: 25,
-        description: 'HD quality free streams',
+        id: 'nigeria',
+        name: 'Nigeria',
+        icon: '🇳🇬',
+        playlist: 'nigeria',
+        estChannels: 64,
+        estLive: 38,
+        rate: 60,
+        description: 'Nigerian TV channels',
+        loaded: false
+      },
+      {
+        id: 'southAfrica',
+        name: 'South Africa',
+        icon: '🇿🇦',
+        playlist: 'southAfrica',
+        estChannels: 41,
+        estLive: 16,
+        rate: 40,
+        description: 'South African TV',
+        loaded: false
+      },
+      {
+        id: 'ghana',
+        name: 'Ghana',
+        icon: '🇬🇭',
+        playlist: 'ghana',
+        estChannels: 22,
+        estLive: 13,
+        rate: 60,
+        description: 'Ghanaian TV channels',
+        loaded: false
+      },
+      {
+        id: 'senegal',
+        name: 'Senegal',
+        icon: '🇸🇳',
+        playlist: 'senegal',
+        estChannels: 29,
+        estLive: 17,
+        rate: 60,
+        description: 'Senegalese TV channels',
+        loaded: false
+      },
+      {
+        id: 'ivoryCoast',
+        name: 'Ivory Coast',
+        icon: '🇨🇮',
+        playlist: 'ivoryCoast',
+        estChannels: 29,
+        estLive: 17,
+        rate: 60,
+        description: 'Ivorian TV channels',
+        loaded: false
+      },
+      {
+        id: 'cameroon',
+        name: 'Cameroon',
+        icon: '🇨🇲',
+        playlist: 'cameroon',
+        estChannels: 16,
+        estLive: 10,
+        rate: 60,
+        description: 'Cameroonian TV channels',
+        loaded: false
+      },
+      {
+        id: 'drc',
+        name: 'DR Congo',
+        icon: '🇨🇩',
+        playlist: 'drc',
+        estChannels: 21,
+        estLive: 13,
+        rate: 60,
+        description: 'Congolese TV channels',
+        loaded: false
+      },
+      {
+        id: 'guinea',
+        name: 'Guinea',
+        icon: '🇬🇳',
+        playlist: 'guinea',
+        estChannels: 6,
+        estLive: 4,
+        rate: 60,
+        description: 'Guinean TV channels',
+        loaded: false
+      },
+      // === NORTH AFRICA & MENA ===
+      {
+        id: 'mena',
+        name: 'MENA Region',
+        icon: '🏜️',
+        playlist: 'mena',
+        estChannels: 937,
+        estLive: 468,
+        rate: 50,
+        description: 'Middle East & North Africa',
+        loaded: false
+      },
+      {
+        id: 'middleEast',
+        name: 'Middle East',
+        icon: '🕌',
+        playlist: 'middleEast',
+        estChannels: 908,
+        estLive: 454,
+        rate: 50,
+        description: 'Middle Eastern channels',
+        loaded: false
+      },
+      {
+        id: 'egypt',
+        name: 'Egypt',
+        icon: '🇪🇬',
+        playlist: 'egypt',
+        estChannels: 20,
+        estLive: 12,
+        rate: 60,
+        description: 'Egyptian TV channels',
+        loaded: false
+      },
+      {
+        id: 'morocco',
+        name: 'Morocco',
+        icon: '🇲🇦',
+        playlist: 'morocco',
+        estChannels: 9,
+        estLive: 5,
+        rate: 60,
+        description: 'Moroccan TV channels',
+        loaded: false
+      },
+      {
+        id: 'algeria',
+        name: 'Algeria',
+        icon: '🇩🇿',
+        playlist: 'algeria',
+        estChannels: 7,
+        estLive: 4,
+        rate: 60,
+        description: 'Algerian TV channels',
+        loaded: false
+      },
+      {
+        id: 'tunisia',
+        name: 'Tunisia',
+        icon: '🇹🇳',
+        playlist: 'tunisia',
+        estChannels: 5,
+        estLive: 3,
+        rate: 60,
+        description: 'Tunisian TV channels',
+        loaded: false
+      },
+      {
+        id: 'libya',
+        name: 'Libya',
+        icon: '🇱🇾',
+        playlist: 'libya',
+        estChannels: 6,
+        estLive: 4,
+        rate: 60,
+        description: 'Libyan TV channels',
+        loaded: false
+      },
+      // === LANGUAGE EXPERIENCES ===
+      {
+        id: 'french',
+        name: 'French TV',
+        icon: '🇫🇷',
+        playlist: 'french',
+        estChannels: 492,
+        estLive: 197,
+        rate: 40,
+        description: 'Francophone channels worldwide',
         loaded: false
       },
       {
@@ -558,14 +716,37 @@ class DashApp {
         loaded: false
       },
       {
-        id: 'kids',
-        name: 'Kids TV',
-        icon: '🧸',
-        playlist: 'kids',
-        estChannels: 247,
-        estLive: 99,
+        id: 'portuguese',
+        name: 'Portuguese TV',
+        icon: '🇵🇹',
+        playlist: 'portuguese',
+        estChannels: 252,
+        estLive: 101,
         rate: 40,
-        description: 'Children entertainment',
+        description: 'Portuguese language channels',
+        loaded: false
+      },
+      // === CATEGORY EXPERIENCES ===
+      {
+        id: 'movies',
+        name: 'Movies',
+        icon: '🎬',
+        playlist: 'movies',
+        estChannels: 379,
+        estLive: 152,
+        rate: 40,
+        description: '24/7 Movie channels',
+        loaded: false
+      },
+      {
+        id: 'entertainment',
+        name: 'Entertainment',
+        icon: '🎭',
+        playlist: 'entertainment',
+        estChannels: 610,
+        estLive: 244,
+        rate: 40,
+        description: 'General entertainment',
         loaded: false
       },
       {
@@ -580,25 +761,49 @@ class DashApp {
         loaded: false
       },
       {
-        id: 'movies',
-        name: 'Movies',
-        icon: '🎬',
-        playlist: 'movies',
-        estChannels: 379,
-        estLive: 152,
+        id: 'kids',
+        name: 'Kids TV',
+        icon: '🧸',
+        playlist: 'kids',
+        estChannels: 247,
+        estLive: 99,
         rate: 40,
-        description: 'Movie channels',
+        description: 'Children entertainment',
+        loaded: false
+      },
+      // === PREMIUM EXPERIENCES ===
+      {
+        id: 'dstv',
+        name: 'DSTV Collection',
+        icon: '📡',
+        playlist: 'dstv',
+        estChannels: 216,
+        estLive: 0,
+        rate: 5,
+        description: 'DSTV channels (limited)',
         loaded: false
       },
       {
-        id: 'entertainment',
-        name: 'Entertainment',
-        icon: '🎭',
-        playlist: 'entertainment',
-        estChannels: 610,
-        estLive: 244,
-        rate: 40,
-        description: 'General entertainment',
+        id: 'supersport',
+        name: 'SuperSport',
+        icon: '⚽',
+        playlist: 'supersport',
+        estChannels: 38,
+        estLive: 0,
+        rate: 5,
+        description: 'Sports channels (limited)',
+        loaded: false
+      },
+      // === BONUS ===
+      {
+        id: 'chad',
+        name: 'Chad',
+        icon: '🇹🇩',
+        playlist: 'chad',
+        estChannels: 1,
+        estLive: 1,
+        rate: 100,
+        description: 'Chadian TV',
         loaded: false
       }
     ]
