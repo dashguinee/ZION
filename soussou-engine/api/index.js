@@ -97,14 +97,17 @@ module.exports = async (req, res) => {
       const stats = guiniusV2?.getStats?.() || {};
       return res.json({
         status: 'healthy',
-        engine: 'Guinius v2',
-        version: '2.0.1',
+        engine: stats.engine || 'Guinius v2 FULL',
+        version: stats.version || '2.1.0',
         capabilities: {
           translation: !!guiniusV2,
           conversation: true,
           gemini: !!gemini,
-          geminiError: geminiError
+          geminiError: geminiError,
+          // Full pipeline modules
+          ...(stats.capabilities || {})
         },
+        modules: stats.modules || {},
         stats: {
           englishWords: stats.englishWords || 0,
           susuWords: stats.susuWords || 0,
