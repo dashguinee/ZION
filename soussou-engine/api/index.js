@@ -15,19 +15,54 @@ try {
   console.error('Guinius load error:', e.message);
 }
 
-// Gemini API - Using BEST model (2.5 Pro)
+// Gemini API - Using 2.0 Flash for SPEED + quality balance
 let genAI, gemini;
 let geminiError = null;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyC0GIOyUh3FHlb3gRW7boj8YMPmz1cOIBM';
 try {
   const { GoogleGenerativeAI } = require('@google/generative-ai');
   genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-  gemini = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
-  console.log('Gemini 2.5 Pro initialized - BEST MODEL');
+  gemini = genAI.getGenerativeModel({
+    model: 'gemini-2.0-flash',
+    generationConfig: {
+      temperature: 0.7,
+      topP: 0.9,
+      maxOutputTokens: 500
+    }
+  });
+  console.log('Gemini 2.0 Flash initialized - FAST + SMART');
 } catch (e) {
   geminiError = e.message;
   console.error('Gemini init error:', e.message);
 }
+
+// Guinius System Prompt - Teaches Gemini about the architecture
+const GUINIUS_SYSTEM = `You are GUINIUS, the world's first Susu (Soussou) language AI assistant.
+
+ABOUT SUSU:
+- Susu is spoken by ~2 million people in Guinea, Sierra Leone, Guinea-Bissau
+- Word order: SOV (Subject-Object-Verb), unlike English SVO
+- Example: "N na wo xanu" = "I love you" (literally: I you love)
+- Tonal language with nasalization
+
+YOUR CAPABILITIES:
+- You have access to a 31,829 sentence corpus with verified translations
+- The Guinius v2 engine provides translations - TRUST these translations
+- When confidence is 100%, the translation is from verified corpus
+- When confidence is lower, it's pattern-matched or generated
+
+YOUR ROLE:
+- Help users learn Susu through natural conversation
+- Explain grammar patterns (SOV order, particles, tones)
+- Provide pronunciation tips (focus on nasals: ñ, ŋ)
+- Suggest related phrases to expand vocabulary
+- Be encouraging - learning a minority language is valuable!
+
+RESPONSE STYLE:
+- Brief and conversational (2-3 sentences max for response)
+- Always include the Susu phrase prominently
+- Add 1-2 related phrase suggestions
+- Include pronunciation tip when relevant`;
 
 // Session storage
 const chatSessions = new Map();
@@ -108,7 +143,26 @@ module.exports = async (req, res) => {
 
       if (gemini) {
         try {
-          const prompt = `You are a Susu language assistant. User said: "${message}". Translation: "${translation.translation}" (${(translation.confidence * 100).toFixed(0)}% confidence). Give a brief helpful response and 2 phrase suggestions. Respond in JSON: {"response": "text", "susu": "susu translation", "suggestions": [{"susu": "phrase", "english": "meaning"}], "pronunciation": "tip or null"}`;
+          // Build conversation context
+          const recentHistory = session.history.slice(-5).map(h =>
+            `User: ${h.user}\nAssistant: ${h.ai}`
+          ).join('\n\n');
+
+          const prompt = `${GUINIUS_SYSTEM}
+
+CONVERSATION HISTORY:
+${recentHistory || '(New conversation)'}
+
+CURRENT EXCHANGE:
+User said: "${message}"
+Guinius Translation Engine result: "${translation.translation}"
+Confidence: ${(translation.confidence * 100).toFixed(0)}%
+Source: ${translation.source || 'pattern-match'}
+Detected language: ${lang}
+
+Respond naturally as GUINIUS. Include the Susu translation prominently.
+Respond in JSON format ONLY:
+{"response": "your conversational response", "susu": "${translation.translation}", "suggestions": [{"susu": "phrase", "english": "meaning"}], "pronunciation": "tip or null"}`;
 
           const result = await gemini.generateContent(prompt);
           const text = result.response.text();
@@ -118,6 +172,7 @@ module.exports = async (req, res) => {
           }
         } catch (e) {
           console.error('Gemini error:', e.message);
+          geminiError = e.message;
         }
       }
 
