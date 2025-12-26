@@ -15,15 +15,15 @@ try {
   console.error('Guinius load error:', e.message);
 }
 
-// Gemini API
+// Gemini API - Using BEST model (2.5 Pro)
 let genAI, gemini;
 let geminiError = null;
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyCV-1WfnuFLmxw5ib_fuVcO2KLGjUXLpuk';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyC0GIOyUh3FHlb3gRW7boj8YMPmz1cOIBM';
 try {
   const { GoogleGenerativeAI } = require('@google/generative-ai');
   genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-  gemini = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-  console.log('Gemini 1.5 Flash initialized successfully');
+  gemini = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
+  console.log('Gemini 2.5 Pro initialized - BEST MODEL');
 } catch (e) {
   geminiError = e.message;
   console.error('Gemini init error:', e.message);
