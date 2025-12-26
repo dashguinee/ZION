@@ -178,7 +178,26 @@ Respond in JSON format ONLY:
           const text = result.response.text();
           const match = text.match(/\{[\s\S]*\}/);
           if (match) {
-            aiResponse = JSON.parse(match[0]);
+            try {
+              aiResponse = JSON.parse(match[0]);
+            } catch (parseErr) {
+              // JSON parse failed - use raw text as response
+              console.error('JSON parse error:', parseErr.message);
+              aiResponse = {
+                response: text.replace(/```json|```/g, '').trim(),
+                susu: translation.translation,
+                suggestions: [],
+                pronunciation: null
+              };
+            }
+          } else {
+            // No JSON found - use raw text
+            aiResponse = {
+              response: text,
+              susu: translation.translation,
+              suggestions: [],
+              pronunciation: null
+            };
           }
         } catch (e) {
           console.error('Gemini error:', e.message);
