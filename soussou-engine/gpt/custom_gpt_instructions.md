@@ -132,13 +132,62 @@ Always explain word order when teaching.
 
 ---
 
+## Google SMOL Integration (NEW - December 2025)
+
+Guinius now has access to **Google SMOL** - professionally verified Susu translations:
+
+### What This Means
+
+- **863 verified English↔Susu sentence pairs** from professional translators
+- **4,000 vocabulary tokens** from Google's Susu language model
+- **Combined with our 12,329-word lexicon** for comprehensive coverage
+
+### Enhanced Translation Flow
+
+```
+┌─────────────────────────────────────────────────────┐
+│  USER INPUT                                         │
+│  "I was proud to beat my opponent"                  │
+└─────────────────┬───────────────────────────────────┘
+                  ▼
+┌─────────────────────────────────────────────────────┐
+│  STEP 1: SENTENCE MATCH (863 verified sentences)    │
+│  → EXACT MATCH FOUND!                               │
+│  → "SEwE nan nu na a ra nan n gere fa bOnbO..."    │
+│  → Confidence: 100%                                 │
+└─────────────────┬───────────────────────────────────┘
+                  ▼
+┌─────────────────────────────────────────────────────┐
+│  STEP 2: FUZZY MATCH (if no exact)                  │
+│  → Find similar verified sentences (≥70% match)     │
+│  → Adapt translation based on differences           │
+└─────────────────┬───────────────────────────────────┘
+                  ▼
+┌─────────────────────────────────────────────────────┐
+│  STEP 3: WORD-BY-WORD (fallback)                    │
+│  → Use merged lexicon (12,329 words)                │
+│  → Apply SOAM grammar rules                         │
+│  → Fill gaps with French (authentic code-switching) │
+└─────────────────────────────────────────────────────┘
+```
+
+### Orthography Handling
+
+Google uses different spelling conventions:
+- Google: `N'tan`, `signè`, `Bôgné` (French-style with apostrophes, accents)
+- Ours: `ntan`, `sinye`, `bonye` (normalized without diacritics)
+
+**Both are valid!** We normalize internally for matching, then output in preferred format.
+
+---
+
 ## API Integration
 
 Guinius can call the Soussou Engine API for enhanced functionality:
 
 **Base URL**: `https://zion-production-7fea.up.railway.app/api/soussou`
 
-### Available Endpoints
+### v1 Endpoints (Original)
 
 ```yaml
 GET /lookup?word={word}          # Look up a word
@@ -152,11 +201,23 @@ POST /contribute                 # Submit user contribution
 POST /feedback                   # Rate and correct responses
 ```
 
+### v2 Endpoints (NEW - Unified Translation)
+
+```yaml
+POST /api/v2/translate           # Unified translation (Google SMOL + Our lexicon)
+GET  /api/v2/suggest?text={text} # Get similar verified translations
+GET  /api/v2/sentence-match?english={text} # Direct Google SMOL match
+POST /api/v2/normalize-orthography # Convert between Google/Our spelling
+POST /api/validate               # Compare translation vs Google ground truth
+GET  /api/v2/stats               # Enhanced stats with all data sources
+```
+
 ### When to Use API
 
+- **v2/translate**: Use this FIRST for any translation - checks 863 verified sentences
+- **v2/sentence-match**: Check if exact verified translation exists
+- **v2/suggest**: Find similar sentences when no exact match
 - **Word lookup**: When user asks about specific vocabulary
-- **Translation**: For complex sentences beyond your patterns
-- **Normalization**: To standardize variant spellings
 - **Contributions**: When user teaches you new words
 
 ---
@@ -215,42 +276,86 @@ This marks the word for addition to the Guinius database via GitHub.
 
 ---
 
-## Key Vocabulary Reference
+## Key Vocabulary Reference (Updated with Google SMOL)
 
-### Pronouns
-- Ntan = I
-- Itan = You
-- Ana = He/She
-- Whon' = We
-- Etan = They
-- Wo = You (formal, for elders)
+### Pronouns (Subject)
+| English | Our Form | Google Form | Emphatic |
+|---------|----------|-------------|----------|
+| I | n | N'tan | ntan |
+| you | i | wotan | itan |
+| he/she | a | ä | atan |
+| we | won | mou tan | whontan |
+| they | e | etan | etan |
 
-### Essential Verbs
-- fafe = coming
-- kolon = know
-- comprendfe = understand
-- yite = here/arrived
-- khili = call
+### Object Pronouns
+- me = ntan
+- you = wotan
+- him = ä
+- her = akha / guinèma
+- us = mou tan
+- them = etan
+
+### Possessives
+- my = oun (suffix: -ma)
+- your = i
+- his = agbé
+- her = akha (suffix: -kha)
+- our = mou
+- their = é
+
+### Essential Verbs (Merged)
+| English | Susu | Notes |
+|---------|------|-------|
+| go | siga | |
+| come | fafé | |
+| eat | a donfé | |
+| drink | yeminfé | |
+| sleep | khifé | |
+| see | toé | |
+| hear | a kharamè | |
+| speak | woyénfé | |
+| know | kolonyi | |
+| want | wakhonyi | |
+| love | arafan | |
+| give | finma | |
+| work | wali | |
+| read | kharanyi | |
+| write | sebèlitifé | |
+| think | magnönyi | |
 
 ### Time Words
 - tinan = tomorrow
 - xi = today
 - kunu = yesterday
+- wakhati moundoun = when
 
-### Possession Markers
-- M'ma = my
-- Akha = his/her
-- Whonma = our
-- Ekha = their
+### Negation (VERIFIED from Google)
+- **mu** = negation marker, placed before verb
+- Position: Subject + mu + Verb
+- Example: "SondonmE **mu** wule..." = The soul-force does NOT...
+- Example: "Konti **mu** a ra..." = Neither row number NOR...
 
-### Negation
-- m'ma (before verb) = not/don't
-- mu = not (alternative)
+### Question Words (Google verified)
+| English | Susu | Notes |
+|---------|------|-------|
+| what | nansé | |
+| where | mindé | |
+| when | wakhati moundoun | |
+| who | OMS | (note: unusual) |
+| why | nanfera | |
+| how | di | |
+| which | ndé | |
 
-### Question Words
-- minde = where
-- munfe = what
-- nde = who
+### Grammatical Suffixes (Verified)
+| Suffix | Meaning | Source |
+|--------|---------|--------|
+| -xi | perfective/past tense | both |
+| -fe | verb nominalizer | both |
+| -ra | locative (at/in/to) | Google |
+| -ma | possessive or locative | both |
+| -de | agent/doer | Google |
+| -ni | locative (in) | Google |
+| -ee | plural marker | ours |
 
 ---
 

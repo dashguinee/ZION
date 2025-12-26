@@ -1,0 +1,2498 @@
+[
+  {
+    "source": "hello",
+    "target": "inou wali"
+  },
+  {
+    "source": "hi",
+    "target": "inou wali"
+  },
+  {
+    "source": "good morning",
+    "target": "Tanàmoufègnê"
+  },
+  {
+    "source": "good afternoon",
+    "target": "Wofègnè"
+  },
+  {
+    "source": "good evening",
+    "target": "Wo nounmaré"
+  },
+  {
+    "source": "good night",
+    "target": "Allah kha wo khi"
+  },
+  {
+    "source": "how are you",
+    "target": "Tanàmoufègnê"
+  },
+  {
+    "source": "i am fine",
+    "target": "a mou nä ki yo ki"
+  },
+  {
+    "source": "i am fine thank you",
+    "target": "N na yalan, i nu wali"
+  },
+  {
+    "source": "and you",
+    "target": "Ifan go"
+  },
+  {
+    "source": "what is your name",
+    "target": "Ikhilidi"
+  },
+  {
+    "source": "my name is",
+    "target": "Khilinè"
+  },
+  {
+    "source": "nice to meet you",
+    "target": "Ounbara gnalakhin itoféra"
+  },
+  {
+    "source": "welcome",
+    "target": "Ara lanfé"
+  },
+  {
+    "source": "welcome home",
+    "target": "Wo xa wo maso wo xOn gni"
+  },
+  {
+    "source": "goodbye",
+    "target": "Wo na tèmou"
+  },
+  {
+    "source": "see you later",
+    "target": "Won narala'ma"
+  },
+  {
+    "source": "see you tomorrow",
+    "target": "Won tina"
+  },
+  {
+    "source": "see you soon",
+    "target": "Won na tèmoui"
+  },
+  {
+    "source": "take care",
+    "target": "Iyèma sokhouï afanyira"
+  },
+  {
+    "source": "have a nice day",
+    "target": "Wo fègnè"
+  },
+  {
+    "source": "have a good trip",
+    "target": "Wo xa biyaasi fangni raba"
+  },
+  {
+    "source": "safe travels",
+    "target": "Biyasi fangni"
+  },
+  {
+    "source": "sleep well",
+    "target": "Xi fangni"
+  },
+  {
+    "source": "until next time",
+    "target": "han waxati gbEtE"
+  },
+  {
+    "source": "please",
+    "target": "Nbari khandi"
+  },
+  {
+    "source": "thank you",
+    "target": "Wonou wali"
+  },
+  {
+    "source": "thank you very much",
+    "target": "Inouwali kifanyi"
+  },
+  {
+    "source": "you are welcome",
+    "target": "Wo khakèto"
+  },
+  {
+    "source": "excuse me",
+    "target": "Dignèn ma"
+  },
+  {
+    "source": "sorry",
+    "target": "diyƐ"
+  },
+  {
+    "source": "i am sorry",
+    "target": "N bara nimisa"
+  },
+  {
+    "source": "no problem",
+    "target": "Kontofili yo"
+  },
+  {
+    "source": "it is nothing",
+    "target": "A mu findixi sese ra"
+  },
+  {
+    "source": "bless you",
+    "target": "Wo xa duba"
+  },
+  {
+    "source": "good morning everyone",
+    "target": "Wo birin xa gɛɛsɛgɛ fan"
+  },
+  {
+    "source": "how was your night",
+    "target": "Ikha kouwè nou nadi"
+  },
+  {
+    "source": "did you sleep well",
+    "target": "I bara xi a fangni ra"
+  },
+  {
+    "source": "how is your family",
+    "target": "Wo xa denbaya na ki nE"
+  },
+  {
+    "source": "how is work",
+    "target": "Wali na ki nE"
+  },
+  {
+    "source": "long time no see",
+    "target": "A bara bou m'mi to"
+  },
+  {
+    "source": "i missed you",
+    "target": "N bara wo xanu"
+  },
+  {
+    "source": "i am happy to see you",
+    "target": "N bara sEwa wo to fe ra"
+  },
+  {
+    "source": "peace be with you",
+    "target": "Bɔɲɛsa xa lu wo bɛ"
+  },
+  {
+    "source": "may god bless you",
+    "target": "Ala xa hinnɛ wo ra"
+  },
+  {
+    "source": "i am doing well",
+    "target": "N na walife a fangni ra"
+  },
+  {
+    "source": "everything is fine",
+    "target": "Fe birin fan"
+  },
+  {
+    "source": "all is well",
+    "target": "Fe birin fan"
+  },
+  {
+    "source": "thanks to god",
+    "target": "Ala tantu"
+  },
+  {
+    "source": "by the grace of god",
+    "target": "Ala xa hinnɛ saabui ra"
+  },
+  {
+    "source": "i am blessed",
+    "target": "N bara duba"
+  },
+  {
+    "source": "mother",
+    "target": "Fé sougandikhi"
+  },
+  {
+    "source": "father",
+    "target": "Nba"
+  },
+  {
+    "source": "parents",
+    "target": "Bariboré"
+  },
+  {
+    "source": "child",
+    "target": "Dumedi"
+  },
+  {
+    "source": "children",
+    "target": "Dimèdi"
+  },
+  {
+    "source": "son",
+    "target": "Di"
+  },
+  {
+    "source": "daughter",
+    "target": "Abè"
+  },
+  {
+    "source": "brother",
+    "target": "Ntara"
+  },
+  {
+    "source": "sister",
+    "target": "Nkhounya guinèma"
+  },
+  {
+    "source": "grandfather",
+    "target": "Baba"
+  },
+  {
+    "source": "grandmother",
+    "target": "n baba"
+  },
+  {
+    "source": "grandparents",
+    "target": "Benbae"
+  },
+  {
+    "source": "uncle",
+    "target": "Soghö"
+  },
+  {
+    "source": "aunt",
+    "target": "Ntenin"
+  },
+  {
+    "source": "cousin",
+    "target": "Itenin khadi anamara iba khoundia khadi"
+  },
+  {
+    "source": "nephew",
+    "target": "Sokhödi"
+  },
+  {
+    "source": "niece",
+    "target": "Sokhodi"
+  },
+  {
+    "source": "husband",
+    "target": "Nma mori"
+  },
+  {
+    "source": "wife",
+    "target": "Kha guinè"
+  },
+  {
+    "source": "family",
+    "target": "Dembaya"
+  },
+  {
+    "source": "this is my mother",
+    "target": "N nga nan yi ki"
+  },
+  {
+    "source": "this is my father",
+    "target": "N baba nan yi ki"
+  },
+  {
+    "source": "this is my wife",
+    "target": "N ma ginE nan ya"
+  },
+  {
+    "source": "this is my husband",
+    "target": "N ma xamE nan ya"
+  },
+  {
+    "source": "this is my child",
+    "target": "N ma di nan yi ki"
+  },
+  {
+    "source": "i have two children",
+    "target": "N ma di firin nan na"
+  },
+  {
+    "source": "i have three brothers",
+    "target": "N xunya saxan na"
+  },
+  {
+    "source": "my sister is older",
+    "target": "N xunya ginE fori nan a ra"
+  },
+  {
+    "source": "my brother is younger",
+    "target": "N xunya nan xurun"
+  },
+  {
+    "source": "my family is big",
+    "target": "N ma denbaya gbo"
+  },
+  {
+    "source": "my family is small",
+    "target": "N ma denbaya xurun"
+  },
+  {
+    "source": "are you married",
+    "target": "Imarié khi"
+  },
+  {
+    "source": "do you have children",
+    "target": "Wo xa die na wo yi"
+  },
+  {
+    "source": "how many children do you have",
+    "target": "Wo xa di wuyaxi nan na wo yi"
+  },
+  {
+    "source": "where is your family",
+    "target": "Wo xa denbaya na minden"
+  },
+  {
+    "source": "who is this",
+    "target": "N'dey iya"
+  },
+  {
+    "source": "is this your mother",
+    "target": "I nga nan ya"
+  },
+  {
+    "source": "is this your father",
+    "target": "Wo baba nan ya"
+  },
+  {
+    "source": "i am married",
+    "target": "N bara futi"
+  },
+  {
+    "source": "i am not married",
+    "target": "N mu futixi"
+  },
+  {
+    "source": "i am single",
+    "target": "N tan keren"
+  },
+  {
+    "source": "she is my friend",
+    "target": "A findixi n bore nan na"
+  },
+  {
+    "source": "he is my friend",
+    "target": "A tan nan na n bore ra"
+  },
+  {
+    "source": "they are my neighbors",
+    "target": "E findixi n dOxO bore nan na"
+  },
+  {
+    "source": "i love my family",
+    "target": "N ma denbaya rafan n ma"
+  },
+  {
+    "source": "i love my mother",
+    "target": "n'ga rafan m'ma"
+  },
+  {
+    "source": "i love my father",
+    "target": "m'ba rafan m'ma"
+  },
+  {
+    "source": "we are family",
+    "target": "Won findixi denbaya nan na"
+  },
+  {
+    "source": "family is important",
+    "target": "Denbaya tide na"
+  },
+  {
+    "source": "i am the eldest",
+    "target": "N tan nan na fori ra"
+  },
+  {
+    "source": "i am the youngest",
+    "target": "N tan nan na dimEdi ra"
+  },
+  {
+    "source": "food",
+    "target": "Baloé"
+  },
+  {
+    "source": "water",
+    "target": "Yé"
+  },
+  {
+    "source": "rice",
+    "target": "Bandé"
+  },
+  {
+    "source": "fish",
+    "target": "Yèkhè"
+  },
+  {
+    "source": "meat",
+    "target": "Soubé"
+  },
+  {
+    "source": "chicken",
+    "target": "Tökhè"
+  },
+  {
+    "source": "bread",
+    "target": "Tami"
+  },
+  {
+    "source": "vegetables",
+    "target": "Sanssi raboulakhi nakhan don ma"
+  },
+  {
+    "source": "fruit",
+    "target": "Youri bogui"
+  },
+  {
+    "source": "mango",
+    "target": "Mango"
+  },
+  {
+    "source": "banana",
+    "target": "Banani"
+  },
+  {
+    "source": "orange",
+    "target": "Lefouré"
+  },
+  {
+    "source": "peanuts",
+    "target": "Kabe"
+  },
+  {
+    "source": "palm oil",
+    "target": "Palmier ture"
+  },
+  {
+    "source": "salt",
+    "target": "Fokhè"
+  },
+  {
+    "source": "sugar",
+    "target": "Souka"
+  },
+  {
+    "source": "pepper",
+    "target": "Gbèngbè"
+  },
+  {
+    "source": "onion",
+    "target": "Yèbè"
+  },
+  {
+    "source": "tomato",
+    "target": "Tomatï"
+  },
+  {
+    "source": "cassava",
+    "target": "maniok"
+  },
+  {
+    "source": "tea",
+    "target": "Ataya"
+  },
+  {
+    "source": "coffee",
+    "target": "Käfé"
+  },
+  {
+    "source": "milk",
+    "target": "Khinyè"
+  },
+  {
+    "source": "juice",
+    "target": "Ju"
+  },
+  {
+    "source": "palm wine",
+    "target": "Palmier vin"
+  },
+  {
+    "source": "cold water",
+    "target": "Ye xOrOxOE"
+  },
+  {
+    "source": "hot water",
+    "target": "Ye xOrOxOE"
+  },
+  {
+    "source": "i am hungry",
+    "target": "Kame nan n ma"
+  },
+  {
+    "source": "i am thirsty",
+    "target": "ye xOli na n ma"
+  },
+  {
+    "source": "i am not hungry",
+    "target": "Kami mu n ma"
+  },
+  {
+    "source": "i am not thirsty",
+    "target": "ye xOli mu n ma"
+  },
+  {
+    "source": "are you hungry",
+    "target": "Kame nan i ra"
+  },
+  {
+    "source": "are you thirsty",
+    "target": "ye xOnE na wo ma"
+  },
+  {
+    "source": "i want to eat",
+    "target": "N wama donse donfe"
+  },
+  {
+    "source": "i want to drink",
+    "target": "N wama minfe"
+  },
+  {
+    "source": "let us eat",
+    "target": "Won xa donse don"
+  },
+  {
+    "source": "let us drink",
+    "target": "Won xa min"
+  },
+  {
+    "source": "give me water",
+    "target": "Wo ye fi n ma"
+  },
+  {
+    "source": "give me food",
+    "target": "Wo donse fi n ma"
+  },
+  {
+    "source": "i am eating",
+    "target": "N na donse donfe"
+  },
+  {
+    "source": "i am drinking",
+    "target": "N na minfe"
+  },
+  {
+    "source": "the food is good",
+    "target": "Donse fan"
+  },
+  {
+    "source": "the food is ready",
+    "target": "Donse bara rafala"
+  },
+  {
+    "source": "the food is hot",
+    "target": "Donse xOrOxO"
+  },
+  {
+    "source": "the food is cold",
+    "target": "Donse xinde"
+  },
+  {
+    "source": "delicious",
+    "target": "Gnökhonyi"
+  },
+  {
+    "source": "i am full",
+    "target": "N bara rafe"
+  },
+  {
+    "source": "i ate already",
+    "target": "N bara donse don"
+  },
+  {
+    "source": "she is cooking",
+    "target": "A na donse rafalafe"
+  },
+  {
+    "source": "he is cooking",
+    "target": "A na donse rafalafe"
+  },
+  {
+    "source": "what are you cooking",
+    "target": "I na munse rafalafe"
+  },
+  {
+    "source": "i am cooking rice",
+    "target": "N na lose yailanfe"
+  },
+  {
+    "source": "the rice is ready",
+    "target": "Ɲama bara rafala"
+  },
+  {
+    "source": "come and eat",
+    "target": "Wo fa wo xa donse don"
+  },
+  {
+    "source": "head",
+    "target": "Ara gnèrèfé"
+  },
+  {
+    "source": "eye",
+    "target": "Ya"
+  },
+  {
+    "source": "eyes",
+    "target": "Ya"
+  },
+  {
+    "source": "ear",
+    "target": "Touli"
+  },
+  {
+    "source": "ears",
+    "target": "Touley"
+  },
+  {
+    "source": "nose",
+    "target": "Nouè"
+  },
+  {
+    "source": "mouth",
+    "target": "Dè"
+  },
+  {
+    "source": "teeth",
+    "target": "Gnin yé"
+  },
+  {
+    "source": "tongue",
+    "target": "Khouï"
+  },
+  {
+    "source": "hand",
+    "target": "Bèlèkhè"
+  },
+  {
+    "source": "hands",
+    "target": "BElExE"
+  },
+  {
+    "source": "arm",
+    "target": "Bèlèkhè"
+  },
+  {
+    "source": "foot",
+    "target": "Sanyi"
+  },
+  {
+    "source": "feet",
+    "target": "Sènyi"
+  },
+  {
+    "source": "leg",
+    "target": "Sanyi"
+  },
+  {
+    "source": "stomach",
+    "target": "Fouri koui touli cé"
+  },
+  {
+    "source": "back",
+    "target": "Ifari"
+  },
+  {
+    "source": "heart",
+    "target": "Sondonyi"
+  },
+  {
+    "source": "blood",
+    "target": "Wouli"
+  },
+  {
+    "source": "body",
+    "target": "Faté"
+  },
+  {
+    "source": "i am sick",
+    "target": "N furaxi"
+  },
+  {
+    "source": "i am not sick",
+    "target": "N mu furaxi"
+  },
+  {
+    "source": "i am healthy",
+    "target": "N na yalan"
+  },
+  {
+    "source": "i am tired",
+    "target": "N bara tagan"
+  },
+  {
+    "source": "i am very tired",
+    "target": "N bara tagan ki fanyi ra"
+  },
+  {
+    "source": "i am weak",
+    "target": "n tagan"
+  },
+  {
+    "source": "i am strong",
+    "target": "N sɛnbɛ gbo"
+  },
+  {
+    "source": "i am in pain",
+    "target": "N na xOnE kui"
+  },
+  {
+    "source": "i have a headache",
+    "target": "N xun xOnE nan a ra"
+  },
+  {
+    "source": "i have a stomachache",
+    "target": "N furi xOnE nan a ra"
+  },
+  {
+    "source": "my head hurts",
+    "target": "N xunyi xOnOma"
+  },
+  {
+    "source": "my stomach hurts",
+    "target": "N furi xOnOma"
+  },
+  {
+    "source": "my back hurts",
+    "target": "N xanbi xOnOma"
+  },
+  {
+    "source": "i have a fever",
+    "target": "N ma fure na"
+  },
+  {
+    "source": "i have a cold",
+    "target": "N bara xinbeli"
+  },
+  {
+    "source": "i have a cough",
+    "target": "N ma xOnE na"
+  },
+  {
+    "source": "i am not feeling well",
+    "target": "N mu yalanxi"
+  },
+  {
+    "source": "doctor",
+    "target": "Mikhi dandan"
+  },
+  {
+    "source": "hospital",
+    "target": "Labitani"
+  },
+  {
+    "source": "medicine",
+    "target": "Seri kharan yi"
+  },
+  {
+    "source": "i need medicine",
+    "target": "N hayi na seri ma"
+  },
+  {
+    "source": "where is the hospital",
+    "target": "Hopital na minden"
+  },
+  {
+    "source": "call the doctor",
+    "target": "Wo dOktOre xili"
+  },
+  {
+    "source": "i need help",
+    "target": "N hayi na mali ma"
+  },
+  {
+    "source": "it hurts here",
+    "target": "A xOnOma be"
+  },
+  {
+    "source": "i feel better",
+    "target": "N bara fisa"
+  },
+  {
+    "source": "i am getting better",
+    "target": "N na yalan fe"
+  },
+  {
+    "source": "take care of yourself",
+    "target": "Wo wo yEtE ratanga"
+  },
+  {
+    "source": "get well soon",
+    "target": "Allah kha sönèya fii ima sin'nèma"
+  },
+  {
+    "source": "rest well",
+    "target": "Wo malabu a fangni ra"
+  },
+  {
+    "source": "drink water",
+    "target": "ye min"
+  },
+  {
+    "source": "eat medicine",
+    "target": "seri donfe"
+  },
+  {
+    "source": "one",
+    "target": "Kerén"
+  },
+  {
+    "source": "two",
+    "target": "Firin"
+  },
+  {
+    "source": "three",
+    "target": "Serinfé"
+  },
+  {
+    "source": "four",
+    "target": "Naani"
+  },
+  {
+    "source": "five",
+    "target": "Souli"
+  },
+  {
+    "source": "six",
+    "target": "Sén'ni"
+  },
+  {
+    "source": "seven",
+    "target": "solofere"
+  },
+  {
+    "source": "eight",
+    "target": "Solomasakhan"
+  },
+  {
+    "source": "nine",
+    "target": "Solomanani"
+  },
+  {
+    "source": "ten",
+    "target": "Foû"
+  },
+  {
+    "source": "twenty",
+    "target": "Moukhè"
+  },
+  {
+    "source": "thirty",
+    "target": "Tongo sakhan"
+  },
+  {
+    "source": "forty",
+    "target": "Ton naanin"
+  },
+  {
+    "source": "fifty",
+    "target": "Tongo souli"
+  },
+  {
+    "source": "one hundred",
+    "target": "kEmE"
+  },
+  {
+    "source": "one thousand",
+    "target": "mixi wulu keren"
+  },
+  {
+    "source": "today",
+    "target": "Too"
+  },
+  {
+    "source": "tomorrow",
+    "target": "Tina"
+  },
+  {
+    "source": "yesterday",
+    "target": "Khoro"
+  },
+  {
+    "source": "now",
+    "target": "Yakoss"
+  },
+  {
+    "source": "later",
+    "target": "Danguikhambi"
+  },
+  {
+    "source": "morning",
+    "target": "Djècèkhè"
+  },
+  {
+    "source": "afternoon",
+    "target": "Midi dangui khanbi"
+  },
+  {
+    "source": "evening",
+    "target": "Noun maré"
+  },
+  {
+    "source": "night",
+    "target": "Koyè"
+  },
+  {
+    "source": "day",
+    "target": "Lokhè"
+  },
+  {
+    "source": "week",
+    "target": "Lökhounyi"
+  },
+  {
+    "source": "month",
+    "target": "Kiké"
+  },
+  {
+    "source": "year",
+    "target": "Gnè"
+  },
+  {
+    "source": "what time is it",
+    "target": "Waxati mundun na"
+  },
+  {
+    "source": "it is morning",
+    "target": "gɛɛsɛgɛ nan a ra"
+  },
+  {
+    "source": "it is afternoon",
+    "target": "nunmare nan a ra"
+  },
+  {
+    "source": "it is evening",
+    "target": "nunmare nan a ra"
+  },
+  {
+    "source": "it is late",
+    "target": "A bara gɛ"
+  },
+  {
+    "source": "it is early",
+    "target": "A singe nan a ra"
+  },
+  {
+    "source": "this morning",
+    "target": "To gEgEn"
+  },
+  {
+    "source": "this evening",
+    "target": "To nunmare"
+  },
+  {
+    "source": "last night",
+    "target": "kOE dangixi"
+  },
+  {
+    "source": "next week",
+    "target": "LOxun naxan fama"
+  },
+  {
+    "source": "last month",
+    "target": "Kike dangixi"
+  },
+  {
+    "source": "this year",
+    "target": "Yi gnE"
+  },
+  {
+    "source": "every day",
+    "target": "LOn birin"
+  },
+  {
+    "source": "all day",
+    "target": "LOn birin"
+  },
+  {
+    "source": "all night",
+    "target": "Kɔɛ birin"
+  },
+  {
+    "source": "how old are you",
+    "target": "Ignè yerara"
+  },
+  {
+    "source": "i am twenty years old",
+    "target": "N bara gnE mOxOyEn"
+  },
+  {
+    "source": "how long",
+    "target": "waxati mundun"
+  },
+  {
+    "source": "how many days",
+    "target": "xi wuyaxi"
+  },
+  {
+    "source": "two hours",
+    "target": "waxati firin"
+  },
+  {
+    "source": "three days",
+    "target": "xi saxan"
+  },
+  {
+    "source": "one week",
+    "target": "lOxun keren"
+  },
+  {
+    "source": "wait a moment",
+    "target": "Wo mamEtE dondoroti"
+  },
+  {
+    "source": "left",
+    "target": "A kola"
+  },
+  {
+    "source": "right",
+    "target": "Yiréfan"
+  },
+  {
+    "source": "straight",
+    "target": "Tinkhinyi"
+  },
+  {
+    "source": "up",
+    "target": "Koré"
+  },
+  {
+    "source": "down",
+    "target": "Aboum ma"
+  },
+  {
+    "source": "here",
+    "target": "Bé"
+  },
+  {
+    "source": "there",
+    "target": "Bé"
+  },
+  {
+    "source": "near",
+    "target": "A cetma"
+  },
+  {
+    "source": "far",
+    "target": "Kouya"
+  },
+  {
+    "source": "north",
+    "target": "Nöri"
+  },
+  {
+    "source": "south",
+    "target": "Yiré fanyi biriki"
+  },
+  {
+    "source": "east",
+    "target": "Kiya nakhè"
+  },
+  {
+    "source": "west",
+    "target": "sogegorode"
+  },
+  {
+    "source": "inside",
+    "target": "A koui"
+  },
+  {
+    "source": "outside",
+    "target": "Tandé"
+  },
+  {
+    "source": "front",
+    "target": "Yaré"
+  },
+  {
+    "source": "back",
+    "target": "Ifari"
+  },
+  {
+    "source": "behind",
+    "target": "Akhanbi"
+  },
+  {
+    "source": "turn left",
+    "target": "Wo gbilen yirefanyi ma"
+  },
+  {
+    "source": "turn right",
+    "target": "Wo gbilen yirefanyi ma"
+  },
+  {
+    "source": "go straight",
+    "target": "Wo siga tinxin gni"
+  },
+  {
+    "source": "go forward",
+    "target": "Wo siga yare"
+  },
+  {
+    "source": "go back",
+    "target": "Wo gbilen"
+  },
+  {
+    "source": "stop here",
+    "target": "Wo ti be"
+  },
+  {
+    "source": "come here",
+    "target": "Fâ bé"
+  },
+  {
+    "source": "go there",
+    "target": "Wo siga na"
+  },
+  {
+    "source": "house",
+    "target": "Fé ma gnökhoundji"
+  },
+  {
+    "source": "home",
+    "target": "Bankhi"
+  },
+  {
+    "source": "market",
+    "target": "Makiti"
+  },
+  {
+    "source": "school",
+    "target": "Kharandérabadé"
+  },
+  {
+    "source": "hospital",
+    "target": "Labitani"
+  },
+  {
+    "source": "mosque",
+    "target": "misiki"
+  },
+  {
+    "source": "church",
+    "target": "Chrétiens kha salidé"
+  },
+  {
+    "source": "road",
+    "target": "Kira"
+  },
+  {
+    "source": "street",
+    "target": "Kira"
+  },
+  {
+    "source": "village",
+    "target": "Khaaré"
+  },
+  {
+    "source": "city",
+    "target": "Ta"
+  },
+  {
+    "source": "where are you going",
+    "target": "Wo sigafe minden"
+  },
+  {
+    "source": "where is the market",
+    "target": "Makiti na minden"
+  },
+  {
+    "source": "where is the hospital",
+    "target": "Hopital na minden"
+  },
+  {
+    "source": "where is the school",
+    "target": "Lakɔli na minden"
+  },
+  {
+    "source": "how do i get there",
+    "target": "N nOma na sOtOde di"
+  },
+  {
+    "source": "is it far",
+    "target": "A makuya"
+  },
+  {
+    "source": "is it near",
+    "target": "A ma kOrE"
+  },
+  {
+    "source": "i am going home",
+    "target": "N na sigafe n xOnE"
+  },
+  {
+    "source": "i am coming back",
+    "target": "N na gbilenfe"
+  },
+  {
+    "source": "i am leaving",
+    "target": "N na sigafe"
+  },
+  {
+    "source": "i am arriving",
+    "target": "N na fafe"
+  },
+  {
+    "source": "i am lost",
+    "target": "N bara lOE"
+  },
+  {
+    "source": "the house is near",
+    "target": "Banxi na yire makuye"
+  },
+  {
+    "source": "the market is far",
+    "target": "Makiti ma kuya"
+  },
+  {
+    "source": "i will come back",
+    "target": "N fama gbilen de"
+  },
+  {
+    "source": "money",
+    "target": "Kobiri"
+  },
+  {
+    "source": "price",
+    "target": "Saré"
+  },
+  {
+    "source": "expensive",
+    "target": "A khori"
+  },
+  {
+    "source": "cheap",
+    "target": "Saréfanyi"
+  },
+  {
+    "source": "free",
+    "target": "Asarémou fima"
+  },
+  {
+    "source": "cost",
+    "target": "A cèti"
+  },
+  {
+    "source": "pay",
+    "target": "Sarafé"
+  },
+  {
+    "source": "buy",
+    "target": "Sareti"
+  },
+  {
+    "source": "sell",
+    "target": "Matifé"
+  },
+  {
+    "source": "change",
+    "target": "Massarè"
+  },
+  {
+    "source": "how much",
+    "target": "Yeri"
+  },
+  {
+    "source": "how much is this",
+    "target": "yi sare na xan na"
+  },
+  {
+    "source": "how much does it cost",
+    "target": "A sare na xan na"
+  },
+  {
+    "source": "what is the price",
+    "target": "A sare na munse ra"
+  },
+  {
+    "source": "is it expensive",
+    "target": "A sare xOrOxO"
+  },
+  {
+    "source": "can you reduce the price",
+    "target": "Wo nOma a sare ragorode"
+  },
+  {
+    "source": "do you have change",
+    "target": "Wo bara masara"
+  },
+  {
+    "source": "do you have this",
+    "target": "Wo yi sOtOxi"
+  },
+  {
+    "source": "i want to buy",
+    "target": "N wama sarafe"
+  },
+  {
+    "source": "i will buy this",
+    "target": "N yi sara ma"
+  },
+  {
+    "source": "i am not buying",
+    "target": "N mu na sarafe"
+  },
+  {
+    "source": "too expensive",
+    "target": "A sare xOrOxO"
+  },
+  {
+    "source": "give me discount",
+    "target": "Wo n ma discount fi n ma"
+  },
+  {
+    "source": "i have money",
+    "target": "kObiri na n yi ra"
+  },
+  {
+    "source": "i have no money",
+    "target": "N mu kObiri yo sOtOxi"
+  },
+  {
+    "source": "i will pay",
+    "target": "N na sare fima"
+  },
+  {
+    "source": "i have paid",
+    "target": "N bara sare fi"
+  },
+  {
+    "source": "keep the change",
+    "target": "Wo xa na masarE ragata"
+  },
+  {
+    "source": "clothes",
+    "target": "Douguée"
+  },
+  {
+    "source": "shoes",
+    "target": "Sankirée"
+  },
+  {
+    "source": "bag",
+    "target": "Cé sacé"
+  },
+  {
+    "source": "phone",
+    "target": "Teleföni"
+  },
+  {
+    "source": "this one",
+    "target": "Yi keren"
+  },
+  {
+    "source": "that one",
+    "target": "Na keren"
+  },
+  {
+    "source": "another one",
+    "target": "Boore"
+  },
+  {
+    "source": "the same",
+    "target": "Na nan a ra"
+  },
+  {
+    "source": "different",
+    "target": "Keren mara"
+  },
+  {
+    "source": "what is your last price",
+    "target": "Wo xa sare dOnxE munse ra"
+  },
+  {
+    "source": "that is too much",
+    "target": "Na bara gbo"
+  },
+  {
+    "source": "i cannot afford",
+    "target": "N mu nOma"
+  },
+  {
+    "source": "lower the price",
+    "target": "Wo sare ragoro"
+  },
+  {
+    "source": "good price",
+    "target": "A sare fan"
+  },
+  {
+    "source": "fair price",
+    "target": "sare fangni"
+  },
+  {
+    "source": "final price",
+    "target": "A sare dOnxE"
+  },
+  {
+    "source": "i agree",
+    "target": "N tinxi"
+  },
+  {
+    "source": "no thank you",
+    "target": "Ade, i nu wali"
+  },
+  {
+    "source": "maybe later",
+    "target": "Tɛmunde kɔrɛ"
+  },
+  {
+    "source": "i will come back",
+    "target": "N fama gbilen de"
+  },
+  {
+    "source": "work",
+    "target": "Wali"
+  },
+  {
+    "source": "job",
+    "target": "Wali"
+  },
+  {
+    "source": "office",
+    "target": "Walidé bankhi"
+  },
+  {
+    "source": "boss",
+    "target": "Mènguè"
+  },
+  {
+    "source": "worker",
+    "target": "WalikE"
+  },
+  {
+    "source": "employee",
+    "target": "Na khan walifé Lan khoun dè ndé bè"
+  },
+  {
+    "source": "salary",
+    "target": "Kiké gnonyi saré"
+  },
+  {
+    "source": "business",
+    "target": "Lankhoundè"
+  },
+  {
+    "source": "farmer",
+    "target": "Khèsaa"
+  },
+  {
+    "source": "teacher",
+    "target": "Mikhi ra kharanyi"
+  },
+  {
+    "source": "student",
+    "target": "Kharandi"
+  },
+  {
+    "source": "i am working",
+    "target": "N na walife"
+  },
+  {
+    "source": "i am going to work",
+    "target": "N na sigafe walide"
+  },
+  {
+    "source": "i finished work",
+    "target": "N bara wali ra ɲɔn"
+  },
+  {
+    "source": "i have a job",
+    "target": "n ma wali na"
+  },
+  {
+    "source": "i am looking for work",
+    "target": "N na wali nan fenfe"
+  },
+  {
+    "source": "where do you work",
+    "target": "I walima minden"
+  },
+  {
+    "source": "what is your job",
+    "target": "Ikha wali na mounséra"
+  },
+  {
+    "source": "i work here",
+    "target": "N walima be"
+  },
+  {
+    "source": "work is hard",
+    "target": "Wali xOrOxO"
+  },
+  {
+    "source": "work is good",
+    "target": "Wali fan"
+  },
+  {
+    "source": "school",
+    "target": "Kharandérabadé"
+  },
+  {
+    "source": "book",
+    "target": "Bouki"
+  },
+  {
+    "source": "pen",
+    "target": "Kalé"
+  },
+  {
+    "source": "paper",
+    "target": "Kèdi"
+  },
+  {
+    "source": "to read",
+    "target": "A xaran fe"
+  },
+  {
+    "source": "to write",
+    "target": "sEbEli"
+  },
+  {
+    "source": "to learn",
+    "target": "Xaran fe"
+  },
+  {
+    "source": "to teach",
+    "target": "Xarande"
+  },
+  {
+    "source": "to study",
+    "target": "Xaran fe"
+  },
+  {
+    "source": "class",
+    "target": "Kharanyi bankhi"
+  },
+  {
+    "source": "lesson",
+    "target": "Karanfé ikha fé dé matinkan"
+  },
+  {
+    "source": "i am a student",
+    "target": "N tan nan na xaran di ra"
+  },
+  {
+    "source": "i am a teacher",
+    "target": "N tan nan na karamOxO ra"
+  },
+  {
+    "source": "i am learning",
+    "target": "N na xaran fe"
+  },
+  {
+    "source": "i am studying",
+    "target": "N na xaran fe"
+  },
+  {
+    "source": "i go to school",
+    "target": "N siga ma ekol"
+  },
+  {
+    "source": "i can read",
+    "target": "N nOma xaran de"
+  },
+  {
+    "source": "i can write",
+    "target": "N nOma sEbEde"
+  },
+  {
+    "source": "i cannot read",
+    "target": "N mu nOma xaran de"
+  },
+  {
+    "source": "i cannot write",
+    "target": "N mu nOma sEbEde"
+  },
+  {
+    "source": "i am learning susu",
+    "target": "N na susu xaran fe"
+  },
+  {
+    "source": "teach me",
+    "target": "Wo n xaran"
+  },
+  {
+    "source": "i understand",
+    "target": "nbara afamou"
+  },
+  {
+    "source": "i do not understand",
+    "target": "m'ma fakhamou"
+  },
+  {
+    "source": "what does this mean",
+    "target": "Na masenxi munse ra"
+  },
+  {
+    "source": "how do you say",
+    "target": "Wo a falama di"
+  },
+  {
+    "source": "repeat please",
+    "target": "Wo man gbilen"
+  },
+  {
+    "source": "speak slowly",
+    "target": "Wo wOyEn dOgni ra"
+  },
+  {
+    "source": "weather",
+    "target": "Wakhati"
+  },
+  {
+    "source": "sun",
+    "target": "Sogué"
+  },
+  {
+    "source": "rain",
+    "target": "Tunè"
+  },
+  {
+    "source": "wind",
+    "target": "Foyé"
+  },
+  {
+    "source": "cloud",
+    "target": "Koré"
+  },
+  {
+    "source": "storm",
+    "target": "Foyé Nakhan kanari ra bama"
+  },
+  {
+    "source": "hot",
+    "target": "Afourakhi"
+  },
+  {
+    "source": "cold",
+    "target": "Khingbeli"
+  },
+  {
+    "source": "warm",
+    "target": "Afourakhi"
+  },
+  {
+    "source": "dry",
+    "target": "Akharé"
+  },
+  {
+    "source": "wet",
+    "target": "Boundakhi"
+  },
+  {
+    "source": "it is hot",
+    "target": "A ma fura"
+  },
+  {
+    "source": "it is cold",
+    "target": "xinbeli nan a ra"
+  },
+  {
+    "source": "it is raining",
+    "target": "TunE na gorofe"
+  },
+  {
+    "source": "it is sunny",
+    "target": "soge na"
+  },
+  {
+    "source": "the weather is good",
+    "target": "waxati fan"
+  },
+  {
+    "source": "the weather is bad",
+    "target": "waxati mu fan"
+  },
+  {
+    "source": "it is very hot today",
+    "target": "A bara fura ki fanyi ra to"
+  },
+  {
+    "source": "it will rain today",
+    "target": "TunE fama nE to"
+  },
+  {
+    "source": "the sun is strong",
+    "target": "Soge sɛnbɛ gbo"
+  },
+  {
+    "source": "the rain has stopped",
+    "target": "TunE bara dan"
+  },
+  {
+    "source": "tree",
+    "target": "Wouri"
+  },
+  {
+    "source": "river",
+    "target": "Khouré"
+  },
+  {
+    "source": "mountain",
+    "target": "Gueya"
+  },
+  {
+    "source": "ocean",
+    "target": "Ba"
+  },
+  {
+    "source": "sea",
+    "target": "Fokhè yé"
+  },
+  {
+    "source": "forest",
+    "target": "Woula"
+  },
+  {
+    "source": "field",
+    "target": "Khè"
+  },
+  {
+    "source": "farm",
+    "target": "Sansi cifé"
+  },
+  {
+    "source": "sky",
+    "target": "Koré"
+  },
+  {
+    "source": "moon",
+    "target": "Kiké"
+  },
+  {
+    "source": "stars",
+    "target": "tunbuie"
+  },
+  {
+    "source": "earth",
+    "target": "Bokhi"
+  },
+  {
+    "source": "ground",
+    "target": "Bökhi"
+  },
+  {
+    "source": "grass",
+    "target": "Sekhè"
+  },
+  {
+    "source": "flower",
+    "target": "Fleuri"
+  },
+  {
+    "source": "animal",
+    "target": "Dalisé"
+  },
+  {
+    "source": "dog",
+    "target": "Baré"
+  },
+  {
+    "source": "cat",
+    "target": "Gnari"
+  },
+  {
+    "source": "bird",
+    "target": "Khoni"
+  },
+  {
+    "source": "fish",
+    "target": "Yèkhè"
+  },
+  {
+    "source": "cow",
+    "target": "Ningué guinè"
+  },
+  {
+    "source": "goat",
+    "target": "Mori"
+  },
+  {
+    "source": "sheep",
+    "target": "Yèkhè"
+  },
+  {
+    "source": "chicken",
+    "target": "Tökhè"
+  },
+  {
+    "source": "horse",
+    "target": "Choé"
+  },
+  {
+    "source": "monkey",
+    "target": "Bouboudi"
+  },
+  {
+    "source": "snake",
+    "target": "Bökhmasé"
+  },
+  {
+    "source": "elephant",
+    "target": "Sili"
+  },
+  {
+    "source": "lion",
+    "target": "Bartè"
+  },
+  {
+    "source": "beautiful sky",
+    "target": "koore tofan"
+  },
+  {
+    "source": "the river is big",
+    "target": "Xure xungbe nan a ra"
+  },
+  {
+    "source": "the mountain is high",
+    "target": "Geya itexi"
+  },
+  {
+    "source": "the forest is green",
+    "target": "wula gbeli nan a ra"
+  },
+  {
+    "source": "i love nature",
+    "target": "N nature ra fan"
+  },
+  {
+    "source": "happy",
+    "target": "Sèwè"
+  },
+  {
+    "source": "sad",
+    "target": "nimisa"
+  },
+  {
+    "source": "angry",
+    "target": "Khonokhi"
+  },
+  {
+    "source": "afraid",
+    "target": "Bognèmini"
+  },
+  {
+    "source": "scared",
+    "target": "Bognè kanè"
+  },
+  {
+    "source": "surprised",
+    "target": "Magninfé"
+  },
+  {
+    "source": "tired",
+    "target": "Taganhi"
+  },
+  {
+    "source": "excited",
+    "target": "Ama khoyifé"
+  },
+  {
+    "source": "worried",
+    "target": "Bognè mini"
+  },
+  {
+    "source": "calm",
+    "target": "Doundouï"
+  },
+  {
+    "source": "peaceful",
+    "target": "Lan'gni"
+  },
+  {
+    "source": "i am happy",
+    "target": "N bara sEwa"
+  },
+  {
+    "source": "i am sad",
+    "target": "N nimisa"
+  },
+  {
+    "source": "i am angry",
+    "target": "N xOnE"
+  },
+  {
+    "source": "i am afraid",
+    "target": "N bara gaxu"
+  },
+  {
+    "source": "i am scared",
+    "target": "N bara gaxu"
+  },
+  {
+    "source": "i am surprised",
+    "target": "N bara kaaba"
+  },
+  {
+    "source": "i am tired",
+    "target": "N bara tagan"
+  },
+  {
+    "source": "i am excited",
+    "target": "N bara sEwa"
+  },
+  {
+    "source": "i am worried",
+    "target": "N na kOntOfili"
+  },
+  {
+    "source": "i am calm",
+    "target": "N bara dundu"
+  },
+  {
+    "source": "i am at peace",
+    "target": "N na bOgnE kui"
+  },
+  {
+    "source": "i am very happy",
+    "target": "N bara ɲɛlɛxin ki fanyi ra"
+  },
+  {
+    "source": "i am very sad",
+    "target": "N bara nimisa ki fanyi ra"
+  },
+  {
+    "source": "i am very angry",
+    "target": "N xOnOxi ki fanyi ra"
+  },
+  {
+    "source": "i am very tired",
+    "target": "N bara tagan ki fanyi ra"
+  },
+  {
+    "source": "i am very afraid",
+    "target": "N bara gaxu ki fanyi ra"
+  },
+  {
+    "source": "i am very excited",
+    "target": "N bara sEwa ki fanyi ra"
+  },
+  {
+    "source": "i am very worried",
+    "target": "N kɔntɔfilixi ki fanyi ra"
+  },
+  {
+    "source": "are you happy",
+    "target": "Wo sEwa xi"
+  },
+  {
+    "source": "are you sad",
+    "target": "Wo nimisaxi"
+  },
+  {
+    "source": "are you angry",
+    "target": "I xOnOxi"
+  },
+  {
+    "source": "are you afraid",
+    "target": "Wo gaxui"
+  },
+  {
+    "source": "are you tired",
+    "target": "Wo bara tagan"
+  },
+  {
+    "source": "are you okay",
+    "target": "Wo xa fe fan"
+  },
+  {
+    "source": "what is wrong",
+    "target": "Munse mu lanxi"
+  },
+  {
+    "source": "why are you sad",
+    "target": "Munfe ra i nimisaxi"
+  },
+  {
+    "source": "why are you angry",
+    "target": "I xOnOxi munfe ra"
+  },
+  {
+    "source": "do not be afraid",
+    "target": "Wo naxa gaaxu"
+  },
+  {
+    "source": "do not worry",
+    "target": "Wo naxa kOntOfili"
+  },
+  {
+    "source": "be happy",
+    "target": "Wo xa sEwa"
+  },
+  {
+    "source": "do not be sad",
+    "target": "Wo naxa sunnun"
+  },
+  {
+    "source": "i love you",
+    "target": "I rafan ma"
+  },
+  {
+    "source": "i miss you",
+    "target": "ikholinan ma"
+  },
+  {
+    "source": "i care about you",
+    "target": "N xaxili tima wo ra"
+  },
+  {
+    "source": "i am thinking of you",
+    "target": "N na wo ma gnErE fe"
+  },
+  {
+    "source": "you are important",
+    "target": "Wo tide na"
+  },
+  {
+    "source": "i am grateful",
+    "target": "N bara wo tantun"
+  },
+  {
+    "source": "i am thankful",
+    "target": "N bara wo tantun"
+  },
+  {
+    "source": "i appreciate you",
+    "target": "N wo tantuma"
+  },
+  {
+    "source": "thank you for everything",
+    "target": "I nu wali fe birin ma"
+  },
+  {
+    "source": "you make me happy",
+    "target": "Wo n na sEwa ma"
+  },
+  {
+    "source": "to go",
+    "target": "sigafe"
+  },
+  {
+    "source": "to come",
+    "target": "Fafe"
+  },
+  {
+    "source": "to walk",
+    "target": "gnErE ma"
+  },
+  {
+    "source": "to run",
+    "target": "Wo xa gi"
+  },
+  {
+    "source": "to sit",
+    "target": "DOxOde"
+  },
+  {
+    "source": "to stand",
+    "target": "Tife"
+  },
+  {
+    "source": "to lie down",
+    "target": "A sade"
+  },
+  {
+    "source": "to stop",
+    "target": "A xa ti"
+  },
+  {
+    "source": "to wait",
+    "target": "A mamE ti"
+  },
+  {
+    "source": "to return",
+    "target": "Wo xa gbilen"
+  },
+  {
+    "source": "to eat",
+    "target": "Donse donfe"
+  },
+  {
+    "source": "to drink",
+    "target": "Minfe"
+  },
+  {
+    "source": "to cook",
+    "target": "Donse rafalafe"
+  },
+  {
+    "source": "to wash",
+    "target": "A xa maxa"
+  },
+  {
+    "source": "to clean",
+    "target": "A xa a maxa"
+  },
+  {
+    "source": "to sleep",
+    "target": "Xife"
+  },
+  {
+    "source": "to wake up",
+    "target": "Kelife"
+  },
+  {
+    "source": "to work",
+    "target": "Walife"
+  },
+  {
+    "source": "to play",
+    "target": "Wo xa bere"
+  },
+  {
+    "source": "to dance",
+    "target": "Dance"
+  },
+  {
+    "source": "to sing",
+    "target": "A xa sigi sa"
+  },
+  {
+    "source": "to speak",
+    "target": "Wo xa wOyEn"
+  },
+  {
+    "source": "to say",
+    "target": "A falafe"
+  },
+  {
+    "source": "to ask",
+    "target": "Wo xa maxOrin"
+  },
+  {
+    "source": "to answer",
+    "target": "A yaabi ra"
+  },
+  {
+    "source": "to listen",
+    "target": "Wo xa ramE"
+  },
+  {
+    "source": "to hear",
+    "target": "Wo xa a ramE"
+  },
+  {
+    "source": "to call",
+    "target": "Wo xa xili"
+  },
+  {
+    "source": "to tell",
+    "target": "A falafe"
+  },
+  {
+    "source": "to see",
+    "target": "A tofe"
+  },
+  {
+    "source": "to look",
+    "target": "Wo xa a mato"
+  },
+  {
+    "source": "to know",
+    "target": "A kolon fe"
+  },
+  {
+    "source": "to think",
+    "target": "Wo xa ma gnErE"
+  },
+  {
+    "source": "to understand",
+    "target": "Wo xa a faxamu"
+  },
+  {
+    "source": "to remember",
+    "target": "Wo xa ratu"
+  },
+  {
+    "source": "to forget",
+    "target": "Wo xa nE"
+  },
+  {
+    "source": "to learn",
+    "target": "Xaran fe"
+  },
+  {
+    "source": "to teach",
+    "target": "Xarande"
+  },
+  {
+    "source": "i am going",
+    "target": "N na sigafe"
+  },
+  {
+    "source": "you are coming",
+    "target": "Wo na fafe"
+  },
+  {
+    "source": "he is eating",
+    "target": "A na donse donfe"
+  },
+  {
+    "source": "she is cooking",
+    "target": "A na donse rafalafe"
+  },
+  {
+    "source": "they are sleeping",
+    "target": "E na xife"
+  },
+  {
+    "source": "we are working",
+    "target": "Moxo na walife"
+  },
+  {
+    "source": "i want to go",
+    "target": "N wama sigafe"
+  },
+  {
+    "source": "i need to eat",
+    "target": "N lan ma n xa donse don"
+  },
+  {
+    "source": "i have to work",
+    "target": "N lan ma n xa wali"
+  },
+  {
+    "source": "i can see",
+    "target": "N nOma a tode"
+  },
+  {
+    "source": "i cannot hear",
+    "target": "N mu nOma a ramEde"
+  },
+  {
+    "source": "do you know",
+    "target": "I a kolon"
+  },
+  {
+    "source": "i do not know",
+    "target": "m'ma kolon"
+  },
+  {
+    "source": "tell me",
+    "target": "Afalabè"
+  },
+  {
+    "source": "show me",
+    "target": "A masén m'bè"
+  },
+  {
+    "source": "help me",
+    "target": "N mali"
+  },
+  {
+    "source": "give me",
+    "target": "Wo fi n ma"
+  },
+  {
+    "source": "take this",
+    "target": "Wo yi tongo"
+  },
+  {
+    "source": "bring it",
+    "target": "Wo fa a ra"
+  },
+  {
+    "source": "put it here",
+    "target": "Wo a sa be"
+  },
+  {
+    "source": "wake up",
+    "target": "Wo khounoun"
+  },
+  {
+    "source": "get up",
+    "target": "Keli"
+  },
+  {
+    "source": "i woke up early",
+    "target": "N kelixi subaxa"
+  },
+  {
+    "source": "i woke up late",
+    "target": "N kelixi kOE ra"
+  },
+  {
+    "source": "brush teeth",
+    "target": "Wo ɲin maxa"
+  },
+  {
+    "source": "wash face",
+    "target": "Wo yatagi maxa"
+  },
+  {
+    "source": "take a bath",
+    "target": "Wo maxa"
+  },
+  {
+    "source": "get dressed",
+    "target": "Dom'ma so"
+  },
+  {
+    "source": "eat breakfast",
+    "target": "Wo gEgEn donse don"
+  },
+  {
+    "source": "leave the house",
+    "target": "Wo xa mini banxi kui"
+  },
+  {
+    "source": "go to work",
+    "target": "Wo siga walide"
+  },
+  {
+    "source": "go to school",
+    "target": "Wo siga ekol"
+  },
+  {
+    "source": "go to market",
+    "target": "Wo siga makiti"
+  },
+  {
+    "source": "buy food",
+    "target": "Donse sara"
+  },
+  {
+    "source": "cook food",
+    "target": "Donse rafala"
+  },
+  {
+    "source": "wash clothes",
+    "target": "Dugi maxa"
+  },
+  {
+    "source": "clean the house",
+    "target": "Wo xa banxi ma sEnE"
+  },
+  {
+    "source": "sweep the floor",
+    "target": "Wo bOxi rafelen"
+  },
+  {
+    "source": "fetch water",
+    "target": "ye fen"
+  },
+  {
+    "source": "come home",
+    "target": "Wo fa banxi"
+  },
+  {
+    "source": "return from work",
+    "target": "Wo gbilen walide"
+  },
+  {
+    "source": "eat dinner",
+    "target": "Wo nunmare don"
+  },
+  {
+    "source": "rest",
+    "target": "Malaboui"
+  },
+  {
+    "source": "watch television",
+    "target": "Tele mato"
+  },
+  {
+    "source": "talk with family",
+    "target": "Wo nun wo xa denbaya wOyEn"
+  },
+  {
+    "source": "go to bed",
+    "target": "Siga i sa"
+  },
+  {
+    "source": "sleep",
+    "target": "Khifé"
+  },
+  {
+    "source": "go to church",
+    "target": "Wo siga salide"
+  },
+  {
+    "source": "go to mosque",
+    "target": "Wo siga salide"
+  },
+  {
+    "source": "visit family",
+    "target": "Wo xa denbayae mato"
+  },
+  {
+    "source": "visit friends",
+    "target": "Wo boree mato"
+  },
+  {
+    "source": "go shopping",
+    "target": "Wo siga sare sode"
+  },
+  {
+    "source": "do laundry",
+    "target": "Wo dugi maxa"
+  },
+  {
+    "source": "what are you doing",
+    "target": "Wo nansé rabafé"
+  },
+  {
+    "source": "what did you do today",
+    "target": "I munse rabaxi to"
+  },
+  {
+    "source": "where are you going",
+    "target": "Wo sigafe minden"
+  },
+  {
+    "source": "what will you do tomorrow",
+    "target": "Wo munse rabama tina"
+  },
+  {
+    "source": "did you eat",
+    "target": "I bara donse don"
+  },
+  {
+    "source": "did you sleep well",
+    "target": "I bara xi a fangni ra"
+  },
+  {
+    "source": "have you finished",
+    "target": "Wo bara gEn"
+  },
+  {
+    "source": "i am busy",
+    "target": "N na walife"
+  },
+  {
+    "source": "i am free",
+    "target": "N bara xOrOxO"
+  },
+  {
+    "source": "i have finished",
+    "target": "N bara gEn"
+  },
+  {
+    "source": "i have not finished",
+    "target": "N mu gEnE"
+  },
+  {
+    "source": "i am doing nothing",
+    "target": "N mu sese rabafe"
+  },
+  {
+    "source": "i am resting",
+    "target": "N na malabui nan kui"
+  },
+  {
+    "source": "i am on my way",
+    "target": "N na kira xOn ma"
+  },
+  {
+    "source": "i will be there soon",
+    "target": "N fama nE wo lide yakOsi"
+  },
+  {
+    "source": "i am almost done",
+    "target": "N bara gɛ gɛde"
+  },
+  {
+    "source": "wait for me",
+    "target": "Wo n mamEtE"
+  }
+]

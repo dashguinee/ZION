@@ -1,0 +1,272 @@
+{
+  "working": [
+    {
+      "key": "mena",
+      "url": "https://iptv-org.github.io/iptv/regions/mena.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 937,
+      "size": 197748,
+      "method": "direct"
+    },
+    {
+      "key": "middleEast",
+      "url": "https://iptv-org.github.io/iptv/regions/mideast.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 908,
+      "size": 191536,
+      "method": "direct"
+    },
+    {
+      "key": "guinea",
+      "url": "https://iptv-org.github.io/iptv/countries/gn.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 6,
+      "size": 1069,
+      "method": "direct"
+    },
+    {
+      "key": "senegal",
+      "url": "https://iptv-org.github.io/iptv/countries/sn.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 29,
+      "size": 5094,
+      "method": "direct"
+    },
+    {
+      "key": "ivoryCoast",
+      "url": "https://iptv-org.github.io/iptv/countries/ci.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 29,
+      "size": 5628,
+      "method": "direct"
+    },
+    {
+      "key": "cameroon",
+      "url": "https://iptv-org.github.io/iptv/countries/cm.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 16,
+      "size": 2881,
+      "method": "direct"
+    },
+    {
+      "key": "nigeria",
+      "url": "https://iptv-org.github.io/iptv/countries/ng.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 64,
+      "size": 13427,
+      "method": "direct"
+    },
+    {
+      "key": "ghana",
+      "url": "https://iptv-org.github.io/iptv/countries/gh.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 22,
+      "size": 4204,
+      "method": "direct"
+    },
+    {
+      "key": "drc",
+      "url": "https://iptv-org.github.io/iptv/countries/cd.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 21,
+      "size": 3659,
+      "method": "direct"
+    },
+    {
+      "key": "southAfrica",
+      "url": "https://iptv-org.github.io/iptv/countries/za.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 41,
+      "size": 8180,
+      "method": "direct"
+    },
+    {
+      "key": "chad",
+      "url": "https://iptv-org.github.io/iptv/countries/td.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 1,
+      "size": 223,
+      "method": "direct"
+    },
+    {
+      "key": "libya",
+      "url": "https://iptv-org.github.io/iptv/countries/ly.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 6,
+      "size": 1253,
+      "method": "direct"
+    },
+    {
+      "key": "morocco",
+      "url": "https://iptv-org.github.io/iptv/countries/ma.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 9,
+      "size": 2065,
+      "method": "direct"
+    },
+    {
+      "key": "algeria",
+      "url": "https://iptv-org.github.io/iptv/countries/dz.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 7,
+      "size": 1347,
+      "method": "direct"
+    },
+    {
+      "key": "egypt",
+      "url": "https://iptv-org.github.io/iptv/countries/eg.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 20,
+      "size": 4160,
+      "method": "direct"
+    },
+    {
+      "key": "tunisia",
+      "url": "https://iptv-org.github.io/iptv/countries/tn.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 5,
+      "size": 978,
+      "method": "direct"
+    },
+    {
+      "key": "french",
+      "url": "https://iptv-org.github.io/iptv/languages/fra.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 492,
+      "size": 115640,
+      "method": "direct"
+    },
+    {
+      "key": "arabic",
+      "url": "https://iptv-org.github.io/iptv/languages/ara.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 366,
+      "size": 77130,
+      "method": "direct"
+    },
+    {
+      "key": "english",
+      "url": "https://iptv-org.github.io/iptv/languages/eng.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 2362,
+      "size": 566174,
+      "method": "direct"
+    },
+    {
+      "key": "portuguese",
+      "url": "https://iptv-org.github.io/iptv/languages/por.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 252,
+      "size": 56056,
+      "method": "direct"
+    },
+    {
+      "key": "news",
+      "url": "https://iptv-org.github.io/iptv/categories/news.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 865,
+      "size": 186061,
+      "method": "direct"
+    },
+    {
+      "key": "movies",
+      "url": "https://iptv-org.github.io/iptv/categories/movies.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 379,
+      "size": 104513,
+      "method": "direct"
+    },
+    {
+      "key": "entertainment",
+      "url": "https://iptv-org.github.io/iptv/categories/entertainment.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 610,
+      "size": 134427,
+      "method": "direct"
+    },
+    {
+      "key": "kids",
+      "url": "https://iptv-org.github.io/iptv/categories/kids.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 247,
+      "size": 66832,
+      "method": "direct"
+    },
+    {
+      "key": "music",
+      "url": "https://iptv-org.github.io/iptv/categories/music.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 630,
+      "size": 130824,
+      "method": "direct"
+    },
+    {
+      "key": "dstv",
+      "url": "https://raw.githubusercontent.com/Tinkie/iptv/main/DSTV.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 216,
+      "size": 22754,
+      "method": "direct"
+    },
+    {
+      "key": "supersport",
+      "url": "https://raw.githubusercontent.com/Mano33Starz/IPTVTHREE/main/SUPERSPORT.m3u",
+      "ok": true,
+      "status": 200,
+      "channels": 38,
+      "size": 5204,
+      "method": "direct"
+    },
+    {
+      "key": "freeTvHd",
+      "url": "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8",
+      "ok": true,
+      "status": 200,
+      "channels": 1851,
+      "size": 459947,
+      "method": "direct"
+    }
+  ],
+  "dead": [
+    {
+      "key": "africa",
+      "url": "https://iptv-org.github.io/iptv/regions/africa.m3u",
+      "ok": false,
+      "status": 404,
+      "channels": 0
+    },
+    {
+      "key": "sports",
+      "url": "https://iptv-org.github.io/iptv/categories/sport.m3u",
+      "ok": false,
+      "status": 404,
+      "channels": 0
+    }
+  ]
+}

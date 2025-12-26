@@ -1,0 +1,1474 @@
+{
+  "version": "1.0",
+  "generatedAt": "2025-12-26T08:59:45.453Z",
+  "language": "Susu (Soussou)",
+  "description": "Grammar patterns extracted from parallel corpus",
+  "sentenceTypes": [
+    {
+      "type": "perfective",
+      "count": 5442,
+      "percentage": "17.57"
+    },
+    {
+      "type": "existential",
+      "count": 6724,
+      "percentage": "21.71"
+    },
+    {
+      "type": "negation",
+      "count": 7372,
+      "percentage": "23.81"
+    },
+    {
+      "type": "question",
+      "count": 5421,
+      "percentage": "17.51"
+    },
+    {
+      "type": "sov",
+      "count": 1004,
+      "percentage": "3.24"
+    }
+  ],
+  "verbPatterns": [
+    {
+      "marker": "na",
+      "count": 10846,
+      "info": {
+        "tense": "present",
+        "english": "is/are",
+        "usage": "present state/copula"
+      }
+    },
+    {
+      "marker": "naxa",
+      "count": 7190,
+      "info": {
+        "tense": "past_narrative",
+        "english": "did/was",
+        "usage": "biblical/formal past"
+      }
+    },
+    {
+      "marker": "bara",
+      "count": 3092,
+      "info": {
+        "tense": "perfective",
+        "english": "has/have",
+        "usage": "completed action"
+      }
+    },
+    {
+      "marker": "nu",
+      "count": 1849,
+      "info": {
+        "tense": "past",
+        "english": "was/were",
+        "usage": "past state"
+      }
+    },
+    {
+      "marker": "fama",
+      "count": 1143,
+      "info": {
+        "tense": "future",
+        "english": "will",
+        "usage": "future tense"
+      }
+    },
+    {
+      "marker": "Na",
+      "count": 945,
+      "info": {
+        "tense": "present",
+        "english": "is/are",
+        "usage": "present state/copula"
+      }
+    },
+    {
+      "suffix": "-ma",
+      "count": 31310,
+      "info": {
+        "aspect": "present",
+        "english": "-s/-ing",
+        "meaning": "present tense"
+      }
+    },
+    {
+      "suffix": "-xi",
+      "count": 26734,
+      "info": {
+        "aspect": "perfective",
+        "english": "-ed",
+        "meaning": "completed action"
+      }
+    },
+    {
+      "suffix": "-de",
+      "count": 8003,
+      "info": {
+        "aspect": "agent",
+        "english": "-er",
+        "meaning": "one who does"
+      }
+    },
+    {
+      "suffix": "-fe",
+      "count": 6064,
+      "info": {
+        "aspect": "progressive",
+        "english": "-ing",
+        "meaning": "ongoing action"
+      }
+    }
+  ],
+  "pronounPatterns": [
+    {
+      "form": "a",
+      "count": 52729,
+      "info": {
+        "person": "3s",
+        "english": "he/she/it",
+        "type": "subject"
+      }
+    },
+    {
+      "form": "e",
+      "count": 23161,
+      "info": {
+        "person": "3p",
+        "english": "they",
+        "type": "subject"
+      }
+    },
+    {
+      "form": "n",
+      "count": 19948,
+      "info": {
+        "person": "1s",
+        "english": "I",
+        "type": "subject"
+      }
+    },
+    {
+      "form": "wo",
+      "count": 16880,
+      "info": {
+        "person": "2s",
+        "english": "you (formal)",
+        "type": "formal"
+      }
+    },
+    {
+      "form": "i",
+      "count": 14085,
+      "info": {
+        "person": "2s",
+        "english": "you",
+        "type": "subject"
+      }
+    },
+    {
+      "form": "muxu",
+      "count": 3083,
+      "info": {
+        "person": "1pe",
+        "english": "we (excl.)",
+        "type": "subject"
+      }
+    },
+    {
+      "form": "won",
+      "count": 2782,
+      "info": {
+        "person": "1pi",
+        "english": "we (incl.)",
+        "type": "subject"
+      }
+    },
+    {
+      "form": "ana",
+      "count": 14,
+      "info": {
+        "person": "3s",
+        "english": "he/she is",
+        "type": "progressive"
+      }
+    }
+  ],
+  "templates": [
+    {
+      "susu": [
+        "Ala",
+        "naxa",
+        "{subject}",
+        "{noun}",
+        "{noun}",
+        "bɛ"
+      ],
+      "english": "And God said to Noah,",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "masen"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "Nuha"
+        }
+      ],
+      "pattern": "Ala naxa {subject} {noun} {noun} bɛ"
+    },
+    {
+      "susu": [
+        "Yebusukae",
+        "{noun}",
+        "Girigasakae"
+      ],
+      "english": "And the Jebusite and the Amorite and the Girgashite,",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Amorikae"
+        }
+      ],
+      "pattern": "Yebusukae {noun} Girigasakae"
+    },
+    {
+      "susu": [
+        "Hiwikae",
+        "{noun}",
+        "Sinikae"
+      ],
+      "english": "And the Hivite and the Arkite and the Sinite,",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Arakikae"
+        }
+      ],
+      "pattern": "Hiwikae {noun} Sinikae"
+    },
+    {
+      "susu": [
+        "Hadorami",
+        "{noun}",
+        "Dikila"
+      ],
+      "english": "And Hadoram and Uzal and Diklah",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Usali"
+        }
+      ],
+      "pattern": "Hadorami {noun} Dikila"
+    },
+    {
+      "susu": [
+        "Obala",
+        "{noun}",
+        "Seeba"
+      ],
+      "english": "And Obal and Abimael and Sheba",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Abimayele"
+        }
+      ],
+      "pattern": "Obala {noun} Seeba"
+    },
+    {
+      "susu": [
+        "Xiti",
+        "{noun}",
+        "Refa"
+      ],
+      "english": "And the Hittite, and the Perizzite, and the Rephaim,",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Perisi"
+        }
+      ],
+      "pattern": "Xiti {noun} Refa"
+    },
+    {
+      "susu": [
+        "Amori",
+        "{noun}",
+        "{noun}",
+        "nun",
+        "Yebusu"
+      ],
+      "english": "And the Amorite, and the Canaanite, and the Girgashite, and the Jebusite.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Kanaan"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "Girigasa"
+        }
+      ],
+      "pattern": "Amori {noun} {noun} nun Yebusu"
+    },
+    {
+      "susu": [
+        "Xitikae",
+        "naxa",
+        "{subject}",
+        "yaabi"
+      ],
+      "english": "And in answer the children of Heth said to Abraham,",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        }
+      ],
+      "pattern": "Xitikae naxa {subject} yaabi"
+    },
+    {
+      "susu": [
+        "Eferon",
+        "naxa",
+        "{subject}",
+        "yaabi"
+      ],
+      "english": "So Ephron said to Abraham,",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        }
+      ],
+      "pattern": "Eferon naxa {subject} yaabi"
+    },
+    {
+      "susu": [
+        "{verb}",
+        "{verb}",
+        "Masa"
+      ],
+      "english": "And Mishma and Dumah and Massa,",
+      "slots": [
+        {
+          "type": "verb",
+          "position": 0,
+          "example": "Misima"
+        },
+        {
+          "type": "verb",
+          "position": 1,
+          "example": "Duma"
+        }
+      ],
+      "pattern": "{verb} {verb} Masa"
+    },
+    {
+      "susu": [
+        "Na",
+        "{noun}",
+        "{noun}",
+        "naxa",
+        "{noun}",
+        "Gerara"
+      ],
+      "english": "So Isaac went on living in Gerar;",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "kui"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "Isiyaga"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "sabati"
+        }
+      ],
+      "pattern": "Na {noun} {noun} naxa {noun} Gerara"
+    },
+    {
+      "susu": [
+        "Raxele",
+        "naxa",
+        "{noun}",
+        "nun",
+        "{noun}",
+        "bari"
+      ],
+      "english": "The sons of Rachel: Joseph and Benjamin;",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "Yusufu"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "Bunyamin"
+        }
+      ],
+      "pattern": "Raxele naxa {noun} nun {noun} bari"
+    },
+    {
+      "susu": [
+        "{verb}",
+        "{noun}",
+        "Pinon"
+      ],
+      "english": "Oholibamah, Elah, Pinon,",
+      "slots": [
+        {
+          "type": "verb",
+          "position": 0,
+          "example": "Oholibama"
+        },
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Ela"
+        }
+      ],
+      "pattern": "{verb} {noun} Pinon"
+    },
+    {
+      "susu": [
+        "Kenasi",
+        "{noun}",
+        "Mibisari"
+      ],
+      "english": "Kenaz, Teman, Mibzar,",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Teman"
+        }
+      ],
+      "pattern": "Kenasi {noun} Mibisari"
+    },
+    {
+      "susu": [
+        "Dana",
+        "xa",
+        "{noun}",
+        "{noun}",
+        "{noun}",
+        "Xusimi"
+      ],
+      "english": "And the son of Dan was Hushim.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "di"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "nan"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "ya"
+        }
+      ],
+      "pattern": "Dana xa {noun} {noun} {noun} Xusimi"
+    },
+    {
+      "susu": [
+        "Ruben",
+        "{noun}",
+        "{noun}",
+        "Yuda"
+      ],
+      "english": "Reuben, Simeon, Levi, and Judah;",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Simeyɔn"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "Lewi"
+        }
+      ],
+      "pattern": "Ruben {noun} {noun} Yuda"
+    },
+    {
+      "susu": [
+        "Isakari",
+        "{noun}",
+        "Bunyamin"
+      ],
+      "english": "Issachar, Zebulun, and Benjamin;",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Sabulon"
+        }
+      ],
+      "pattern": "Isakari {noun} Bunyamin"
+    },
+    {
+      "susu": [
+        "Dana",
+        "{noun}",
+        "{noun}",
+        "nun",
+        "Aseri"
+      ],
+      "english": "Dan and Naphtali, Gad and Asher.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Nafatali"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "Gadi"
+        }
+      ],
+      "pattern": "Dana {noun} {noun} nun Aseri"
+    },
+    {
+      "susu": [
+        "Yusufu",
+        "nun",
+        "{subject}",
+        "{noun}",
+        "{noun}",
+        "xanbi"
+      ],
+      "english": "Then Joseph came to his end, and all his brothers, and all that generation.",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "ngaxakerenyie"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "dangi"
+        }
+      ],
+      "pattern": "Yusufu nun {subject} {noun} {noun} xanbi"
+    },
+    {
+      "susu": [
+        "Alatala",
+        "naxa",
+        "{subject}",
+        "{noun}",
+        "{noun}",
+        "bɛ"
+      ],
+      "english": "And the Lord said to Moses,",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "masen"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "Munsa"
+        }
+      ],
+      "pattern": "Alatala naxa {subject} {noun} {noun} bɛ"
+    },
+    {
+      "susu": [
+        "Alatala",
+        "xa",
+        "{noun}",
+        "{verb}",
+        "abadan"
+      ],
+      "english": "The Lord is King for ever and ever.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "mangɛya"
+        },
+        {
+          "type": "verb",
+          "position": 3,
+          "example": "buma"
+        }
+      ],
+      "pattern": "Alatala xa {noun} {verb} abadan"
+    },
+    {
+      "susu": [
+        "Isirayilakae",
+        "{subject}",
+        "{noun}",
+        "na",
+        "{noun}",
+        "nɛ"
+      ],
+      "english": "And the children of Israel did so, and some took more and some less.",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 1,
+          "example": "a"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "raba"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "ki"
+        }
+      ],
+      "pattern": "Isirayilakae {subject} {noun} na {noun} nɛ"
+    },
+    {
+      "susu": [
+        "Amalɛkikae",
+        "naxa",
+        "{noun}",
+        "{noun}",
+        "{verb}",
+        "Refidimi"
+      ],
+      "english": "Then Amalek came and made war on Israel in Rephidim.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "fa"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "Isirayila"
+        },
+        {
+          "type": "verb",
+          "position": 4,
+          "example": "gerede"
+        }
+      ],
+      "pattern": "Amalɛkikae naxa {noun} {noun} {verb} Refidimi"
+    },
+    {
+      "susu": [
+        "{formal}",
+        "naxa",
+        "{verb}",
+        "faxa"
+      ],
+      "english": "Do not put anyone to death without cause.",
+      "slots": [
+        {
+          "type": "formal",
+          "position": 0,
+          "example": "Wo"
+        },
+        {
+          "type": "verb",
+          "position": 2,
+          "example": "mixi"
+        }
+      ],
+      "pattern": "{formal} naxa {verb} faxa"
+    },
+    {
+      "susu": [
+        "{formal}",
+        "naxa",
+        "{noun}",
+        "raba"
+      ],
+      "english": "Do not be false to the married relation.",
+      "slots": [
+        {
+          "type": "formal",
+          "position": 0,
+          "example": "Wo"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "yɛnɛ"
+        }
+      ],
+      "pattern": "{formal} naxa {noun} raba"
+    },
+    {
+      "susu": [
+        "{formal}",
+        "naxa",
+        "{noun}",
+        "ti"
+      ],
+      "english": "Do not take the property of another.",
+      "slots": [
+        {
+          "type": "formal",
+          "position": 0,
+          "example": "Wo"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "muɲɛ"
+        }
+      ],
+      "pattern": "{formal} naxa {noun} ti"
+    },
+    {
+      "susu": [
+        "{formal}",
+        "naxa",
+        "{formal}",
+        "{noun}",
+        "tɔɔɲɛgɛ"
+      ],
+      "english": "Do not give false witness against your neighbour.",
+      "slots": [
+        {
+          "type": "formal",
+          "position": 0,
+          "example": "Wo"
+        },
+        {
+          "type": "formal",
+          "position": 2,
+          "example": "wo"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "boore"
+        }
+      ],
+      "pattern": "{formal} naxa {formal} {noun} tɔɔɲɛgɛ"
+    },
+    {
+      "susu": [
+        "{verb}",
+        "{noun}",
+        "{noun}",
+        "gbeeli"
+      ],
+      "english": "And this is the offering you are to take from them: gold and silver and brass;",
+      "slots": [
+        {
+          "type": "verb",
+          "position": 0,
+          "example": "xɛɛma"
+        },
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "gbeti"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "wure"
+        }
+      ],
+      "pattern": "{verb} {noun} {noun} gbeeli"
+    },
+    {
+      "susu": [
+        "{subject}",
+        "naxa",
+        "{noun}",
+        "na",
+        "abadan"
+      ],
+      "english": "The rods are to be kept in the rings, and never taken out.",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 0,
+          "example": "E"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "ramini"
+        }
+      ],
+      "pattern": "{subject} naxa {noun} na abadan"
+    },
+    {
+      "susu": [
+        "Munsa",
+        "naxa",
+        "{subject}",
+        "{noun}",
+        "{verb}",
+        "ma"
+      ],
+      "english": "Then Moses quickly went down on his face in worship.",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "felen"
+        },
+        {
+          "type": "verb",
+          "position": 4,
+          "example": "bɔxi"
+        }
+      ],
+      "pattern": "Munsa naxa {subject} {noun} {verb} ma"
+    },
+    {
+      "susu": [
+        "Tɛtɛ",
+        "naxa",
+        "{noun}",
+        "{noun}",
+        "{noun}",
+        "ra"
+      ],
+      "english": "All the hangings were of the best linen.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "yailan"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "suwa"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "dugi"
+        }
+      ],
+      "pattern": "Tɛtɛ naxa {noun} {noun} {noun} ra"
+    },
+    {
+      "susu": [
+        "{subject}",
+        "nun",
+        "{noun}",
+        "{noun}",
+        "birin"
+      ],
+      "english": "And the kite and the falcon, and birds of that sort;",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 0,
+          "example": "a"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "nee"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "maniyɛ"
+        }
+      ],
+      "pattern": "{subject} nun {noun} {noun} birin"
+    },
+    {
+      "susu": [
+        "Xundi",
+        "{noun}",
+        "{subject}",
+        "nun",
+        "tagarantongoe"
+      ],
+      "english": "And the ostrich and the night-hawk and the sea-hawk, and birds of that sort;",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "koofole"
+        },
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        }
+      ],
+      "pattern": "Xundi {noun} {subject} nun tagarantongoe"
+    },
+    {
+      "susu": [
+        "bonbolika",
+        "{noun}",
+        "nun",
+        "{noun}",
+        "maniyɛe"
+      ],
+      "english": "And the ferret and the land crocodile and the lizard and the sand-lizard and the chameleon.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "koolo"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "nee"
+        }
+      ],
+      "pattern": "bonbolika {noun} nun {noun} maniyɛe"
+    },
+    {
+      "susu": [
+        "Xi",
+        "{noun}",
+        "{noun}",
+        "{noun}",
+        "xa",
+        "sunna"
+      ],
+      "english": "And on the eighth day let him be given circumcision.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "solomasaxan"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "lɔxɔɛ"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "di"
+        }
+      ],
+      "pattern": "Xi {noun} {noun} {noun} xa sunna"
+    },
+    {
+      "susu": [
+        "dugie",
+        "{noun}",
+        "{noun}",
+        "ma"
+      ],
+      "english": "And for signs of disease in clothing, or in a house;",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "ma"
+        },
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "banxie"
+        }
+      ],
+      "pattern": "dugie {noun} {noun} ma"
+    },
+    {
+      "susu": [
+        "Isirayilakae",
+        "xa",
+        "{noun}",
+        "{noun}",
+        "{noun}",
+        "raba"
+      ],
+      "english": "Let the children of Israel keep the Passover at its regular time.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "Sayamalekɛ"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "Dangi"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "Sali"
+        }
+      ],
+      "pattern": "Isirayilakae xa {noun} {noun} {noun} raba"
+    },
+    {
+      "susu": [
+        "Mana",
+        "nu",
+        "{verb}",
+        "{noun}",
+        "{noun}",
+        "tɛmui"
+      ],
+      "english": "When the dew came down on the tents at night, the manna came down with it.",
+      "slots": [
+        {
+          "type": "verb",
+          "position": 2,
+          "example": "goroma"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "xini"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "goro"
+        }
+      ],
+      "pattern": "Mana nu {verb} {noun} {noun} tɛmui"
+    },
+    {
+      "susu": [
+        "Alatala",
+        "naxa",
+        "{noun}",
+        "yaabi"
+      ],
+      "english": "And the Lord said to Moses,",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "Munsa"
+        }
+      ],
+      "pattern": "Alatala naxa {noun} yaabi"
+    },
+    {
+      "susu": [
+        "Isirayila",
+        "naxa",
+        "{noun}",
+        "{noun}",
+        "xa",
+        "{verb}",
+        "ma"
+      ],
+      "english": "So Israel put up their tents in the land of the Amorites.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "sabati"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "Amorikae"
+        },
+        {
+          "type": "verb",
+          "position": 5,
+          "example": "bɔxi"
+        }
+      ],
+      "pattern": "Isirayila naxa {noun} {noun} xa {verb} ma"
+    },
+    {
+      "susu": [
+        "Xesiron",
+        "{noun}",
+        "nun",
+        "{subject}",
+        "xabilɛe"
+      ],
+      "english": "Of Hezron, the family of the Hezronites: of Carmi, the family of the Carmites.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Karimi"
+        },
+        {
+          "type": "subject",
+          "position": 3,
+          "example": "e"
+        }
+      ],
+      "pattern": "Xesiron {noun} nun {subject} xabilɛe"
+    },
+    {
+      "susu": [
+        "Palu",
+        "xa",
+        "{noun}",
+        "{noun}",
+        "Eliyabi"
+      ],
+      "english": "And the sons of Pallu, Eliab",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 2,
+          "example": "di"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "xɛmɛ"
+        }
+      ],
+      "pattern": "Palu xa {noun} {noun} Eliyabi"
+    },
+    {
+      "susu": [
+        "Sera",
+        "{noun}",
+        "{subject}",
+        "nun",
+        "{subject}",
+        "xabilɛe"
+      ],
+      "english": "Of Zerah, the family of the Zerahites: of Shaul, the family of the Shaulites.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Sawulu"
+        },
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        },
+        {
+          "type": "subject",
+          "position": 4,
+          "example": "e"
+        }
+      ],
+      "pattern": "Sera {noun} {subject} nun {subject} xabilɛe"
+    },
+    {
+      "susu": [
+        "Arodi",
+        "{noun}",
+        "nun",
+        "{subject}",
+        "xabilɛe"
+      ],
+      "english": "Of Arod, the family of the Arodites: of Areli, the family of the Arelites.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Areli"
+        },
+        {
+          "type": "subject",
+          "position": 3,
+          "example": "e"
+        }
+      ],
+      "pattern": "Arodi {noun} nun {subject} xabilɛe"
+    },
+    {
+      "susu": [
+        "Yasubu",
+        "{noun}",
+        "nun",
+        "{subject}",
+        "xabilɛe"
+      ],
+      "english": "Of Jashub, the family of the Jashubites: of Shimron, the family of the Shimronites.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Simiron"
+        },
+        {
+          "type": "subject",
+          "position": 3,
+          "example": "e"
+        }
+      ],
+      "pattern": "Yasubu {noun} nun {subject} xabilɛe"
+    },
+    {
+      "susu": [
+        "Sɛmida",
+        "{noun}",
+        "nun",
+        "{subject}",
+        "xabilɛe"
+      ],
+      "english": "And of Shemida, the family of the Shemidaites: and of Hepher, the family of the Hepherites.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Xeferi"
+        },
+        {
+          "type": "subject",
+          "position": 3,
+          "example": "e"
+        }
+      ],
+      "pattern": "Sɛmida {noun} nun {subject} xabilɛe"
+    },
+    {
+      "susu": [
+        "Sufami",
+        "{noun}",
+        "nun",
+        "{subject}",
+        "xabilɛe"
+      ],
+      "english": "Of Shephupham, the family of the Shuphamites: and of Hupham, the family of the Huphamites.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Xufami"
+        },
+        {
+          "type": "subject",
+          "position": 3,
+          "example": "e"
+        }
+      ],
+      "pattern": "Sufami {noun} nun {subject} xabilɛe"
+    },
+    {
+      "susu": [
+        "Yeseri",
+        "{noun}",
+        "nun",
+        "{subject}",
+        "xabilɛe"
+      ],
+      "english": "Of Jezer, the family of the Jezerites: of Shillem, the family of the Shillemites.",
+      "slots": [
+        {
+          "type": "noun",
+          "position": 1,
+          "example": "Silemi"
+        },
+        {
+          "type": "subject",
+          "position": 3,
+          "example": "e"
+        }
+      ],
+      "pattern": "Yeseri {noun} nun {subject} xabilɛe"
+    },
+    {
+      "susu": [
+        "Alatala",
+        "naxa",
+        "{subject}",
+        "{noun}",
+        "{subject}",
+        "bɛ"
+      ],
+      "english": "And the Lord said to Moses,",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "masen"
+        },
+        {
+          "type": "subject",
+          "position": 4,
+          "example": "a"
+        }
+      ],
+      "pattern": "Alatala naxa {subject} {noun} {subject} bɛ"
+    },
+    {
+      "susu": [
+        "Munsa",
+        "naxa",
+        "{subject}",
+        "{noun}",
+        "{noun}",
+        "bɛ"
+      ],
+      "english": "Then Moses said to the Lord,",
+      "slots": [
+        {
+          "type": "subject",
+          "position": 2,
+          "example": "a"
+        },
+        {
+          "type": "noun",
+          "position": 3,
+          "example": "fala"
+        },
+        {
+          "type": "noun",
+          "position": 4,
+          "example": "Alatala"
+        }
+      ],
+      "pattern": "Munsa naxa {subject} {noun} {noun} bɛ"
+    }
+  ],
+  "grammarRules": [
+    {
+      "rule": "SOV Word Order",
+      "description": "Subject-Object-Verb is the default word order",
+      "example": {
+        "susu": "Ala koore daa",
+        "english": "God heaven created"
+      }
+    },
+    {
+      "rule": "Narrative Past with naxa",
+      "description": "Use \"naxa\" between subject and verb for narrative past tense",
+      "example": {
+        "susu": "Ala naxa a masen",
+        "english": "God said"
+      }
+    },
+    {
+      "rule": "Perfective with bara",
+      "description": "Use \"bara\" to indicate completed action",
+      "example": {
+        "susu": "A bara siga",
+        "english": "He/she has gone"
+      }
+    },
+    {
+      "rule": "Negation with mu",
+      "description": "Place \"mu\" before the verb to negate",
+      "example": {
+        "susu": "A mu siga",
+        "english": "He/she did not go"
+      }
+    },
+    {
+      "rule": "Progressive with -fe suffix",
+      "description": "Add \"-fe\" to verb root for progressive/ongoing action",
+      "example": {
+        "susu": "N na sigafe",
+        "english": "I am going"
+      }
+    },
+    {
+      "rule": "Past/Perfective with -xi suffix",
+      "description": "Add \"-xi\" to verb root for completed action",
+      "example": {
+        "susu": "A sigaxi",
+        "english": "He/she went"
+      }
+    },
+    {
+      "rule": "Existential with na",
+      "description": "Use \"na\" as copula for existential statements",
+      "example": {
+        "susu": "Ala na",
+        "english": "God is/exists"
+      }
+    },
+    {
+      "rule": "Postpositions",
+      "description": "Location markers come after the noun (not before like English prepositions)",
+      "example": {
+        "susu": "banxi ra",
+        "english": "at the house"
+      }
+    },
+    {
+      "rule": "Possessive with xa",
+      "description": "Use \"xa\" between possessor and possessed noun",
+      "example": {
+        "susu": "Ala xa sɛrɛ",
+        "english": "God's creation"
+      }
+    },
+    {
+      "rule": "Relative Clause with naxan",
+      "description": "Use \"naxan\" to introduce relative clauses",
+      "example": {
+        "susu": "mixi naxan na",
+        "english": "the person who is there"
+      }
+    }
+  ],
+  "statistics": {
+    "totalSentences": 30966,
+    "processedSentences": 30966,
+    "extractedAt": "2025-12-26T08:59:45.452Z"
+  }
+}

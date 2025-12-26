@@ -1,0 +1,283 @@
+{
+  "summary": {
+    "title": "Soussou Engine Translation Quality Report",
+    "timestamp": "2025-12-26T08:59:24.295Z",
+    "sampleSize": 25,
+    "successfulTests": 25,
+    "errors": 0
+  },
+  "overallAgreement": {
+    "compositeScore": "42.0%",
+    "interpretation": "Moderate - Notable differences but core meaning likely preserved",
+    "breakdown": {
+      "jaccardAvg": "39.4%",
+      "levenshteinAvg": "47.7%",
+      "orthographicAvg": "39.7%"
+    }
+  },
+  "agreementDistribution": {
+    "high": "1 (4.0%)",
+    "medium": "10 (40.0%)",
+    "low": "14 (56.0%)"
+  },
+  "commonDifferences": {
+    "apostropheUsage": {
+      "count": 0,
+      "percentage": "0.0%",
+      "description": "Different apostrophe conventions (N'tan vs Ntan)"
+    },
+    "gnVsNy": {
+      "count": 0,
+      "percentage": "0.0%",
+      "description": "Palatal nasal spelling (gn vs ny)"
+    },
+    "diacriticDifferences": {
+      "count": 0,
+      "percentage": "0.0%",
+      "description": "Diacritic usage differences (è, é, ô, etc.)"
+    },
+    "wordOrderDifferences": {
+      "count": 8,
+      "percentage": "32.0%",
+      "description": "Same words in different order"
+    }
+  },
+  "wordDiscrepancies": {
+    "wordsUniqueToOurs": {
+      "description": "Words appearing in our translations but not Google's",
+      "topWords": [
+        {
+          "word": "a",
+          "count": 8
+        },
+        {
+          "word": "na",
+          "count": 8
+        },
+        {
+          "word": "ra",
+          "count": 6
+        },
+        {
+          "word": "mu",
+          "count": 5
+        },
+        {
+          "word": "bɛ",
+          "count": 5
+        },
+        {
+          "word": "naxan",
+          "count": 5
+        },
+        {
+          "word": "bɔnsɔɛ",
+          "count": 5
+        },
+        {
+          "word": "ma",
+          "count": 4
+        },
+        {
+          "word": "nɛ",
+          "count": 3
+        },
+        {
+          "word": "adama",
+          "count": 3
+        },
+        {
+          "word": "nu",
+          "count": 3
+        },
+        {
+          "word": "xun",
+          "count": 3
+        },
+        {
+          "word": "nɔ",
+          "count": 3
+        },
+        {
+          "word": "fe",
+          "count": 3
+        },
+        {
+          "word": "birin",
+          "count": 3
+        },
+        {
+          "word": "naxa",
+          "count": 2
+        },
+        {
+          "word": "han",
+          "count": 2
+        },
+        {
+          "word": "yɛtɛ",
+          "count": 2
+        },
+        {
+          "word": "i",
+          "count": 2
+        },
+        {
+          "word": "toma",
+          "count": 2
+        }
+      ]
+    },
+    "wordsUniqueToGoogle": {
+      "description": "Words appearing in Google's translations but not ours",
+      "topWords": [
+        {
+          "word": "na",
+          "count": 9
+        },
+        {
+          "word": "e",
+          "count": 9
+        },
+        {
+          "word": "xa",
+          "count": 7
+        },
+        {
+          "word": "kui",
+          "count": 6
+        },
+        {
+          "word": "mixi",
+          "count": 5
+        },
+        {
+          "word": "xanbi",
+          "count": 4
+        },
+        {
+          "word": "fe",
+          "count": 4
+        },
+        {
+          "word": "bɔxi",
+          "count": 4
+        },
+        {
+          "word": "ra",
+          "count": 4
+        },
+        {
+          "word": "birin",
+          "count": 3
+        },
+        {
+          "word": "findi",
+          "count": 3
+        },
+        {
+          "word": "a",
+          "count": 3
+        },
+        {
+          "word": "ya",
+          "count": 3
+        },
+        {
+          "word": "to",
+          "count": 3
+        },
+        {
+          "word": "nun",
+          "count": 3
+        },
+        {
+          "word": "kolon",
+          "count": 3
+        },
+        {
+          "word": "de",
+          "count": 2
+        },
+        {
+          "word": "dangi",
+          "count": 2
+        },
+        {
+          "word": "wo",
+          "count": 2
+        },
+        {
+          "word": "xɛmɛ",
+          "count": 2
+        }
+      ]
+    }
+  },
+  "examples": {
+    "best": [
+      {
+        "english": "So Jacob went out from Beer-sheba to go to Haran.",
+        "ourSusu": "Yaxuba naxa keli Beriseeba sigafe ra Xarani.",
+        "googleSusu": "Na kui Yaxuba naxa keli Beriseeba sigafe ra Xarani.",
+        "score": "80.2%"
+      },
+      {
+        "english": "Now these are the generations of Esau, that is to say, Edom.",
+        "ourSusu": "Esayu, naxan man xili falama Edon, a xa taruxui nan ya.",
+        "googleSusu": "Esayu xa taruxui nan ya, naxan xili falama Edon.",
+        "score": "68.8%"
+      },
+      {
+        "english": "So Balak took Balaam to the top of Peor, looking down over the waste land.",
+        "ourSusu": "Balaki naxa Balami xanin Peyori geya fari, gbengberenyi toma dɛnnaxɛ.",
+        "googleSusu": "Na kui Balaki naxa Balami xanin Peyori geya fari, a na gbengberenyi ya rabɛɲinfe.",
+        "score": "58.6%"
+      },
+      {
+        "english": "Then the king said to the runners who were waiting near him, Put the priests of the Lord to death; because they are on David's side, and having knowledge of his flight, did not give me word of it. But the king's servants would not put out their hands to make an attack on the Lord's priests.",
+        "ourSusu": "Mangɛ naxa a fala a xa sɔɔrie bɛ, naxee nu tixi a fɛ ma, a e xa Alatala xa sɛrɛxɛdubɛe faxa, barima e mu a rakolon a Dawuda na gife a ma. Kɔnɔ sɔɔrie tan mu tin na rabade.",
+        "googleSusu": "Na tɛmui mangɛ naxa a fala giri birin bɛ, naxee nu na a sɛɛti ma, «Wo Alatala xa sɛrɛxɛdubɛe faxa. barima e na Dawuda sɛɛti ma, e to a kolon a a gixi ki naxɛ, e mu na fe fala n bɛ.» Kɔnɔ mangɛ xa sɔɔrie mu tin Alatala xa sɛrɛxɛdubɛe xilide.",
+        "score": "52.7%"
+      },
+      {
+        "english": "Then in bitter grief they put the bags on the asses again and went back to the town.",
+        "ourSusu": "Na kui Yaxuba xa die naxa e xa donmae ibɔɔ. E birin naxa e xa kote baki sofalee fari, e man naxa gbilen taa kui.",
+        "googleSusu": "Na xanbi, e man naxa e xa kotee sa sofalee fari, e naxa gbilen taa kui.",
+        "score": "52.3%"
+      }
+    ],
+    "worst": [
+      {
+        "english": "Do good to Zion in your good pleasure, building up the walls of Jerusalem.",
+        "ourSusu": "Sɛrɛxɛ mu rafan i ma, xa na mu a ra n na bama nɛ i bɛ nu. I mu wama sɛrɛxɛ gan daaxi xɔn.",
+        "googleSusu": "I xa fe fanyi raba Siyoni bɛ i xa tinxinyi kui, i xa Darisalamu tɛtɛ yailan.",
+        "score": "17.9%"
+      },
+      {
+        "english": "Further on, past the horse doorway, the priests were at work, every one opposite his house.",
+        "ourSusu": "Sɛrɛxɛdubɛe naxa tɛtɛ yailan han Soee xa naadɛ. Kankan nu walima a yɛtɛ xa banxi ya ra.",
+        "googleSusu": "Na xanbi, soe dE ra dangi xanbi, sErEri nu na walife, e birin nu na e xa banxi ya ra.",
+        "score": "25.6%"
+      },
+      {
+        "english": "If this is to be my fate, put me to death now in answer to my prayer, if I have grace in your eyes; and let me not see my shame.",
+        "ourSusu": "Faxɛ nan fisa na kote bɛ. Xa n ma fe rafan i ma, i naxa n xun nakana.»",
+        "googleSusu": "Xa yi findi n ma fe ra, n faxa yi waxati n ma sali yaabi ra, xa n bara hinnE i ya i; I naxa tin n xa n ma yaagi to.»",
+        "score": "26.6%"
+      },
+      {
+        "english": "This is the heritage of the tribe of the children of Naphtali by their families, these towns with their unwalled places.",
+        "ourSusu": "Nafatali bɔnsɔɛ xabilɛe kɛ nan na ki.",
+        "googleSusu": "Nafatali bɔnsɔɛe xa bɔxi nan na ki e xabilɛ ki ma, e xa taae nun e xa yire makantaxie.",
+        "score": "27.9%"
+      },
+      {
+        "english": "There were men of great strength and size on the earth in those days; and after that, when the sons of God had connection with the daughters of men, they gave birth to children: these were the great men of old days, the men of great name.",
+        "ourSusu": "Na waxati, a nun waxati naxan fa na xanbi ra, nabiyoro bɔnsɔɛ nu na duniɲa ma. Na malekɛe nun na di ginɛe nan nee barixi. Geresoe belebelee nun xili xungbe kanyie nan nu nabiyoro bɔnsɔɛ ra.",
+        "googleSusu": "Na waxati, mixi sɛnbɛmae nun mixi xungbe nu na bɔxi ma; Na dangi xanbi, Ala xa die to e maso adamee xa di ginEe ra, e naxa di bari, e nu findixi mixi xungbe nan na waxati fori kui, mixi xungbe.",
+        "score": "29.0%"
+      }
+    ]
+  }
+}

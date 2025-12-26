@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DASH TV+ Live TV Diagnostic</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #2a2a2a;
+            border-left: 4px solid #00ff00;
+        }
+        .error { color: #ff0000; }
+        .success { color: #00ff00; }
+        .warning { color: #ffaa00; }
+        pre {
+            background: #000;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>DASH TV+ Live TV Diagnostic</h1>
+
+    <div class="section">
+        <h2>Backend API Tests</h2>
+        <div id="backend-tests">Testing...</div>
+    </div>
+
+    <div class="section">
+        <h2>Local Data Files</h2>
+        <div id="data-tests">Testing...</div>
+    </div>
+
+    <div class="section">
+        <h2>Recommendations</h2>
+        <div id="recommendations"></div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'http://localhost:3001';
+
+        async function runTests() {
+            const results = [];
+
+            // Test 1: Backend Health
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/health`);
+                const data = await res.json();
+                results.push({
+                    test: 'Backend Health',
+                    status: data.status === 'degraded' || data.status === 'ok' ? 'success' : 'error',
+                    message: `Backend is ${data.status}`
+                });
+            } catch (err) {
+                results.push({
+                    test: 'Backend Health',
+                    status: 'error',
+                    message: `Backend unreachable: ${err.message}`
+                });
+            }
+
+            // Test 2: Free Channels
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/free/verified`);
+                const data = await res.json();
+                results.push({
+                    test: 'Free Channels API',
+                    status: data.success && data.channels ? 'success' : 'error',
+                    message: `Loaded ${data.channels?.length || 0} verified channels`
+                });
+            } catch (err) {
+                results.push({
+                    test: 'Free Channels API',
+                    status: 'error',
+                    message: err.message
+                });
+            }
+
+            // Test 3: Guinea Channels
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/free/guinea`);
+                const data = await res.json();
+                results.push({
+                    test: 'Guinea Channels',
+                    status: data.success && data.channels ? 'success' : 'error',
+                    message: `${data.count || 0} Guinea channels available`
+                });
+            } catch (err) {
+                results.push({
+                    test: 'Guinea Channels',
+                    status: 'error',
+                    message: err.message
+                });
+            }
+
+            // Test 4: All Free Channels
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/free/channels`);
+                const data = await res.json();
+                results.push({
+                    test: 'All Free Channels',
+                    status: data.success && data.channels ? 'success' : 'error',
+                    message: `${data.count || 0} total free channels`
+                });
+            } catch (err) {
+                results.push({
+                    test: 'All Free Channels',
+                    status: 'error',
+                    message: err.message
+                });
+            }
+
+            // Display backend results
+            const backendDiv = document.getElementById('backend-tests');
+            backendDiv.innerHTML = results.map(r => `
+                <div class="${r.status}">
+                    ${r.status === 'success' ? '✓' : '✗'} ${r.test}: ${r.message}
+                </div>
+            `).join('');
+
+            // Test 5: Local JSON files
+            const dataResults = [];
+            try {
+                const res = await fetch('data/live.json');
+                const data = await res.json();
+                dataResults.push({
+                    test: 'live.json',
+                    status: 'success',
+                    message: `${data.length} live channels in local file`
+                });
+            } catch (err) {
+                dataResults.push({
+                    test: 'live.json',
+                    status: 'error',
+                    message: err.message
+                });
+            }
+
+            try {
+                const res = await fetch('data/movies.json');
+                const data = await res.json();
+                dataResults.push({
+                    test: 'movies.json',
+                    status: 'success',
+                    message: `${data.length} movies in local file`
+                });
+            } catch (err) {
+                dataResults.push({
+                    test: 'movies.json',
+                    status: 'error',
+                    message: err.message
+                });
+            }
+
+            const dataDiv = document.getElementById('data-tests');
+            dataDiv.innerHTML = dataResults.map(r => `
+                <div class="${r.status}">
+                    ${r.status === 'success' ? '✓' : '✗'} ${r.test}: ${r.message}
+                </div>
+            `).join('');
+
+            // Recommendations
+            const recDiv = document.getElementById('recommendations');
+            const allPassed = results.every(r => r.status === 'success') &&
+                             dataResults.every(r => r.status === 'success');
+
+            if (allPassed) {
+                recDiv.innerHTML = `
+                    <div class="success">
+                        ✓ All tests passed! Backend and data files are working correctly.
+                        <br><br>
+                        <strong>Next Steps:</strong>
+                        <ol>
+                            <li>Open browser console on main app (http://localhost:5500)</li>
+                            <li>Login with AzizTest1 / Test1</li>
+                            <li>Navigate to Live TV section</li>
+                            <li>Check console for errors in loadLocalData() or loadFreeChannels()</li>
+                        </ol>
+                    </div>
+                `;
+            } else {
+                recDiv.innerHTML = `
+                    <div class="error">
+                        Some tests failed. Check the errors above.
+                    </div>
+                `;
+            }
+        }
+
+        runTests();
+    </script>
+</body>
+</html>

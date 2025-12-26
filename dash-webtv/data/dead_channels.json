@@ -1,0 +1,3001 @@
+{
+  "verified_channels": [
+    {
+      "id": "canal-2-movies",
+      "name": "Canal 2 Movies",
+      "country": "Cameroon",
+      "category": "movies",
+      "url": "https://stream.ecable.tv/canal2m/tracks-v1a1/mono.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": 404
+    }
+  ],
+  "guinea_channels": [
+    {
+      "id": "kaback-tv",
+      "name": "Kaback TV",
+      "url": "https://guineetvdirect.online:3842/live/kabacktvlive.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "fasso-tv",
+      "name": "Fasso TV Kankan",
+      "url": "https://dvrfl06.bozztv.com/astv-fassotv/index.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "ERR"
+    }
+  ],
+  "senegal_channels": [],
+  "ivory_coast_channels": [],
+  "cameroon_channels": [
+    {
+      "id": "canal-2-movies",
+      "name": "Canal 2 Movies",
+      "url": "https://stream.ecable.tv/canal2m/tracks-v1a1/mono.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": 404
+    }
+  ],
+  "south_africa_free": [
+    {
+      "id": "sabc-1",
+      "name": "SABC 1",
+      "url": "https://sabconeta.cdn.mangomolo.com/sabc1/smil:sabc1.stream.smil/master.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "sabc-2",
+      "name": "SABC 2",
+      "url": "https://sabctwota.cdn.mangomolo.com/sabc2/smil:sabc2.stream.smil/master.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "sabc-3",
+      "name": "SABC 3",
+      "url": "https://sabctreta.cdn.mangomolo.com/sabc3/smil:sabc3.stream.smil/master.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "sports-connect",
+      "name": "Sports Connect",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/sportsconnect/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "afriwood-blockbuster",
+      "name": "Afriwood Blockbuster",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/afriwoodbb/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "afriwood-series",
+      "name": "Afriwood Series",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/afriwoodseries/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "bongo-tv",
+      "name": "Bongo TV",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/bongotv/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "cinema-hausa",
+      "name": "Cinema Hausa",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/cinemahausa/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "kiddiwinks",
+      "name": "Kiddiwinks",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/kiddiwinks/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "diva",
+      "name": "Diva",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/diva/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "fresh-tv",
+      "name": "Fresh TV",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/freshtv/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "limelight",
+      "name": "Limelight",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/limelight/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "life-tv",
+      "name": "Life TV",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/lifetv/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "rpm",
+      "name": "RPM",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/rpm/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "fight-night",
+      "name": "Fight Night",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/fightnight/playlist.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    }
+  ],
+  "international_french": [
+    {
+      "id": "tv5monde",
+      "name": "TV5Monde",
+      "url": "https://ott.tv5monde.com/Content/HLS/Live/channel(fbs)/variant.m3u8",
+      "quality": "1080p",
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "france-24",
+      "name": "France 24",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/france24/browser-HLS8/france24.m3u8",
+      "quality": "720p",
+      "status": "DEAD",
+      "reason": 302
+    }
+  ],
+  "supersport": [
+    {
+      "id": "ss-action",
+      "name": "SuperSport Action HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/194354",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-blitz",
+      "name": "SuperSport Blitz HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/281536",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-cricket",
+      "name": "SuperSport Cricket HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11637",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-football",
+      "name": "SuperSport Football HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/38575",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-golf",
+      "name": "SuperSport Golf HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11641",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-grandstand",
+      "name": "SuperSport Grandstand HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/194353",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-laliga",
+      "name": "SuperSport LaLiga HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/194358",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-maximo",
+      "name": "SuperSport Maximo 1 HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/38572",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-motorsport",
+      "name": "SuperSport Motorsport HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11638",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-premier-league",
+      "name": "SuperSport Premier League HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11642",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-psl",
+      "name": "SuperSport PSL HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11643",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-rugby",
+      "name": "SuperSport Rugby HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11639",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-tennis",
+      "name": "SuperSport Tennis HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/15200",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-variety-1",
+      "name": "SuperSport Variety 1 HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11633",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-variety-2",
+      "name": "SuperSport Variety 2 HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11634",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-variety-3",
+      "name": "SuperSport Variety 3 HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11635",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-variety-4",
+      "name": "SuperSport Variety 4 HD",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/11636",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    }
+  ],
+  "supersport_backup": [
+    {
+      "id": "ss-action-2",
+      "name": "SuperSport Action HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290640",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-blitz-2",
+      "name": "SuperSport Blitz HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290642",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-cricket-2",
+      "name": "SuperSport Cricket HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290630",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-football-2",
+      "name": "SuperSport Football HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290638",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-golf-2",
+      "name": "SuperSport Golf HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290633",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-grandstand-2",
+      "name": "SuperSport Grandstand HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290639",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-laliga-2",
+      "name": "SuperSport LaLiga HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290641",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-maximo-2",
+      "name": "SuperSport Maximo 1 HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290637",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-motorsport-2",
+      "name": "SuperSport Motorsport HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290631",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-premier-league-2",
+      "name": "SuperSport Premier League HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290634",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-psl-2",
+      "name": "SuperSport PSL HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290635",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-rugby-2",
+      "name": "SuperSport Rugby HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290632",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-tennis-2",
+      "name": "SuperSport Tennis HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290636",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-variety-1-2",
+      "name": "SuperSport Variety 1 HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290626",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-variety-2-2",
+      "name": "SuperSport Variety 2 HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290627",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-variety-3-2",
+      "name": "SuperSport Variety 3 HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290628",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-variety-4-2",
+      "name": "SuperSport Variety 4 HD (B)",
+      "url": "http://iptvtree.net:8080/F11143/577c9609/290629",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    }
+  ],
+  "supersport_hls": [
+    {
+      "id": "ss-1-hls",
+      "name": "Supersports 1 HLS",
+      "url": "http://93.157.62.180/Supersport1/index.m3u8",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-2-hls",
+      "name": "Supersports 2 HLS",
+      "url": "http://93.157.62.180/Supersport2/index.m3u8",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "ss-3-hls",
+      "name": "Supersports 3 HLS",
+      "url": "http://93.157.62.180/Supersport3/index.m3u8",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    }
+  ],
+  "bein_sports": [
+    {
+      "id": "bein-fr-1",
+      "name": "beIN Sports FR 1",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/16.ts",
+      "lang": "fr",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-fr-2",
+      "name": "beIN Sports FR 2",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/17.ts",
+      "lang": "fr",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-fr-3",
+      "name": "beIN Sports FR 3",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/566.ts",
+      "lang": "fr",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-movies-1",
+      "name": "beIN Movies 1",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/387.ts",
+      "type": "movies",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-movies-2",
+      "name": "beIN Movies 2",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/343.ts",
+      "type": "movies",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-movies-3",
+      "name": "beIN Movies 3",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/534.ts",
+      "type": "movies",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-1",
+      "name": "beIN Sport SD 1",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/293.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-2",
+      "name": "beIN Sport SD 2",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/294.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-3",
+      "name": "beIN Sport SD 3",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/295.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-4",
+      "name": "beIN Sport SD 4",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/296.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-5",
+      "name": "beIN Sport SD 5",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/297.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-6",
+      "name": "beIN Sport SD 6",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/298.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-7",
+      "name": "beIN Sport SD 7",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/299.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-8",
+      "name": "beIN Sport SD 8",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/300.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-9",
+      "name": "beIN Sport SD 9",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/301.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-sd-10",
+      "name": "beIN Sport SD 10",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/302.ts",
+      "lang": "ar",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-en-11",
+      "name": "beIN Sport EN 11",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/575.ts",
+      "lang": "en",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-en-12",
+      "name": "beIN Sport EN 12",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/577.ts",
+      "lang": "en",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-fr-13",
+      "name": "beIN Sport FR 13",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/632.ts",
+      "lang": "fr",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-fr-14",
+      "name": "beIN Sport FR 14",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/633.ts",
+      "lang": "fr",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-fr-15",
+      "name": "beIN Sport FR 15",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/634.ts",
+      "lang": "fr",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bein-fr-16",
+      "name": "beIN Sport FR 16",
+      "url": "http://iptv.am000.tv:8000/live/add17/add17/635.ts",
+      "lang": "fr",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    }
+  ],
+  "dstv_movies": [
+    {
+      "id": "movie-room",
+      "name": "Movie Room",
+      "url": "http://za.cline.in:8888/DSTV/eab73dde155e4515a7066d1324f9084b/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "1magic",
+      "name": "1Magic",
+      "url": "http://za.cline.in:8888/DSTV/2a094aeb1f4744c5abfe056ad928db8c/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mnet-movies-1-hd",
+      "name": "M-Net Movies 1 HD",
+      "url": "http://za.cline.in:8888/DSTV/d7197942ef3b4533a7ed1d26f41b9d46/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mnet-movies-2-hd",
+      "name": "M-Net Movies 2 HD",
+      "url": "http://za.cline.in:8888/DSTV/a4ec39ad9b0f44cbbc4b672d0a005405/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mnet-movies-3-hd",
+      "name": "M-Net Movies 3 HD",
+      "url": "http://za.cline.in:8888/DSTV/85ddeeb965084270a9b9cfa247b7021e/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mnet-movies-4-hd",
+      "name": "M-Net Movies 4 HD",
+      "url": "http://za.cline.in:8888/DSTV/a0e986c29734480f981b1f7c18852728/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "studio-universal",
+      "name": "Studio Universal",
+      "url": "http://za.cline.in:8888/DSTV/6975a820fd264af187f62de70f5d76a3/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "me-tv",
+      "name": "ME TV",
+      "url": "http://za.cline.in:8888/DSTV/e92fa1c779b54bbca2760522f73b06ec/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "universal-tv",
+      "name": "Universal TV",
+      "url": "http://za.cline.in:8888/DSTV/6d11af4a5c31407c90d1e0468b8f625b/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "telemundo",
+      "name": "Telemundo",
+      "url": "http://za.cline.in:8888/DSTV/0c2d61481fb046fd957fb47eb4689bfb/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "bbc-brit",
+      "name": "BBC Brit",
+      "url": "http://za.cline.in:8888/DSTV/d38465be4ee24e47a00237dca48d7c21/mpegts",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    }
+  ],
+  "mena_cached": [
+    {
+      "id": "mena-0",
+      "name": "2M Monde",
+      "url": "https://cdn-globecast.akamaized.net/live/eds/2m_monde/hls_video_ts_tuhawxpiemz257adfc/2m_monde.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-4",
+      "name": "4 Music",
+      "url": "https://4muhls.persiana.live/hls/stream.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-6",
+      "name": "24 Horas Internacional",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/canal24horas/browser-HLS8/canal24horas.m3u8",
+      "group": "News;Public",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-7",
+      "name": "24 TV (1080p)",
+      "url": "https://mn-nl.mncdn.com/kanal24/smil:kanal24.smil/playlist.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-8",
+      "name": "247 Box TV",
+      "url": "https://hls.247box.live/hls/stream.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-12",
+      "name": "A Türk Izmir (360p)",
+      "url": "https://vdo.digitalbox.xyz:3807/stream/play.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-13",
+      "name": "AA Live (720p) [Not 24/7]",
+      "url": "https://mtulqxgomrllive.mediatriple.net/mtulqxgomrllive/broadcast_59f9c0c785b88.smil/playlist.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-15",
+      "name": "Abalfadhl TV",
+      "url": "https://t.northtelecom.org/ABALFADHLTV.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 301
+    },
+    {
+      "id": "mena-24",
+      "name": "ADA TV (576p)",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/adatv/bant1/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-33",
+      "name": "Africa 24 (1080p)",
+      "url": "https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-35",
+      "name": "Africa 24 Sport (1080p)",
+      "url": "https://africa24.vedge.infomaniak.com/livecast/ik:africa24sport/manifest.m3u8",
+      "group": "News;Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-43",
+      "name": "Ajyal TV (720p)",
+      "url": "http://htvmada.mada.ps:8888/ajyal/index.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-62",
+      "name": "Al Ghad TV (1080p)",
+      "url": "https://eazyvwqssi.erbvr.com/alghadtv/alghadtv.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-70",
+      "name": "Al Jazeera Documentary (1080p) [Geo-blocked]",
+      "url": "https://live-hls-apps-ajd-fa.getaj.net/AJD/index.m3u8",
+      "group": "Documentary",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-77",
+      "name": "Al Maghribia",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/almaghribia/browser-dash/almaghribia.mpd",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-83",
+      "name": "Al Masriyah",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/almasriyah/browser-HLS8/almasriyah.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-89",
+      "name": "Al Rabiaa TV (1080p)",
+      "url": "https://stream.castr.com/65045e4aba85cfe0025e4a60/live_c6c4040053cd11ee95b47153d2861736/index.fmp4.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-90",
+      "name": "Al Rafidain (720p) [Not 24/7]",
+      "url": "https://arrafidain.tvplayer.online/arrafidaintv/source/playlist.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 502
+    },
+    {
+      "id": "mena-94",
+      "name": "Al Resalah (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/risala_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-106",
+      "name": "Al-Majd Holy Quran",
+      "url": "https://edge66.magictvbox.com/liveApple/al_majd/tracks-v1a1/mono.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-114",
+      "name": "Alborz",
+      "url": "https://ncdn.telewebion.com/alborz/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-116",
+      "name": "Alfa Sport (1080p) [Not 24/7]",
+      "url": "https://dev.aftermind.xyz/edge-hls/unitrust/alfasports/index.m3u8?token=8TXWzhY3h6jrzqEqx",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 521
+    },
+    {
+      "id": "mena-136",
+      "name": "Amani TV (1080p) [Not 24/7]",
+      "url": "https://goccn.cloud/hls/amanitv/index.m3u8",
+      "group": "Culture",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-146",
+      "name": "Anwar TV2 (720p)",
+      "url": "https://cloud.odysee.live/content/f92670235a1ce2bce4cf77671cc4dcc2188baa1d/master.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-147",
+      "name": "Ara",
+      "url": "https://ncdn.telewebion.com/ara/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-163",
+      "name": "Atrak",
+      "url": "https://ncdn.telewebion.com/atrak/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-166",
+      "name": "ATV Alanya (720p) [Not 24/7]",
+      "url": "http://stream2.taksimbilisim.com:1935/alanyatv/alanyatv.smil/playlist.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-175",
+      "name": "BabyTV Turkiye (1080p) [Geo-blocked]",
+      "url": "https://saran-live.ercdn.net/babytv/index.m3u8",
+      "group": "Kids",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-186",
+      "name": "BBC News (1080p) [Geo-blocked]",
+      "url": "https://vs-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/iptv_mse_v0_hevc.mpd",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-187",
+      "name": "BBC News Europe",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/bbcworld/browser-HLS8/bbcworld.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-189",
+      "name": "Benguturk TV (1080p)",
+      "url": "http://185.234.111.229:8000/play/a05u",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-190",
+      "name": "Berat TV (720p) [Not 24/7]",
+      "url": "https://cdn-berattv.yayin.com.tr/berattv/berattv/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-191",
+      "name": "Beşiktaş Web TV (360p)",
+      "url": "https://s01.vpis.io/besiktas/besiktas.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-196",
+      "name": "Bizimev TV (720p)",
+      "url": "https://mn-nl.mncdn.com/blutv_bizimev/bizimev_sd.smil/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-198",
+      "name": "Bloomberg TV EMEA Live Event (720p)",
+      "url": "https://bloomberg.com/media-manifest/streams/eu-event.m3u8",
+      "group": "Business",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 301
+    },
+    {
+      "id": "mena-199",
+      "name": "Bloomberg TV Europe (720p)",
+      "url": "https://bloomberg.com/media-manifest/streams/eu.m3u8",
+      "group": "Business",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 301
+    },
+    {
+      "id": "mena-201",
+      "name": "BRT 1 (720p) [Not 24/7]",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/brt1hd/bant1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-202",
+      "name": "BRT 2 (720p) [Not 24/7]",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/brt2hd/bant1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-203",
+      "name": "BRT 3",
+      "url": "http://185.234.111.229:8000/play/a07e",
+      "group": "Undefined",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-205",
+      "name": "BTV World (1080p)",
+      "url": "https://www.btvlive.gov.bd/streams/ef8b8bbc-98b7-4ba7-a49d-a0adaf259d35/ES/d96eb7f4-83c2-4472-9597-3568390a8ebf/d96eb7f4-83c2-4472-9597-3568390a8ebf_3_playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-207",
+      "name": "Bursa TV (720p) [Not 24/7]",
+      "url": "https://cdn-bursatv.yayin.com.tr/bursatv/bursatv/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-208",
+      "name": "Bushehr",
+      "url": "https://ncdn.telewebion.com/bushehr/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-210",
+      "name": "BVN",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/bvn/browser-dash/bvn.mpd",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-216",
+      "name": "Canal 2 Movies",
+      "url": "https://stream.ecable.tv/canal2m/tracks-v1a1/mono.m3u8",
+      "group": "Movies",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-221",
+      "name": "Cekmeköy TV (1080p)",
+      "url": "https://cdn-cekmekoybeltv.yayin.com.tr/cekmekoybeltv/cekmekoybeltv/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-229",
+      "name": "Chada TV (720p)",
+      "url": "https://chadatv.vedge.infomaniak.com/livecast/chadatv/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-231",
+      "name": "Channel 9 (540p) [Not 24/7]",
+      "url": "http://50.7.231.221:8081/185/index.m3u8?wmsAuthSign=okad",
+      "group": "News",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-233",
+      "name": "Çiftçi TV (1080p) [Not 24/7]",
+      "url": "http://stream.taksimbilisim.com:1935/ciftcitv/smil:ciftcitv.smil/playlist.m3u8",
+      "group": "Culture;Education",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-235",
+      "name": "Cine5 (720p)",
+      "url": "https://cdn-cine5tv.yayin.com.tr/cine5tv/cine5tv/playlist.m3u8",
+      "group": "Movies",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-236",
+      "name": "City Channel (720p) [Not 24/7]",
+      "url": "https://dev.aftermind.xyz/edge-hls/unitrust/citychannel/index.m3u8?token=8TXWzhY3h6jrzqEqx",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 521
+    },
+    {
+      "id": "mena-239",
+      "name": "CNA International (1080p)",
+      "url": "https://mediacorp-videosbclive.akamaized.net/dd724cfb0e8e4cdc921bbc4ac94614bf/ap-southeast-1/6057994443001/playlist.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-240",
+      "name": "CNBC Africa (480p)",
+      "url": "https://5be2f59e715dd.streamlock.net/CNBC/smil:CNBCSandton.smil/playlist.m3u8",
+      "group": "Business",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-242",
+      "name": "CNBC Europe HD (1080p)",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/cnbc/browser-HLS8/cnbc.m3u8",
+      "group": "Business",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-244",
+      "name": "CuriosityStream (720p)",
+      "url": "https://fl1.moveonjoy.com/Curiosity_Stream/index.m3u8",
+      "group": "Education",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-247",
+      "name": "Deha TV (720p) [Geo-blocked]",
+      "url": "https://live.artidijitalmedya.com/artidijital_dehatv/dehatv/playlist.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-248",
+      "name": "Dena",
+      "url": "https://ncdn.telewebion.com/dena/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-250",
+      "name": "Dersim62 TV (720p)",
+      "url": "http://live.arkumedia.com:1935/dersim62tv/dersim62tv/playlist.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-252",
+      "name": "Dijlah Tarab (1080p)",
+      "url": "https://ghaasiflu.online/tarab/index.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-255",
+      "name": "Disney Jr. (1080p) [Geo-blocked]",
+      "url": "https://saran-live.ercdn.net/disneyjunior/index.m3u8",
+      "group": "Animation;Kids",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-261",
+      "name": "DRT Denizli (720p)",
+      "url": "https://edge1.socialsmart.tv/drttv/bant1/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-271",
+      "name": "ducktv (720p)",
+      "url": "https://jmp2.uk/stvp-ESBC4700001GR",
+      "group": "Kids",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-272",
+      "name": "Duna World (576p)",
+      "url": "http://146.59.85.40:89/dunaworld/index.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-275",
+      "name": "Edessa TV (720p)",
+      "url": "https://tv.digitalbox.xyz:19360/edessatv/edessatv.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-277",
+      "name": "El Fadjer TV (720p)",
+      "url": "https://stream.wsla.top/play/1.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 441
+    },
+    {
+      "id": "mena-279",
+      "name": "El Watania 1",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/tunisienationale/browser-dash/tunisienationale.mpd",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-283",
+      "name": "Energy",
+      "url": "https://ncdn.telewebion.com/baenergy/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-290",
+      "name": "Eshragh",
+      "url": "https://ncdn.telewebion.com/eshragh/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-294",
+      "name": "Euro D (1080p)",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/eurod/browser-HLS8/eurod.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-296",
+      "name": "Euronews",
+      "url": "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/60d35bcaf1ff4a00078af0a6/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=8e0614c6-1f2c-11ef-86d8-5d587df108c6&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=90bc590c-c00a-4ff4-b9e2-ad20ea686992",
+      "group": "News",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-297",
+      "name": "Euronews",
+      "url": "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/6639d7d4b18d700008da5316/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=1b1d8ac5-4b81-11ef-a8ac-e146e4e7be02&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=c0d21e0b-3cc9-4c67-81b6-e33e50a7d888",
+      "group": "News",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-299",
+      "name": "Euronews French HD",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/euronews/browser-HLS8/euronews.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-301",
+      "name": "EuroStar",
+      "url": "https://gknnowtv.onrender.com/eurostar.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-305",
+      "name": "Fajer TV 1 (480p)",
+      "url": "http://platform.topuphost.com:8577/live/alfajr.stream/playlist.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-306",
+      "name": "Fajer TV 2 (576p)",
+      "url": "http://platform.topuphost.com:8577/live/alfajr2.stream/playlist.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-310",
+      "name": "FashionTV Europe (1080p)",
+      "url": "https://68f1accef2154d2195cae87dec183843.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RakutenTV-eu_FashionTV/playlist.m3u8",
+      "group": "Lifestyle",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 504
+    },
+    {
+      "id": "mena-316",
+      "name": "Flash TV (720p)",
+      "url": "https://mn-nl.mncdn.com/blutv_flashtv/live.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-317",
+      "name": "For You TV (480p)",
+      "url": "https://stream.az-multimedia.com:3793/live/foryoutvlive.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-319",
+      "name": "France 24",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/france24/browser-HLS8/france24.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-325",
+      "name": "FX (1080p) [Geo-blocked]",
+      "url": "https://saran-live.ercdn.net/fx/index.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-351",
+      "name": "GOD TV Africa (576p)",
+      "url": "https://webstreaming.viewmedia.tv/web_006/Stream/playlist.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-353",
+      "name": "Golkhane TV",
+      "url": "https://ncdn.telewebion.com/golkhane/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-354",
+      "name": "Gonca TV (720p)",
+      "url": "https://edge1.socialsmart.tv/goncatv/bant1/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-358",
+      "name": "GÜNEŞ TV (576p) [Not 24/7]",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/gunestv/bant1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-359",
+      "name": "Guney TV Tarsus (720p)",
+      "url": "https://live.artidijitalmedya.com/artidijital_guneytv/guneytv/playlist.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-364",
+      "name": "Habertürk TV (1080p)",
+      "url": "https://ciner-live.daioncdn.net/haberturktv/haberturktv.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-365",
+      "name": "Habib TV",
+      "url": "https://ncdn.telewebion.com/habib/live/playlist.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-371",
+      "name": "Hala Ramallah (720p)",
+      "url": "https://halaramallahtv.com:2053/HRamallah-Tv/HalaRamallah/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-374",
+      "name": "Hamedan",
+      "url": "https://ncdn.telewebion.com/sina/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-375",
+      "name": "Hamoon",
+      "url": "https://ncdn.telewebion.com/hamoon/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-376",
+      "name": "Health Media TV (720p)",
+      "url": "https://6n3yowknl9ok-hls-live.5centscdn.com/HMN/271ddf829afeece44d8732757fba1a66.sdp/playlist.m3u8",
+      "group": "Lifestyle",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-381",
+      "name": "Hope Channel Africa (1080p)",
+      "url": "https://jstre.am/live/jsl:i1onRBELcGV.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-389",
+      "name": "IBB TV (1080p) [Not 24/7]",
+      "url": "https://npserver1.ibb.gov.tr/webtv/webtv_wowza1/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-392",
+      "name": "Icel TV (720p) [Not 24/7]",
+      "url": "http://stream.taksimbilisim.com:1935/iceltv/bant1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-399",
+      "name": "Ilam",
+      "url": "https://ncdn.telewebion.com/ilam/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-400",
+      "name": "Imam Asr TV (720p)",
+      "url": "https://iptv.imamasrtv.com/asrfa/playlist.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-412",
+      "name": "Iran Nama",
+      "url": "https://iran613hls.wns.live/hls/stream.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-415",
+      "name": "Iraneman",
+      "url": "https://ncdn.telewebion.com/iraneman/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-422",
+      "name": "IRIB UHD (2160p)",
+      "url": "https://ncdn.telewebion.com/faratar/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-426",
+      "name": "Israel Pars TV (540p)",
+      "url": "https://live.pars-israel.com/iptv/stream.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-430",
+      "name": "Jahanbin",
+      "url": "https://ncdn.telewebion.com/jahanbin/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-441",
+      "name": "Jordan Sport (1080p) [Geo-blocked]",
+      "url": "https://jrtv-live.ercdn.net/jordansporthd/jordansporthd.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-442",
+      "name": "Jordan Sport 2 (1080p) [Geo-blocked]",
+      "url": "https://jrtv-live.ercdn.net/learning2/learning2.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-456",
+      "name": "Kanal 33 (720p) [Not 24/7]",
+      "url": "http://stream.taksimbilisim.com:1935/kanal33/bant1/playlist.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-457",
+      "name": "Kanal 34 (720p) [Not 24/7]",
+      "url": "https://vdo.digitalbox.xyz:3266/live/kanal34tvlive.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-458",
+      "name": "Kanal 38 (540p) [Not 24/7]",
+      "url": "http://yayin3.canlitv.com:1935/live/kanal38/playlist.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-460",
+      "name": "Kanal Avrupa (1080p)",
+      "url": "http://51.15.2.151/hls/kanalavrupa.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-461",
+      "name": "Kanal B (480p) [Not 24/7]",
+      "url": "http://212.174.58.161/hls-live/livepkgr/_definst_/liveevent/kanalb.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-466",
+      "name": "Kanal Sim (576p) [Not 24/7]",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/simtv/bantp1/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-470",
+      "name": "Karoon TV",
+      "url": "https://ncdn.telewebion.com/karoon/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-474",
+      "name": "Keshet 12 (1080i) [Not 24/7]",
+      "url": "https://mako-streaming.akamaized.net/stream/hls/live/2033791/k12n12wad/profile/1/hdntl=exp=1757445516~acl=/*~data=hdntl~hmac=a8baf01127ae46cd6fd241cf61db8590d7eacc3406f4735ed2defef329496b8a/profileManifest.m3u8?_did=6cfbfc673e5d5f7f274bf96b6c72f28ce1a53f82&_uid=0195a46a-9f11-4704-a944-301512682f7d&rK=bn",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-475",
+      "name": "Ketabnama",
+      "url": "http://ncdn.telewebion.com/ketabnama/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-476",
+      "name": "Khalij-e Fars",
+      "url": "https://ncdn.telewebion.com/khalijefars/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-477",
+      "name": "Khavaran",
+      "url": "https://ncdn.telewebion.com/khavaran/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-478",
+      "name": "Khorasan Razavi",
+      "url": "https://ncdn.telewebion.com/khorasanrazavi/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-480",
+      "name": "Kibris Genç TV (720p) [Not 24/7]",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/kibrisgenctv/bant1/playlist.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-481",
+      "name": "Kibris Kanal T (576p) [Not 24/7]",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/kanalt/bantp1/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-482",
+      "name": "Kibris TV (576p) [Not 24/7]",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/kibristv/bant1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-483",
+      "name": "Kish",
+      "url": "https://ncdn.telewebion.com/kish/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-484",
+      "name": "Knesset Channel (480p) [Not 24/7]",
+      "url": "https://contact.gostreaming.tv/Knesset/myStream/playlist.m3u8",
+      "group": "Legislative",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-485",
+      "name": "Kolalnas TV",
+      "url": "https://htvint.mada.ps/kolalnas/index.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-490",
+      "name": "Korean Central Television (KCTV) (576p)",
+      "url": "https://streamer.nknews.org/tvdash/stream.mpd",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 520
+    },
+    {
+      "id": "mena-492",
+      "name": "KRAL TV (720p)",
+      "url": "https://dogus-live.daioncdn.net/kraltv/playlist.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-501",
+      "name": "Kudüs TV (480p) [Geo-blocked]",
+      "url": "https://yayin.kudustv.com/981680400/kudustv/playlist.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-509",
+      "name": "Labbayk TV",
+      "url": "https://ncdn.telewebion.com/labbayk/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-511",
+      "name": "LBC (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/lbc_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-520",
+      "name": "Mahabad",
+      "url": "https://ncdn.telewebion.com/mahabad/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-525",
+      "name": "Manoto TV",
+      "url": "https://late-sky-0e1a.zahsytwdtjgjhasxby.workers.dev/?url=https://m3u.iranvids.com/manoto/output.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-558",
+      "name": "Milyon TV (720p)",
+      "url": "https://sosyoapp-live.cdnnew.com/sosyo/buraya-bir-isim-verin.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-559",
+      "name": "Minika Cocuk (480p)",
+      "url": "https://tgn.bozztv.com/dvrfl05/gin-minikacocuk/index.m3u8",
+      "group": "Kids",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-560",
+      "name": "Minika Go (480p)",
+      "url": "https://tgn.bozztv.com/dvrfl05/gin-minikago/index.m3u8",
+      "group": "Kids",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-571",
+      "name": "MovieSmart Turk (576p)",
+      "url": "http://playhdnewjj.xyz:8080/recc121412/KVqfhtdJ2nQ7/174",
+      "group": "Movies",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-575",
+      "name": "Nabaa TV (720p) [Not 24/7]",
+      "url": "http://31.14.40.237:1935/live/Nabaa/playlist.m3u8",
+      "group": "News",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-576",
+      "name": "Nablus TV (1080p)",
+      "url": "https://htvint.mada.ps/nabluslive/index.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-577",
+      "name": "Nama TV",
+      "url": "https://ncdn.telewebion.com/nama/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-578",
+      "name": "Namaquran",
+      "url": "https://ncdn.telewebion.com/namaquran/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-581",
+      "name": "National Geographic (1080p)",
+      "url": "http://62.210.211.188:2095/play/a00d",
+      "group": "Documentary",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-582",
+      "name": "National Geographic (1080p) [Geo-blocked]",
+      "url": "https://saran-live.ercdn.net/natgeohd/index.m3u8",
+      "group": "Documentary",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-584",
+      "name": "National Geographic Wild (1080p) [Geo-blocked]",
+      "url": "https://saran-live.ercdn.net/natgeowild/index.m3u8",
+      "group": "Documentary",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-585",
+      "name": "Natural TV (720p) [Not 24/7]",
+      "url": "http://broadcasttr.com:1935/naturaltv/bant1/playlist.m3u8",
+      "group": "Culture",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-587",
+      "name": "NBT World (720p)",
+      "url": "https://cdn-edge-ott.prd.go.th/live_vlc/smil:2609-b4a6-64b3-1431-5e64/chunklist_w507269531_b2128000.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-588",
+      "name": "Negah TV",
+      "url": "https://iptv.negahtv.com/negahtv/playlist.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-589",
+      "name": "Nessma El Jadida",
+      "url": "https://fl1002.bozztv.com/ga-nessmatv/tracks-v1a1/mono.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-591",
+      "name": "NHK World Premium (720p) [Not 24/7]",
+      "url": "https://cdn.nhkworld.jp/www11/nhkworld-tv/pre/hlscomp.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-593",
+      "name": "NHK World-Japan HD (1080i)",
+      "url": "https://hls.mskycdn.online/tv/nhkworld/index.m3u8",
+      "group": "Culture;News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-595",
+      "name": "NogoumFMTV (672p) [Not 24/7]",
+      "url": "https://nogoumtv.nrpstream.com/hls/stream.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-596",
+      "name": "Noor",
+      "url": "https://ncdn.telewebion.com/noor/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-605",
+      "name": "Now 14 (720p)",
+      "url": "https://now14.g-mana.live/media/91517161-44ab-4e46-af70-e9fe26117d2e/mainManifest.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-611",
+      "name": "NTV (720p) [Not 24/7]",
+      "url": "https://dogus-live.daioncdn.net/ntv/ntv.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-616",
+      "name": "Number 1 Türk (720p)",
+      "url": "https://mn-nl.mncdn.com/blutv_nr1turk2/live.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-626",
+      "name": "OMONOIA TV (684p)",
+      "url": "http://62.233.57.226:8001/play/a00b00",
+      "group": "Sports",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-629",
+      "name": "ON Medya Haber (720p) [Geo-blocked]",
+      "url": "http://live.arkumedia.com:1935/marmaratv/marmaratv/playlist.m3u8",
+      "group": "News",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-630",
+      "name": "Öncü TV (1024p) [Not 24/7]",
+      "url": "https://edge1.socialsmart.tv/oncurtv/bant1/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-635",
+      "name": "Palestine",
+      "url": "https://ncdn.telewebion.com/palestine/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-641",
+      "name": "Pamukkale TV (614p)",
+      "url": "http://ms1.sanlisoy.com:1935/pamukkaletv/pamukkaletv/playlist.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-649",
+      "name": "Peace TV Chinese (1080p)",
+      "url": "https://dzkyvlfyge.erbvr.com/PeaceTvChinese/index.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-650",
+      "name": "Peace TV English (1080p)",
+      "url": "https://dzkyvlfyge.erbvr.com/PeaceTvEnglish/index.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-654",
+      "name": "Persian Film",
+      "url": "https://pfilmhls.wns.live/hls/stream.m3u8",
+      "group": "Movies",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-658",
+      "name": "Persiana Emirates",
+      "url": "https://pemirateshls.persiana.live/hls/stream.m3u8",
+      "group": "Series",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-665",
+      "name": "Persiana Latino",
+      "url": "https://latinohls.persiana.live/hls/stream.m3u8",
+      "group": "Movies",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-670",
+      "name": "Persiana Plus One",
+      "url": "https://poneplushls.persiana.live/hls/stream.m3u8",
+      "group": "Movies",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-677",
+      "name": "Persiana Teen",
+      "url": "https://kphls.persiana.live/hls/stream.m3u8",
+      "group": "Kids",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-684",
+      "name": "Pooya TV Plus",
+      "url": "https://ncdn.telewebion.com/javaneh/live/playlist.m3u8",
+      "group": "Kids",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-687",
+      "name": "Power Plus (1080p)",
+      "url": "https://livetv.powerapp.com.tr/pplustv/pplustv.smil/playlist.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-690",
+      "name": "Power Türk En Iyiler (1080p)",
+      "url": "https://livetv.powerapp.com.tr/pturkeniyiler/eniyiler.smil/playlist.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-694",
+      "name": "Press TV (720p)",
+      "url": "https://cloud.odysee.live/content/26bcbcc342a5b143578f27dbfaf000201f06e417/master.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-704",
+      "name": "Qwest TV (1080p)",
+      "url": "https://qwestjazz-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-qwestjazz-rakuten/CDN/master.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 307
+    },
+    {
+      "id": "mena-706",
+      "name": "RACER International",
+      "url": "https://amg00378-mavtv-amg00378c2-rakuten-us-1048.playouts.now.amagi.tv/playlist/amg00378-mavtvfast-motorsportsnetwork-rakutenus/playlist.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 307
+    },
+    {
+      "id": "mena-707",
+      "name": "Racer Network (1080p)",
+      "url": "https://amg00378-mavtv-amg00378c2-samsung-au-1790.playouts.now.amagi.tv/playlist/amg00378-mavtvfast-motorsportsnetwork-samsungau/playlist.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-716",
+      "name": "Raya 1 (1080p)",
+      "url": "https://htvmada.mada.ps:4443/raya/index.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-717",
+      "name": "Razavi TV",
+      "url": "https://ncdn.telewebion.com/razavi/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-721",
+      "name": "Rehber TV (720p)",
+      "url": "https://yayin30.haber100.com/live/rehbertv/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-722",
+      "name": "Relevant TV (1080p)",
+      "url": "https://6180c994cb835402.mediapackage.eu-west-1.amazonaws.com/out/v1/f1339272dd24416ca60b00e69075d783/index.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-723",
+      "name": "Reshet 13 (1080p)",
+      "url": "https://d18b0e6mopany4.cloudfront.net/out/v1/08bc71cf0a0f4712b6b03c732b0e6d25/index.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-725",
+      "name": "Romanza+ Africa (720p)",
+      "url": "https://origin3.afxp.telemedia.co.za/PremiumFree/romanza/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-728",
+      "name": "Rotana Cinema Egypt (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/cinemamasr_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Movies",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-729",
+      "name": "Rotana Cinema KSA (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/cinema_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Movies",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-730",
+      "name": "Rotana Classic (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/classical_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Classic",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-731",
+      "name": "Rotana Clip (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/clip_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-732",
+      "name": "Rotana Comedy (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/comedy_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Comedy",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-733",
+      "name": "Rotana Drama (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/drama_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Series",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-734",
+      "name": "Rotana Khalijia (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/khaleejiya_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-735",
+      "name": "Rotana Music (1080p) [Geo-blocked]",
+      "url": "https://rotana.hibridcdn.net/rotananet/music_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-743",
+      "name": "Roya TV",
+      "url": "https://ncdn.telewebion.com/iribu/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-746",
+      "name": "RT Documentary (1080p)",
+      "url": "https://hls.mskycdn.online/tv/rtd/index.m3u8",
+      "group": "Documentary",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-748",
+      "name": "RTD",
+      "url": "https://dvrfl06.bozztv.com/astv-djibouti/index.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-749",
+      "name": "RTD 4",
+      "url": "http://dvrfl05.bozztv.com/gin-rtddjibouti/index.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-750",
+      "name": "RTP África (504p) [Not 24/7]",
+      "url": "https://streaming-live.rtp.pt/liverepeater/smil:rtpafrica.smil/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 204
+    },
+    {
+      "id": "mena-751",
+      "name": "RTP Internacional (1080p) [Not 24/7]",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/rtpi/browser-HLS8/rtpi.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-754",
+      "name": "S Sport",
+      "url": "https://bcovlive-a.akamaihd.net/540fcb034b144b848e7ff887f61a293a/eu-central-1/6415845530001/profile_0/chunklist.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-755",
+      "name": "S Sport 2",
+      "url": "https://bcovlive-a.akamaihd.net/29c60f23ea4840ba8726925a77fcfd0b/eu-central-1/6415845530001/profile_0/chunklist.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-756",
+      "name": "Sabalan",
+      "url": "https://ncdn.telewebion.com/sabalan/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-757",
+      "name": "Sabz",
+      "url": "https://ncdn.telewebion.com/sabz/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-759",
+      "name": "SaharAfghan",
+      "url": "https://ncdn.telewebion.com/saharafghan/live/playlist.m3u8",
+      "group": "Education",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-762",
+      "name": "Sarbedaran",
+      "url": "https://ncdn.telewebion.com/sarbedaran/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-763",
+      "name": "Sarıyer TV (360p)",
+      "url": "https://s01.vpis.io/sariyer/sariyer.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-766",
+      "name": "Sat7 Pars (1080p)",
+      "url": "https://svs.itworkscdn.net/sat7parslive/sat7pars.smil/playlist.m3u8",
+      "group": "Religious",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-772",
+      "name": "SBN TV International",
+      "url": "http://trn03.bozztv.com/gin-sbntv/index.m3u8",
+      "group": "Religious",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-774",
+      "name": "Semnan",
+      "url": "https://ncdn.telewebion.com/semnan/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-788",
+      "name": "Show Max",
+      "url": "https://raw.githubusercontent.com/UzunMuhalefet/yayinlar/main/streams/best/showmax.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-789",
+      "name": "Show TV (1080p)",
+      "url": "https://ciner-live.daioncdn.net/showtv/showtv.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-792",
+      "name": "Sinop Yildiz TV (360p)",
+      "url": "https://s01.vpis.io/sinopyildiz/sinopyildiz.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-793",
+      "name": "SKI TV (1080p) [Not 24/7]",
+      "url": "https://d2xeo83q8fcni6.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/SkiTV-SportsTribal/193.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-800",
+      "name": "SNN TV [Not 24/7]",
+      "url": "https://live2.snn.ir/hls/snn2_hd720/index.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-803",
+      "name": "Star TV (720p) [Not 24/7]",
+      "url": "https://dogus-live.daioncdn.net/startv/startv.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-811",
+      "name": "Tabii Spor 6 (720p) [Geo-blocked]",
+      "url": "https://vbtob9hyq58eiophct5qctxr2.medya.trt.com.tr/master.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-816",
+      "name": "Tarih TV",
+      "url": "https://tv1.arectv30.sbs/live/tarihtv.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-820",
+      "name": "TBN Africa (1080p)",
+      "url": "https://tbn-jw.cdn.vustreams.com/live/tbn-africa/live.isml/master.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-822",
+      "name": "Tek Rumeli TV (576p)",
+      "url": "https://edge1.socialsmart.tv/tekrumelitv/bant1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-823",
+      "name": "Tekyemadahi",
+      "url": "https://ncdn.telewebion.com/tekyemadahi/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-824",
+      "name": "Tekyesokhanrani",
+      "url": "https://ncdn.telewebion.com/tekyesokhanrani/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-833",
+      "name": "Teve2 (1080p)",
+      "url": "https://demiroren-live.daioncdn.net/teve2/teve2.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-835",
+      "name": "TGRT Europe (576p)",
+      "url": "https://tv.ensonhaber.com/tv/tr/tgrteu/index.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 500
+    },
+    {
+      "id": "mena-839",
+      "name": "TJK TV 2 (1080p) [Not 24/7]",
+      "url": "https://tjktv-live.tjk.org/tjktv2/tjktv2.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-845",
+      "name": "Toprak TV (720p) [Not 24/7]",
+      "url": "https://59cba4d34b678.streamlock.net/canlitv/topraktv/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-853",
+      "name": "TRT Belgesel (720p)",
+      "url": "https://tv-trtbelgesel.medya.trt.com.tr/master.m3u8",
+      "group": "Documentary",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-860",
+      "name": "TRT Müzik (720p)",
+      "url": "https://tv-trtmuzik.medya.trt.com.tr/master.m3u8",
+      "group": "Music",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-861",
+      "name": "TRT Spor (1080p) [Geo-blocked]",
+      "url": "https://tv-trtspor1.medya.trt.com.tr/master.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-862",
+      "name": "TRT Spor Yildiz (1080p) [Geo-blocked]",
+      "url": "https://tv-trtspor2.medya.trt.com.tr/master.m3u8",
+      "group": "Sports",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-863",
+      "name": "TRT Turk",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/trtturk/browser-dash/trtturk.mpd",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-867",
+      "name": "TV2",
+      "url": "https://viamotionhsi.netplus.ch/live/eds/canalalgerie/browser-dash/canalalgerie.mpd",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-869",
+      "name": "TV4 Tamazight TV (576p)",
+      "url": "http://149.62.177.98:8000/play/a01t/index.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-870",
+      "name": "TV5Monde Europe (1080p) [Geo-blocked]",
+      "url": "https://ott.tv5monde.com/Content/HLS/Live/channel(europe)/variant.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-871",
+      "name": "TV 8 (1080p) [Not 24/7]",
+      "url": "https://tv8-live.daioncdn.net/tv8/tv8.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-872",
+      "name": "TV 8.5 (720p)",
+      "url": "http://bozztv.com/gin-dvrfl05/gin-tv8_5/index.m3u8",
+      "group": "Undefined",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-873",
+      "name": "TV 38 (360p) [Not 24/7]",
+      "url": "https://59cba4d34b678.streamlock.net/live/tv38/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-874",
+      "name": "TV 41 (720p) [Not 24/7]",
+      "url": "http://stream.taksimbilisim.com:1935/tv41/bant1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-875",
+      "name": "TV 52 (720p) [Not 24/7]",
+      "url": "http://stream.taksimbilisim.com:1935/tv52/smil:tv52.smil/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-878",
+      "name": "TV 2020 (576p) [Not 24/7]",
+      "url": "https://sc-kuzeykibrissmarttv.ercdn.net/tv2020/bantp1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-879",
+      "name": "TV A (720p)",
+      "url": "https://live.artidijitalmedya.com/artidijital_tva/tva/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-881",
+      "name": "TV Den (576p) [Not 24/7]",
+      "url": "http://canli.tvden.com.tr/hls/live.m3u8",
+      "group": "Undefined",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-882",
+      "name": "TVA Nava",
+      "url": "https://ncdn.telewebion.com/nava/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-888",
+      "name": "UçanKuş TV (720p)",
+      "url": "https://ucankus-live.cdnnew.com/ucankus/ucankus.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-889",
+      "name": "Ülke TV (720p)",
+      "url": "https://mn-nl.mncdn.com/blutv_ulketv2/live.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-890",
+      "name": "Ulusal Kanal (720p)",
+      "url": "https://stream.guventechnology.com:19360/ulusaltv/ulusaltv.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-892",
+      "name": "UNews",
+      "url": "https://cdn.catiacast.video/abr/9436b5ab3c1171ab04a59af11951292f/playlist.m3u8",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-893",
+      "name": "Üniversite TV (720p) [Not 24/7]",
+      "url": "https://vdo.digitalbox.xyz:3986/live/unitvlive.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "TIMEOUT"
+    },
+    {
+      "id": "mena-896",
+      "name": "ÜÜ TV 1 (1080p)",
+      "url": "https://uskudarunv.mediatriple.net/uskudarunv/uskudar1/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-898",
+      "name": "V TV (720p)",
+      "url": "https://serdar.tiviplayer.com/player/m3u8/65aae71c9b93f0965aaed3a92660d98b/65aae71c9b93f0965aaed3a92660d98b.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 401
+    },
+    {
+      "id": "mena-901",
+      "name": "Velayat TV",
+      "url": "https://ncdn.telewebion.com/velayat/live/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-902",
+      "name": "Viasat Explore",
+      "url": "https://tv.arectv29.sbs/live/viasathistory.m3u8",
+      "group": "Documentary",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 403
+    },
+    {
+      "id": "mena-906",
+      "name": "Vouli TV (1080p) [Not 24/7]",
+      "url": "https://dev.aftermind.xyz/edge-hls/unitrust/voulitv/index.m3u8?token=8TXWzhY3h6jrzqEqx",
+      "group": "News",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 521
+    },
+    {
+      "id": "mena-907",
+      "name": "VOX1",
+      "url": "https://hls.vox1.live/hls/stream.m3u8",
+      "group": "Entertainment",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-913",
+      "name": "Watar TV (720p) [Not 24/7]",
+      "url": "http://htvint.mada.ps:8889/orient/index.m3u8",
+      "group": "General",
+      "needsProxy": true,
+      "status": "DEAD",
+      "reason": 404
+    },
+    {
+      "id": "mena-915",
+      "name": "WildEarth [Geo-blocked]",
+      "url": "https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01290-wildearthmediap-wildearth-samsungnl/playlist.m3u8",
+      "group": "Undefined",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    },
+    {
+      "id": "mena-918",
+      "name": "Woman TV (1080p)",
+      "url": "https://embedlp.becdn.net/womantv.m3u8",
+      "group": "Culture;Education;Lifestyle",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-923",
+      "name": "Yol TV (720p)",
+      "url": "https://stream.yol.tv:9443/medialive/yol.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": "ERR"
+    },
+    {
+      "id": "mena-927",
+      "name": "Zagros",
+      "url": "https://ncdn.telewebion.com/zagros/live/playlist.m3u8",
+      "group": "General",
+      "needsProxy": false,
+      "status": "DEAD",
+      "reason": 302
+    }
+  ]
+}

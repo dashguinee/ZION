@@ -1,0 +1,161 @@
+{
+  "word_order": {
+    "basic": "SOV (Subject-Object-Verb)",
+    "confirmed_patterns": []
+  },
+  "negation": {
+    "marker": "mu",
+    "position": "before verb",
+    "examples": [
+      {
+        "en": "The unrelenting soul-force of those who would hold us accountable blows that all",
+        "sus": "SondonmE mu wule falama-mikhi ne khee sEmbE wama a ma senfe a yo mu na moho bE e"
+      },
+      {
+        "en": "The bus, normally crowded, was stunningly nearly empty at this hour.",
+        "sus": "Nan ma gnixi nE woto rafexira gi waxatima se mu a kui."
+      },
+      {
+        "en": "She can do things with her tongue most of us can't even fathom, like touch her e",
+        "sus": "A nOma fe raba deba de a nEngnira won ya ma mixi gbe gbe mu nOma, a nOma xali a "
+      },
+      {
+        "en": "Lower population means a lower chance of having an accident in addition to fewer",
+        "sus": "GnamanE die ne xe magoro ma fura acident sOtOde sOnOya ra a nun ma xui mu e kon "
+      },
+      {
+        "en": "Neither row number nor column letter in an absolute reference will change.",
+        "sus": "Konti mu a ra sEbEli mu a ra sen mu ma sarama."
+      },
+      {
+        "en": "So, considering the ratio of net value added to gross output does not yield a co",
+        "sus": "Nakui, wali raba daxi misalife fe ra a yaabi ra na mu a ma senxi a bara findi wa"
+      },
+      {
+        "en": "You can also work with a virtual assistant or someone in your company who can cr",
+        "sus": "Mixi noma kaffude i ma walide wo nun na xan mu yireke ren xa na mu wo mixi na xa"
+      },
+      {
+        "en": "Half of Hook’s crew was already gone, and the remaining few were so drunk they c",
+        "sus": "Hook xa gnama tagi bara nu siga, a dOnxOe bara sisi e gnan mu nOma tide."
+      },
+      {
+        "en": "Treatment options depend on the duration or frequency of ear symptoms.",
+        "sus": "Dandan gnie fatanxi waxati nan na xa na mu tuli fure xa laman tun gni wuyaxi."
+      },
+      {
+        "en": "Furthermore, sweep, dust, or vacuum it regularly and occasionally wipe your cork",
+        "sus": "Nan yiren de, yire ma kOfe, xube xa na mu lErin de xinbeli."
+      }
+    ],
+    "notes": [
+      "mu comes immediately before the verb",
+      "Double negation (mu...mu) for emphasis like \"neither...nor\"",
+      "Contracted forms: m'ma = mu + ma (negative + verb)"
+    ]
+  },
+  "tense_aspect": {
+    "past_perfective": {
+      "suffix": "-xi",
+      "examples": [],
+      "notes": "Indicates completed action"
+    },
+    "present_imperfective": {
+      "notes": "Base verb form, often with auxiliary"
+    },
+    "future": {
+      "marker": "na (will) or bara (going to)",
+      "examples": []
+    }
+  },
+  "suffixes": {
+    "-xi": {
+      "meaning": "past/perfective",
+      "examples": [
+        "rafexi",
+        "gnixi",
+        "toxi",
+        "nOxunxi",
+        "kelixi",
+        "sOtOxi",
+        "seridaxi",
+        "mixi"
+      ]
+    },
+    "-fe": {
+      "meaning": "verb nominalizer (action noun)",
+      "examples": [
+        "nOfe",
+        "fe",
+        "sOtOfe",
+        "senfe",
+        "sOtofe",
+        "wahonfe"
+      ]
+    },
+    "-ra": {
+      "meaning": "locative (at/in/to)",
+      "examples": [
+        "ara",
+        "ra",
+        "kEra",
+        "Bira",
+        "kira",
+        "bara",
+        "fera",
+        "fokhora",
+        "yora"
+      ]
+    },
+    "-ma": {
+      "meaning": "possessive or locative (on)",
+      "examples": []
+    },
+    "-de": {
+      "meaning": "agent/doer",
+      "examples": [
+        "de",
+        "kaffude",
+        "fude",
+        "sOtOde",
+        "walide",
+        "sugandide"
+      ]
+    },
+    "-ni": {
+      "meaning": "locative (in)",
+      "examples": []
+    },
+    "-e/-ee": {
+      "meaning": "plural marker",
+      "examples": []
+    }
+  },
+  "pronouns": {
+    "subject": {
+      "I": "ntan",
+      "you": "wotan",
+      "we": "mou tan",
+      "he": "ä",
+      "they": "etan",
+      "she": "guinèma"
+    },
+    "object": {},
+    "possessive": {
+      "my": "oun",
+      "your": "i",
+      "our": "mou",
+      "their": "é"
+    }
+  },
+  "verb_conjugation": {
+    "notes": "Susu verbs change minimally - main changes via auxiliaries and suffixes",
+    "patterns": [
+      "Base verb: siga (go), fafe (come), raba (do)",
+      "With pronoun: N siga (I go), I siga (you go), A siga (he/she goes)",
+      "Past: Add -xi suffix: sigaxi (went), rabaxi (did)",
+      "Negation: N mu siga (I don't go), A mu fafe (he/she doesn't come)",
+      "Continuous: Add auxiliary: N na siga (I am going)"
+    ]
+  }
+}

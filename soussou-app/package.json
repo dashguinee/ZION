@@ -1,0 +1,23 @@
+{
+  "name": "soussou-ai-app",
+  "version": "1.0.0",
+  "description": "Soussou AI - The First AI That Speaks Susu",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "node backend/server.js",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "openai": "^4.67.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

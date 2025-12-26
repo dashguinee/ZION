@@ -1,0 +1,333 @@
+{
+  "freeTvHd": {
+    "total": 1851,
+    "groups": 92,
+    "tested": 20,
+    "working": 5,
+    "rate": 25,
+    "topGroups": [
+      [
+        "Italy",
+        388
+      ],
+      [
+        "VOD Italy",
+        155
+      ],
+      [
+        "UK",
+        57
+      ],
+      [
+        "Russia",
+        56
+      ],
+      [
+        "Hungary",
+        53
+      ]
+    ],
+    "sampleWorking": [
+      {
+        "name": "Peer TV Südtirol",
+        "group": "Italy",
+        "url": "https://iptv.peer.biz/live/peertv.m3u8"
+      },
+      {
+        "name": "Север",
+        "group": "Russia",
+        "url": "https://live.mediacdn.ru/sr1/sever/playlist.m3u8"
+      },
+      {
+        "name": "Al Saudiya",
+        "group": "Saudi Arabia",
+        "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-saudi-tv/2ad66056b51fd8c1b624854623112e43/index.m3u8"
+      },
+      {
+        "name": "RTV Noord",
+        "group": "Netherlands",
+        "url": "https://media.rtvnoord.nl/live/rtvnoord/tv/playlist.m3u8"
+      },
+      {
+        "name": "Al Rayyan Old TV",
+        "group": "Qatar",
+        "url": "https://alrayyancdn.vidgyor.com/pub-nooldraybinbdh/liveabr/playlist_dvr.m3u8"
+      }
+    ]
+  },
+  "english": {
+    "total": 2362,
+    "groups": 84,
+    "tested": 20,
+    "working": 7,
+    "rate": 35,
+    "topGroups": [
+      [
+        "General",
+        372
+      ],
+      [
+        "Undefined",
+        342
+      ],
+      [
+        "Religious",
+        205
+      ],
+      [
+        "News",
+        189
+      ],
+      [
+        "Sports",
+        155
+      ]
+    ],
+    "sampleWorking": [
+      {
+        "name": "Unknown",
+        "group": "Entertainment",
+        "url": "https://epiconvh.akamaized.net/live/epic/master.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "General",
+        "url": "https://qazaqstantv-stream.qazcdn.com/international/international/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "News",
+        "url": "https://vg-tv9yupp.akamaized.net/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/vglive-sk-237347/main.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Religious",
+        "url": "https://livemtaasia.akamaized.net/hls/live/2039224/mta6asia/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Movies",
+        "url": "https://maverick-maverick-black-cinema-3-us.roku.wurl.tv/playlist.m3u8"
+      }
+    ]
+  },
+  "french": {
+    "total": 492,
+    "groups": 35,
+    "tested": 15,
+    "working": 6,
+    "rate": 40,
+    "topGroups": [
+      [
+        "General",
+        154
+      ],
+      [
+        "Religious",
+        52
+      ],
+      [
+        "News",
+        48
+      ],
+      [
+        "Undefined",
+        43
+      ],
+      [
+        "Entertainment",
+        38
+      ]
+    ],
+    "sampleWorking": [
+      {
+        "name": "Unknown",
+        "group": "Religious",
+        "url": "https://chlivemta.akamaized.net/hls/live/2010555/mtaafrica2/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Religious",
+        "url": "https://strhlslb01.streamakaci.tv/str_mtv_mtv/str_mtv_multi/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "News",
+        "url": "https://hls.newworldtv.com/nw-info/video/live.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "General",
+        "url": "https://strhls.streamakaci.tv/ortb/ortb1-multi/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Religious",
+        "url": "https://chlivemta.akamaized.net/hls/live/2010555/mtaafrica1/playlist.m3u8"
+      }
+    ]
+  },
+  "news": {
+    "total": 865,
+    "groups": 25,
+    "tested": 15,
+    "working": 11,
+    "rate": 73,
+    "topGroups": [
+      [
+        "News",
+        794
+      ],
+      [
+        "General;News",
+        17
+      ],
+      [
+        "News;Public",
+        9
+      ],
+      [
+        "Culture;News",
+        7
+      ],
+      [
+        "Business;News",
+        6
+      ]
+    ],
+    "sampleWorking": [
+      {
+        "name": "Unknown",
+        "group": "News",
+        "url": "https://live.france24.com/hls/live/2037220-b/F24_ES_HI_HLS/master_5000.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "News",
+        "url": "https://jmc-live.ercdn.net/altaghier/altaghier.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "News",
+        "url": "https://turkmedya-live.ercdn.net/tv360/tv360.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Business;News",
+        "url": "https://bcovlive-a.akamaihd.net/ed81ac1118414d4fa893d3a83ccec9be/eu-central-1/6203311941001/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "News",
+        "url": "https://6prlive.akamaized.net/hls/live/2033806/6PR/index.m3u8"
+      }
+    ]
+  },
+  "nigeria": {
+    "total": 64,
+    "groups": 12,
+    "tested": 10,
+    "working": 6,
+    "rate": 60,
+    "topGroups": [
+      [
+        "Religious",
+        27
+      ],
+      [
+        "Undefined",
+        14
+      ],
+      [
+        "News",
+        10
+      ],
+      [
+        "General",
+        3
+      ],
+      [
+        "Culture",
+        3
+      ]
+    ],
+    "sampleWorking": [
+      {
+        "name": "Unknown",
+        "group": "Religious",
+        "url": "https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_010/Stream/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Undefined",
+        "url": "https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_013/Stream/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Religious",
+        "url": "https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_014/Stream/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "General;Religious",
+        "url": "https://live.approvaltv.com/approvaltv/index.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "News",
+        "url": "https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_029/Stream/playlist.m3u8"
+      }
+    ]
+  },
+  "southAfrica": {
+    "total": 41,
+    "groups": 16,
+    "tested": 10,
+    "working": 4,
+    "rate": 40,
+    "topGroups": [
+      [
+        "Undefined",
+        11
+      ],
+      [
+        "Religious",
+        8
+      ],
+      [
+        "News",
+        4
+      ],
+      [
+        "General",
+        3
+      ],
+      [
+        "Entertainment;Family;General",
+        2
+      ]
+    ],
+    "sampleWorking": [
+      {
+        "name": "Unknown",
+        "group": "Entertainment;Family",
+        "url": "https://cdn.freevisiontv.co.za/sttv/smil:soweto.stream.smil/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "News",
+        "url": "https://sabconetanw.cdn.mangomolo.com/news/smil:news.stream.smil/master.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Entertainment",
+        "url": "https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_002/Stream/playlist.m3u8"
+      },
+      {
+        "name": "Unknown",
+        "group": "Music",
+        "url": "https://livestream2.bokradio.co.za/hls/Bok5c.m3u8"
+      }
+    ]
+  }
+}

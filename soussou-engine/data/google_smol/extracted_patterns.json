@@ -1,0 +1,257 @@
+{
+  "source": "Google SMOL Dataset",
+  "extracted_date": "2025-12-26",
+  "patterns": {
+    "pronouns": {
+      "i": "N'tan",
+      "you": "wotan",
+      "we": "mou tan",
+      "he": "ä",
+      "it": "atan",
+      "me": "ntan",
+      "they": "etan",
+      "her": "akha",
+      "she": "guinèma",
+      "them": "etan",
+      "us": "mou tan",
+      "him": "ä"
+    },
+    "possessives": {
+      "my": "oun",
+      "your": "i",
+      "her": "akha",
+      "our": "mou",
+      "their": "é",
+      "mine": "amafén",
+      "his": "agbé",
+      "its": "a kha"
+    },
+    "question_words": {
+      "what": "nansé",
+      "why": "nanfera",
+      "how": "di",
+      "when": "wakhati moundoun",
+      "where": "mindé",
+      "who": "OMS",
+      "which": "ndé"
+    },
+    "verbs": {},
+    "negation_marker": "mu",
+    "suffixes": {
+      "-xi": "perfective/past",
+      "-fe": "verb nominalizer (action)",
+      "-ra": "locative (at/in)",
+      "-ma": "possessive/on",
+      "-de": "agent/doer",
+      "-an": "common noun ending",
+      "-ni": "locative/in"
+    },
+    "word_order": {
+      "basic": "Subject + Object + Verb (SOV)",
+      "negation": "Subject + mu + Verb",
+      "question": "Question word typically at start or end"
+    }
+  },
+  "sentence_examples": [
+    {
+      "en": "It allows me to work by following my vibes and molding my teaching style to the learning style of the audience.",
+      "sus": "Bira fe n ma magno khoungnee fokhora n malimanE n kha no haranderaba ki sugandide tulima tiiye kha ma tinkangni kEgnama."
+    },
+    {
+      "en": "The unrelenting soul-force of those who would hold us accountable blows that all away.",
+      "sus": "SondonmE mu wule falama-mikhi ne khee sEmbE wama a ma senfe a yo mu na moho bE e bara na birin na lOE."
+    },
+    {
+      "en": "When taken regularly in therapeutic doses, ginger root can effectively cure nausea;",
+      "sus": "GnOhOmi dongni tEmui birin a seridaxi a mage dandan ma nE;"
+    },
+    {
+      "en": "They accomplished their goals and created a legacy of self-determination to which others may aspire.",
+      "sus": "E wahonfe bara raba e man fa yEtE kan sEbE soki findi kEra mixi gbEtee no ma gnErE de kira ma han hon ma."
+    },
+    {
+      "en": "But faster economic activity could also translate into some degree of inflation.",
+      "sus": "Nafuli fengni na ma fire fan na No manE see sare ra tede."
+    },
+    {
+      "en": "The main characteristics a stone should possess are uniform surface, grain, and density.",
+      "sus": "GEmE kolon ma a gna naxan, a fari nun xOri a nun a ma nOxunxi ki."
+    },
+    {
+      "en": "Lettuce, no matter the variety, is considered a cool-weather crop.",
+      "sus": "Salad burEhE, a fan findi a mOli yora a kolongni xinbeli tEmui san si nan na."
+    },
+    {
+      "en": "It was a trick to lure foolish humans to an ogre who would teach them a very valuable lesson.",
+      "sus": "KOta nan nu ara mixi dugulee ma bendun fera magaxui ma na xan sariyE xOrO sa e fari."
+    },
+    {
+      "en": "Just to clarify, though, assertive is not the same as aggressive or arrogant.",
+      "sus": "Fee yaibaki ma, i naxa i yEtE kEgna a nun sEbE ma sumbu na nu woyEn kobi."
+    },
+    {
+      "en": "The bus, normally crowded, was stunningly nearly empty at this hour.",
+      "sus": "Nan ma gnixi nE woto rafexira gi waxatima se mu a kui."
+    },
+    {
+      "en": "She can do things with her tongue most of us can't even fathom, like touch her elbow or lick her own ear.",
+      "sus": "A nOma fe raba deba de a nEngnira won ya ma mixi gbe gbe mu nOma, a nOma xali a nin gni ma konde."
+    },
+    {
+      "en": "He ran a dairy herd, kept sheep, and grew potatoes, cereals, and wheat-straw for thatching.",
+      "sus": "A agi xinE dalisee fOxOra, yEe a nun burExE ma see POM detEree nun tenge sOtofe ma."
+    },
+    {
+      "en": "Each step unleashed a waft of that divine scent, filling my lungs with pure bliss.",
+      "sus": "Na keren keren ma biri yilangni fee nan na kelixi nan xiri fangni n bOgnE kui rafexi tEp."
+    },
+    {
+      "en": "Lower population means a lower chance of having an accident in addition to fewer liability claims.",
+      "sus": "GnamanE die ne xe magoro ma fura acident sOtOde sOnOya ra a nun ma xui mu e kon e yo ma sen de."
+    },
+    {
+      "en": "We’ll be glad to provide expert advice to assist you with how much you can comfortably afford to borrow.",
+      "sus": "Maxo sEwa ma afangnira i ra sifema a fangnira fee ma moxo kolon gni sOtOxi naxan fee wuya nan nOma i mali de a fangnira kira wuyagni ma."
+    },
+    {
+      "en": "The works span the gamut from medicine to astronomy, from Quranic exegesis to philosophy and poetry.",
+      "sus": "Waliee ne xe santeya fe ma toxi a nu xuruan xa senbE tarixa masengnee falafe."
+    },
+    {
+      "en": "Adaptability - flexible, agile mindset, optimistic approach;",
+      "sus": "Bore xayifan - bOrOxE , sariyE safe, xaxili, sabuee; i limaniya nan soma i yi."
+    },
+    {
+      "en": "Being grateful is showing appreciation with kindness, whereas being thankful is simply being pleased and relieved.",
+      "sus": "Findi fe fekolongni a ma xi nE fekolongni bOgnE fangni, adama fekolongni mixi bOrOxOxinan a ra yandi."
+    },
+    {
+      "en": "Add these ingredients: oil, white wine vinegar, salt, and freshly ground black pepper.",
+      "sus": "See safe: ture, vinEgre fixE, fOxE a nun gbEgbE xinde."
+    },
+    {
+      "en": "Make the best of it before we depart for the airport in the early afternoon and bid farewell to Mauritius.",
+      "sus": "I nOfe raba xan benun i xa kele aeroport sin nEn karabi gnungui rabirEma."
+    },
+    {
+      "en": "With amazing enthusiasm they are at work, and wherever I pass they wave and greet with a loud call.",
+      "sus": "BOgnE fangnira i mulama na xan na, e na walide a nunfan n nu dangi dendenxEn e n xEa fangnira e xuii tegnira."
+    },
+    {
+      "en": "He is a symbol of a passionate but very frustrated, even misguided, leader.",
+      "sus": "A tokima mengE ra mixi nan ara nEtEna xan bE kOnOn animisaxi a man bOgnE, ra gna xuxi a ma."
+    },
+    {
+      "en": "The book's title was \"Time to Assess Invalid Ideas.\"",
+      "sus": "Buki nu xili nE ''kolongni sOtO fe xaxili foree dangixiee ma\""
+    },
+    {
+      "en": "Therefore, before you take on a permanent relationship, consider a trial run.",
+      "sus": "SOnOn, xan be nu i xa i so ma lan boreya kui, a mato sinden."
+    },
+    {
+      "en": "Hence, every food item made of grain got scarcer, rural income declined, and every farmer fell deeper into debt.",
+      "sus": "SOnOn, sansi xOri sOtOfe bara ra xOrOxO, xEsaee xa geni bara xurun, a nun doni bara gbo e ma kifan gnira."
+    },
+    {
+      "en": "The peculiar thing about a trauma anniversary is that you share it with someone horrible.",
+      "sus": "Mixi xaxili matongo xa gnE yigbilengni luxi nE aloo wo nun mixi ma gaxui nan see yi tOxun fe."
+    },
+    {
+      "en": "Buddha, in one of his famous quotes, pointed out that the origin of suffering is precisely attachment.",
+      "sus": "Buda, xa masengni xagigE de kui, a tOrE fOlOxi dEn dEn xEn a yi dOxOxi fOlOxi mEnni nE."
+    },
+    {
+      "en": "But I forgot the initially set password with all the excitement.",
+      "sus": "KOnOn n nEmuxi agbengbengnira dangi fe woyEngni nan na naxan amasenxi a birin fangni na a ra."
+    },
+    {
+      "en": "Standard glow paint, weather-resistant acrylic paint brand delivering rich bold color markers!",
+      "sus": "See masoxi a kiyan ma, a buuma a karaxan watixati ki ma a man gningi karin!"
+    },
+    {
+      "en": "Neither row number nor column letter in an absolute reference will change.",
+      "sus": "Konti mu a ra sEbEli mu a ra sen mu ma sarama."
+    },
+    {
+      "en": "Thus, the connection between relationship status and exercise has received significant research attention.",
+      "sus": "Nakui, n gaxa keren ya a nun fate ma xOrO longori findi xi bOgnE sa nan fe xon na fegne bE."
+    },
+    {
+      "en": "We treat behavioral problems, emotional distress, cognitive loss, prolonged grief reactions, and severe mental illness.",
+      "sus": "Moxo adaama kEgna, tagangni,xaxili fure a nun a xa moya yi fure dandan ma, moxo sesomaya fure fan dandan ma."
+    },
+    {
+      "en": "So, considering the ratio of net value added to gross output does not yield a complete picture.",
+      "sus": "Nakui, wali raba daxi misalife fe ra a yaabi ra na mu a ma senxi a bara findi wali kamalixi ra."
+    },
+    {
+      "en": "You can also work with a virtual assistant or someone in your company who can create your resume from scratch.",
+      "sus": "Mixi noma kaffude i ma walide wo nun na xan mu yireke ren xa na mu wo mixi na xan na lanxundE keren."
+    },
+    {
+      "en": "Fabulous amenities including resort style pool, fitness center, club room and outdoor entertainment area.",
+      "sus": "Se xili kangni a nun pisine, fate ma xoroxo banxi, anun kEnE ma."
+    },
+    {
+      "en": "The grave-digging is a very important aspect of the Koireng funeral ceremony.",
+      "sus": "Gaburi ge fe findi xi fe xagigE nan na koireng xa ma ra gatE lOE."
+    },
+    {
+      "en": "As images of the perfectly rational Creator, humans strive for internal consistency.",
+      "sus": "Alo misali yalangni a fan gnira, adamee wakilixi e yEtE bE."
+    },
+    {
+      "en": "At thirty years of age a girl is actually currently 15 years past her child-bearing prime.",
+      "sus": "A gnE tongo sa xan, ginE dumEdi bara gnE 15 fu nu suli gbEtE sOtO dangi fe a di sOtO gnE ra."
+    },
+    {
+      "en": "Half of Hook’s crew was already gone, and the remaining few were so drunk they could barely stand.",
+      "sus": "Hook xa gnama tagi bara nu siga, a dOnxOe bara sisi e gnan mu nOma tide."
+    },
+    {
+      "en": "He's fun, funny, clever, generous and absolutely wonderful company.",
+      "sus": "A bere ma, a ma yele, a xaxili fan, a bOgnE fan, a xa malan boreya fan yati yati."
+    },
+    {
+      "en": "Imagine not worrying about urinary tract infection, painful bladder stones, or aggressive kidney diseases.",
+      "sus": "Wo ma gnoxun wo na xa kontOfili fure xunxurie ra karabi wo xOli fude ma, xOnE ma wo xOlisa de ma, a nun furee xee sEmBE mee."
+    },
+    {
+      "en": "I was proud to beat my opponent with a witness present.",
+      "sus": "SEwE nan nu na a ra nan n gere fa bOnbO fe sede ya xOri."
+    },
+    {
+      "en": "Treatment options depend on the duration or frequency of ear symptoms.",
+      "sus": "Dandan gnie fatanxi waxati nan na xa na mu tuli fure xa laman tun gni wuyaxi."
+    },
+    {
+      "en": "This Toyota facility employed approximately 150 employees during the beginning of its operation.",
+      "sus": "Gi toyota banxi nun mixi kEmE mixi 150 tonge suli nan nu wali ma a yi a baxi rabi de."
+    },
+    {
+      "en": "Who can forget the oreo cookie and peanut butter challenge?",
+      "sus": "N de nOma nE mude bisikiti oreo ma xa xili ma na nun kansi bEra?"
+    },
+    {
+      "en": "Furthermore, sweep, dust, or vacuum it regularly and occasionally wipe your cork flooring with a damp mop.",
+      "sus": "Nan yiren de, yire ma kOfe, xube xa na mu lErin de xinbeli."
+    },
+    {
+      "en": "For a while, I was like the parrot trapped in the corporate cage of money and a prosperous future.",
+      "sus": "Waxati n de ma, n nu luxi nE alo kaloe kObiri kulE kui a nun yare ma sigE."
+    },
+    {
+      "en": "During their extended game of tag, one of them darted inside a small cave near the summit of an unknown hill.",
+      "sus": "E tonu bere ma konkoe lan ma kui giya din n de nu na na, na xan mu kolon xi."
+    },
+    {
+      "en": "Either abandon the thread, admit defeat, or continue digging yourself into this hole.",
+      "sus": "Kere i gbilen louti fOxOra, xa na mu i tin lOsi ra, xa na mu i yEtE kan xa yili ge."
+    },
+    {
+      "en": "Due to this fact, it is usually crucial to track down a subject that you are passionate about.",
+      "sus": "A nondi ki ma bira fe fe keren wo ni waxon ma fe."
+    }
+  ]
+}

@@ -1,0 +1,877 @@
+{
+  "harvestDate": "2025-12-26T09:13:30.778Z",
+  "analysis": {
+    "total": 77,
+    "successful": 77,
+    "matched": 0,
+    "patterns": {
+      "pronouns": {},
+      "verbs": {},
+      "nouns": {},
+      "phrases": [
+        {
+          "en": "good morning",
+          "sus": "Tanàmoufègnê"
+        },
+        {
+          "en": "good afternoon",
+          "sus": "Wofègnè"
+        },
+        {
+          "en": "good evening",
+          "sus": "Wo nounmaré"
+        },
+        {
+          "en": "good night",
+          "sus": "Allah kha wo khi"
+        },
+        {
+          "en": "see you later",
+          "sus": "Won narala'ma"
+        },
+        {
+          "en": "take care",
+          "sus": "Iyèma sokhouï afanyira"
+        },
+        {
+          "en": "have a nice day",
+          "sus": "Wo fègnè"
+        },
+        {
+          "en": "where are you going",
+          "sus": "Wo sigafe minden"
+        },
+        {
+          "en": "where do you live",
+          "sus": "I logékhi mindé"
+        },
+        {
+          "en": "how old are you",
+          "sus": "Ignè yerara"
+        },
+        {
+          "en": "do you understand",
+          "sus": "Wo bara a faxamu"
+        },
+        {
+          "en": "can you help me",
+          "sus": "I nOma n malide"
+        },
+        {
+          "en": "what time is it",
+          "sus": "Waxati mundun na"
+        },
+        {
+          "en": "how much does it cost",
+          "sus": "A sare na xan na"
+        },
+        {
+          "en": "i am from guinea",
+          "sus": "N kelixi Gine nan ma"
+        },
+        {
+          "en": "i speak susu",
+          "sus": "N susu xui nan falama"
+        },
+        {
+          "en": "i am learning susu",
+          "sus": "N na susu xaran fe"
+        },
+        {
+          "en": "i understand a little",
+          "sus": "N bara a faxamu dondoroti"
+        },
+        {
+          "en": "please speak slowly",
+          "sus": "Wo xa wOyEn dOgni ra"
+        },
+        {
+          "en": "i am lost",
+          "sus": "N bara lOE"
+        },
+        {
+          "en": "i am sick",
+          "sus": "N furaxi"
+        },
+        {
+          "en": "i am going home",
+          "sus": "N na sigafe n xOnE"
+        },
+        {
+          "en": "i am coming back",
+          "sus": "N na gbilenfe"
+        },
+        {
+          "en": "i am waiting for you",
+          "sus": "N na wo nan mamɛfe"
+        },
+        {
+          "en": "i will come tomorrow",
+          "sus": "N fama nE tina"
+        },
+        {
+          "en": "i went to the market",
+          "sus": "N naxa siga makiti"
+        },
+        {
+          "en": "she is cooking food",
+          "sus": "A na donse yailan fe"
+        },
+        {
+          "en": "he is working",
+          "sus": "A na walife"
+        },
+        {
+          "en": "they are sleeping",
+          "sus": "E na xife"
+        },
+        {
+          "en": "i am thirsty",
+          "sus": "ye xOli na n ma"
+        },
+        {
+          "en": "give me water",
+          "sus": "Wo ye fi n ma"
+        },
+        {
+          "en": "the food is good",
+          "sus": "Donse fan"
+        },
+        {
+          "en": "i want to eat",
+          "sus": "N wama donse donfe"
+        },
+        {
+          "en": "let us eat",
+          "sus": "Won xa donse don"
+        },
+        {
+          "en": "this is my mother",
+          "sus": "N nga nan yi ki"
+        },
+        {
+          "en": "this is my father",
+          "sus": "N baba nan yi ki"
+        },
+        {
+          "en": "i have two children",
+          "sus": "N ma di firin nan na"
+        },
+        {
+          "en": "my brother is here",
+          "sus": "N xunya na be"
+        },
+        {
+          "en": "my sister is there",
+          "sus": "N xunya ginE na na"
+        },
+        {
+          "en": "it is raining",
+          "sus": "TunE na gorofe"
+        },
+        {
+          "en": "the weather is good",
+          "sus": "waxati fan"
+        },
+        {
+          "en": "the sky is clear",
+          "sus": "koore fiixE"
+        },
+        {
+          "en": "it is very hot today",
+          "sus": "A bara xOrOxO to"
+        },
+        {
+          "en": "i am very happy",
+          "sus": "N bara ɲɛlɛxin ki fanyi ra"
+        },
+        {
+          "en": "i am very tired",
+          "sus": "N bara tagan ki fanyi ra"
+        },
+        {
+          "en": "i am not feeling well",
+          "sus": "N mu yalanxi"
+        },
+        {
+          "en": "i miss you",
+          "sus": "ikholinan ma"
+        },
+        {
+          "en": "i am grateful",
+          "sus": "N bara wo tantun"
+        },
+        {
+          "en": "i am sorry",
+          "sus": "N bara nimisa"
+        },
+        {
+          "en": "how much",
+          "sus": "Yeri"
+        },
+        {
+          "en": "too expensive",
+          "sus": "A sare xOrOxO"
+        },
+        {
+          "en": "give me discount",
+          "sus": "Wo n ma discount fi n ma"
+        },
+        {
+          "en": "i will buy this",
+          "sus": "N yi sara ma"
+        },
+        {
+          "en": "i have money",
+          "sus": "kObiri na n yi ra"
+        },
+        {
+          "en": "i have no money",
+          "sus": "N mu kObiri yo sOtOxi"
+        },
+        {
+          "en": "turn left",
+          "sus": "Wo gbilen yirefanyi ma"
+        },
+        {
+          "en": "turn right",
+          "sus": "Wo gbilen yirefanyi ma"
+        },
+        {
+          "en": "go straight",
+          "sus": "Wo siga tinxin gni"
+        },
+        {
+          "en": "stop here",
+          "sus": "Wo ti be"
+        },
+        {
+          "en": "the house is near",
+          "sus": "Banxi na yire makuye"
+        },
+        {
+          "en": "the market is far",
+          "sus": "Makiti ma kuya"
+        },
+        {
+          "en": "today",
+          "sus": "Too"
+        },
+        {
+          "en": "tomorrow",
+          "sus": "Tina"
+        },
+        {
+          "en": "yesterday",
+          "sus": "Khoro"
+        },
+        {
+          "en": "this morning",
+          "sus": "To gEgEn"
+        },
+        {
+          "en": "this evening",
+          "sus": "To nunmare"
+        },
+        {
+          "en": "next week",
+          "sus": "LOxun naxan fama"
+        },
+        {
+          "en": "last month",
+          "sus": "Kike dangixi"
+        },
+        {
+          "en": "come here",
+          "sus": "Fâ bé"
+        },
+        {
+          "en": "go away",
+          "sus": "I masiga"
+        },
+        {
+          "en": "sit down",
+          "sus": "Wo dOxO"
+        },
+        {
+          "en": "stand up",
+          "sus": "Keli"
+        },
+        {
+          "en": "wait",
+          "sus": "Wo mamèti"
+        },
+        {
+          "en": "listen",
+          "sus": "Aramèfé"
+        },
+        {
+          "en": "look",
+          "sus": "Amatofé"
+        },
+        {
+          "en": "be quiet",
+          "sus": "Wo xa dundu"
+        },
+        {
+          "en": "hurry up",
+          "sus": "I mafoura"
+        }
+      ]
+    },
+    "matchRate": "0.0%"
+  },
+  "results": [
+    {
+      "english": "Good morning",
+      "google": "Tanàmoufègnê",
+      "ours": "fanyi [morning]",
+      "match": false
+    },
+    {
+      "english": "Good afternoon",
+      "google": "Wofègnè",
+      "ours": "fanyi [afternoon]",
+      "match": false
+    },
+    {
+      "english": "Good evening",
+      "google": "Wo nounmaré",
+      "ours": "fanyi [evening]",
+      "match": false
+    },
+    {
+      "english": "Good night",
+      "google": "Allah kha wo khi",
+      "ours": "fanyi koe",
+      "match": false
+    },
+    {
+      "english": "See you later",
+      "google": "Won narala'ma",
+      "ours": "to i [later]",
+      "match": false
+    },
+    {
+      "english": "Take care",
+      "google": "Iyèma sokhouï afanyira",
+      "ours": "ton [care]",
+      "match": false
+    },
+    {
+      "english": "Have a nice day",
+      "google": "Wo fègnè",
+      "ours": "[have] [nice] lOnyi",
+      "match": false
+    },
+    {
+      "english": "Where are you going",
+      "google": "Wo sigafe minden",
+      "ours": "minende [are] i [going]",
+      "match": false
+    },
+    {
+      "english": "Where do you live",
+      "google": "I logékhi mindé",
+      "ours": "minende [do] i [live]",
+      "match": false
+    },
+    {
+      "english": "How old are you",
+      "google": "Ignè yerara",
+      "ours": "di fori [are] i",
+      "match": false
+    },
+    {
+      "english": "Do you understand",
+      "google": "Wo bara a faxamu",
+      "ours": "[do] i [understand]",
+      "match": false
+    },
+    {
+      "english": "Can you help me",
+      "google": "I nOma n malide",
+      "ours": "[can] i mali [me]",
+      "match": false
+    },
+    {
+      "english": "What time is it",
+      "google": "Waxati mundun na",
+      "ours": "munse [time] [is] a",
+      "match": false
+    },
+    {
+      "english": "How much does it cost",
+      "google": "A sare na xan na",
+      "ours": "di [much] [does] a [cost]",
+      "match": false
+    },
+    {
+      "english": "I am from Guinea",
+      "google": "N kelixi Gine nan ma",
+      "ours": "n [from] [guinea]",
+      "match": false
+    },
+    {
+      "english": "I speak Susu",
+      "google": "N susu xui nan falama",
+      "ours": "n wori [susu]",
+      "match": false
+    },
+    {
+      "english": "I am learning Susu",
+      "google": "N na susu xaran fe",
+      "ours": "n [learning] [susu]",
+      "match": false
+    },
+    {
+      "english": "I understand a little",
+      "google": "N bara a faxamu dondoroti",
+      "ours": "n [understand] [little]",
+      "match": false
+    },
+    {
+      "english": "Please speak slowly",
+      "google": "Wo xa wOyEn dOgni ra",
+      "ours": "nbari khandi wori [slowly]",
+      "match": false
+    },
+    {
+      "english": "I am lost",
+      "google": "N bara lOE",
+      "ours": "n [lost]",
+      "match": false
+    },
+    {
+      "english": "I am sick",
+      "google": "N furaxi",
+      "ours": "n [sick]",
+      "match": false
+    },
+    {
+      "english": "I am going home",
+      "google": "N na sigafe n xOnE",
+      "ours": "n [going] [home]",
+      "match": false
+    },
+    {
+      "english": "I am coming back",
+      "google": "N na gbilenfe",
+      "ours": "n [coming] [back]",
+      "match": false
+    },
+    {
+      "english": "I am waiting for you",
+      "google": "N na wo nan mamɛfe",
+      "ours": "n [waiting] [for] i",
+      "match": false
+    },
+    {
+      "english": "I will come tomorrow",
+      "google": "N fama nE tina",
+      "ours": "n [will] fa [tomorrow]",
+      "match": false
+    },
+    {
+      "english": "I went to the market",
+      "google": "N naxa siga makiti",
+      "ours": "n [went] ma [market]",
+      "match": false
+    },
+    {
+      "english": "She is cooking food",
+      "google": "A na donse yailan fe",
+      "ours": "a [cooking] donse",
+      "match": false
+    },
+    {
+      "english": "He is working",
+      "google": "A na walife",
+      "ours": "a [working]",
+      "match": false
+    },
+    {
+      "english": "They are sleeping",
+      "google": "E na xife",
+      "ours": "e [sleeping]",
+      "match": false
+    },
+    {
+      "english": "I am thirsty",
+      "google": "ye xOli na n ma",
+      "ours": "n [thirsty]",
+      "match": false
+    },
+    {
+      "english": "Give me water",
+      "google": "Wo ye fi n ma",
+      "ours": "so [me] ye",
+      "match": false
+    },
+    {
+      "english": "The food is good",
+      "google": "Donse fan",
+      "ours": "donse fanyi",
+      "match": false
+    },
+    {
+      "english": "I want to eat",
+      "google": "N wama donse donfe",
+      "ours": "n waxi na [to] don",
+      "match": false
+    },
+    {
+      "english": "Let us eat",
+      "google": "Won xa donse don",
+      "ours": "[let] [us] don",
+      "match": false
+    },
+    {
+      "english": "This is my mother",
+      "google": "N nga nan yi ki",
+      "ours": "[this] [is] n'ma nga",
+      "match": false
+    },
+    {
+      "english": "This is my father",
+      "google": "N baba nan yi ki",
+      "ours": "[this] [is] n'ma baba",
+      "match": false
+    },
+    {
+      "english": "I have two children",
+      "google": "N ma di firin nan na",
+      "ours": "n hayi na [two] [children]",
+      "match": false
+    },
+    {
+      "english": "My brother is here",
+      "google": "N xunya na be",
+      "ours": "n'ma [brother] [is] [here]",
+      "match": false
+    },
+    {
+      "english": "My sister is there",
+      "google": "N xunya ginE na na",
+      "ours": "n'ma [sister] [is] [there]",
+      "match": false
+    },
+    {
+      "english": "It is raining",
+      "google": "TunE na gorofe",
+      "ours": "a [raining]",
+      "match": false
+    },
+    {
+      "english": "The weather is good",
+      "google": "waxati fan",
+      "ours": "[weather] fanyi",
+      "match": false
+    },
+    {
+      "english": "The sky is clear",
+      "google": "koore fiixE",
+      "ours": "[sky] [is] [clear]",
+      "match": false
+    },
+    {
+      "english": "It is very hot today",
+      "google": "A bara xOrOxO to",
+      "ours": "a [very] xoroxo [today]",
+      "match": false
+    },
+    {
+      "english": "I am very happy",
+      "google": "N bara ɲɛlɛxin ki fanyi ra",
+      "ours": "n [very] sewa",
+      "match": false
+    },
+    {
+      "english": "I am very tired",
+      "google": "N bara tagan ki fanyi ra",
+      "ours": "n [very] fata",
+      "match": false
+    },
+    {
+      "english": "I am not feeling well",
+      "google": "N mu yalanxi",
+      "ours": "n mu [feeling] [well]",
+      "match": false
+    },
+    {
+      "english": "I miss you",
+      "google": "ikholinan ma",
+      "ours": "n [miss] i",
+      "match": false
+    },
+    {
+      "english": "I am grateful",
+      "google": "N bara wo tantun",
+      "ours": "n [grateful]",
+      "match": false
+    },
+    {
+      "english": "I am sorry",
+      "google": "N bara nimisa",
+      "ours": "n tantu",
+      "match": false
+    },
+    {
+      "english": "How much",
+      "google": "Yeri",
+      "ours": "di [much]",
+      "match": false
+    },
+    {
+      "english": "Too expensive",
+      "google": "A sare xOrOxO",
+      "ours": "[too] [expensive]",
+      "match": false
+    },
+    {
+      "english": "Give me discount",
+      "google": "Wo n ma discount fi n ma",
+      "ours": "so [me] [discount]",
+      "match": false
+    },
+    {
+      "english": "I will buy this",
+      "google": "N yi sara ma",
+      "ours": "n [will] [buy] [this]",
+      "match": false
+    },
+    {
+      "english": "I have money",
+      "google": "kObiri na n yi ra",
+      "ours": "n hayi na kObiri",
+      "match": false
+    },
+    {
+      "english": "I have no money",
+      "google": "N mu kObiri yo sOtOxi",
+      "ours": "n hayi na ade kObiri",
+      "match": false
+    },
+    {
+      "english": "Turn left",
+      "google": "Wo gbilen yirefanyi ma",
+      "ours": "[turn] [left]",
+      "match": false
+    },
+    {
+      "english": "Turn right",
+      "google": "Wo gbilen yirefanyi ma",
+      "ours": "[turn] [right]",
+      "match": false
+    },
+    {
+      "english": "Go straight",
+      "google": "Wo siga tinxin gni",
+      "ours": "siga [straight]",
+      "match": false
+    },
+    {
+      "english": "Stop here",
+      "google": "Wo ti be",
+      "ours": "[stop] [here]",
+      "match": false
+    },
+    {
+      "english": "The house is near",
+      "google": "Banxi na yire makuye",
+      "ours": "banxi [is] [near]",
+      "match": false
+    },
+    {
+      "english": "The market is far",
+      "google": "Makiti ma kuya",
+      "ours": "[market] [is] [far]",
+      "match": false
+    },
+    {
+      "english": "Today",
+      "google": "Too",
+      "ours": "[today]",
+      "match": false
+    },
+    {
+      "english": "Tomorrow",
+      "google": "Tina",
+      "ours": "[tomorrow]",
+      "match": false
+    },
+    {
+      "english": "Yesterday",
+      "google": "Khoro",
+      "ours": "[yesterday]",
+      "match": false
+    },
+    {
+      "english": "This morning",
+      "google": "To gEgEn",
+      "ours": "[this] [morning]",
+      "match": false
+    },
+    {
+      "english": "This evening",
+      "google": "To nunmare",
+      "ours": "[this] [evening]",
+      "match": false
+    },
+    {
+      "english": "Next week",
+      "google": "LOxun naxan fama",
+      "ours": "[next] [week]",
+      "match": false
+    },
+    {
+      "english": "Last month",
+      "google": "Kike dangixi",
+      "ours": "[last] [month]",
+      "match": false
+    },
+    {
+      "english": "Come here",
+      "google": "Fâ bé",
+      "ours": "fa [here]",
+      "match": false
+    },
+    {
+      "english": "Go away",
+      "google": "I masiga",
+      "ours": "siga [away]",
+      "match": false
+    },
+    {
+      "english": "Sit down",
+      "google": "Wo dOxO",
+      "ours": "[sit] [down]",
+      "match": false
+    },
+    {
+      "english": "Stand up",
+      "google": "Keli",
+      "ours": "[stand] [up]",
+      "match": false
+    },
+    {
+      "english": "Wait",
+      "google": "Wo mamèti",
+      "ours": "[wait]",
+      "match": false
+    },
+    {
+      "english": "Listen",
+      "google": "Aramèfé",
+      "ours": "[listen]",
+      "match": false
+    },
+    {
+      "english": "Look",
+      "google": "Amatofé",
+      "ours": "[look]",
+      "match": false
+    },
+    {
+      "english": "Be quiet",
+      "google": "Wo xa dundu",
+      "ours": "[be] [quiet]",
+      "match": false
+    },
+    {
+      "english": "Hurry up",
+      "google": "I mafoura",
+      "ours": "[hurry] [up]",
+      "match": false
+    }
+  ],
+  "additions": {
+    "phrases": {
+      "good morning": "Tanàmoufègnê",
+      "good afternoon": "Wofègnè",
+      "good evening": "Wo nounmaré",
+      "good night": "Allah kha wo khi",
+      "see you later": "Won narala'ma",
+      "take care": "Iyèma sokhouï afanyira",
+      "have a nice day": "Wo fègnè",
+      "where are you going": "Wo sigafe minden",
+      "where do you live": "I logékhi mindé",
+      "how old are you": "Ignè yerara",
+      "do you understand": "Wo bara a faxamu",
+      "can you help me": "I nOma n malide",
+      "what time is it": "Waxati mundun na",
+      "how much does it cost": "A sare na xan na",
+      "i am from guinea": "N kelixi Gine nan ma",
+      "i speak susu": "N susu xui nan falama",
+      "i am learning susu": "N na susu xaran fe",
+      "i understand a little": "N bara a faxamu dondoroti",
+      "please speak slowly": "Wo xa wOyEn dOgni ra",
+      "i am lost": "N bara lOE",
+      "i am sick": "N furaxi",
+      "i am going home": "N na sigafe n xOnE",
+      "i am coming back": "N na gbilenfe",
+      "i am waiting for you": "N na wo nan mamɛfe",
+      "i will come tomorrow": "N fama nE tina",
+      "i went to the market": "N naxa siga makiti",
+      "she is cooking food": "A na donse yailan fe",
+      "he is working": "A na walife",
+      "they are sleeping": "E na xife",
+      "i am thirsty": "ye xOli na n ma",
+      "give me water": "Wo ye fi n ma",
+      "the food is good": "Donse fan",
+      "i want to eat": "N wama donse donfe",
+      "let us eat": "Won xa donse don",
+      "this is my mother": "N nga nan yi ki",
+      "this is my father": "N baba nan yi ki",
+      "i have two children": "N ma di firin nan na",
+      "my brother is here": "N xunya na be",
+      "my sister is there": "N xunya ginE na na",
+      "it is raining": "TunE na gorofe",
+      "the weather is good": "waxati fan",
+      "the sky is clear": "koore fiixE",
+      "it is very hot today": "A bara xOrOxO to",
+      "i am very happy": "N bara ɲɛlɛxin ki fanyi ra",
+      "i am very tired": "N bara tagan ki fanyi ra",
+      "i am not feeling well": "N mu yalanxi",
+      "i miss you": "ikholinan ma",
+      "i am grateful": "N bara wo tantun",
+      "i am sorry": "N bara nimisa",
+      "how much": "Yeri",
+      "too expensive": "A sare xOrOxO",
+      "give me discount": "Wo n ma discount fi n ma",
+      "i will buy this": "N yi sara ma",
+      "i have money": "kObiri na n yi ra",
+      "i have no money": "N mu kObiri yo sOtOxi",
+      "turn left": "Wo gbilen yirefanyi ma",
+      "turn right": "Wo gbilen yirefanyi ma",
+      "go straight": "Wo siga tinxin gni",
+      "stop here": "Wo ti be",
+      "the house is near": "Banxi na yire makuye",
+      "the market is far": "Makiti ma kuya",
+      "today": "Too",
+      "tomorrow": "Tina",
+      "yesterday": "Khoro",
+      "this morning": "To gEgEn",
+      "this evening": "To nunmare",
+      "next week": "LOxun naxan fama",
+      "last month": "Kike dangixi",
+      "come here": "Fâ bé",
+      "go away": "I masiga",
+      "sit down": "Wo dOxO",
+      "stand up": "Keli",
+      "wait": "Wo mamèti",
+      "listen": "Aramèfé",
+      "look": "Amatofé",
+      "be quiet": "Wo xa dundu",
+      "hurry up": "I mafoura"
+    },
+    "words": {
+      "today": "Too",
+      "tomorrow": "Tina",
+      "yesterday": "Khoro",
+      "wait": "Wo",
+      "listen": "Aramèfé",
+      "look": "Amatofé"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Soussou AI - Guinius",
+  "short_name": "Guinius",
+  "description": "The First AI That Speaks Susu - Learn and translate the language of Guinea",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#009460",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "utilities"],
+  "lang": "en",
+  "dir": "ltr"
+}

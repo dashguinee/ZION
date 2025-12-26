@@ -10,8 +10,26 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 
+// Load environment variables
+require('dotenv').config();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Gemini API for conversation enhancement
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyCV-1WfnuFLmxw5ib_fuVcO2KLGjUXLpuk';
+let genAI, gemini;
+try {
+  const { GoogleGenerativeAI } = require('@google/generative-ai');
+  genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+  gemini = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+  console.log('✅ Gemini API initialized');
+} catch (e) {
+  console.warn('⚠️ Gemini not available:', e.message);
+}
+
+// Session storage for conversations
+const chatSessions = new Map();
 
 // Middleware
 app.use(cors());
@@ -26,18 +44,199 @@ const syntaxPatterns = JSON.parse(fs.readFileSync(path.join(dataDir, 'syntax_pat
 const generationTemplates = JSON.parse(fs.readFileSync(path.join(dataDir, 'generation_templates.json'), 'utf8'));
 
 // Load source modules
-const VariantNormalizer = require('../src/variant_normalizer');
-const SentenceGenerator = require('../src/sentence_generator');
+const variantNormalizerModule = require('../src/variant_normalizer');
+const sentenceGeneratorModule = require('../src/sentence_generator');
 const ResponseSelector = require('../src/response_selector');
+const UnifiedTranslator = require('../src/unified_translator');
+const SentenceMatcher = require('../src/sentence_matcher');
+const OrthographyConverter = require('../src/orthography_converter');
+
+// Load Guinius v2 - Main translation engine
+let guiniusV2;
+try {
+  guiniusV2 = require('../src/guinius_v2');
+  console.log('✅ Guinius v2 loaded');
+} catch (e) {
+  console.warn('⚠️ Guinius v2 not available:', e.message);
+}
 
 // Initialize engines
-const normalizer = new VariantNormalizer(variantMappings);
-const generator = new SentenceGenerator(generationTemplates, lexicon);
+// Normalizer is a module with functions, not a class
+const normalizer = {
+  normalize: variantNormalizerModule.normalize,
+  normalizePhrase: variantNormalizerModule.normalizePhrase
+};
+// Sentence generator is now a module with translate() function
+const generator = {
+  generate: (template, slots) => sentenceGeneratorModule.translate(slots.text || template),
+  translate: sentenceGeneratorModule.translate
+};
 const responseSelector = new ResponseSelector(lexicon, generationTemplates);
+const unifiedTranslator = new UnifiedTranslator();
+
+// Pre-load unified translator data
+try {
+  unifiedTranslator.load();
+  console.log('✅ Unified Translator loaded with Google SMOL + Our lexicon');
+} catch (e) {
+  console.error('⚠️ Unified Translator failed to load:', e.message);
+}
 
 // In-memory stores for contributions/feedback (would be database in production)
 const contributions = [];
 const feedback = [];
+
+// ============== GUINIUS v2 CHAT ENDPOINTS ==============
+
+// GET /api/health - Health check
+app.get('/api/health', (req, res) => {
+  const stats = guiniusV2?.getStats?.() || {};
+  res.json({
+    status: 'healthy',
+    engine: 'Guinius v2',
+    version: '2.0.0',
+    capabilities: {
+      translation: !!guiniusV2,
+      conversation: true,
+      gemini: !!gemini,
+      whisper: false
+    },
+    stats: {
+      englishWords: stats.englishWords || 0,
+      susuWords: stats.susuWords || 0,
+      sentences: stats.sentences || 0,
+      sources: stats.sources || {}
+    }
+  });
+});
+
+// POST /api/chat - Conversational interface with Gemini
+app.post('/api/chat', async (req, res) => {
+  const { message, sessionId = 'default', mode = 'learn' } = req.body;
+
+  if (!message) {
+    return res.status(400).json({ error: 'Message is required' });
+  }
+
+  try {
+    // Get or create session
+    if (!chatSessions.has(sessionId)) {
+      chatSessions.set(sessionId, {
+        history: [],
+        context: {},
+        created: new Date()
+      });
+    }
+    const session = chatSessions.get(sessionId);
+
+    // Detect language
+    const lang = guiniusV2?.detectLanguage?.(message) || 'en';
+
+    // Get translation from Guinius v2
+    let translation;
+    if (guiniusV2) {
+      translation = await guiniusV2.translate(message, { from: lang });
+    } else {
+      translation = { translation: message, confidence: 0.5, source: 'fallback' };
+    }
+
+    // Generate AI response using Gemini
+    let aiResponse = {
+      response: `I understood: "${message}". In Susu: "${translation.translation}"`,
+      susu: translation.translation,
+      suggestions: [],
+      pronunciation: null
+    };
+
+    if (gemini) {
+      try {
+        aiResponse = await generateConversationResponse(message, translation, session, mode);
+      } catch (e) {
+        console.error('Gemini error:', e.message);
+      }
+    }
+
+    // Update session history
+    session.history.push({
+      user: message,
+      lang,
+      translation: translation.translation,
+      ai: aiResponse.response,
+      timestamp: new Date()
+    });
+
+    // Keep only last 20 messages
+    if (session.history.length > 20) {
+      session.history = session.history.slice(-20);
+    }
+
+    res.json({
+      input: message,
+      inputLang: lang,
+      translation: translation.translation,
+      translationSource: translation.source,
+      confidence: translation.confidence,
+      response: aiResponse.response,
+      responseSusu: aiResponse.susu,
+      suggestions: aiResponse.suggestions,
+      pronunciation: aiResponse.pronunciation
+    });
+  } catch (error) {
+    console.error('Chat error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Helper: Generate conversation response with Gemini
+async function generateConversationResponse(message, translation, session, mode) {
+  const historyContext = session.history.slice(-5).map(h =>
+    `User: ${h.user}\nAI: ${h.ai}`
+  ).join('\n');
+
+  const prompt = `You are a Susu language learning assistant. The user is learning Susu (Soussou), spoken in Guinea.
+
+User message: "${message}"
+Translation to Susu: "${translation.translation}"
+Confidence: ${(translation.confidence * 100).toFixed(0)}%
+Source: ${translation.source}
+
+Recent conversation:
+${historyContext || 'New conversation'}
+
+Mode: ${mode} (learn = teach vocabulary, chat = natural conversation)
+
+Respond naturally while helping them learn Susu. Include:
+1. A helpful response in English
+2. The Susu translation of your response
+3. 2-3 suggested phrases they could say next (in Susu with English)
+4. Pronunciation tip if relevant
+
+Respond in JSON:
+{
+  "response": "your helpful response in English",
+  "susu": "your response translated to Susu",
+  "suggestions": [
+    {"susu": "phrase", "english": "meaning"},
+    {"susu": "phrase", "english": "meaning"}
+  ],
+  "pronunciation": "tip for any tricky sounds"
+}`;
+
+  const result = await gemini.generateContent(prompt);
+  const response = result.response.text();
+
+  const jsonMatch = response.match(/\{[\s\S]*\}/);
+  if (jsonMatch) {
+    return JSON.parse(jsonMatch[0]);
+  }
+
+  return {
+    response: response,
+    susu: translation.translation,
+    suggestions: [],
+    pronunciation: null
+  };
+}
 
 // ============== LOOKUP ENDPOINTS ==============
 
@@ -200,6 +399,260 @@ app.post('/api/translate', (req, res) => {
     notes: notes || []
   });
 });
+
+// ============== UNIFIED TRANSLATE ENDPOINT (NEW) ==============
+
+// POST /api/v2/translate - Enhanced translation with Google SMOL + Our lexicon
+app.post('/api/v2/translate', (req, res) => {
+  const { text, from, to, include_alternatives } = req.body;
+
+  if (!text) {
+    return res.status(400).json({ error: 'text parameter required' });
+  }
+
+  // Default: English → Susu
+  const sourceLanguage = from || 'english';
+  const targetLanguage = to || 'susu';
+
+  let result;
+
+  if (sourceLanguage === 'english' && targetLanguage === 'susu') {
+    // Use unified translator (Google SMOL sentences + Our lexicon + Grammar rules)
+    result = unifiedTranslator.translate(text);
+  } else if (sourceLanguage === 'susu' && targetLanguage === 'english') {
+    // Susu → English
+    result = unifiedTranslator.translateToEnglish(text);
+  } else {
+    return res.status(400).json({
+      error: 'Guinius specializes in English↔Susu translation',
+      supported_pairs: ['english→susu', 'susu→english']
+    });
+  }
+
+  const response = {
+    original: text,
+    translation: result.translation,
+    confidence: result.confidence,
+    method: result.method || 'word_by_word',
+    notes: result.notes || []
+  };
+
+  // Include alternatives if requested
+  if (include_alternatives && result.alternatives?.length > 0) {
+    response.alternatives = result.alternatives;
+  }
+
+  // Include suggestions for low confidence translations
+  if (result.confidence < 0.7) {
+    const suggestions = unifiedTranslator.suggest(text, 3);
+    if (suggestions.length > 0) {
+      response.similar_verified_sentences = suggestions;
+    }
+  }
+
+  res.json(response);
+});
+
+// GET /api/v2/suggest - Get similar verified translations
+app.get('/api/v2/suggest', (req, res) => {
+  const { text, limit } = req.query;
+
+  if (!text) {
+    return res.status(400).json({ error: 'text parameter required' });
+  }
+
+  const suggestions = unifiedTranslator.suggest(text, parseInt(limit) || 5);
+
+  res.json({
+    query: text,
+    suggestions: suggestions,
+    source: 'Google SMOL verified translations'
+  });
+});
+
+// GET /api/v2/sentence-match - Direct sentence matching from Google SMOL
+app.get('/api/v2/sentence-match', (req, res) => {
+  const { english, threshold } = req.query;
+
+  if (!english) {
+    return res.status(400).json({ error: 'english parameter required' });
+  }
+
+  const match = SentenceMatcher.findMatch(english);
+  const minThreshold = parseFloat(threshold) || 0.5;
+
+  if (match && match.confidence >= minThreshold) {
+    res.json({
+      found: true,
+      english: match.english,
+      susu: match.susu,
+      confidence: match.confidence,
+      match_type: match.matchType,
+      source: 'Google SMOL verified translation'
+    });
+  } else {
+    // Return similar sentences as suggestions
+    const similar = SentenceMatcher.suggestSimilar(english, 3);
+    res.json({
+      found: false,
+      query: english,
+      suggestions: similar,
+      message: 'No exact match found. See similar verified sentences.'
+    });
+  }
+});
+
+// POST /api/v2/normalize-orthography - Convert between Google/Our spelling
+app.post('/api/v2/normalize-orthography', (req, res) => {
+  const { text, to_format } = req.body;
+
+  if (!text) {
+    return res.status(400).json({ error: 'text parameter required' });
+  }
+
+  const detected = OrthographyConverter.detectOrthography(text);
+  let converted;
+
+  if (to_format === 'google') {
+    converted = OrthographyConverter.oursToGoogle(text);
+  } else if (to_format === 'ours') {
+    converted = OrthographyConverter.googleToOurs(text);
+  } else {
+    // Default: normalize to our canonical form
+    converted = OrthographyConverter.normalizeEither(text);
+  }
+
+  res.json({
+    original: text,
+    detected_format: detected,
+    converted: converted,
+    target_format: to_format || 'canonical'
+  });
+});
+
+// ============== VALIDATION ENDPOINT ==============
+
+// POST /api/validate - Compare our translation vs ground truth
+app.post('/api/validate', (req, res) => {
+  const { english, expected_susu } = req.body;
+
+  if (!english) {
+    return res.status(400).json({ error: 'english parameter required' });
+  }
+
+  // Get our translation
+  const ourResult = unifiedTranslator.translate(english);
+
+  // Get Google SMOL match if exists
+  const googleMatch = SentenceMatcher.findMatch(english);
+
+  // Prepare validation report
+  const validation = {
+    english_input: english,
+    our_translation: ourResult.translation,
+    our_confidence: ourResult.confidence,
+    our_method: ourResult.method,
+    google_smol_match: null,
+    match_with_expected: null,
+    verdict: null
+  };
+
+  // Add Google SMOL comparison if match found
+  if (googleMatch && googleMatch.confidence >= 0.7) {
+    validation.google_smol_match = {
+      susu: googleMatch.susu,
+      confidence: googleMatch.confidence,
+      match_type: googleMatch.matchType
+    };
+
+    // Compare our translation with Google's verified translation
+    const ourNormalized = OrthographyConverter.normalizeEither(ourResult.translation);
+    const googleNormalized = OrthographyConverter.normalizeEither(googleMatch.susu);
+
+    if (ourNormalized === googleNormalized) {
+      validation.verdict = 'MATCH';
+    } else {
+      // Calculate similarity
+      const similarity = calculateTextSimilarity(ourNormalized, googleNormalized);
+      validation.google_similarity = similarity;
+      validation.verdict = similarity > 0.7 ? 'SIMILAR' : 'DIFFERENT';
+    }
+  } else {
+    validation.verdict = 'NO_REFERENCE';
+    validation.notes = 'No verified Google SMOL translation available for comparison';
+  }
+
+  // Compare with user-provided expected translation
+  if (expected_susu) {
+    const expectedNormalized = OrthographyConverter.normalizeEither(expected_susu);
+    const ourNormalized = OrthographyConverter.normalizeEither(ourResult.translation);
+
+    validation.match_with_expected = {
+      expected: expected_susu,
+      matches: ourNormalized === expectedNormalized,
+      similarity: calculateTextSimilarity(ourNormalized, expectedNormalized)
+    };
+  }
+
+  res.json(validation);
+});
+
+// GET /api/v2/stats - Enhanced stats with Google SMOL data
+app.get('/api/v2/stats', (req, res) => {
+  const words = lexicon.words || [];
+  const unifiedStats = unifiedTranslator.getStats();
+  const sentenceStats = SentenceMatcher.getStats();
+
+  // Count by category
+  const categories = {};
+  words.forEach(w => {
+    const cat = w.category || 'unknown';
+    categories[cat] = (categories[cat] || 0) + 1;
+  });
+
+  res.json({
+    // Our lexicon
+    our_lexicon: {
+      total_words: words.length,
+      total_variants: Object.keys(variantMappings.variant_to_base || {}).length,
+      categories: categories
+    },
+    // Google SMOL
+    google_smol: {
+      sentence_pairs: sentenceStats.totalPairs,
+      vocabulary_entries: unifiedStats.google_vocab,
+      avg_english_length: sentenceStats.avgEnglishLength,
+      avg_susu_length: sentenceStats.avgSusuLength
+    },
+    // Unified
+    unified: {
+      merged_lexicon_entries: unifiedStats.lexicon_size,
+      english_to_susu_mappings: unifiedStats.en_to_sus_mappings
+    },
+    contributions_pending: contributions.filter(c => c.status === 'pending_review').length,
+    version: '2.0',
+    capabilities: [
+      'sentence_matching',
+      'word_by_word_translation',
+      'orthography_normalization',
+      'validation_against_google'
+    ]
+  });
+});
+
+// Helper: Calculate text similarity (Jaccard)
+function calculateTextSimilarity(a, b) {
+  const wordsA = new Set(a.toLowerCase().split(/\s+/));
+  const wordsB = new Set(b.toLowerCase().split(/\s+/));
+
+  let intersection = 0;
+  for (const word of wordsA) {
+    if (wordsB.has(word)) intersection++;
+  }
+
+  const union = wordsA.size + wordsB.size - intersection;
+  return union > 0 ? intersection / union : 0;
+}
 
 // ============== GENERATE ENDPOINTS ==============
 
@@ -543,19 +996,33 @@ function generateId(prefix) {
 // ============== START SERVER ==============
 
 app.listen(PORT, () => {
+  const unifiedStats = unifiedTranslator.getStats();
+  const sentenceStats = SentenceMatcher.getStats();
+
   console.log(`
-  ╔═══════════════════════════════════════════════╗
-  ║                                               ║
-  ║   🇬🇳  GUINIUS API v1.0                       ║
-  ║   The first AI that speaks Soussou            ║
-  ║                                               ║
-  ║   Server running on port ${PORT}                  ║
-  ║                                               ║
-  ║   Lexicon: ${(lexicon.words || []).length} words                      ║
-  ║   Variants: ${Object.keys(variantMappings.variant_to_base || {}).length} mappings                  ║
-  ║   Templates: ${Object.keys(generationTemplates.templates || {}).length} patterns                    ║
-  ║                                               ║
-  ╚═══════════════════════════════════════════════╝
+  ╔═══════════════════════════════════════════════════════╗
+  ║                                                       ║
+  ║   🇬🇳  GUINIUS API v2.0                               ║
+  ║   The first AI that speaks Soussou                    ║
+  ║   Now powered by Google SMOL + Our Engine             ║
+  ║                                                       ║
+  ║   Server running on port ${PORT}                          ║
+  ║                                                       ║
+  ║   📚 Data Sources:                                    ║
+  ║   • Unified Lexicon: ${unifiedStats.lexicon_size.toLocaleString()} entries                 ║
+  ║   • Google SMOL Sentences: ${sentenceStats.totalPairs} verified        ║
+  ║   • Google Vocabulary: ${unifiedStats.google_vocab.toLocaleString()} tokens                ║
+  ║   • EN→SU Mappings: ${unifiedStats.en_to_sus_mappings.toLocaleString()} words                   ║
+  ║                                                       ║
+  ║   🔥 New v2 Endpoints:                                ║
+  ║   • POST /api/v2/translate (unified)                  ║
+  ║   • GET  /api/v2/suggest                              ║
+  ║   • GET  /api/v2/sentence-match                       ║
+  ║   • POST /api/v2/normalize-orthography                ║
+  ║   • POST /api/validate (compare vs Google)            ║
+  ║   • GET  /api/v2/stats                                ║
+  ║                                                       ║
+  ╚═══════════════════════════════════════════════════════╝
   `);
 });
 

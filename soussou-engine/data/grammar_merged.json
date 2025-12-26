@@ -1,0 +1,195 @@
+{
+  "source": "merged from our engine + Google SMOL",
+  "pronouns": {
+    "subject": {
+      "I": {
+        "base": "n",
+        "emphatic": "ntan",
+        "google": "N'tan"
+      },
+      "you": {
+        "base": "i",
+        "emphatic": "itan",
+        "google": "wotan"
+      },
+      "he/she": {
+        "base": "a",
+        "emphatic": "atan",
+        "google": "ä"
+      },
+      "we": {
+        "base": "won",
+        "emphatic": "whontan",
+        "google": "mou tan"
+      },
+      "they": {
+        "base": "e",
+        "emphatic": "etan",
+        "google": "etan"
+      }
+    },
+    "object": {
+      "i": "N'tan",
+      "you": "wotan",
+      "he": "ä",
+      "she": "guinèma",
+      "it": "atan",
+      "we": "mou tan",
+      "they": "etan",
+      "me": "ntan",
+      "him": "ä",
+      "her": "akha",
+      "us": "mou tan",
+      "them": "etan"
+    }
+  },
+  "possessives": {
+    "our": {
+      "my": "oun",
+      "your": "i",
+      "his": "agbé",
+      "her": "akha",
+      "its": "a kha",
+      "our": "mou",
+      "their": "é",
+      "mine": "amafén"
+    },
+    "suffixes": {
+      "-ma": "my (1st person)",
+      "-kha": "his/her/its (3rd person)",
+      "-oun": "your (from Google)"
+    }
+  },
+  "question_words": {
+    "what": "nansé",
+    "where": "mindé",
+    "when": "wakhati moundoun",
+    "who": "OMS",
+    "why": "nanfera",
+    "how": "di",
+    "which": "ndé"
+  },
+  "verbs": {
+    "go": "siga",
+    "come": "fafé",
+    "eat": "a donfé",
+    "drink": "yeminfé",
+    "sleep": "khifé",
+    "see": "toé",
+    "hear": "a kharamè",
+    "speak": "woyénfé",
+    "say": "falèfé",
+    "know": "kolonyi",
+    "want": "wakhonyi",
+    "need": "khayi",
+    "love": "arafan",
+    "like": "allo",
+    "give": "finma",
+    "take": "tongoï",
+    "make": "araba",
+    "do": "araba",
+    "have": "moun",
+    "be": "iyètè",
+    "run": "I gui",
+    "walk": "gnèrè",
+    "sit": "dökhöfé",
+    "stand": "loufé bé",
+    "work": "wali",
+    "play": "béré",
+    "read": "kharanyi",
+    "write": "sebèlitifé",
+    "think": "magnönyi",
+    "feel": "yètèkoloyi",
+    "take care": "iyèma sokhouï afanyira",
+    "love you": "irafama",
+    "give up": "gbelin afora",
+    "do you": "ibara",
+    "have a nice day": "wo fègnè",
+    "take off": "yaba cole ma",
+    "see you": "won na tèmou",
+    "come on": "Na louna",
+    "go ahead": "wonkhai",
+    "see you soon": "won na tèmoui",
+    "make up": "ira tonfa fé",
+    "see you later": "won narala'ma",
+    "be careful": "a gnè doyi",
+    "have you eaten": "i bara idègué",
+    "have fun": "béré",
+    "work out": "matikanfé",
+    "have a good day": "ala khi kha lökhè sönèya",
+    "take away": "a khanin",
+    "have breakfast": "dèbâ",
+    "go to bed": "siga i sa",
+    "come here": "fâ bé",
+    "write here": "sèbèli tii bé",
+    "go away": "i masiga",
+    "do you love me": "eské n'nafan ima",
+    "see you tomorrow": "won tina"
+  },
+  "negation": {
+    "marker": "mu",
+    "position": "before verb",
+    "alternative": "m'ma (contraction of mu + ma)",
+    "examples": [
+      {
+        "en": "The unrelenting soul-force of those who would hold us accountable blows that all away.",
+        "sus": "SondonmE mu wule falama-mikhi ne khee sEmbE wama a ma senfe a yo mu na moho bE e bara na birin na lOE.",
+        "marker": "mu"
+      },
+      {
+        "en": "The bus, normally crowded, was stunningly nearly empty at this hour.",
+        "sus": "Nan ma gnixi nE woto rafexira gi waxatima se mu a kui.",
+        "marker": "mu"
+      },
+      {
+        "en": "She can do things with her tongue most of us can't even fathom, like touch her elbow or lick her own ear.",
+        "sus": "A nOma fe raba deba de a nEngnira won ya ma mixi gbe gbe mu nOma, a nOma xali a nin gni ma konde.",
+        "marker": "mu"
+      },
+      {
+        "en": "Lower population means a lower chance of having an accident in addition to fewer liability claims.",
+        "sus": "GnamanE die ne xe magoro ma fura acident sOtOde sOnOya ra a nun ma xui mu e kon e yo ma sen de.",
+        "marker": "mu"
+      },
+      {
+        "en": "Neither row number nor column letter in an absolute reference will change.",
+        "sus": "Konti mu a ra sEbEli mu a ra sen mu ma sarama.",
+        "marker": "mu"
+      }
+    ]
+  },
+  "suffixes": {
+    "-xi": {
+      "meaning": "perfective/past tense",
+      "source": "both"
+    },
+    "-fe": {
+      "meaning": "verb nominalizer (action noun)",
+      "source": "both"
+    },
+    "-ra": {
+      "meaning": "locative (at/in/to)",
+      "source": "google"
+    },
+    "-ma": {
+      "meaning": "possessive or locative (on)",
+      "source": "both"
+    },
+    "-de": {
+      "meaning": "agent/doer",
+      "source": "google"
+    },
+    "-ni": {
+      "meaning": "locative (in)",
+      "source": "google"
+    },
+    "-ee": {
+      "meaning": "plural marker",
+      "source": "ours"
+    }
+  },
+  "word_order": {
+    "basic": "SOV (Subject-Object-Verb)",
+    "confirmed_by": "both systems"
+  }
+}

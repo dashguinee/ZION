@@ -1,0 +1,6951 @@
+{
+  "metadata": {
+    "harvestDate": "2025-12-26T09:30:24.493Z",
+    "sourceLanguage": "en",
+    "targetLanguage": "sus",
+    "totalPhrases": 624,
+    "successfulTranslations": 624,
+    "failedTranslations": 0,
+    "categories": 12
+  },
+  "categories": {
+    "greetings_farewells": {
+      "total": 51,
+      "successful": 51,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Hello",
+          "susu": "inou wali",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Hi",
+          "susu": "inou wali",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Good morning",
+          "susu": "Tanàmoufègnê",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Good afternoon",
+          "susu": "Wofègnè",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Good evening",
+          "susu": "Wo nounmaré",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Good night",
+          "susu": "Allah kha wo khi",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "How are you",
+          "susu": "Tanàmoufègnê",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "I am fine",
+          "susu": "a mou nä ki yo ki",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "I am fine thank you",
+          "susu": "N na yalan, i nu wali",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "And you",
+          "susu": "Ifan go",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "What is your name",
+          "susu": "Ikhilidi",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "My name is",
+          "susu": "Khilinè",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Nice to meet you",
+          "susu": "Ounbara gnalakhin itoféra",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Welcome",
+          "susu": "Ara lanfé",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Welcome home",
+          "susu": "Wo xa wo maso wo xOn gni",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Goodbye",
+          "susu": "Wo na tèmou",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "See you later",
+          "susu": "Won narala'ma",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "See you tomorrow",
+          "susu": "Won tina",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "See you soon",
+          "susu": "Won na tèmoui",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Take care",
+          "susu": "Iyèma sokhouï afanyira",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Have a nice day",
+          "susu": "Wo fègnè",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Have a good trip",
+          "susu": "Wo xa biyaasi fangni raba",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Safe travels",
+          "susu": "Biyasi fangni",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Sleep well",
+          "susu": "Xi fangni",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Until next time",
+          "susu": "han waxati gbEtE",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Please",
+          "susu": "Nbari khandi",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Thank you",
+          "susu": "Wonou wali",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Thank you very much",
+          "susu": "Inouwali kifanyi",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "You are welcome",
+          "susu": "Wo khakèto",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Excuse me",
+          "susu": "Dignèn ma",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Sorry",
+          "susu": "diyƐ",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "I am sorry",
+          "susu": "N bara nimisa",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "No problem",
+          "susu": "Kontofili yo",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "It is nothing",
+          "susu": "A mu findixi sese ra",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Bless you",
+          "susu": "Wo xa duba",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Good morning everyone",
+          "susu": "Wo birin xa gɛɛsɛgɛ fan",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "How was your night",
+          "susu": "Ikha kouwè nou nadi",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Did you sleep well",
+          "susu": "I bara xi a fangni ra",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "How is your family",
+          "susu": "Wo xa denbaya na ki nE",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "How is work",
+          "susu": "Wali na ki nE",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Long time no see",
+          "susu": "A bara bou m'mi to",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "I missed you",
+          "susu": "N bara wo xanu",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "I am happy to see you",
+          "susu": "N bara sEwa wo to fe ra",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Peace be with you",
+          "susu": "Bɔɲɛsa xa lu wo bɛ",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "May God bless you",
+          "susu": "Ala xa hinnɛ wo ra",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "I am doing well",
+          "susu": "N na walife a fangni ra",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Everything is fine",
+          "susu": "Fe birin fan",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "All is well",
+          "susu": "Fe birin fan",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "Thanks to God",
+          "susu": "Ala tantu",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "By the grace of God",
+          "susu": "Ala xa hinnɛ saabui ra",
+          "category": "greetings_farewells"
+        },
+        {
+          "english": "I am blessed",
+          "susu": "N bara duba",
+          "category": "greetings_farewells"
+        }
+      ]
+    },
+    "family_relationships": {
+      "total": 51,
+      "successful": 51,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Mother",
+          "susu": "Fé sougandikhi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Father",
+          "susu": "Nba",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Parents",
+          "susu": "Bariboré",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Child",
+          "susu": "Dumedi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Children",
+          "susu": "Dimèdi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Son",
+          "susu": "Di",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Daughter",
+          "susu": "Abè",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Brother",
+          "susu": "Ntara",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Sister",
+          "susu": "Nkhounya guinèma",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Grandfather",
+          "susu": "Baba",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Grandmother",
+          "susu": "n baba",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Grandparents",
+          "susu": "Benbae",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Uncle",
+          "susu": "Soghö",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Aunt",
+          "susu": "Ntenin",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Cousin",
+          "susu": "Itenin khadi anamara iba khoundia khadi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Nephew",
+          "susu": "Sokhödi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Niece",
+          "susu": "Sokhodi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Husband",
+          "susu": "Nma mori",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Wife",
+          "susu": "Kha guinè",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Family",
+          "susu": "Dembaya",
+          "category": "family_relationships"
+        },
+        {
+          "english": "This is my mother",
+          "susu": "N nga nan yi ki",
+          "category": "family_relationships"
+        },
+        {
+          "english": "This is my father",
+          "susu": "N baba nan yi ki",
+          "category": "family_relationships"
+        },
+        {
+          "english": "This is my wife",
+          "susu": "N ma ginE nan ya",
+          "category": "family_relationships"
+        },
+        {
+          "english": "This is my husband",
+          "susu": "N ma xamE nan ya",
+          "category": "family_relationships"
+        },
+        {
+          "english": "This is my child",
+          "susu": "N ma di nan yi ki",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I have two children",
+          "susu": "N ma di firin nan na",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I have three brothers",
+          "susu": "N xunya saxan na",
+          "category": "family_relationships"
+        },
+        {
+          "english": "My sister is older",
+          "susu": "N xunya ginE fori nan a ra",
+          "category": "family_relationships"
+        },
+        {
+          "english": "My brother is younger",
+          "susu": "N xunya nan xurun",
+          "category": "family_relationships"
+        },
+        {
+          "english": "My family is big",
+          "susu": "N ma denbaya gbo",
+          "category": "family_relationships"
+        },
+        {
+          "english": "My family is small",
+          "susu": "N ma denbaya xurun",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Are you married",
+          "susu": "Imarié khi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Do you have children",
+          "susu": "Wo xa die na wo yi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "How many children do you have",
+          "susu": "Wo xa di wuyaxi nan na wo yi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Where is your family",
+          "susu": "Wo xa denbaya na minden",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Who is this",
+          "susu": "N'dey iya",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Is this your mother",
+          "susu": "I nga nan ya",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Is this your father",
+          "susu": "Wo baba nan ya",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I am married",
+          "susu": "N bara futi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I am not married",
+          "susu": "N mu futixi",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I am single",
+          "susu": "N tan keren",
+          "category": "family_relationships"
+        },
+        {
+          "english": "She is my friend",
+          "susu": "A findixi n bore nan na",
+          "category": "family_relationships"
+        },
+        {
+          "english": "He is my friend",
+          "susu": "A tan nan na n bore ra",
+          "category": "family_relationships"
+        },
+        {
+          "english": "They are my neighbors",
+          "susu": "E findixi n dOxO bore nan na",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I love my family",
+          "susu": "N ma denbaya rafan n ma",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I love my mother",
+          "susu": "n'ga rafan m'ma",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I love my father",
+          "susu": "m'ba rafan m'ma",
+          "category": "family_relationships"
+        },
+        {
+          "english": "We are family",
+          "susu": "Won findixi denbaya nan na",
+          "category": "family_relationships"
+        },
+        {
+          "english": "Family is important",
+          "susu": "Denbaya tide na",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I am the eldest",
+          "susu": "N tan nan na fori ra",
+          "category": "family_relationships"
+        },
+        {
+          "english": "I am the youngest",
+          "susu": "N tan nan na dimEdi ra",
+          "category": "family_relationships"
+        }
+      ]
+    },
+    "food_drink": {
+      "total": 54,
+      "successful": 54,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Food",
+          "susu": "Baloé",
+          "category": "food_drink"
+        },
+        {
+          "english": "Water",
+          "susu": "Yé",
+          "category": "food_drink"
+        },
+        {
+          "english": "Rice",
+          "susu": "Bandé",
+          "category": "food_drink"
+        },
+        {
+          "english": "Fish",
+          "susu": "Yèkhè",
+          "category": "food_drink"
+        },
+        {
+          "english": "Meat",
+          "susu": "Soubé",
+          "category": "food_drink"
+        },
+        {
+          "english": "Chicken",
+          "susu": "Tökhè",
+          "category": "food_drink"
+        },
+        {
+          "english": "Bread",
+          "susu": "Tami",
+          "category": "food_drink"
+        },
+        {
+          "english": "Vegetables",
+          "susu": "Sanssi raboulakhi nakhan don ma",
+          "category": "food_drink"
+        },
+        {
+          "english": "Fruit",
+          "susu": "Youri bogui",
+          "category": "food_drink"
+        },
+        {
+          "english": "Mango",
+          "susu": "Mango",
+          "category": "food_drink"
+        },
+        {
+          "english": "Banana",
+          "susu": "Banani",
+          "category": "food_drink"
+        },
+        {
+          "english": "Orange",
+          "susu": "Lefouré",
+          "category": "food_drink"
+        },
+        {
+          "english": "Peanuts",
+          "susu": "Kabe",
+          "category": "food_drink"
+        },
+        {
+          "english": "Palm oil",
+          "susu": "Palmier ture",
+          "category": "food_drink"
+        },
+        {
+          "english": "Salt",
+          "susu": "Fokhè",
+          "category": "food_drink"
+        },
+        {
+          "english": "Sugar",
+          "susu": "Souka",
+          "category": "food_drink"
+        },
+        {
+          "english": "Pepper",
+          "susu": "Gbèngbè",
+          "category": "food_drink"
+        },
+        {
+          "english": "Onion",
+          "susu": "Yèbè",
+          "category": "food_drink"
+        },
+        {
+          "english": "Tomato",
+          "susu": "Tomatï",
+          "category": "food_drink"
+        },
+        {
+          "english": "Cassava",
+          "susu": "maniok",
+          "category": "food_drink"
+        },
+        {
+          "english": "Tea",
+          "susu": "Ataya",
+          "category": "food_drink"
+        },
+        {
+          "english": "Coffee",
+          "susu": "Käfé",
+          "category": "food_drink"
+        },
+        {
+          "english": "Milk",
+          "susu": "Khinyè",
+          "category": "food_drink"
+        },
+        {
+          "english": "Juice",
+          "susu": "Ju",
+          "category": "food_drink"
+        },
+        {
+          "english": "Palm wine",
+          "susu": "Palmier vin",
+          "category": "food_drink"
+        },
+        {
+          "english": "Cold water",
+          "susu": "Ye xOrOxOE",
+          "category": "food_drink"
+        },
+        {
+          "english": "Hot water",
+          "susu": "Ye xOrOxOE",
+          "category": "food_drink"
+        },
+        {
+          "english": "I am hungry",
+          "susu": "Kame nan n ma",
+          "category": "food_drink"
+        },
+        {
+          "english": "I am thirsty",
+          "susu": "ye xOli na n ma",
+          "category": "food_drink"
+        },
+        {
+          "english": "I am not hungry",
+          "susu": "Kami mu n ma",
+          "category": "food_drink"
+        },
+        {
+          "english": "I am not thirsty",
+          "susu": "ye xOli mu n ma",
+          "category": "food_drink"
+        },
+        {
+          "english": "Are you hungry",
+          "susu": "Kame nan i ra",
+          "category": "food_drink"
+        },
+        {
+          "english": "Are you thirsty",
+          "susu": "ye xOnE na wo ma",
+          "category": "food_drink"
+        },
+        {
+          "english": "I want to eat",
+          "susu": "N wama donse donfe",
+          "category": "food_drink"
+        },
+        {
+          "english": "I want to drink",
+          "susu": "N wama minfe",
+          "category": "food_drink"
+        },
+        {
+          "english": "Let us eat",
+          "susu": "Won xa donse don",
+          "category": "food_drink"
+        },
+        {
+          "english": "Let us drink",
+          "susu": "Won xa min",
+          "category": "food_drink"
+        },
+        {
+          "english": "Give me water",
+          "susu": "Wo ye fi n ma",
+          "category": "food_drink"
+        },
+        {
+          "english": "Give me food",
+          "susu": "Wo donse fi n ma",
+          "category": "food_drink"
+        },
+        {
+          "english": "I am eating",
+          "susu": "N na donse donfe",
+          "category": "food_drink"
+        },
+        {
+          "english": "I am drinking",
+          "susu": "N na minfe",
+          "category": "food_drink"
+        },
+        {
+          "english": "The food is good",
+          "susu": "Donse fan",
+          "category": "food_drink"
+        },
+        {
+          "english": "The food is ready",
+          "susu": "Donse bara rafala",
+          "category": "food_drink"
+        },
+        {
+          "english": "The food is hot",
+          "susu": "Donse xOrOxO",
+          "category": "food_drink"
+        },
+        {
+          "english": "The food is cold",
+          "susu": "Donse xinde",
+          "category": "food_drink"
+        },
+        {
+          "english": "Delicious",
+          "susu": "Gnökhonyi",
+          "category": "food_drink"
+        },
+        {
+          "english": "I am full",
+          "susu": "N bara rafe",
+          "category": "food_drink"
+        },
+        {
+          "english": "I ate already",
+          "susu": "N bara donse don",
+          "category": "food_drink"
+        },
+        {
+          "english": "She is cooking",
+          "susu": "A na donse rafalafe",
+          "category": "food_drink"
+        },
+        {
+          "english": "He is cooking",
+          "susu": "A na donse rafalafe",
+          "category": "food_drink"
+        },
+        {
+          "english": "What are you cooking",
+          "susu": "I na munse rafalafe",
+          "category": "food_drink"
+        },
+        {
+          "english": "I am cooking rice",
+          "susu": "N na lose yailanfe",
+          "category": "food_drink"
+        },
+        {
+          "english": "The rice is ready",
+          "susu": "Ɲama bara rafala",
+          "category": "food_drink"
+        },
+        {
+          "english": "Come and eat",
+          "susu": "Wo fa wo xa donse don",
+          "category": "food_drink"
+        }
+      ]
+    },
+    "health_body": {
+      "total": 52,
+      "successful": 52,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Head",
+          "susu": "Ara gnèrèfé",
+          "category": "health_body"
+        },
+        {
+          "english": "Eye",
+          "susu": "Ya",
+          "category": "health_body"
+        },
+        {
+          "english": "Eyes",
+          "susu": "Ya",
+          "category": "health_body"
+        },
+        {
+          "english": "Ear",
+          "susu": "Touli",
+          "category": "health_body"
+        },
+        {
+          "english": "Ears",
+          "susu": "Touley",
+          "category": "health_body"
+        },
+        {
+          "english": "Nose",
+          "susu": "Nouè",
+          "category": "health_body"
+        },
+        {
+          "english": "Mouth",
+          "susu": "Dè",
+          "category": "health_body"
+        },
+        {
+          "english": "Teeth",
+          "susu": "Gnin yé",
+          "category": "health_body"
+        },
+        {
+          "english": "Tongue",
+          "susu": "Khouï",
+          "category": "health_body"
+        },
+        {
+          "english": "Hand",
+          "susu": "Bèlèkhè",
+          "category": "health_body"
+        },
+        {
+          "english": "Hands",
+          "susu": "BElExE",
+          "category": "health_body"
+        },
+        {
+          "english": "Arm",
+          "susu": "Bèlèkhè",
+          "category": "health_body"
+        },
+        {
+          "english": "Foot",
+          "susu": "Sanyi",
+          "category": "health_body"
+        },
+        {
+          "english": "Feet",
+          "susu": "Sènyi",
+          "category": "health_body"
+        },
+        {
+          "english": "Leg",
+          "susu": "Sanyi",
+          "category": "health_body"
+        },
+        {
+          "english": "Stomach",
+          "susu": "Fouri koui touli cé",
+          "category": "health_body"
+        },
+        {
+          "english": "Back",
+          "susu": "Ifari",
+          "category": "health_body"
+        },
+        {
+          "english": "Heart",
+          "susu": "Sondonyi",
+          "category": "health_body"
+        },
+        {
+          "english": "Blood",
+          "susu": "Wouli",
+          "category": "health_body"
+        },
+        {
+          "english": "Body",
+          "susu": "Faté",
+          "category": "health_body"
+        },
+        {
+          "english": "I am sick",
+          "susu": "N furaxi",
+          "category": "health_body"
+        },
+        {
+          "english": "I am not sick",
+          "susu": "N mu furaxi",
+          "category": "health_body"
+        },
+        {
+          "english": "I am healthy",
+          "susu": "N na yalan",
+          "category": "health_body"
+        },
+        {
+          "english": "I am tired",
+          "susu": "N bara tagan",
+          "category": "health_body"
+        },
+        {
+          "english": "I am very tired",
+          "susu": "N bara tagan ki fanyi ra",
+          "category": "health_body"
+        },
+        {
+          "english": "I am weak",
+          "susu": "n tagan",
+          "category": "health_body"
+        },
+        {
+          "english": "I am strong",
+          "susu": "N sɛnbɛ gbo",
+          "category": "health_body"
+        },
+        {
+          "english": "I am in pain",
+          "susu": "N na xOnE kui",
+          "category": "health_body"
+        },
+        {
+          "english": "I have a headache",
+          "susu": "N xun xOnE nan a ra",
+          "category": "health_body"
+        },
+        {
+          "english": "I have a stomachache",
+          "susu": "N furi xOnE nan a ra",
+          "category": "health_body"
+        },
+        {
+          "english": "My head hurts",
+          "susu": "N xunyi xOnOma",
+          "category": "health_body"
+        },
+        {
+          "english": "My stomach hurts",
+          "susu": "N furi xOnOma",
+          "category": "health_body"
+        },
+        {
+          "english": "My back hurts",
+          "susu": "N xanbi xOnOma",
+          "category": "health_body"
+        },
+        {
+          "english": "I have a fever",
+          "susu": "N ma fure na",
+          "category": "health_body"
+        },
+        {
+          "english": "I have a cold",
+          "susu": "N bara xinbeli",
+          "category": "health_body"
+        },
+        {
+          "english": "I have a cough",
+          "susu": "N ma xOnE na",
+          "category": "health_body"
+        },
+        {
+          "english": "I am not feeling well",
+          "susu": "N mu yalanxi",
+          "category": "health_body"
+        },
+        {
+          "english": "Doctor",
+          "susu": "Mikhi dandan",
+          "category": "health_body"
+        },
+        {
+          "english": "Hospital",
+          "susu": "Labitani",
+          "category": "health_body"
+        },
+        {
+          "english": "Medicine",
+          "susu": "Seri kharan yi",
+          "category": "health_body"
+        },
+        {
+          "english": "I need medicine",
+          "susu": "N hayi na seri ma",
+          "category": "health_body"
+        },
+        {
+          "english": "Where is the hospital",
+          "susu": "Hopital na minden",
+          "category": "health_body"
+        },
+        {
+          "english": "Call the doctor",
+          "susu": "Wo dOktOre xili",
+          "category": "health_body"
+        },
+        {
+          "english": "I need help",
+          "susu": "N hayi na mali ma",
+          "category": "health_body"
+        },
+        {
+          "english": "It hurts here",
+          "susu": "A xOnOma be",
+          "category": "health_body"
+        },
+        {
+          "english": "I feel better",
+          "susu": "N bara fisa",
+          "category": "health_body"
+        },
+        {
+          "english": "I am getting better",
+          "susu": "N na yalan fe",
+          "category": "health_body"
+        },
+        {
+          "english": "Take care of yourself",
+          "susu": "Wo wo yEtE ratanga",
+          "category": "health_body"
+        },
+        {
+          "english": "Get well soon",
+          "susu": "Allah kha sönèya fii ima sin'nèma",
+          "category": "health_body"
+        },
+        {
+          "english": "Rest well",
+          "susu": "Wo malabu a fangni ra",
+          "category": "health_body"
+        },
+        {
+          "english": "Drink water",
+          "susu": "ye min",
+          "category": "health_body"
+        },
+        {
+          "english": "Eat medicine",
+          "susu": "seri donfe",
+          "category": "health_body"
+        }
+      ]
+    },
+    "numbers_time": {
+      "total": 52,
+      "successful": 52,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "One",
+          "susu": "Kerén",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Two",
+          "susu": "Firin",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Three",
+          "susu": "Serinfé",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Four",
+          "susu": "Naani",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Five",
+          "susu": "Souli",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Six",
+          "susu": "Sén'ni",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Seven",
+          "susu": "solofere",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Eight",
+          "susu": "Solomasakhan",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Nine",
+          "susu": "Solomanani",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Ten",
+          "susu": "Foû",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Twenty",
+          "susu": "Moukhè",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Thirty",
+          "susu": "Tongo sakhan",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Forty",
+          "susu": "Ton naanin",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Fifty",
+          "susu": "Tongo souli",
+          "category": "numbers_time"
+        },
+        {
+          "english": "One hundred",
+          "susu": "kEmE",
+          "category": "numbers_time"
+        },
+        {
+          "english": "One thousand",
+          "susu": "mixi wulu keren",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Today",
+          "susu": "Too",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Tomorrow",
+          "susu": "Tina",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Yesterday",
+          "susu": "Khoro",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Now",
+          "susu": "Yakoss",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Later",
+          "susu": "Danguikhambi",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Morning",
+          "susu": "Djècèkhè",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Afternoon",
+          "susu": "Midi dangui khanbi",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Evening",
+          "susu": "Noun maré",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Night",
+          "susu": "Koyè",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Day",
+          "susu": "Lokhè",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Week",
+          "susu": "Lökhounyi",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Month",
+          "susu": "Kiké",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Year",
+          "susu": "Gnè",
+          "category": "numbers_time"
+        },
+        {
+          "english": "What time is it",
+          "susu": "Waxati mundun na",
+          "category": "numbers_time"
+        },
+        {
+          "english": "It is morning",
+          "susu": "gɛɛsɛgɛ nan a ra",
+          "category": "numbers_time"
+        },
+        {
+          "english": "It is afternoon",
+          "susu": "nunmare nan a ra",
+          "category": "numbers_time"
+        },
+        {
+          "english": "It is evening",
+          "susu": "nunmare nan a ra",
+          "category": "numbers_time"
+        },
+        {
+          "english": "It is late",
+          "susu": "A bara gɛ",
+          "category": "numbers_time"
+        },
+        {
+          "english": "It is early",
+          "susu": "A singe nan a ra",
+          "category": "numbers_time"
+        },
+        {
+          "english": "This morning",
+          "susu": "To gEgEn",
+          "category": "numbers_time"
+        },
+        {
+          "english": "This evening",
+          "susu": "To nunmare",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Last night",
+          "susu": "kOE dangixi",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Next week",
+          "susu": "LOxun naxan fama",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Last month",
+          "susu": "Kike dangixi",
+          "category": "numbers_time"
+        },
+        {
+          "english": "This year",
+          "susu": "Yi gnE",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Every day",
+          "susu": "LOn birin",
+          "category": "numbers_time"
+        },
+        {
+          "english": "All day",
+          "susu": "LOn birin",
+          "category": "numbers_time"
+        },
+        {
+          "english": "All night",
+          "susu": "Kɔɛ birin",
+          "category": "numbers_time"
+        },
+        {
+          "english": "How old are you",
+          "susu": "Ignè yerara",
+          "category": "numbers_time"
+        },
+        {
+          "english": "I am twenty years old",
+          "susu": "N bara gnE mOxOyEn",
+          "category": "numbers_time"
+        },
+        {
+          "english": "How long",
+          "susu": "waxati mundun",
+          "category": "numbers_time"
+        },
+        {
+          "english": "How many days",
+          "susu": "xi wuyaxi",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Two hours",
+          "susu": "waxati firin",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Three days",
+          "susu": "xi saxan",
+          "category": "numbers_time"
+        },
+        {
+          "english": "One week",
+          "susu": "lOxun keren",
+          "category": "numbers_time"
+        },
+        {
+          "english": "Wait a moment",
+          "susu": "Wo mamEtE dondoroti",
+          "category": "numbers_time"
+        }
+      ]
+    },
+    "travel_directions": {
+      "total": 52,
+      "successful": 52,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Left",
+          "susu": "A kola",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Right",
+          "susu": "Yiréfan",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Straight",
+          "susu": "Tinkhinyi",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Up",
+          "susu": "Koré",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Down",
+          "susu": "Aboum ma",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Here",
+          "susu": "Bé",
+          "category": "travel_directions"
+        },
+        {
+          "english": "There",
+          "susu": "Bé",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Near",
+          "susu": "A cetma",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Far",
+          "susu": "Kouya",
+          "category": "travel_directions"
+        },
+        {
+          "english": "North",
+          "susu": "Nöri",
+          "category": "travel_directions"
+        },
+        {
+          "english": "South",
+          "susu": "Yiré fanyi biriki",
+          "category": "travel_directions"
+        },
+        {
+          "english": "East",
+          "susu": "Kiya nakhè",
+          "category": "travel_directions"
+        },
+        {
+          "english": "West",
+          "susu": "sogegorode",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Inside",
+          "susu": "A koui",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Outside",
+          "susu": "Tandé",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Front",
+          "susu": "Yaré",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Back",
+          "susu": "Ifari",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Behind",
+          "susu": "Akhanbi",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Turn left",
+          "susu": "Wo gbilen yirefanyi ma",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Turn right",
+          "susu": "Wo gbilen yirefanyi ma",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Go straight",
+          "susu": "Wo siga tinxin gni",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Go forward",
+          "susu": "Wo siga yare",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Go back",
+          "susu": "Wo gbilen",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Stop here",
+          "susu": "Wo ti be",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Come here",
+          "susu": "Fâ bé",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Go there",
+          "susu": "Wo siga na",
+          "category": "travel_directions"
+        },
+        {
+          "english": "House",
+          "susu": "Fé ma gnökhoundji",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Home",
+          "susu": "Bankhi",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Market",
+          "susu": "Makiti",
+          "category": "travel_directions"
+        },
+        {
+          "english": "School",
+          "susu": "Kharandérabadé",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Hospital",
+          "susu": "Labitani",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Mosque",
+          "susu": "misiki",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Church",
+          "susu": "Chrétiens kha salidé",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Road",
+          "susu": "Kira",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Street",
+          "susu": "Kira",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Village",
+          "susu": "Khaaré",
+          "category": "travel_directions"
+        },
+        {
+          "english": "City",
+          "susu": "Ta",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Where are you going",
+          "susu": "Wo sigafe minden",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Where is the market",
+          "susu": "Makiti na minden",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Where is the hospital",
+          "susu": "Hopital na minden",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Where is the school",
+          "susu": "Lakɔli na minden",
+          "category": "travel_directions"
+        },
+        {
+          "english": "How do I get there",
+          "susu": "N nOma na sOtOde di",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Is it far",
+          "susu": "A makuya",
+          "category": "travel_directions"
+        },
+        {
+          "english": "Is it near",
+          "susu": "A ma kOrE",
+          "category": "travel_directions"
+        },
+        {
+          "english": "I am going home",
+          "susu": "N na sigafe n xOnE",
+          "category": "travel_directions"
+        },
+        {
+          "english": "I am coming back",
+          "susu": "N na gbilenfe",
+          "category": "travel_directions"
+        },
+        {
+          "english": "I am leaving",
+          "susu": "N na sigafe",
+          "category": "travel_directions"
+        },
+        {
+          "english": "I am arriving",
+          "susu": "N na fafe",
+          "category": "travel_directions"
+        },
+        {
+          "english": "I am lost",
+          "susu": "N bara lOE",
+          "category": "travel_directions"
+        },
+        {
+          "english": "The house is near",
+          "susu": "Banxi na yire makuye",
+          "category": "travel_directions"
+        },
+        {
+          "english": "The market is far",
+          "susu": "Makiti ma kuya",
+          "category": "travel_directions"
+        },
+        {
+          "english": "I will come back",
+          "susu": "N fama gbilen de",
+          "category": "travel_directions"
+        }
+      ]
+    },
+    "shopping_money": {
+      "total": 48,
+      "successful": 48,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Money",
+          "susu": "Kobiri",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Price",
+          "susu": "Saré",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Expensive",
+          "susu": "A khori",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Cheap",
+          "susu": "Saréfanyi",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Free",
+          "susu": "Asarémou fima",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Cost",
+          "susu": "A cèti",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Pay",
+          "susu": "Sarafé",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Buy",
+          "susu": "Sareti",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Sell",
+          "susu": "Matifé",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Change",
+          "susu": "Massarè",
+          "category": "shopping_money"
+        },
+        {
+          "english": "How much",
+          "susu": "Yeri",
+          "category": "shopping_money"
+        },
+        {
+          "english": "How much is this",
+          "susu": "yi sare na xan na",
+          "category": "shopping_money"
+        },
+        {
+          "english": "How much does it cost",
+          "susu": "A sare na xan na",
+          "category": "shopping_money"
+        },
+        {
+          "english": "What is the price",
+          "susu": "A sare na munse ra",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Is it expensive",
+          "susu": "A sare xOrOxO",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Can you reduce the price",
+          "susu": "Wo nOma a sare ragorode",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Do you have change",
+          "susu": "Wo bara masara",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Do you have this",
+          "susu": "Wo yi sOtOxi",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I want to buy",
+          "susu": "N wama sarafe",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I will buy this",
+          "susu": "N yi sara ma",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I am not buying",
+          "susu": "N mu na sarafe",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Too expensive",
+          "susu": "A sare xOrOxO",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Give me discount",
+          "susu": "Wo n ma discount fi n ma",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I have money",
+          "susu": "kObiri na n yi ra",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I have no money",
+          "susu": "N mu kObiri yo sOtOxi",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I will pay",
+          "susu": "N na sare fima",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I have paid",
+          "susu": "N bara sare fi",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Keep the change",
+          "susu": "Wo xa na masarE ragata",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Clothes",
+          "susu": "Douguée",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Shoes",
+          "susu": "Sankirée",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Bag",
+          "susu": "Cé sacé",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Phone",
+          "susu": "Teleföni",
+          "category": "shopping_money"
+        },
+        {
+          "english": "This one",
+          "susu": "Yi keren",
+          "category": "shopping_money"
+        },
+        {
+          "english": "That one",
+          "susu": "Na keren",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Another one",
+          "susu": "Boore",
+          "category": "shopping_money"
+        },
+        {
+          "english": "The same",
+          "susu": "Na nan a ra",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Different",
+          "susu": "Keren mara",
+          "category": "shopping_money"
+        },
+        {
+          "english": "What is your last price",
+          "susu": "Wo xa sare dOnxE munse ra",
+          "category": "shopping_money"
+        },
+        {
+          "english": "That is too much",
+          "susu": "Na bara gbo",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I cannot afford",
+          "susu": "N mu nOma",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Lower the price",
+          "susu": "Wo sare ragoro",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Good price",
+          "susu": "A sare fan",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Fair price",
+          "susu": "sare fangni",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Final price",
+          "susu": "A sare dOnxE",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I agree",
+          "susu": "N tinxi",
+          "category": "shopping_money"
+        },
+        {
+          "english": "No thank you",
+          "susu": "Ade, i nu wali",
+          "category": "shopping_money"
+        },
+        {
+          "english": "Maybe later",
+          "susu": "Tɛmunde kɔrɛ",
+          "category": "shopping_money"
+        },
+        {
+          "english": "I will come back",
+          "susu": "N fama gbilen de",
+          "category": "shopping_money"
+        }
+      ]
+    },
+    "work_education": {
+      "total": 49,
+      "successful": 49,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Work",
+          "susu": "Wali",
+          "category": "work_education"
+        },
+        {
+          "english": "Job",
+          "susu": "Wali",
+          "category": "work_education"
+        },
+        {
+          "english": "Office",
+          "susu": "Walidé bankhi",
+          "category": "work_education"
+        },
+        {
+          "english": "Boss",
+          "susu": "Mènguè",
+          "category": "work_education"
+        },
+        {
+          "english": "Worker",
+          "susu": "WalikE",
+          "category": "work_education"
+        },
+        {
+          "english": "Employee",
+          "susu": "Na khan walifé Lan khoun dè ndé bè",
+          "category": "work_education"
+        },
+        {
+          "english": "Salary",
+          "susu": "Kiké gnonyi saré",
+          "category": "work_education"
+        },
+        {
+          "english": "Business",
+          "susu": "Lankhoundè",
+          "category": "work_education"
+        },
+        {
+          "english": "Farmer",
+          "susu": "Khèsaa",
+          "category": "work_education"
+        },
+        {
+          "english": "Teacher",
+          "susu": "Mikhi ra kharanyi",
+          "category": "work_education"
+        },
+        {
+          "english": "Student",
+          "susu": "Kharandi",
+          "category": "work_education"
+        },
+        {
+          "english": "I am working",
+          "susu": "N na walife",
+          "category": "work_education"
+        },
+        {
+          "english": "I am going to work",
+          "susu": "N na sigafe walide",
+          "category": "work_education"
+        },
+        {
+          "english": "I finished work",
+          "susu": "N bara wali ra ɲɔn",
+          "category": "work_education"
+        },
+        {
+          "english": "I have a job",
+          "susu": "n ma wali na",
+          "category": "work_education"
+        },
+        {
+          "english": "I am looking for work",
+          "susu": "N na wali nan fenfe",
+          "category": "work_education"
+        },
+        {
+          "english": "Where do you work",
+          "susu": "I walima minden",
+          "category": "work_education"
+        },
+        {
+          "english": "What is your job",
+          "susu": "Ikha wali na mounséra",
+          "category": "work_education"
+        },
+        {
+          "english": "I work here",
+          "susu": "N walima be",
+          "category": "work_education"
+        },
+        {
+          "english": "Work is hard",
+          "susu": "Wali xOrOxO",
+          "category": "work_education"
+        },
+        {
+          "english": "Work is good",
+          "susu": "Wali fan",
+          "category": "work_education"
+        },
+        {
+          "english": "School",
+          "susu": "Kharandérabadé",
+          "category": "work_education"
+        },
+        {
+          "english": "Book",
+          "susu": "Bouki",
+          "category": "work_education"
+        },
+        {
+          "english": "Pen",
+          "susu": "Kalé",
+          "category": "work_education"
+        },
+        {
+          "english": "Paper",
+          "susu": "Kèdi",
+          "category": "work_education"
+        },
+        {
+          "english": "To read",
+          "susu": "A xaran fe",
+          "category": "work_education"
+        },
+        {
+          "english": "To write",
+          "susu": "sEbEli",
+          "category": "work_education"
+        },
+        {
+          "english": "To learn",
+          "susu": "Xaran fe",
+          "category": "work_education"
+        },
+        {
+          "english": "To teach",
+          "susu": "Xarande",
+          "category": "work_education"
+        },
+        {
+          "english": "To study",
+          "susu": "Xaran fe",
+          "category": "work_education"
+        },
+        {
+          "english": "Class",
+          "susu": "Kharanyi bankhi",
+          "category": "work_education"
+        },
+        {
+          "english": "Lesson",
+          "susu": "Karanfé ikha fé dé matinkan",
+          "category": "work_education"
+        },
+        {
+          "english": "I am a student",
+          "susu": "N tan nan na xaran di ra",
+          "category": "work_education"
+        },
+        {
+          "english": "I am a teacher",
+          "susu": "N tan nan na karamOxO ra",
+          "category": "work_education"
+        },
+        {
+          "english": "I am learning",
+          "susu": "N na xaran fe",
+          "category": "work_education"
+        },
+        {
+          "english": "I am studying",
+          "susu": "N na xaran fe",
+          "category": "work_education"
+        },
+        {
+          "english": "I go to school",
+          "susu": "N siga ma ekol",
+          "category": "work_education"
+        },
+        {
+          "english": "I can read",
+          "susu": "N nOma xaran de",
+          "category": "work_education"
+        },
+        {
+          "english": "I can write",
+          "susu": "N nOma sEbEde",
+          "category": "work_education"
+        },
+        {
+          "english": "I cannot read",
+          "susu": "N mu nOma xaran de",
+          "category": "work_education"
+        },
+        {
+          "english": "I cannot write",
+          "susu": "N mu nOma sEbEde",
+          "category": "work_education"
+        },
+        {
+          "english": "I am learning Susu",
+          "susu": "N na susu xaran fe",
+          "category": "work_education"
+        },
+        {
+          "english": "Teach me",
+          "susu": "Wo n xaran",
+          "category": "work_education"
+        },
+        {
+          "english": "I understand",
+          "susu": "nbara afamou",
+          "category": "work_education"
+        },
+        {
+          "english": "I do not understand",
+          "susu": "m'ma fakhamou",
+          "category": "work_education"
+        },
+        {
+          "english": "What does this mean",
+          "susu": "Na masenxi munse ra",
+          "category": "work_education"
+        },
+        {
+          "english": "How do you say",
+          "susu": "Wo a falama di",
+          "category": "work_education"
+        },
+        {
+          "english": "Repeat please",
+          "susu": "Wo man gbilen",
+          "category": "work_education"
+        },
+        {
+          "english": "Speak slowly",
+          "susu": "Wo wOyEn dOgni ra",
+          "category": "work_education"
+        }
+      ]
+    },
+    "weather_nature": {
+      "total": 55,
+      "successful": 55,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Weather",
+          "susu": "Wakhati",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Sun",
+          "susu": "Sogué",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Rain",
+          "susu": "Tunè",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Wind",
+          "susu": "Foyé",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Cloud",
+          "susu": "Koré",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Storm",
+          "susu": "Foyé Nakhan kanari ra bama",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Hot",
+          "susu": "Afourakhi",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Cold",
+          "susu": "Khingbeli",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Warm",
+          "susu": "Afourakhi",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Dry",
+          "susu": "Akharé",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Wet",
+          "susu": "Boundakhi",
+          "category": "weather_nature"
+        },
+        {
+          "english": "It is hot",
+          "susu": "A ma fura",
+          "category": "weather_nature"
+        },
+        {
+          "english": "It is cold",
+          "susu": "xinbeli nan a ra",
+          "category": "weather_nature"
+        },
+        {
+          "english": "It is raining",
+          "susu": "TunE na gorofe",
+          "category": "weather_nature"
+        },
+        {
+          "english": "It is sunny",
+          "susu": "soge na",
+          "category": "weather_nature"
+        },
+        {
+          "english": "The weather is good",
+          "susu": "waxati fan",
+          "category": "weather_nature"
+        },
+        {
+          "english": "The weather is bad",
+          "susu": "waxati mu fan",
+          "category": "weather_nature"
+        },
+        {
+          "english": "It is very hot today",
+          "susu": "A bara fura ki fanyi ra to",
+          "category": "weather_nature"
+        },
+        {
+          "english": "It will rain today",
+          "susu": "TunE fama nE to",
+          "category": "weather_nature"
+        },
+        {
+          "english": "The sun is strong",
+          "susu": "Soge sɛnbɛ gbo",
+          "category": "weather_nature"
+        },
+        {
+          "english": "The rain has stopped",
+          "susu": "TunE bara dan",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Tree",
+          "susu": "Wouri",
+          "category": "weather_nature"
+        },
+        {
+          "english": "River",
+          "susu": "Khouré",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Mountain",
+          "susu": "Gueya",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Ocean",
+          "susu": "Ba",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Sea",
+          "susu": "Fokhè yé",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Forest",
+          "susu": "Woula",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Field",
+          "susu": "Khè",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Farm",
+          "susu": "Sansi cifé",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Sky",
+          "susu": "Koré",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Moon",
+          "susu": "Kiké",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Stars",
+          "susu": "tunbuie",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Earth",
+          "susu": "Bokhi",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Ground",
+          "susu": "Bökhi",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Grass",
+          "susu": "Sekhè",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Flower",
+          "susu": "Fleuri",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Animal",
+          "susu": "Dalisé",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Dog",
+          "susu": "Baré",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Cat",
+          "susu": "Gnari",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Bird",
+          "susu": "Khoni",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Fish",
+          "susu": "Yèkhè",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Cow",
+          "susu": "Ningué guinè",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Goat",
+          "susu": "Mori",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Sheep",
+          "susu": "Yèkhè",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Chicken",
+          "susu": "Tökhè",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Horse",
+          "susu": "Choé",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Monkey",
+          "susu": "Bouboudi",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Snake",
+          "susu": "Bökhmasé",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Elephant",
+          "susu": "Sili",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Lion",
+          "susu": "Bartè",
+          "category": "weather_nature"
+        },
+        {
+          "english": "Beautiful sky",
+          "susu": "koore tofan",
+          "category": "weather_nature"
+        },
+        {
+          "english": "The river is big",
+          "susu": "Xure xungbe nan a ra",
+          "category": "weather_nature"
+        },
+        {
+          "english": "The mountain is high",
+          "susu": "Geya itexi",
+          "category": "weather_nature"
+        },
+        {
+          "english": "The forest is green",
+          "susu": "wula gbeli nan a ra",
+          "category": "weather_nature"
+        },
+        {
+          "english": "I love nature",
+          "susu": "N nature ra fan",
+          "category": "weather_nature"
+        }
+      ]
+    },
+    "emotions_feelings": {
+      "total": 52,
+      "successful": 52,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Happy",
+          "susu": "Sèwè",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Sad",
+          "susu": "nimisa",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Angry",
+          "susu": "Khonokhi",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Afraid",
+          "susu": "Bognèmini",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Scared",
+          "susu": "Bognè kanè",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Surprised",
+          "susu": "Magninfé",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Tired",
+          "susu": "Taganhi",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Excited",
+          "susu": "Ama khoyifé",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Worried",
+          "susu": "Bognè mini",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Calm",
+          "susu": "Doundouï",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Peaceful",
+          "susu": "Lan'gni",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am happy",
+          "susu": "N bara sEwa",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am sad",
+          "susu": "N nimisa",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am angry",
+          "susu": "N xOnE",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am afraid",
+          "susu": "N bara gaxu",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am scared",
+          "susu": "N bara gaxu",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am surprised",
+          "susu": "N bara kaaba",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am tired",
+          "susu": "N bara tagan",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am excited",
+          "susu": "N bara sEwa",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am worried",
+          "susu": "N na kOntOfili",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am calm",
+          "susu": "N bara dundu",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am at peace",
+          "susu": "N na bOgnE kui",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am very happy",
+          "susu": "N bara ɲɛlɛxin ki fanyi ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am very sad",
+          "susu": "N bara nimisa ki fanyi ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am very angry",
+          "susu": "N xOnOxi ki fanyi ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am very tired",
+          "susu": "N bara tagan ki fanyi ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am very afraid",
+          "susu": "N bara gaxu ki fanyi ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am very excited",
+          "susu": "N bara sEwa ki fanyi ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am very worried",
+          "susu": "N kɔntɔfilixi ki fanyi ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Are you happy",
+          "susu": "Wo sEwa xi",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Are you sad",
+          "susu": "Wo nimisaxi",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Are you angry",
+          "susu": "I xOnOxi",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Are you afraid",
+          "susu": "Wo gaxui",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Are you tired",
+          "susu": "Wo bara tagan",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Are you okay",
+          "susu": "Wo xa fe fan",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "What is wrong",
+          "susu": "Munse mu lanxi",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Why are you sad",
+          "susu": "Munfe ra i nimisaxi",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Why are you angry",
+          "susu": "I xOnOxi munfe ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Do not be afraid",
+          "susu": "Wo naxa gaaxu",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Do not worry",
+          "susu": "Wo naxa kOntOfili",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Be happy",
+          "susu": "Wo xa sEwa",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Do not be sad",
+          "susu": "Wo naxa sunnun",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I love you",
+          "susu": "I rafan ma",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I miss you",
+          "susu": "ikholinan ma",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I care about you",
+          "susu": "N xaxili tima wo ra",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am thinking of you",
+          "susu": "N na wo ma gnErE fe",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "You are important",
+          "susu": "Wo tide na",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am grateful",
+          "susu": "N bara wo tantun",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I am thankful",
+          "susu": "N bara wo tantun",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "I appreciate you",
+          "susu": "N wo tantuma",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "Thank you for everything",
+          "susu": "I nu wali fe birin ma",
+          "category": "emotions_feelings"
+        },
+        {
+          "english": "You make me happy",
+          "susu": "Wo n na sEwa ma",
+          "category": "emotions_feelings"
+        }
+      ]
+    },
+    "common_verbs": {
+      "total": 58,
+      "successful": 58,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "To go",
+          "susu": "sigafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To come",
+          "susu": "Fafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To walk",
+          "susu": "gnErE ma",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To run",
+          "susu": "Wo xa gi",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To sit",
+          "susu": "DOxOde",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To stand",
+          "susu": "Tife",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To lie down",
+          "susu": "A sade",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To stop",
+          "susu": "A xa ti",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To wait",
+          "susu": "A mamE ti",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To return",
+          "susu": "Wo xa gbilen",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To eat",
+          "susu": "Donse donfe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To drink",
+          "susu": "Minfe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To cook",
+          "susu": "Donse rafalafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To wash",
+          "susu": "A xa maxa",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To clean",
+          "susu": "A xa a maxa",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To sleep",
+          "susu": "Xife",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To wake up",
+          "susu": "Kelife",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To work",
+          "susu": "Walife",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To play",
+          "susu": "Wo xa bere",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To dance",
+          "susu": "Dance",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To sing",
+          "susu": "A xa sigi sa",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To speak",
+          "susu": "Wo xa wOyEn",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To say",
+          "susu": "A falafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To ask",
+          "susu": "Wo xa maxOrin",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To answer",
+          "susu": "A yaabi ra",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To listen",
+          "susu": "Wo xa ramE",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To hear",
+          "susu": "Wo xa a ramE",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To call",
+          "susu": "Wo xa xili",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To tell",
+          "susu": "A falafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To see",
+          "susu": "A tofe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To look",
+          "susu": "Wo xa a mato",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To know",
+          "susu": "A kolon fe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To think",
+          "susu": "Wo xa ma gnErE",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To understand",
+          "susu": "Wo xa a faxamu",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To remember",
+          "susu": "Wo xa ratu",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To forget",
+          "susu": "Wo xa nE",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To learn",
+          "susu": "Xaran fe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "To teach",
+          "susu": "Xarande",
+          "category": "common_verbs"
+        },
+        {
+          "english": "I am going",
+          "susu": "N na sigafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "You are coming",
+          "susu": "Wo na fafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "He is eating",
+          "susu": "A na donse donfe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "She is cooking",
+          "susu": "A na donse rafalafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "They are sleeping",
+          "susu": "E na xife",
+          "category": "common_verbs"
+        },
+        {
+          "english": "We are working",
+          "susu": "Moxo na walife",
+          "category": "common_verbs"
+        },
+        {
+          "english": "I want to go",
+          "susu": "N wama sigafe",
+          "category": "common_verbs"
+        },
+        {
+          "english": "I need to eat",
+          "susu": "N lan ma n xa donse don",
+          "category": "common_verbs"
+        },
+        {
+          "english": "I have to work",
+          "susu": "N lan ma n xa wali",
+          "category": "common_verbs"
+        },
+        {
+          "english": "I can see",
+          "susu": "N nOma a tode",
+          "category": "common_verbs"
+        },
+        {
+          "english": "I cannot hear",
+          "susu": "N mu nOma a ramEde",
+          "category": "common_verbs"
+        },
+        {
+          "english": "Do you know",
+          "susu": "I a kolon",
+          "category": "common_verbs"
+        },
+        {
+          "english": "I do not know",
+          "susu": "m'ma kolon",
+          "category": "common_verbs"
+        },
+        {
+          "english": "Tell me",
+          "susu": "Afalabè",
+          "category": "common_verbs"
+        },
+        {
+          "english": "Show me",
+          "susu": "A masén m'bè",
+          "category": "common_verbs"
+        },
+        {
+          "english": "Help me",
+          "susu": "N mali",
+          "category": "common_verbs"
+        },
+        {
+          "english": "Give me",
+          "susu": "Wo fi n ma",
+          "category": "common_verbs"
+        },
+        {
+          "english": "Take this",
+          "susu": "Wo yi tongo",
+          "category": "common_verbs"
+        },
+        {
+          "english": "Bring it",
+          "susu": "Wo fa a ra",
+          "category": "common_verbs"
+        },
+        {
+          "english": "Put it here",
+          "susu": "Wo a sa be",
+          "category": "common_verbs"
+        }
+      ]
+    },
+    "daily_activities": {
+      "total": 50,
+      "successful": 50,
+      "failed": 0,
+      "phrases": [
+        {
+          "english": "Wake up",
+          "susu": "Wo khounoun",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Get up",
+          "susu": "Keli",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I woke up early",
+          "susu": "N kelixi subaxa",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I woke up late",
+          "susu": "N kelixi kOE ra",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Brush teeth",
+          "susu": "Wo ɲin maxa",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Wash face",
+          "susu": "Wo yatagi maxa",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Take a bath",
+          "susu": "Wo maxa",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Get dressed",
+          "susu": "Dom'ma so",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Eat breakfast",
+          "susu": "Wo gEgEn donse don",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Leave the house",
+          "susu": "Wo xa mini banxi kui",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Go to work",
+          "susu": "Wo siga walide",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Go to school",
+          "susu": "Wo siga ekol",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Go to market",
+          "susu": "Wo siga makiti",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Buy food",
+          "susu": "Donse sara",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Cook food",
+          "susu": "Donse rafala",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Wash clothes",
+          "susu": "Dugi maxa",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Clean the house",
+          "susu": "Wo xa banxi ma sEnE",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Sweep the floor",
+          "susu": "Wo bOxi rafelen",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Fetch water",
+          "susu": "ye fen",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Come home",
+          "susu": "Wo fa banxi",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Return from work",
+          "susu": "Wo gbilen walide",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Eat dinner",
+          "susu": "Wo nunmare don",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Rest",
+          "susu": "Malaboui",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Watch television",
+          "susu": "Tele mato",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Talk with family",
+          "susu": "Wo nun wo xa denbaya wOyEn",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Go to bed",
+          "susu": "Siga i sa",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Sleep",
+          "susu": "Khifé",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Go to church",
+          "susu": "Wo siga salide",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Go to mosque",
+          "susu": "Wo siga salide",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Visit family",
+          "susu": "Wo xa denbayae mato",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Visit friends",
+          "susu": "Wo boree mato",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Go shopping",
+          "susu": "Wo siga sare sode",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Do laundry",
+          "susu": "Wo dugi maxa",
+          "category": "daily_activities"
+        },
+        {
+          "english": "What are you doing",
+          "susu": "Wo nansé rabafé",
+          "category": "daily_activities"
+        },
+        {
+          "english": "What did you do today",
+          "susu": "I munse rabaxi to",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Where are you going",
+          "susu": "Wo sigafe minden",
+          "category": "daily_activities"
+        },
+        {
+          "english": "What will you do tomorrow",
+          "susu": "Wo munse rabama tina",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Did you eat",
+          "susu": "I bara donse don",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Did you sleep well",
+          "susu": "I bara xi a fangni ra",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Have you finished",
+          "susu": "Wo bara gEn",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I am busy",
+          "susu": "N na walife",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I am free",
+          "susu": "N bara xOrOxO",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I have finished",
+          "susu": "N bara gEn",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I have not finished",
+          "susu": "N mu gEnE",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I am doing nothing",
+          "susu": "N mu sese rabafe",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I am resting",
+          "susu": "N na malabui nan kui",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I am on my way",
+          "susu": "N na kira xOn ma",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I will be there soon",
+          "susu": "N fama nE wo lide yakOsi",
+          "category": "daily_activities"
+        },
+        {
+          "english": "I am almost done",
+          "susu": "N bara gɛ gɛde",
+          "category": "daily_activities"
+        },
+        {
+          "english": "Wait for me",
+          "susu": "Wo n mamEtE",
+          "category": "daily_activities"
+        }
+      ]
+    }
+  },
+  "allPhrases": [
+    {
+      "english": "Hello",
+      "susu": "inou wali",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Hi",
+      "susu": "inou wali",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Good morning",
+      "susu": "Tanàmoufègnê",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Good afternoon",
+      "susu": "Wofègnè",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Good evening",
+      "susu": "Wo nounmaré",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Good night",
+      "susu": "Allah kha wo khi",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "How are you",
+      "susu": "Tanàmoufègnê",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "I am fine",
+      "susu": "a mou nä ki yo ki",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "I am fine thank you",
+      "susu": "N na yalan, i nu wali",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "And you",
+      "susu": "Ifan go",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "What is your name",
+      "susu": "Ikhilidi",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "My name is",
+      "susu": "Khilinè",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Nice to meet you",
+      "susu": "Ounbara gnalakhin itoféra",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Welcome",
+      "susu": "Ara lanfé",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Welcome home",
+      "susu": "Wo xa wo maso wo xOn gni",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Goodbye",
+      "susu": "Wo na tèmou",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "See you later",
+      "susu": "Won narala'ma",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "See you tomorrow",
+      "susu": "Won tina",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "See you soon",
+      "susu": "Won na tèmoui",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Take care",
+      "susu": "Iyèma sokhouï afanyira",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Have a nice day",
+      "susu": "Wo fègnè",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Have a good trip",
+      "susu": "Wo xa biyaasi fangni raba",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Safe travels",
+      "susu": "Biyasi fangni",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Sleep well",
+      "susu": "Xi fangni",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Until next time",
+      "susu": "han waxati gbEtE",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Please",
+      "susu": "Nbari khandi",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Thank you",
+      "susu": "Wonou wali",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Thank you very much",
+      "susu": "Inouwali kifanyi",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "You are welcome",
+      "susu": "Wo khakèto",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Excuse me",
+      "susu": "Dignèn ma",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Sorry",
+      "susu": "diyƐ",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "I am sorry",
+      "susu": "N bara nimisa",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "No problem",
+      "susu": "Kontofili yo",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "It is nothing",
+      "susu": "A mu findixi sese ra",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Bless you",
+      "susu": "Wo xa duba",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Good morning everyone",
+      "susu": "Wo birin xa gɛɛsɛgɛ fan",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "How was your night",
+      "susu": "Ikha kouwè nou nadi",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Did you sleep well",
+      "susu": "I bara xi a fangni ra",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "How is your family",
+      "susu": "Wo xa denbaya na ki nE",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "How is work",
+      "susu": "Wali na ki nE",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Long time no see",
+      "susu": "A bara bou m'mi to",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "I missed you",
+      "susu": "N bara wo xanu",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "I am happy to see you",
+      "susu": "N bara sEwa wo to fe ra",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Peace be with you",
+      "susu": "Bɔɲɛsa xa lu wo bɛ",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "May God bless you",
+      "susu": "Ala xa hinnɛ wo ra",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "I am doing well",
+      "susu": "N na walife a fangni ra",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Everything is fine",
+      "susu": "Fe birin fan",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "All is well",
+      "susu": "Fe birin fan",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Thanks to God",
+      "susu": "Ala tantu",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "By the grace of God",
+      "susu": "Ala xa hinnɛ saabui ra",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "I am blessed",
+      "susu": "N bara duba",
+      "category": "greetings_farewells"
+    },
+    {
+      "english": "Mother",
+      "susu": "Fé sougandikhi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Father",
+      "susu": "Nba",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Parents",
+      "susu": "Bariboré",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Child",
+      "susu": "Dumedi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Children",
+      "susu": "Dimèdi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Son",
+      "susu": "Di",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Daughter",
+      "susu": "Abè",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Brother",
+      "susu": "Ntara",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Sister",
+      "susu": "Nkhounya guinèma",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Grandfather",
+      "susu": "Baba",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Grandmother",
+      "susu": "n baba",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Grandparents",
+      "susu": "Benbae",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Uncle",
+      "susu": "Soghö",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Aunt",
+      "susu": "Ntenin",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Cousin",
+      "susu": "Itenin khadi anamara iba khoundia khadi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Nephew",
+      "susu": "Sokhödi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Niece",
+      "susu": "Sokhodi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Husband",
+      "susu": "Nma mori",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Wife",
+      "susu": "Kha guinè",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Family",
+      "susu": "Dembaya",
+      "category": "family_relationships"
+    },
+    {
+      "english": "This is my mother",
+      "susu": "N nga nan yi ki",
+      "category": "family_relationships"
+    },
+    {
+      "english": "This is my father",
+      "susu": "N baba nan yi ki",
+      "category": "family_relationships"
+    },
+    {
+      "english": "This is my wife",
+      "susu": "N ma ginE nan ya",
+      "category": "family_relationships"
+    },
+    {
+      "english": "This is my husband",
+      "susu": "N ma xamE nan ya",
+      "category": "family_relationships"
+    },
+    {
+      "english": "This is my child",
+      "susu": "N ma di nan yi ki",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I have two children",
+      "susu": "N ma di firin nan na",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I have three brothers",
+      "susu": "N xunya saxan na",
+      "category": "family_relationships"
+    },
+    {
+      "english": "My sister is older",
+      "susu": "N xunya ginE fori nan a ra",
+      "category": "family_relationships"
+    },
+    {
+      "english": "My brother is younger",
+      "susu": "N xunya nan xurun",
+      "category": "family_relationships"
+    },
+    {
+      "english": "My family is big",
+      "susu": "N ma denbaya gbo",
+      "category": "family_relationships"
+    },
+    {
+      "english": "My family is small",
+      "susu": "N ma denbaya xurun",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Are you married",
+      "susu": "Imarié khi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Do you have children",
+      "susu": "Wo xa die na wo yi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "How many children do you have",
+      "susu": "Wo xa di wuyaxi nan na wo yi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Where is your family",
+      "susu": "Wo xa denbaya na minden",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Who is this",
+      "susu": "N'dey iya",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Is this your mother",
+      "susu": "I nga nan ya",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Is this your father",
+      "susu": "Wo baba nan ya",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I am married",
+      "susu": "N bara futi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I am not married",
+      "susu": "N mu futixi",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I am single",
+      "susu": "N tan keren",
+      "category": "family_relationships"
+    },
+    {
+      "english": "She is my friend",
+      "susu": "A findixi n bore nan na",
+      "category": "family_relationships"
+    },
+    {
+      "english": "He is my friend",
+      "susu": "A tan nan na n bore ra",
+      "category": "family_relationships"
+    },
+    {
+      "english": "They are my neighbors",
+      "susu": "E findixi n dOxO bore nan na",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I love my family",
+      "susu": "N ma denbaya rafan n ma",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I love my mother",
+      "susu": "n'ga rafan m'ma",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I love my father",
+      "susu": "m'ba rafan m'ma",
+      "category": "family_relationships"
+    },
+    {
+      "english": "We are family",
+      "susu": "Won findixi denbaya nan na",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Family is important",
+      "susu": "Denbaya tide na",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I am the eldest",
+      "susu": "N tan nan na fori ra",
+      "category": "family_relationships"
+    },
+    {
+      "english": "I am the youngest",
+      "susu": "N tan nan na dimEdi ra",
+      "category": "family_relationships"
+    },
+    {
+      "english": "Food",
+      "susu": "Baloé",
+      "category": "food_drink"
+    },
+    {
+      "english": "Water",
+      "susu": "Yé",
+      "category": "food_drink"
+    },
+    {
+      "english": "Rice",
+      "susu": "Bandé",
+      "category": "food_drink"
+    },
+    {
+      "english": "Fish",
+      "susu": "Yèkhè",
+      "category": "food_drink"
+    },
+    {
+      "english": "Meat",
+      "susu": "Soubé",
+      "category": "food_drink"
+    },
+    {
+      "english": "Chicken",
+      "susu": "Tökhè",
+      "category": "food_drink"
+    },
+    {
+      "english": "Bread",
+      "susu": "Tami",
+      "category": "food_drink"
+    },
+    {
+      "english": "Vegetables",
+      "susu": "Sanssi raboulakhi nakhan don ma",
+      "category": "food_drink"
+    },
+    {
+      "english": "Fruit",
+      "susu": "Youri bogui",
+      "category": "food_drink"
+    },
+    {
+      "english": "Mango",
+      "susu": "Mango",
+      "category": "food_drink"
+    },
+    {
+      "english": "Banana",
+      "susu": "Banani",
+      "category": "food_drink"
+    },
+    {
+      "english": "Orange",
+      "susu": "Lefouré",
+      "category": "food_drink"
+    },
+    {
+      "english": "Peanuts",
+      "susu": "Kabe",
+      "category": "food_drink"
+    },
+    {
+      "english": "Palm oil",
+      "susu": "Palmier ture",
+      "category": "food_drink"
+    },
+    {
+      "english": "Salt",
+      "susu": "Fokhè",
+      "category": "food_drink"
+    },
+    {
+      "english": "Sugar",
+      "susu": "Souka",
+      "category": "food_drink"
+    },
+    {
+      "english": "Pepper",
+      "susu": "Gbèngbè",
+      "category": "food_drink"
+    },
+    {
+      "english": "Onion",
+      "susu": "Yèbè",
+      "category": "food_drink"
+    },
+    {
+      "english": "Tomato",
+      "susu": "Tomatï",
+      "category": "food_drink"
+    },
+    {
+      "english": "Cassava",
+      "susu": "maniok",
+      "category": "food_drink"
+    },
+    {
+      "english": "Tea",
+      "susu": "Ataya",
+      "category": "food_drink"
+    },
+    {
+      "english": "Coffee",
+      "susu": "Käfé",
+      "category": "food_drink"
+    },
+    {
+      "english": "Milk",
+      "susu": "Khinyè",
+      "category": "food_drink"
+    },
+    {
+      "english": "Juice",
+      "susu": "Ju",
+      "category": "food_drink"
+    },
+    {
+      "english": "Palm wine",
+      "susu": "Palmier vin",
+      "category": "food_drink"
+    },
+    {
+      "english": "Cold water",
+      "susu": "Ye xOrOxOE",
+      "category": "food_drink"
+    },
+    {
+      "english": "Hot water",
+      "susu": "Ye xOrOxOE",
+      "category": "food_drink"
+    },
+    {
+      "english": "I am hungry",
+      "susu": "Kame nan n ma",
+      "category": "food_drink"
+    },
+    {
+      "english": "I am thirsty",
+      "susu": "ye xOli na n ma",
+      "category": "food_drink"
+    },
+    {
+      "english": "I am not hungry",
+      "susu": "Kami mu n ma",
+      "category": "food_drink"
+    },
+    {
+      "english": "I am not thirsty",
+      "susu": "ye xOli mu n ma",
+      "category": "food_drink"
+    },
+    {
+      "english": "Are you hungry",
+      "susu": "Kame nan i ra",
+      "category": "food_drink"
+    },
+    {
+      "english": "Are you thirsty",
+      "susu": "ye xOnE na wo ma",
+      "category": "food_drink"
+    },
+    {
+      "english": "I want to eat",
+      "susu": "N wama donse donfe",
+      "category": "food_drink"
+    },
+    {
+      "english": "I want to drink",
+      "susu": "N wama minfe",
+      "category": "food_drink"
+    },
+    {
+      "english": "Let us eat",
+      "susu": "Won xa donse don",
+      "category": "food_drink"
+    },
+    {
+      "english": "Let us drink",
+      "susu": "Won xa min",
+      "category": "food_drink"
+    },
+    {
+      "english": "Give me water",
+      "susu": "Wo ye fi n ma",
+      "category": "food_drink"
+    },
+    {
+      "english": "Give me food",
+      "susu": "Wo donse fi n ma",
+      "category": "food_drink"
+    },
+    {
+      "english": "I am eating",
+      "susu": "N na donse donfe",
+      "category": "food_drink"
+    },
+    {
+      "english": "I am drinking",
+      "susu": "N na minfe",
+      "category": "food_drink"
+    },
+    {
+      "english": "The food is good",
+      "susu": "Donse fan",
+      "category": "food_drink"
+    },
+    {
+      "english": "The food is ready",
+      "susu": "Donse bara rafala",
+      "category": "food_drink"
+    },
+    {
+      "english": "The food is hot",
+      "susu": "Donse xOrOxO",
+      "category": "food_drink"
+    },
+    {
+      "english": "The food is cold",
+      "susu": "Donse xinde",
+      "category": "food_drink"
+    },
+    {
+      "english": "Delicious",
+      "susu": "Gnökhonyi",
+      "category": "food_drink"
+    },
+    {
+      "english": "I am full",
+      "susu": "N bara rafe",
+      "category": "food_drink"
+    },
+    {
+      "english": "I ate already",
+      "susu": "N bara donse don",
+      "category": "food_drink"
+    },
+    {
+      "english": "She is cooking",
+      "susu": "A na donse rafalafe",
+      "category": "food_drink"
+    },
+    {
+      "english": "He is cooking",
+      "susu": "A na donse rafalafe",
+      "category": "food_drink"
+    },
+    {
+      "english": "What are you cooking",
+      "susu": "I na munse rafalafe",
+      "category": "food_drink"
+    },
+    {
+      "english": "I am cooking rice",
+      "susu": "N na lose yailanfe",
+      "category": "food_drink"
+    },
+    {
+      "english": "The rice is ready",
+      "susu": "Ɲama bara rafala",
+      "category": "food_drink"
+    },
+    {
+      "english": "Come and eat",
+      "susu": "Wo fa wo xa donse don",
+      "category": "food_drink"
+    },
+    {
+      "english": "Head",
+      "susu": "Ara gnèrèfé",
+      "category": "health_body"
+    },
+    {
+      "english": "Eye",
+      "susu": "Ya",
+      "category": "health_body"
+    },
+    {
+      "english": "Eyes",
+      "susu": "Ya",
+      "category": "health_body"
+    },
+    {
+      "english": "Ear",
+      "susu": "Touli",
+      "category": "health_body"
+    },
+    {
+      "english": "Ears",
+      "susu": "Touley",
+      "category": "health_body"
+    },
+    {
+      "english": "Nose",
+      "susu": "Nouè",
+      "category": "health_body"
+    },
+    {
+      "english": "Mouth",
+      "susu": "Dè",
+      "category": "health_body"
+    },
+    {
+      "english": "Teeth",
+      "susu": "Gnin yé",
+      "category": "health_body"
+    },
+    {
+      "english": "Tongue",
+      "susu": "Khouï",
+      "category": "health_body"
+    },
+    {
+      "english": "Hand",
+      "susu": "Bèlèkhè",
+      "category": "health_body"
+    },
+    {
+      "english": "Hands",
+      "susu": "BElExE",
+      "category": "health_body"
+    },
+    {
+      "english": "Arm",
+      "susu": "Bèlèkhè",
+      "category": "health_body"
+    },
+    {
+      "english": "Foot",
+      "susu": "Sanyi",
+      "category": "health_body"
+    },
+    {
+      "english": "Feet",
+      "susu": "Sènyi",
+      "category": "health_body"
+    },
+    {
+      "english": "Leg",
+      "susu": "Sanyi",
+      "category": "health_body"
+    },
+    {
+      "english": "Stomach",
+      "susu": "Fouri koui touli cé",
+      "category": "health_body"
+    },
+    {
+      "english": "Back",
+      "susu": "Ifari",
+      "category": "health_body"
+    },
+    {
+      "english": "Heart",
+      "susu": "Sondonyi",
+      "category": "health_body"
+    },
+    {
+      "english": "Blood",
+      "susu": "Wouli",
+      "category": "health_body"
+    },
+    {
+      "english": "Body",
+      "susu": "Faté",
+      "category": "health_body"
+    },
+    {
+      "english": "I am sick",
+      "susu": "N furaxi",
+      "category": "health_body"
+    },
+    {
+      "english": "I am not sick",
+      "susu": "N mu furaxi",
+      "category": "health_body"
+    },
+    {
+      "english": "I am healthy",
+      "susu": "N na yalan",
+      "category": "health_body"
+    },
+    {
+      "english": "I am tired",
+      "susu": "N bara tagan",
+      "category": "health_body"
+    },
+    {
+      "english": "I am very tired",
+      "susu": "N bara tagan ki fanyi ra",
+      "category": "health_body"
+    },
+    {
+      "english": "I am weak",
+      "susu": "n tagan",
+      "category": "health_body"
+    },
+    {
+      "english": "I am strong",
+      "susu": "N sɛnbɛ gbo",
+      "category": "health_body"
+    },
+    {
+      "english": "I am in pain",
+      "susu": "N na xOnE kui",
+      "category": "health_body"
+    },
+    {
+      "english": "I have a headache",
+      "susu": "N xun xOnE nan a ra",
+      "category": "health_body"
+    },
+    {
+      "english": "I have a stomachache",
+      "susu": "N furi xOnE nan a ra",
+      "category": "health_body"
+    },
+    {
+      "english": "My head hurts",
+      "susu": "N xunyi xOnOma",
+      "category": "health_body"
+    },
+    {
+      "english": "My stomach hurts",
+      "susu": "N furi xOnOma",
+      "category": "health_body"
+    },
+    {
+      "english": "My back hurts",
+      "susu": "N xanbi xOnOma",
+      "category": "health_body"
+    },
+    {
+      "english": "I have a fever",
+      "susu": "N ma fure na",
+      "category": "health_body"
+    },
+    {
+      "english": "I have a cold",
+      "susu": "N bara xinbeli",
+      "category": "health_body"
+    },
+    {
+      "english": "I have a cough",
+      "susu": "N ma xOnE na",
+      "category": "health_body"
+    },
+    {
+      "english": "I am not feeling well",
+      "susu": "N mu yalanxi",
+      "category": "health_body"
+    },
+    {
+      "english": "Doctor",
+      "susu": "Mikhi dandan",
+      "category": "health_body"
+    },
+    {
+      "english": "Hospital",
+      "susu": "Labitani",
+      "category": "health_body"
+    },
+    {
+      "english": "Medicine",
+      "susu": "Seri kharan yi",
+      "category": "health_body"
+    },
+    {
+      "english": "I need medicine",
+      "susu": "N hayi na seri ma",
+      "category": "health_body"
+    },
+    {
+      "english": "Where is the hospital",
+      "susu": "Hopital na minden",
+      "category": "health_body"
+    },
+    {
+      "english": "Call the doctor",
+      "susu": "Wo dOktOre xili",
+      "category": "health_body"
+    },
+    {
+      "english": "I need help",
+      "susu": "N hayi na mali ma",
+      "category": "health_body"
+    },
+    {
+      "english": "It hurts here",
+      "susu": "A xOnOma be",
+      "category": "health_body"
+    },
+    {
+      "english": "I feel better",
+      "susu": "N bara fisa",
+      "category": "health_body"
+    },
+    {
+      "english": "I am getting better",
+      "susu": "N na yalan fe",
+      "category": "health_body"
+    },
+    {
+      "english": "Take care of yourself",
+      "susu": "Wo wo yEtE ratanga",
+      "category": "health_body"
+    },
+    {
+      "english": "Get well soon",
+      "susu": "Allah kha sönèya fii ima sin'nèma",
+      "category": "health_body"
+    },
+    {
+      "english": "Rest well",
+      "susu": "Wo malabu a fangni ra",
+      "category": "health_body"
+    },
+    {
+      "english": "Drink water",
+      "susu": "ye min",
+      "category": "health_body"
+    },
+    {
+      "english": "Eat medicine",
+      "susu": "seri donfe",
+      "category": "health_body"
+    },
+    {
+      "english": "One",
+      "susu": "Kerén",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Two",
+      "susu": "Firin",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Three",
+      "susu": "Serinfé",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Four",
+      "susu": "Naani",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Five",
+      "susu": "Souli",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Six",
+      "susu": "Sén'ni",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Seven",
+      "susu": "solofere",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Eight",
+      "susu": "Solomasakhan",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Nine",
+      "susu": "Solomanani",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Ten",
+      "susu": "Foû",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Twenty",
+      "susu": "Moukhè",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Thirty",
+      "susu": "Tongo sakhan",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Forty",
+      "susu": "Ton naanin",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Fifty",
+      "susu": "Tongo souli",
+      "category": "numbers_time"
+    },
+    {
+      "english": "One hundred",
+      "susu": "kEmE",
+      "category": "numbers_time"
+    },
+    {
+      "english": "One thousand",
+      "susu": "mixi wulu keren",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Today",
+      "susu": "Too",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Tomorrow",
+      "susu": "Tina",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Yesterday",
+      "susu": "Khoro",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Now",
+      "susu": "Yakoss",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Later",
+      "susu": "Danguikhambi",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Morning",
+      "susu": "Djècèkhè",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Afternoon",
+      "susu": "Midi dangui khanbi",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Evening",
+      "susu": "Noun maré",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Night",
+      "susu": "Koyè",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Day",
+      "susu": "Lokhè",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Week",
+      "susu": "Lökhounyi",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Month",
+      "susu": "Kiké",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Year",
+      "susu": "Gnè",
+      "category": "numbers_time"
+    },
+    {
+      "english": "What time is it",
+      "susu": "Waxati mundun na",
+      "category": "numbers_time"
+    },
+    {
+      "english": "It is morning",
+      "susu": "gɛɛsɛgɛ nan a ra",
+      "category": "numbers_time"
+    },
+    {
+      "english": "It is afternoon",
+      "susu": "nunmare nan a ra",
+      "category": "numbers_time"
+    },
+    {
+      "english": "It is evening",
+      "susu": "nunmare nan a ra",
+      "category": "numbers_time"
+    },
+    {
+      "english": "It is late",
+      "susu": "A bara gɛ",
+      "category": "numbers_time"
+    },
+    {
+      "english": "It is early",
+      "susu": "A singe nan a ra",
+      "category": "numbers_time"
+    },
+    {
+      "english": "This morning",
+      "susu": "To gEgEn",
+      "category": "numbers_time"
+    },
+    {
+      "english": "This evening",
+      "susu": "To nunmare",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Last night",
+      "susu": "kOE dangixi",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Next week",
+      "susu": "LOxun naxan fama",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Last month",
+      "susu": "Kike dangixi",
+      "category": "numbers_time"
+    },
+    {
+      "english": "This year",
+      "susu": "Yi gnE",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Every day",
+      "susu": "LOn birin",
+      "category": "numbers_time"
+    },
+    {
+      "english": "All day",
+      "susu": "LOn birin",
+      "category": "numbers_time"
+    },
+    {
+      "english": "All night",
+      "susu": "Kɔɛ birin",
+      "category": "numbers_time"
+    },
+    {
+      "english": "How old are you",
+      "susu": "Ignè yerara",
+      "category": "numbers_time"
+    },
+    {
+      "english": "I am twenty years old",
+      "susu": "N bara gnE mOxOyEn",
+      "category": "numbers_time"
+    },
+    {
+      "english": "How long",
+      "susu": "waxati mundun",
+      "category": "numbers_time"
+    },
+    {
+      "english": "How many days",
+      "susu": "xi wuyaxi",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Two hours",
+      "susu": "waxati firin",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Three days",
+      "susu": "xi saxan",
+      "category": "numbers_time"
+    },
+    {
+      "english": "One week",
+      "susu": "lOxun keren",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Wait a moment",
+      "susu": "Wo mamEtE dondoroti",
+      "category": "numbers_time"
+    },
+    {
+      "english": "Left",
+      "susu": "A kola",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Right",
+      "susu": "Yiréfan",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Straight",
+      "susu": "Tinkhinyi",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Up",
+      "susu": "Koré",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Down",
+      "susu": "Aboum ma",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Here",
+      "susu": "Bé",
+      "category": "travel_directions"
+    },
+    {
+      "english": "There",
+      "susu": "Bé",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Near",
+      "susu": "A cetma",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Far",
+      "susu": "Kouya",
+      "category": "travel_directions"
+    },
+    {
+      "english": "North",
+      "susu": "Nöri",
+      "category": "travel_directions"
+    },
+    {
+      "english": "South",
+      "susu": "Yiré fanyi biriki",
+      "category": "travel_directions"
+    },
+    {
+      "english": "East",
+      "susu": "Kiya nakhè",
+      "category": "travel_directions"
+    },
+    {
+      "english": "West",
+      "susu": "sogegorode",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Inside",
+      "susu": "A koui",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Outside",
+      "susu": "Tandé",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Front",
+      "susu": "Yaré",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Back",
+      "susu": "Ifari",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Behind",
+      "susu": "Akhanbi",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Turn left",
+      "susu": "Wo gbilen yirefanyi ma",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Turn right",
+      "susu": "Wo gbilen yirefanyi ma",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Go straight",
+      "susu": "Wo siga tinxin gni",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Go forward",
+      "susu": "Wo siga yare",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Go back",
+      "susu": "Wo gbilen",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Stop here",
+      "susu": "Wo ti be",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Come here",
+      "susu": "Fâ bé",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Go there",
+      "susu": "Wo siga na",
+      "category": "travel_directions"
+    },
+    {
+      "english": "House",
+      "susu": "Fé ma gnökhoundji",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Home",
+      "susu": "Bankhi",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Market",
+      "susu": "Makiti",
+      "category": "travel_directions"
+    },
+    {
+      "english": "School",
+      "susu": "Kharandérabadé",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Hospital",
+      "susu": "Labitani",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Mosque",
+      "susu": "misiki",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Church",
+      "susu": "Chrétiens kha salidé",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Road",
+      "susu": "Kira",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Street",
+      "susu": "Kira",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Village",
+      "susu": "Khaaré",
+      "category": "travel_directions"
+    },
+    {
+      "english": "City",
+      "susu": "Ta",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Where are you going",
+      "susu": "Wo sigafe minden",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Where is the market",
+      "susu": "Makiti na minden",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Where is the hospital",
+      "susu": "Hopital na minden",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Where is the school",
+      "susu": "Lakɔli na minden",
+      "category": "travel_directions"
+    },
+    {
+      "english": "How do I get there",
+      "susu": "N nOma na sOtOde di",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Is it far",
+      "susu": "A makuya",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Is it near",
+      "susu": "A ma kOrE",
+      "category": "travel_directions"
+    },
+    {
+      "english": "I am going home",
+      "susu": "N na sigafe n xOnE",
+      "category": "travel_directions"
+    },
+    {
+      "english": "I am coming back",
+      "susu": "N na gbilenfe",
+      "category": "travel_directions"
+    },
+    {
+      "english": "I am leaving",
+      "susu": "N na sigafe",
+      "category": "travel_directions"
+    },
+    {
+      "english": "I am arriving",
+      "susu": "N na fafe",
+      "category": "travel_directions"
+    },
+    {
+      "english": "I am lost",
+      "susu": "N bara lOE",
+      "category": "travel_directions"
+    },
+    {
+      "english": "The house is near",
+      "susu": "Banxi na yire makuye",
+      "category": "travel_directions"
+    },
+    {
+      "english": "The market is far",
+      "susu": "Makiti ma kuya",
+      "category": "travel_directions"
+    },
+    {
+      "english": "I will come back",
+      "susu": "N fama gbilen de",
+      "category": "travel_directions"
+    },
+    {
+      "english": "Money",
+      "susu": "Kobiri",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Price",
+      "susu": "Saré",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Expensive",
+      "susu": "A khori",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Cheap",
+      "susu": "Saréfanyi",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Free",
+      "susu": "Asarémou fima",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Cost",
+      "susu": "A cèti",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Pay",
+      "susu": "Sarafé",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Buy",
+      "susu": "Sareti",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Sell",
+      "susu": "Matifé",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Change",
+      "susu": "Massarè",
+      "category": "shopping_money"
+    },
+    {
+      "english": "How much",
+      "susu": "Yeri",
+      "category": "shopping_money"
+    },
+    {
+      "english": "How much is this",
+      "susu": "yi sare na xan na",
+      "category": "shopping_money"
+    },
+    {
+      "english": "How much does it cost",
+      "susu": "A sare na xan na",
+      "category": "shopping_money"
+    },
+    {
+      "english": "What is the price",
+      "susu": "A sare na munse ra",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Is it expensive",
+      "susu": "A sare xOrOxO",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Can you reduce the price",
+      "susu": "Wo nOma a sare ragorode",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Do you have change",
+      "susu": "Wo bara masara",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Do you have this",
+      "susu": "Wo yi sOtOxi",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I want to buy",
+      "susu": "N wama sarafe",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I will buy this",
+      "susu": "N yi sara ma",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I am not buying",
+      "susu": "N mu na sarafe",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Too expensive",
+      "susu": "A sare xOrOxO",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Give me discount",
+      "susu": "Wo n ma discount fi n ma",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I have money",
+      "susu": "kObiri na n yi ra",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I have no money",
+      "susu": "N mu kObiri yo sOtOxi",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I will pay",
+      "susu": "N na sare fima",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I have paid",
+      "susu": "N bara sare fi",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Keep the change",
+      "susu": "Wo xa na masarE ragata",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Clothes",
+      "susu": "Douguée",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Shoes",
+      "susu": "Sankirée",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Bag",
+      "susu": "Cé sacé",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Phone",
+      "susu": "Teleföni",
+      "category": "shopping_money"
+    },
+    {
+      "english": "This one",
+      "susu": "Yi keren",
+      "category": "shopping_money"
+    },
+    {
+      "english": "That one",
+      "susu": "Na keren",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Another one",
+      "susu": "Boore",
+      "category": "shopping_money"
+    },
+    {
+      "english": "The same",
+      "susu": "Na nan a ra",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Different",
+      "susu": "Keren mara",
+      "category": "shopping_money"
+    },
+    {
+      "english": "What is your last price",
+      "susu": "Wo xa sare dOnxE munse ra",
+      "category": "shopping_money"
+    },
+    {
+      "english": "That is too much",
+      "susu": "Na bara gbo",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I cannot afford",
+      "susu": "N mu nOma",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Lower the price",
+      "susu": "Wo sare ragoro",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Good price",
+      "susu": "A sare fan",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Fair price",
+      "susu": "sare fangni",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Final price",
+      "susu": "A sare dOnxE",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I agree",
+      "susu": "N tinxi",
+      "category": "shopping_money"
+    },
+    {
+      "english": "No thank you",
+      "susu": "Ade, i nu wali",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Maybe later",
+      "susu": "Tɛmunde kɔrɛ",
+      "category": "shopping_money"
+    },
+    {
+      "english": "I will come back",
+      "susu": "N fama gbilen de",
+      "category": "shopping_money"
+    },
+    {
+      "english": "Work",
+      "susu": "Wali",
+      "category": "work_education"
+    },
+    {
+      "english": "Job",
+      "susu": "Wali",
+      "category": "work_education"
+    },
+    {
+      "english": "Office",
+      "susu": "Walidé bankhi",
+      "category": "work_education"
+    },
+    {
+      "english": "Boss",
+      "susu": "Mènguè",
+      "category": "work_education"
+    },
+    {
+      "english": "Worker",
+      "susu": "WalikE",
+      "category": "work_education"
+    },
+    {
+      "english": "Employee",
+      "susu": "Na khan walifé Lan khoun dè ndé bè",
+      "category": "work_education"
+    },
+    {
+      "english": "Salary",
+      "susu": "Kiké gnonyi saré",
+      "category": "work_education"
+    },
+    {
+      "english": "Business",
+      "susu": "Lankhoundè",
+      "category": "work_education"
+    },
+    {
+      "english": "Farmer",
+      "susu": "Khèsaa",
+      "category": "work_education"
+    },
+    {
+      "english": "Teacher",
+      "susu": "Mikhi ra kharanyi",
+      "category": "work_education"
+    },
+    {
+      "english": "Student",
+      "susu": "Kharandi",
+      "category": "work_education"
+    },
+    {
+      "english": "I am working",
+      "susu": "N na walife",
+      "category": "work_education"
+    },
+    {
+      "english": "I am going to work",
+      "susu": "N na sigafe walide",
+      "category": "work_education"
+    },
+    {
+      "english": "I finished work",
+      "susu": "N bara wali ra ɲɔn",
+      "category": "work_education"
+    },
+    {
+      "english": "I have a job",
+      "susu": "n ma wali na",
+      "category": "work_education"
+    },
+    {
+      "english": "I am looking for work",
+      "susu": "N na wali nan fenfe",
+      "category": "work_education"
+    },
+    {
+      "english": "Where do you work",
+      "susu": "I walima minden",
+      "category": "work_education"
+    },
+    {
+      "english": "What is your job",
+      "susu": "Ikha wali na mounséra",
+      "category": "work_education"
+    },
+    {
+      "english": "I work here",
+      "susu": "N walima be",
+      "category": "work_education"
+    },
+    {
+      "english": "Work is hard",
+      "susu": "Wali xOrOxO",
+      "category": "work_education"
+    },
+    {
+      "english": "Work is good",
+      "susu": "Wali fan",
+      "category": "work_education"
+    },
+    {
+      "english": "School",
+      "susu": "Kharandérabadé",
+      "category": "work_education"
+    },
+    {
+      "english": "Book",
+      "susu": "Bouki",
+      "category": "work_education"
+    },
+    {
+      "english": "Pen",
+      "susu": "Kalé",
+      "category": "work_education"
+    },
+    {
+      "english": "Paper",
+      "susu": "Kèdi",
+      "category": "work_education"
+    },
+    {
+      "english": "To read",
+      "susu": "A xaran fe",
+      "category": "work_education"
+    },
+    {
+      "english": "To write",
+      "susu": "sEbEli",
+      "category": "work_education"
+    },
+    {
+      "english": "To learn",
+      "susu": "Xaran fe",
+      "category": "work_education"
+    },
+    {
+      "english": "To teach",
+      "susu": "Xarande",
+      "category": "work_education"
+    },
+    {
+      "english": "To study",
+      "susu": "Xaran fe",
+      "category": "work_education"
+    },
+    {
+      "english": "Class",
+      "susu": "Kharanyi bankhi",
+      "category": "work_education"
+    },
+    {
+      "english": "Lesson",
+      "susu": "Karanfé ikha fé dé matinkan",
+      "category": "work_education"
+    },
+    {
+      "english": "I am a student",
+      "susu": "N tan nan na xaran di ra",
+      "category": "work_education"
+    },
+    {
+      "english": "I am a teacher",
+      "susu": "N tan nan na karamOxO ra",
+      "category": "work_education"
+    },
+    {
+      "english": "I am learning",
+      "susu": "N na xaran fe",
+      "category": "work_education"
+    },
+    {
+      "english": "I am studying",
+      "susu": "N na xaran fe",
+      "category": "work_education"
+    },
+    {
+      "english": "I go to school",
+      "susu": "N siga ma ekol",
+      "category": "work_education"
+    },
+    {
+      "english": "I can read",
+      "susu": "N nOma xaran de",
+      "category": "work_education"
+    },
+    {
+      "english": "I can write",
+      "susu": "N nOma sEbEde",
+      "category": "work_education"
+    },
+    {
+      "english": "I cannot read",
+      "susu": "N mu nOma xaran de",
+      "category": "work_education"
+    },
+    {
+      "english": "I cannot write",
+      "susu": "N mu nOma sEbEde",
+      "category": "work_education"
+    },
+    {
+      "english": "I am learning Susu",
+      "susu": "N na susu xaran fe",
+      "category": "work_education"
+    },
+    {
+      "english": "Teach me",
+      "susu": "Wo n xaran",
+      "category": "work_education"
+    },
+    {
+      "english": "I understand",
+      "susu": "nbara afamou",
+      "category": "work_education"
+    },
+    {
+      "english": "I do not understand",
+      "susu": "m'ma fakhamou",
+      "category": "work_education"
+    },
+    {
+      "english": "What does this mean",
+      "susu": "Na masenxi munse ra",
+      "category": "work_education"
+    },
+    {
+      "english": "How do you say",
+      "susu": "Wo a falama di",
+      "category": "work_education"
+    },
+    {
+      "english": "Repeat please",
+      "susu": "Wo man gbilen",
+      "category": "work_education"
+    },
+    {
+      "english": "Speak slowly",
+      "susu": "Wo wOyEn dOgni ra",
+      "category": "work_education"
+    },
+    {
+      "english": "Weather",
+      "susu": "Wakhati",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Sun",
+      "susu": "Sogué",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Rain",
+      "susu": "Tunè",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Wind",
+      "susu": "Foyé",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Cloud",
+      "susu": "Koré",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Storm",
+      "susu": "Foyé Nakhan kanari ra bama",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Hot",
+      "susu": "Afourakhi",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Cold",
+      "susu": "Khingbeli",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Warm",
+      "susu": "Afourakhi",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Dry",
+      "susu": "Akharé",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Wet",
+      "susu": "Boundakhi",
+      "category": "weather_nature"
+    },
+    {
+      "english": "It is hot",
+      "susu": "A ma fura",
+      "category": "weather_nature"
+    },
+    {
+      "english": "It is cold",
+      "susu": "xinbeli nan a ra",
+      "category": "weather_nature"
+    },
+    {
+      "english": "It is raining",
+      "susu": "TunE na gorofe",
+      "category": "weather_nature"
+    },
+    {
+      "english": "It is sunny",
+      "susu": "soge na",
+      "category": "weather_nature"
+    },
+    {
+      "english": "The weather is good",
+      "susu": "waxati fan",
+      "category": "weather_nature"
+    },
+    {
+      "english": "The weather is bad",
+      "susu": "waxati mu fan",
+      "category": "weather_nature"
+    },
+    {
+      "english": "It is very hot today",
+      "susu": "A bara fura ki fanyi ra to",
+      "category": "weather_nature"
+    },
+    {
+      "english": "It will rain today",
+      "susu": "TunE fama nE to",
+      "category": "weather_nature"
+    },
+    {
+      "english": "The sun is strong",
+      "susu": "Soge sɛnbɛ gbo",
+      "category": "weather_nature"
+    },
+    {
+      "english": "The rain has stopped",
+      "susu": "TunE bara dan",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Tree",
+      "susu": "Wouri",
+      "category": "weather_nature"
+    },
+    {
+      "english": "River",
+      "susu": "Khouré",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Mountain",
+      "susu": "Gueya",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Ocean",
+      "susu": "Ba",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Sea",
+      "susu": "Fokhè yé",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Forest",
+      "susu": "Woula",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Field",
+      "susu": "Khè",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Farm",
+      "susu": "Sansi cifé",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Sky",
+      "susu": "Koré",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Moon",
+      "susu": "Kiké",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Stars",
+      "susu": "tunbuie",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Earth",
+      "susu": "Bokhi",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Ground",
+      "susu": "Bökhi",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Grass",
+      "susu": "Sekhè",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Flower",
+      "susu": "Fleuri",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Animal",
+      "susu": "Dalisé",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Dog",
+      "susu": "Baré",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Cat",
+      "susu": "Gnari",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Bird",
+      "susu": "Khoni",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Fish",
+      "susu": "Yèkhè",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Cow",
+      "susu": "Ningué guinè",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Goat",
+      "susu": "Mori",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Sheep",
+      "susu": "Yèkhè",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Chicken",
+      "susu": "Tökhè",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Horse",
+      "susu": "Choé",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Monkey",
+      "susu": "Bouboudi",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Snake",
+      "susu": "Bökhmasé",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Elephant",
+      "susu": "Sili",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Lion",
+      "susu": "Bartè",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Beautiful sky",
+      "susu": "koore tofan",
+      "category": "weather_nature"
+    },
+    {
+      "english": "The river is big",
+      "susu": "Xure xungbe nan a ra",
+      "category": "weather_nature"
+    },
+    {
+      "english": "The mountain is high",
+      "susu": "Geya itexi",
+      "category": "weather_nature"
+    },
+    {
+      "english": "The forest is green",
+      "susu": "wula gbeli nan a ra",
+      "category": "weather_nature"
+    },
+    {
+      "english": "I love nature",
+      "susu": "N nature ra fan",
+      "category": "weather_nature"
+    },
+    {
+      "english": "Happy",
+      "susu": "Sèwè",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Sad",
+      "susu": "nimisa",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Angry",
+      "susu": "Khonokhi",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Afraid",
+      "susu": "Bognèmini",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Scared",
+      "susu": "Bognè kanè",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Surprised",
+      "susu": "Magninfé",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Tired",
+      "susu": "Taganhi",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Excited",
+      "susu": "Ama khoyifé",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Worried",
+      "susu": "Bognè mini",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Calm",
+      "susu": "Doundouï",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Peaceful",
+      "susu": "Lan'gni",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am happy",
+      "susu": "N bara sEwa",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am sad",
+      "susu": "N nimisa",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am angry",
+      "susu": "N xOnE",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am afraid",
+      "susu": "N bara gaxu",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am scared",
+      "susu": "N bara gaxu",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am surprised",
+      "susu": "N bara kaaba",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am tired",
+      "susu": "N bara tagan",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am excited",
+      "susu": "N bara sEwa",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am worried",
+      "susu": "N na kOntOfili",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am calm",
+      "susu": "N bara dundu",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am at peace",
+      "susu": "N na bOgnE kui",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am very happy",
+      "susu": "N bara ɲɛlɛxin ki fanyi ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am very sad",
+      "susu": "N bara nimisa ki fanyi ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am very angry",
+      "susu": "N xOnOxi ki fanyi ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am very tired",
+      "susu": "N bara tagan ki fanyi ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am very afraid",
+      "susu": "N bara gaxu ki fanyi ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am very excited",
+      "susu": "N bara sEwa ki fanyi ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am very worried",
+      "susu": "N kɔntɔfilixi ki fanyi ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Are you happy",
+      "susu": "Wo sEwa xi",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Are you sad",
+      "susu": "Wo nimisaxi",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Are you angry",
+      "susu": "I xOnOxi",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Are you afraid",
+      "susu": "Wo gaxui",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Are you tired",
+      "susu": "Wo bara tagan",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Are you okay",
+      "susu": "Wo xa fe fan",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "What is wrong",
+      "susu": "Munse mu lanxi",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Why are you sad",
+      "susu": "Munfe ra i nimisaxi",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Why are you angry",
+      "susu": "I xOnOxi munfe ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Do not be afraid",
+      "susu": "Wo naxa gaaxu",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Do not worry",
+      "susu": "Wo naxa kOntOfili",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Be happy",
+      "susu": "Wo xa sEwa",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Do not be sad",
+      "susu": "Wo naxa sunnun",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I love you",
+      "susu": "I rafan ma",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I miss you",
+      "susu": "ikholinan ma",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I care about you",
+      "susu": "N xaxili tima wo ra",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am thinking of you",
+      "susu": "N na wo ma gnErE fe",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "You are important",
+      "susu": "Wo tide na",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am grateful",
+      "susu": "N bara wo tantun",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I am thankful",
+      "susu": "N bara wo tantun",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "I appreciate you",
+      "susu": "N wo tantuma",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "Thank you for everything",
+      "susu": "I nu wali fe birin ma",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "You make me happy",
+      "susu": "Wo n na sEwa ma",
+      "category": "emotions_feelings"
+    },
+    {
+      "english": "To go",
+      "susu": "sigafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To come",
+      "susu": "Fafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To walk",
+      "susu": "gnErE ma",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To run",
+      "susu": "Wo xa gi",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To sit",
+      "susu": "DOxOde",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To stand",
+      "susu": "Tife",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To lie down",
+      "susu": "A sade",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To stop",
+      "susu": "A xa ti",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To wait",
+      "susu": "A mamE ti",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To return",
+      "susu": "Wo xa gbilen",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To eat",
+      "susu": "Donse donfe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To drink",
+      "susu": "Minfe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To cook",
+      "susu": "Donse rafalafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To wash",
+      "susu": "A xa maxa",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To clean",
+      "susu": "A xa a maxa",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To sleep",
+      "susu": "Xife",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To wake up",
+      "susu": "Kelife",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To work",
+      "susu": "Walife",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To play",
+      "susu": "Wo xa bere",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To dance",
+      "susu": "Dance",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To sing",
+      "susu": "A xa sigi sa",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To speak",
+      "susu": "Wo xa wOyEn",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To say",
+      "susu": "A falafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To ask",
+      "susu": "Wo xa maxOrin",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To answer",
+      "susu": "A yaabi ra",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To listen",
+      "susu": "Wo xa ramE",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To hear",
+      "susu": "Wo xa a ramE",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To call",
+      "susu": "Wo xa xili",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To tell",
+      "susu": "A falafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To see",
+      "susu": "A tofe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To look",
+      "susu": "Wo xa a mato",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To know",
+      "susu": "A kolon fe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To think",
+      "susu": "Wo xa ma gnErE",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To understand",
+      "susu": "Wo xa a faxamu",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To remember",
+      "susu": "Wo xa ratu",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To forget",
+      "susu": "Wo xa nE",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To learn",
+      "susu": "Xaran fe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "To teach",
+      "susu": "Xarande",
+      "category": "common_verbs"
+    },
+    {
+      "english": "I am going",
+      "susu": "N na sigafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "You are coming",
+      "susu": "Wo na fafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "He is eating",
+      "susu": "A na donse donfe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "She is cooking",
+      "susu": "A na donse rafalafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "They are sleeping",
+      "susu": "E na xife",
+      "category": "common_verbs"
+    },
+    {
+      "english": "We are working",
+      "susu": "Moxo na walife",
+      "category": "common_verbs"
+    },
+    {
+      "english": "I want to go",
+      "susu": "N wama sigafe",
+      "category": "common_verbs"
+    },
+    {
+      "english": "I need to eat",
+      "susu": "N lan ma n xa donse don",
+      "category": "common_verbs"
+    },
+    {
+      "english": "I have to work",
+      "susu": "N lan ma n xa wali",
+      "category": "common_verbs"
+    },
+    {
+      "english": "I can see",
+      "susu": "N nOma a tode",
+      "category": "common_verbs"
+    },
+    {
+      "english": "I cannot hear",
+      "susu": "N mu nOma a ramEde",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Do you know",
+      "susu": "I a kolon",
+      "category": "common_verbs"
+    },
+    {
+      "english": "I do not know",
+      "susu": "m'ma kolon",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Tell me",
+      "susu": "Afalabè",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Show me",
+      "susu": "A masén m'bè",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Help me",
+      "susu": "N mali",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Give me",
+      "susu": "Wo fi n ma",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Take this",
+      "susu": "Wo yi tongo",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Bring it",
+      "susu": "Wo fa a ra",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Put it here",
+      "susu": "Wo a sa be",
+      "category": "common_verbs"
+    },
+    {
+      "english": "Wake up",
+      "susu": "Wo khounoun",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Get up",
+      "susu": "Keli",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I woke up early",
+      "susu": "N kelixi subaxa",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I woke up late",
+      "susu": "N kelixi kOE ra",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Brush teeth",
+      "susu": "Wo ɲin maxa",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Wash face",
+      "susu": "Wo yatagi maxa",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Take a bath",
+      "susu": "Wo maxa",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Get dressed",
+      "susu": "Dom'ma so",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Eat breakfast",
+      "susu": "Wo gEgEn donse don",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Leave the house",
+      "susu": "Wo xa mini banxi kui",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Go to work",
+      "susu": "Wo siga walide",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Go to school",
+      "susu": "Wo siga ekol",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Go to market",
+      "susu": "Wo siga makiti",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Buy food",
+      "susu": "Donse sara",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Cook food",
+      "susu": "Donse rafala",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Wash clothes",
+      "susu": "Dugi maxa",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Clean the house",
+      "susu": "Wo xa banxi ma sEnE",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Sweep the floor",
+      "susu": "Wo bOxi rafelen",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Fetch water",
+      "susu": "ye fen",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Come home",
+      "susu": "Wo fa banxi",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Return from work",
+      "susu": "Wo gbilen walide",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Eat dinner",
+      "susu": "Wo nunmare don",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Rest",
+      "susu": "Malaboui",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Watch television",
+      "susu": "Tele mato",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Talk with family",
+      "susu": "Wo nun wo xa denbaya wOyEn",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Go to bed",
+      "susu": "Siga i sa",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Sleep",
+      "susu": "Khifé",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Go to church",
+      "susu": "Wo siga salide",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Go to mosque",
+      "susu": "Wo siga salide",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Visit family",
+      "susu": "Wo xa denbayae mato",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Visit friends",
+      "susu": "Wo boree mato",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Go shopping",
+      "susu": "Wo siga sare sode",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Do laundry",
+      "susu": "Wo dugi maxa",
+      "category": "daily_activities"
+    },
+    {
+      "english": "What are you doing",
+      "susu": "Wo nansé rabafé",
+      "category": "daily_activities"
+    },
+    {
+      "english": "What did you do today",
+      "susu": "I munse rabaxi to",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Where are you going",
+      "susu": "Wo sigafe minden",
+      "category": "daily_activities"
+    },
+    {
+      "english": "What will you do tomorrow",
+      "susu": "Wo munse rabama tina",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Did you eat",
+      "susu": "I bara donse don",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Did you sleep well",
+      "susu": "I bara xi a fangni ra",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Have you finished",
+      "susu": "Wo bara gEn",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I am busy",
+      "susu": "N na walife",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I am free",
+      "susu": "N bara xOrOxO",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I have finished",
+      "susu": "N bara gEn",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I have not finished",
+      "susu": "N mu gEnE",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I am doing nothing",
+      "susu": "N mu sese rabafe",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I am resting",
+      "susu": "N na malabui nan kui",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I am on my way",
+      "susu": "N na kira xOn ma",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I will be there soon",
+      "susu": "N fama nE wo lide yakOsi",
+      "category": "daily_activities"
+    },
+    {
+      "english": "I am almost done",
+      "susu": "N bara gɛ gɛde",
+      "category": "daily_activities"
+    },
+    {
+      "english": "Wait for me",
+      "susu": "Wo n mamEtE",
+      "category": "daily_activities"
+    }
+  ],
+  "simplifiedCorpus": {
+    "hello": "inou wali",
+    "hi": "inou wali",
+    "good morning": "Tanàmoufègnê",
+    "good afternoon": "Wofègnè",
+    "good evening": "Wo nounmaré",
+    "good night": "Allah kha wo khi",
+    "how are you": "Tanàmoufègnê",
+    "i am fine": "a mou nä ki yo ki",
+    "i am fine thank you": "N na yalan, i nu wali",
+    "and you": "Ifan go",
+    "what is your name": "Ikhilidi",
+    "my name is": "Khilinè",
+    "nice to meet you": "Ounbara gnalakhin itoféra",
+    "welcome": "Ara lanfé",
+    "welcome home": "Wo xa wo maso wo xOn gni",
+    "goodbye": "Wo na tèmou",
+    "see you later": "Won narala'ma",
+    "see you tomorrow": "Won tina",
+    "see you soon": "Won na tèmoui",
+    "take care": "Iyèma sokhouï afanyira",
+    "have a nice day": "Wo fègnè",
+    "have a good trip": "Wo xa biyaasi fangni raba",
+    "safe travels": "Biyasi fangni",
+    "sleep well": "Xi fangni",
+    "until next time": "han waxati gbEtE",
+    "please": "Nbari khandi",
+    "thank you": "Wonou wali",
+    "thank you very much": "Inouwali kifanyi",
+    "you are welcome": "Wo khakèto",
+    "excuse me": "Dignèn ma",
+    "sorry": "diyƐ",
+    "i am sorry": "N bara nimisa",
+    "no problem": "Kontofili yo",
+    "it is nothing": "A mu findixi sese ra",
+    "bless you": "Wo xa duba",
+    "good morning everyone": "Wo birin xa gɛɛsɛgɛ fan",
+    "how was your night": "Ikha kouwè nou nadi",
+    "did you sleep well": "I bara xi a fangni ra",
+    "how is your family": "Wo xa denbaya na ki nE",
+    "how is work": "Wali na ki nE",
+    "long time no see": "A bara bou m'mi to",
+    "i missed you": "N bara wo xanu",
+    "i am happy to see you": "N bara sEwa wo to fe ra",
+    "peace be with you": "Bɔɲɛsa xa lu wo bɛ",
+    "may god bless you": "Ala xa hinnɛ wo ra",
+    "i am doing well": "N na walife a fangni ra",
+    "everything is fine": "Fe birin fan",
+    "all is well": "Fe birin fan",
+    "thanks to god": "Ala tantu",
+    "by the grace of god": "Ala xa hinnɛ saabui ra",
+    "i am blessed": "N bara duba",
+    "mother": "Fé sougandikhi",
+    "father": "Nba",
+    "parents": "Bariboré",
+    "child": "Dumedi",
+    "children": "Dimèdi",
+    "son": "Di",
+    "daughter": "Abè",
+    "brother": "Ntara",
+    "sister": "Nkhounya guinèma",
+    "grandfather": "Baba",
+    "grandmother": "n baba",
+    "grandparents": "Benbae",
+    "uncle": "Soghö",
+    "aunt": "Ntenin",
+    "cousin": "Itenin khadi anamara iba khoundia khadi",
+    "nephew": "Sokhödi",
+    "niece": "Sokhodi",
+    "husband": "Nma mori",
+    "wife": "Kha guinè",
+    "family": "Dembaya",
+    "this is my mother": "N nga nan yi ki",
+    "this is my father": "N baba nan yi ki",
+    "this is my wife": "N ma ginE nan ya",
+    "this is my husband": "N ma xamE nan ya",
+    "this is my child": "N ma di nan yi ki",
+    "i have two children": "N ma di firin nan na",
+    "i have three brothers": "N xunya saxan na",
+    "my sister is older": "N xunya ginE fori nan a ra",
+    "my brother is younger": "N xunya nan xurun",
+    "my family is big": "N ma denbaya gbo",
+    "my family is small": "N ma denbaya xurun",
+    "are you married": "Imarié khi",
+    "do you have children": "Wo xa die na wo yi",
+    "how many children do you have": "Wo xa di wuyaxi nan na wo yi",
+    "where is your family": "Wo xa denbaya na minden",
+    "who is this": "N'dey iya",
+    "is this your mother": "I nga nan ya",
+    "is this your father": "Wo baba nan ya",
+    "i am married": "N bara futi",
+    "i am not married": "N mu futixi",
+    "i am single": "N tan keren",
+    "she is my friend": "A findixi n bore nan na",
+    "he is my friend": "A tan nan na n bore ra",
+    "they are my neighbors": "E findixi n dOxO bore nan na",
+    "i love my family": "N ma denbaya rafan n ma",
+    "i love my mother": "n'ga rafan m'ma",
+    "i love my father": "m'ba rafan m'ma",
+    "we are family": "Won findixi denbaya nan na",
+    "family is important": "Denbaya tide na",
+    "i am the eldest": "N tan nan na fori ra",
+    "i am the youngest": "N tan nan na dimEdi ra",
+    "food": "Baloé",
+    "water": "Yé",
+    "rice": "Bandé",
+    "fish": "Yèkhè",
+    "meat": "Soubé",
+    "chicken": "Tökhè",
+    "bread": "Tami",
+    "vegetables": "Sanssi raboulakhi nakhan don ma",
+    "fruit": "Youri bogui",
+    "mango": "Mango",
+    "banana": "Banani",
+    "orange": "Lefouré",
+    "peanuts": "Kabe",
+    "palm oil": "Palmier ture",
+    "salt": "Fokhè",
+    "sugar": "Souka",
+    "pepper": "Gbèngbè",
+    "onion": "Yèbè",
+    "tomato": "Tomatï",
+    "cassava": "maniok",
+    "tea": "Ataya",
+    "coffee": "Käfé",
+    "milk": "Khinyè",
+    "juice": "Ju",
+    "palm wine": "Palmier vin",
+    "cold water": "Ye xOrOxOE",
+    "hot water": "Ye xOrOxOE",
+    "i am hungry": "Kame nan n ma",
+    "i am thirsty": "ye xOli na n ma",
+    "i am not hungry": "Kami mu n ma",
+    "i am not thirsty": "ye xOli mu n ma",
+    "are you hungry": "Kame nan i ra",
+    "are you thirsty": "ye xOnE na wo ma",
+    "i want to eat": "N wama donse donfe",
+    "i want to drink": "N wama minfe",
+    "let us eat": "Won xa donse don",
+    "let us drink": "Won xa min",
+    "give me water": "Wo ye fi n ma",
+    "give me food": "Wo donse fi n ma",
+    "i am eating": "N na donse donfe",
+    "i am drinking": "N na minfe",
+    "the food is good": "Donse fan",
+    "the food is ready": "Donse bara rafala",
+    "the food is hot": "Donse xOrOxO",
+    "the food is cold": "Donse xinde",
+    "delicious": "Gnökhonyi",
+    "i am full": "N bara rafe",
+    "i ate already": "N bara donse don",
+    "she is cooking": "A na donse rafalafe",
+    "he is cooking": "A na donse rafalafe",
+    "what are you cooking": "I na munse rafalafe",
+    "i am cooking rice": "N na lose yailanfe",
+    "the rice is ready": "Ɲama bara rafala",
+    "come and eat": "Wo fa wo xa donse don",
+    "head": "Ara gnèrèfé",
+    "eye": "Ya",
+    "eyes": "Ya",
+    "ear": "Touli",
+    "ears": "Touley",
+    "nose": "Nouè",
+    "mouth": "Dè",
+    "teeth": "Gnin yé",
+    "tongue": "Khouï",
+    "hand": "Bèlèkhè",
+    "hands": "BElExE",
+    "arm": "Bèlèkhè",
+    "foot": "Sanyi",
+    "feet": "Sènyi",
+    "leg": "Sanyi",
+    "stomach": "Fouri koui touli cé",
+    "back": "Ifari",
+    "heart": "Sondonyi",
+    "blood": "Wouli",
+    "body": "Faté",
+    "i am sick": "N furaxi",
+    "i am not sick": "N mu furaxi",
+    "i am healthy": "N na yalan",
+    "i am tired": "N bara tagan",
+    "i am very tired": "N bara tagan ki fanyi ra",
+    "i am weak": "n tagan",
+    "i am strong": "N sɛnbɛ gbo",
+    "i am in pain": "N na xOnE kui",
+    "i have a headache": "N xun xOnE nan a ra",
+    "i have a stomachache": "N furi xOnE nan a ra",
+    "my head hurts": "N xunyi xOnOma",
+    "my stomach hurts": "N furi xOnOma",
+    "my back hurts": "N xanbi xOnOma",
+    "i have a fever": "N ma fure na",
+    "i have a cold": "N bara xinbeli",
+    "i have a cough": "N ma xOnE na",
+    "i am not feeling well": "N mu yalanxi",
+    "doctor": "Mikhi dandan",
+    "hospital": "Labitani",
+    "medicine": "Seri kharan yi",
+    "i need medicine": "N hayi na seri ma",
+    "where is the hospital": "Hopital na minden",
+    "call the doctor": "Wo dOktOre xili",
+    "i need help": "N hayi na mali ma",
+    "it hurts here": "A xOnOma be",
+    "i feel better": "N bara fisa",
+    "i am getting better": "N na yalan fe",
+    "take care of yourself": "Wo wo yEtE ratanga",
+    "get well soon": "Allah kha sönèya fii ima sin'nèma",
+    "rest well": "Wo malabu a fangni ra",
+    "drink water": "ye min",
+    "eat medicine": "seri donfe",
+    "one": "Kerén",
+    "two": "Firin",
+    "three": "Serinfé",
+    "four": "Naani",
+    "five": "Souli",
+    "six": "Sén'ni",
+    "seven": "solofere",
+    "eight": "Solomasakhan",
+    "nine": "Solomanani",
+    "ten": "Foû",
+    "twenty": "Moukhè",
+    "thirty": "Tongo sakhan",
+    "forty": "Ton naanin",
+    "fifty": "Tongo souli",
+    "one hundred": "kEmE",
+    "one thousand": "mixi wulu keren",
+    "today": "Too",
+    "tomorrow": "Tina",
+    "yesterday": "Khoro",
+    "now": "Yakoss",
+    "later": "Danguikhambi",
+    "morning": "Djècèkhè",
+    "afternoon": "Midi dangui khanbi",
+    "evening": "Noun maré",
+    "night": "Koyè",
+    "day": "Lokhè",
+    "week": "Lökhounyi",
+    "month": "Kiké",
+    "year": "Gnè",
+    "what time is it": "Waxati mundun na",
+    "it is morning": "gɛɛsɛgɛ nan a ra",
+    "it is afternoon": "nunmare nan a ra",
+    "it is evening": "nunmare nan a ra",
+    "it is late": "A bara gɛ",
+    "it is early": "A singe nan a ra",
+    "this morning": "To gEgEn",
+    "this evening": "To nunmare",
+    "last night": "kOE dangixi",
+    "next week": "LOxun naxan fama",
+    "last month": "Kike dangixi",
+    "this year": "Yi gnE",
+    "every day": "LOn birin",
+    "all day": "LOn birin",
+    "all night": "Kɔɛ birin",
+    "how old are you": "Ignè yerara",
+    "i am twenty years old": "N bara gnE mOxOyEn",
+    "how long": "waxati mundun",
+    "how many days": "xi wuyaxi",
+    "two hours": "waxati firin",
+    "three days": "xi saxan",
+    "one week": "lOxun keren",
+    "wait a moment": "Wo mamEtE dondoroti",
+    "left": "A kola",
+    "right": "Yiréfan",
+    "straight": "Tinkhinyi",
+    "up": "Koré",
+    "down": "Aboum ma",
+    "here": "Bé",
+    "there": "Bé",
+    "near": "A cetma",
+    "far": "Kouya",
+    "north": "Nöri",
+    "south": "Yiré fanyi biriki",
+    "east": "Kiya nakhè",
+    "west": "sogegorode",
+    "inside": "A koui",
+    "outside": "Tandé",
+    "front": "Yaré",
+    "behind": "Akhanbi",
+    "turn left": "Wo gbilen yirefanyi ma",
+    "turn right": "Wo gbilen yirefanyi ma",
+    "go straight": "Wo siga tinxin gni",
+    "go forward": "Wo siga yare",
+    "go back": "Wo gbilen",
+    "stop here": "Wo ti be",
+    "come here": "Fâ bé",
+    "go there": "Wo siga na",
+    "house": "Fé ma gnökhoundji",
+    "home": "Bankhi",
+    "market": "Makiti",
+    "school": "Kharandérabadé",
+    "mosque": "misiki",
+    "church": "Chrétiens kha salidé",
+    "road": "Kira",
+    "street": "Kira",
+    "village": "Khaaré",
+    "city": "Ta",
+    "where are you going": "Wo sigafe minden",
+    "where is the market": "Makiti na minden",
+    "where is the school": "Lakɔli na minden",
+    "how do i get there": "N nOma na sOtOde di",
+    "is it far": "A makuya",
+    "is it near": "A ma kOrE",
+    "i am going home": "N na sigafe n xOnE",
+    "i am coming back": "N na gbilenfe",
+    "i am leaving": "N na sigafe",
+    "i am arriving": "N na fafe",
+    "i am lost": "N bara lOE",
+    "the house is near": "Banxi na yire makuye",
+    "the market is far": "Makiti ma kuya",
+    "i will come back": "N fama gbilen de",
+    "money": "Kobiri",
+    "price": "Saré",
+    "expensive": "A khori",
+    "cheap": "Saréfanyi",
+    "free": "Asarémou fima",
+    "cost": "A cèti",
+    "pay": "Sarafé",
+    "buy": "Sareti",
+    "sell": "Matifé",
+    "change": "Massarè",
+    "how much": "Yeri",
+    "how much is this": "yi sare na xan na",
+    "how much does it cost": "A sare na xan na",
+    "what is the price": "A sare na munse ra",
+    "is it expensive": "A sare xOrOxO",
+    "can you reduce the price": "Wo nOma a sare ragorode",
+    "do you have change": "Wo bara masara",
+    "do you have this": "Wo yi sOtOxi",
+    "i want to buy": "N wama sarafe",
+    "i will buy this": "N yi sara ma",
+    "i am not buying": "N mu na sarafe",
+    "too expensive": "A sare xOrOxO",
+    "give me discount": "Wo n ma discount fi n ma",
+    "i have money": "kObiri na n yi ra",
+    "i have no money": "N mu kObiri yo sOtOxi",
+    "i will pay": "N na sare fima",
+    "i have paid": "N bara sare fi",
+    "keep the change": "Wo xa na masarE ragata",
+    "clothes": "Douguée",
+    "shoes": "Sankirée",
+    "bag": "Cé sacé",
+    "phone": "Teleföni",
+    "this one": "Yi keren",
+    "that one": "Na keren",
+    "another one": "Boore",
+    "the same": "Na nan a ra",
+    "different": "Keren mara",
+    "what is your last price": "Wo xa sare dOnxE munse ra",
+    "that is too much": "Na bara gbo",
+    "i cannot afford": "N mu nOma",
+    "lower the price": "Wo sare ragoro",
+    "good price": "A sare fan",
+    "fair price": "sare fangni",
+    "final price": "A sare dOnxE",
+    "i agree": "N tinxi",
+    "no thank you": "Ade, i nu wali",
+    "maybe later": "Tɛmunde kɔrɛ",
+    "work": "Wali",
+    "job": "Wali",
+    "office": "Walidé bankhi",
+    "boss": "Mènguè",
+    "worker": "WalikE",
+    "employee": "Na khan walifé Lan khoun dè ndé bè",
+    "salary": "Kiké gnonyi saré",
+    "business": "Lankhoundè",
+    "farmer": "Khèsaa",
+    "teacher": "Mikhi ra kharanyi",
+    "student": "Kharandi",
+    "i am working": "N na walife",
+    "i am going to work": "N na sigafe walide",
+    "i finished work": "N bara wali ra ɲɔn",
+    "i have a job": "n ma wali na",
+    "i am looking for work": "N na wali nan fenfe",
+    "where do you work": "I walima minden",
+    "what is your job": "Ikha wali na mounséra",
+    "i work here": "N walima be",
+    "work is hard": "Wali xOrOxO",
+    "work is good": "Wali fan",
+    "book": "Bouki",
+    "pen": "Kalé",
+    "paper": "Kèdi",
+    "to read": "A xaran fe",
+    "to write": "sEbEli",
+    "to learn": "Xaran fe",
+    "to teach": "Xarande",
+    "to study": "Xaran fe",
+    "class": "Kharanyi bankhi",
+    "lesson": "Karanfé ikha fé dé matinkan",
+    "i am a student": "N tan nan na xaran di ra",
+    "i am a teacher": "N tan nan na karamOxO ra",
+    "i am learning": "N na xaran fe",
+    "i am studying": "N na xaran fe",
+    "i go to school": "N siga ma ekol",
+    "i can read": "N nOma xaran de",
+    "i can write": "N nOma sEbEde",
+    "i cannot read": "N mu nOma xaran de",
+    "i cannot write": "N mu nOma sEbEde",
+    "i am learning susu": "N na susu xaran fe",
+    "teach me": "Wo n xaran",
+    "i understand": "nbara afamou",
+    "i do not understand": "m'ma fakhamou",
+    "what does this mean": "Na masenxi munse ra",
+    "how do you say": "Wo a falama di",
+    "repeat please": "Wo man gbilen",
+    "speak slowly": "Wo wOyEn dOgni ra",
+    "weather": "Wakhati",
+    "sun": "Sogué",
+    "rain": "Tunè",
+    "wind": "Foyé",
+    "cloud": "Koré",
+    "storm": "Foyé Nakhan kanari ra bama",
+    "hot": "Afourakhi",
+    "cold": "Khingbeli",
+    "warm": "Afourakhi",
+    "dry": "Akharé",
+    "wet": "Boundakhi",
+    "it is hot": "A ma fura",
+    "it is cold": "xinbeli nan a ra",
+    "it is raining": "TunE na gorofe",
+    "it is sunny": "soge na",
+    "the weather is good": "waxati fan",
+    "the weather is bad": "waxati mu fan",
+    "it is very hot today": "A bara fura ki fanyi ra to",
+    "it will rain today": "TunE fama nE to",
+    "the sun is strong": "Soge sɛnbɛ gbo",
+    "the rain has stopped": "TunE bara dan",
+    "tree": "Wouri",
+    "river": "Khouré",
+    "mountain": "Gueya",
+    "ocean": "Ba",
+    "sea": "Fokhè yé",
+    "forest": "Woula",
+    "field": "Khè",
+    "farm": "Sansi cifé",
+    "sky": "Koré",
+    "moon": "Kiké",
+    "stars": "tunbuie",
+    "earth": "Bokhi",
+    "ground": "Bökhi",
+    "grass": "Sekhè",
+    "flower": "Fleuri",
+    "animal": "Dalisé",
+    "dog": "Baré",
+    "cat": "Gnari",
+    "bird": "Khoni",
+    "cow": "Ningué guinè",
+    "goat": "Mori",
+    "sheep": "Yèkhè",
+    "horse": "Choé",
+    "monkey": "Bouboudi",
+    "snake": "Bökhmasé",
+    "elephant": "Sili",
+    "lion": "Bartè",
+    "beautiful sky": "koore tofan",
+    "the river is big": "Xure xungbe nan a ra",
+    "the mountain is high": "Geya itexi",
+    "the forest is green": "wula gbeli nan a ra",
+    "i love nature": "N nature ra fan",
+    "happy": "Sèwè",
+    "sad": "nimisa",
+    "angry": "Khonokhi",
+    "afraid": "Bognèmini",
+    "scared": "Bognè kanè",
+    "surprised": "Magninfé",
+    "tired": "Taganhi",
+    "excited": "Ama khoyifé",
+    "worried": "Bognè mini",
+    "calm": "Doundouï",
+    "peaceful": "Lan'gni",
+    "i am happy": "N bara sEwa",
+    "i am sad": "N nimisa",
+    "i am angry": "N xOnE",
+    "i am afraid": "N bara gaxu",
+    "i am scared": "N bara gaxu",
+    "i am surprised": "N bara kaaba",
+    "i am excited": "N bara sEwa",
+    "i am worried": "N na kOntOfili",
+    "i am calm": "N bara dundu",
+    "i am at peace": "N na bOgnE kui",
+    "i am very happy": "N bara ɲɛlɛxin ki fanyi ra",
+    "i am very sad": "N bara nimisa ki fanyi ra",
+    "i am very angry": "N xOnOxi ki fanyi ra",
+    "i am very afraid": "N bara gaxu ki fanyi ra",
+    "i am very excited": "N bara sEwa ki fanyi ra",
+    "i am very worried": "N kɔntɔfilixi ki fanyi ra",
+    "are you happy": "Wo sEwa xi",
+    "are you sad": "Wo nimisaxi",
+    "are you angry": "I xOnOxi",
+    "are you afraid": "Wo gaxui",
+    "are you tired": "Wo bara tagan",
+    "are you okay": "Wo xa fe fan",
+    "what is wrong": "Munse mu lanxi",
+    "why are you sad": "Munfe ra i nimisaxi",
+    "why are you angry": "I xOnOxi munfe ra",
+    "do not be afraid": "Wo naxa gaaxu",
+    "do not worry": "Wo naxa kOntOfili",
+    "be happy": "Wo xa sEwa",
+    "do not be sad": "Wo naxa sunnun",
+    "i love you": "I rafan ma",
+    "i miss you": "ikholinan ma",
+    "i care about you": "N xaxili tima wo ra",
+    "i am thinking of you": "N na wo ma gnErE fe",
+    "you are important": "Wo tide na",
+    "i am grateful": "N bara wo tantun",
+    "i am thankful": "N bara wo tantun",
+    "i appreciate you": "N wo tantuma",
+    "thank you for everything": "I nu wali fe birin ma",
+    "you make me happy": "Wo n na sEwa ma",
+    "to go": "sigafe",
+    "to come": "Fafe",
+    "to walk": "gnErE ma",
+    "to run": "Wo xa gi",
+    "to sit": "DOxOde",
+    "to stand": "Tife",
+    "to lie down": "A sade",
+    "to stop": "A xa ti",
+    "to wait": "A mamE ti",
+    "to return": "Wo xa gbilen",
+    "to eat": "Donse donfe",
+    "to drink": "Minfe",
+    "to cook": "Donse rafalafe",
+    "to wash": "A xa maxa",
+    "to clean": "A xa a maxa",
+    "to sleep": "Xife",
+    "to wake up": "Kelife",
+    "to work": "Walife",
+    "to play": "Wo xa bere",
+    "to dance": "Dance",
+    "to sing": "A xa sigi sa",
+    "to speak": "Wo xa wOyEn",
+    "to say": "A falafe",
+    "to ask": "Wo xa maxOrin",
+    "to answer": "A yaabi ra",
+    "to listen": "Wo xa ramE",
+    "to hear": "Wo xa a ramE",
+    "to call": "Wo xa xili",
+    "to tell": "A falafe",
+    "to see": "A tofe",
+    "to look": "Wo xa a mato",
+    "to know": "A kolon fe",
+    "to think": "Wo xa ma gnErE",
+    "to understand": "Wo xa a faxamu",
+    "to remember": "Wo xa ratu",
+    "to forget": "Wo xa nE",
+    "i am going": "N na sigafe",
+    "you are coming": "Wo na fafe",
+    "he is eating": "A na donse donfe",
+    "they are sleeping": "E na xife",
+    "we are working": "Moxo na walife",
+    "i want to go": "N wama sigafe",
+    "i need to eat": "N lan ma n xa donse don",
+    "i have to work": "N lan ma n xa wali",
+    "i can see": "N nOma a tode",
+    "i cannot hear": "N mu nOma a ramEde",
+    "do you know": "I a kolon",
+    "i do not know": "m'ma kolon",
+    "tell me": "Afalabè",
+    "show me": "A masén m'bè",
+    "help me": "N mali",
+    "give me": "Wo fi n ma",
+    "take this": "Wo yi tongo",
+    "bring it": "Wo fa a ra",
+    "put it here": "Wo a sa be",
+    "wake up": "Wo khounoun",
+    "get up": "Keli",
+    "i woke up early": "N kelixi subaxa",
+    "i woke up late": "N kelixi kOE ra",
+    "brush teeth": "Wo ɲin maxa",
+    "wash face": "Wo yatagi maxa",
+    "take a bath": "Wo maxa",
+    "get dressed": "Dom'ma so",
+    "eat breakfast": "Wo gEgEn donse don",
+    "leave the house": "Wo xa mini banxi kui",
+    "go to work": "Wo siga walide",
+    "go to school": "Wo siga ekol",
+    "go to market": "Wo siga makiti",
+    "buy food": "Donse sara",
+    "cook food": "Donse rafala",
+    "wash clothes": "Dugi maxa",
+    "clean the house": "Wo xa banxi ma sEnE",
+    "sweep the floor": "Wo bOxi rafelen",
+    "fetch water": "ye fen",
+    "come home": "Wo fa banxi",
+    "return from work": "Wo gbilen walide",
+    "eat dinner": "Wo nunmare don",
+    "rest": "Malaboui",
+    "watch television": "Tele mato",
+    "talk with family": "Wo nun wo xa denbaya wOyEn",
+    "go to bed": "Siga i sa",
+    "sleep": "Khifé",
+    "go to church": "Wo siga salide",
+    "go to mosque": "Wo siga salide",
+    "visit family": "Wo xa denbayae mato",
+    "visit friends": "Wo boree mato",
+    "go shopping": "Wo siga sare sode",
+    "do laundry": "Wo dugi maxa",
+    "what are you doing": "Wo nansé rabafé",
+    "what did you do today": "I munse rabaxi to",
+    "what will you do tomorrow": "Wo munse rabama tina",
+    "did you eat": "I bara donse don",
+    "have you finished": "Wo bara gEn",
+    "i am busy": "N na walife",
+    "i am free": "N bara xOrOxO",
+    "i have finished": "N bara gEn",
+    "i have not finished": "N mu gEnE",
+    "i am doing nothing": "N mu sese rabafe",
+    "i am resting": "N na malabui nan kui",
+    "i am on my way": "N na kira xOn ma",
+    "i will be there soon": "N fama nE wo lide yakOsi",
+    "i am almost done": "N bara gɛ gɛde",
+    "wait for me": "Wo n mamEtE"
+  }
+}
