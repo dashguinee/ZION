@@ -24,6 +24,11 @@ const { findMatch, getSusuTranslation, suggestSimilar } = require('./sentence_ma
 let fallbackSystem = null;
 let conversationModule = null;
 let sentenceGenerator = null;
+let translationTransformer = null;
+let qualityScorer = null;
+let grammarExtractor = null;
+let morphologyAnalyzer = null;
+let phoneticMapper = null;
 
 // Lazy loaders
 function getFallbackSystem() {
@@ -48,6 +53,46 @@ function getSentenceGenerator() {
     catch (e) { console.warn('Sentence generator not available'); }
   }
   return sentenceGenerator;
+}
+
+function getTranslationTransformer() {
+  if (!translationTransformer) {
+    try { translationTransformer = require('./translation_transformer'); }
+    catch (e) { console.warn('Translation transformer not available:', e.message); }
+  }
+  return translationTransformer;
+}
+
+function getQualityScorer() {
+  if (!qualityScorer) {
+    try { qualityScorer = require('./quality_scorer'); }
+    catch (e) { console.warn('Quality scorer not available:', e.message); }
+  }
+  return qualityScorer;
+}
+
+function getGrammarExtractor() {
+  if (!grammarExtractor) {
+    try { grammarExtractor = require('./grammar_extractor'); }
+    catch (e) { console.warn('Grammar extractor not available:', e.message); }
+  }
+  return grammarExtractor;
+}
+
+function getMorphologyAnalyzer() {
+  if (!morphologyAnalyzer) {
+    try { morphologyAnalyzer = require('./morphology_analyzer'); }
+    catch (e) { console.warn('Morphology analyzer not available:', e.message); }
+  }
+  return morphologyAnalyzer;
+}
+
+function getPhoneticMapper() {
+  if (!phoneticMapper) {
+    try { phoneticMapper = require('./phonetic_mapper'); }
+    catch (e) { console.warn('Phonetic mapper not available:', e.message); }
+  }
+  return phoneticMapper;
 }
 
 // ===========================================================================
@@ -78,15 +123,19 @@ const CONFIG = {
 // ===========================================================================
 
 /**
- * Comprehensive translation with full pipeline
+ * Comprehensive translation with FULL pipeline (ALL MODULES INTEGRATED)
  *
  * Pipeline:
+ * 0. PRE-PROCESSING: Transform input, analyze morphology, extract grammar
  * 1. Exact corpus match (highest confidence)
- * 2. Fuzzy corpus match
- * 3. Grammar-aware generation
- * 4. Google Translate
- * 5. French bridge (English → French → Susu)
- * 6. Fallback to French/English with gap recording
+ * 2. Phonetic variant matching
+ * 3. Fuzzy corpus match
+ * 4. Grammar-aware generation with pattern extraction
+ * 5. Translation transformer post-processing
+ * 6. Google Translate
+ * 7. French bridge (English → French → Susu)
+ * 8. Quality scoring to pick best from alternatives
+ * 9. Fallback with gap recording
  *
  * @param {string} text - Text to translate
  * @param {Object} options - Translation options
@@ -113,7 +162,12 @@ async function translate(text, options = {}) {
     fallback: null,
     gaps: [],
     conversationContext: null,
-    processingTime: Date.now()
+    processingTime: Date.now(),
+    // NEW: Enhanced analysis data
+    morphology: null,
+    grammarPattern: null,
+    phoneticVariants: [],
+    qualityScore: null
   };
 
   try {
@@ -124,33 +178,93 @@ async function translate(text, options = {}) {
     result.sourceLang = sourceLang;
     result.targetLang = targetLang;
 
-    // 1. Try exact corpus match (fastest, highest confidence)
+    // ==== STEP 0: PRE-PROCESSING (NEW) ====
+
+    // 0a. Morphological analysis (for Susu input)
+    if (sourceLang === 'sus') {
+      const morphology = getMorphologyAnalyzer();
+      if (morphology && morphology.analyze) {
+        try {
+          result.morphology = morphology.analyze(text);
+        } catch (e) { /* continue */ }
+      }
+    }
+
+    // 0b. Grammar pattern extraction
+    const grammar = getGrammarExtractor();
+    if (grammar && grammar.extractPattern) {
+      try {
+        result.grammarPattern = grammar.extractPattern(text, sourceLang);
+      } catch (e) { /* continue */ }
+    }
+
+    // 0c. Get phonetic variants for better matching
+    const phonetic = getPhoneticMapper();
+    if (phonetic && phonetic.getPhoneticVariants) {
+      try {
+        result.phoneticVariants = phonetic.getPhoneticVariants(text);
+      } catch (e) { /* continue */ }
+    }
+
+    // Collect all candidates for quality scoring
+    const candidates = [];
+
+    // ==== STEP 1: EXACT CORPUS MATCH ====
     const exactMatch = await tryExactMatch(text, sourceLang, targetLang);
     if (exactMatch && exactMatch.confidence >= CONFIG.minConfidenceExact) {
-      Object.assign(result, exactMatch);
-      result.method = 'exact_corpus';
-      return finalize(result);
+      candidates.push({ ...exactMatch, method: 'exact_corpus' });
     }
 
-    // 2. Try fuzzy corpus match
+    // ==== STEP 2: PHONETIC VARIANT MATCHING (NEW) ====
+    if (result.phoneticVariants && result.phoneticVariants.length > 0) {
+      for (const variant of result.phoneticVariants.slice(0, 3)) {
+        const variantMatch = await tryExactMatch(variant, sourceLang, targetLang);
+        if (variantMatch && variantMatch.confidence >= CONFIG.minConfidenceExact) {
+          candidates.push({ ...variantMatch, method: 'phonetic_variant', variant });
+        }
+      }
+    }
+
+    // ==== STEP 3: FUZZY CORPUS MATCH ====
     const fuzzyMatch = await tryFuzzyMatch(text, sourceLang, targetLang);
     if (fuzzyMatch && fuzzyMatch.confidence >= CONFIG.minConfidenceFuzzy) {
-      Object.assign(result, fuzzyMatch);
-      result.method = 'fuzzy_corpus';
-      return finalize(result);
+      candidates.push({ ...fuzzyMatch, method: 'fuzzy_corpus' });
     }
 
-    // 3. Try grammar-aware sentence generation (for English → Susu)
+    // ==== STEP 4: GRAMMAR-AWARE GENERATION ====
     if (targetLang === 'sus') {
       const generator = getSentenceGenerator();
       if (generator) {
-        const generated = await tryGenerated(text, generator);
+        const generated = await tryGenerated(text, generator, result.grammarPattern);
         if (generated && generated.confidence >= CONFIG.minConfidenceGenerated) {
-          Object.assign(result, generated);
-          result.method = 'generated';
-          return finalize(result);
+          candidates.push({ ...generated, method: 'generated' });
         }
       }
+    }
+
+    // ==== STEP 5: PICK BEST FROM CANDIDATES (Quality Scoring) ====
+    if (candidates.length > 0) {
+      const bestCandidate = pickBestCandidate(candidates, text, targetLang);
+
+      // Apply translation transformer for post-processing
+      const transformer = getTranslationTransformer();
+      if (transformer && transformer.transform && bestCandidate.translation) {
+        try {
+          const transformed = transformer.transform(bestCandidate.translation, {
+            sourceLang,
+            targetLang,
+            grammarPattern: result.grammarPattern
+          });
+          if (transformed && transformed !== bestCandidate.translation) {
+            bestCandidate.translation = transformed;
+            bestCandidate.transformed = true;
+          }
+        } catch (e) { /* keep original */ }
+      }
+
+      Object.assign(result, bestCandidate);
+      result.alternatives = candidates.filter(c => c !== bestCandidate).slice(0, 3);
+      return finalize(result);
     }
 
     // 4. Try Google Translate directly
@@ -192,6 +306,72 @@ async function translate(text, options = {}) {
   }
 
   return finalize(result);
+}
+
+// ===========================================================================
+// QUALITY SCORING (NEW - Uses all modules to pick best translation)
+// ===========================================================================
+
+/**
+ * Pick the best translation from multiple candidates using quality scoring
+ *
+ * Scoring factors:
+ * - Method priority (exact > phonetic > fuzzy > generated)
+ * - Confidence score
+ * - Quality scorer metrics (if available)
+ * - Grammar pattern match
+ */
+function pickBestCandidate(candidates, originalText, targetLang) {
+  if (candidates.length === 0) return null;
+  if (candidates.length === 1) return candidates[0];
+
+  // Method priority scores
+  const METHOD_PRIORITY = {
+    'exact_corpus': 100,
+    'phonetic_variant': 90,
+    'fuzzy_corpus': 70,
+    'generated': 50,
+    'google_translate': 40,
+    'french_bridge': 30
+  };
+
+  // Score each candidate
+  const scored = candidates.map(candidate => {
+    let score = 0;
+
+    // Base score from method
+    score += METHOD_PRIORITY[candidate.method] || 0;
+
+    // Confidence boost (0-50 points)
+    score += (candidate.confidence || 0) * 50;
+
+    // Use quality scorer if available
+    const scorer = getQualityScorer();
+    if (scorer && scorer.scoreTranslation && candidate.translation) {
+      try {
+        const qualityMetrics = scorer.scoreTranslation(
+          originalText,
+          candidate.translation,
+          targetLang
+        );
+        if (qualityMetrics && qualityMetrics.overall) {
+          score += qualityMetrics.overall * 20; // 0-20 quality boost
+          candidate.qualityMetrics = qualityMetrics;
+        }
+      } catch (e) { /* continue without quality score */ }
+    }
+
+    return { candidate, score };
+  });
+
+  // Sort by score descending
+  scored.sort((a, b) => b.score - a.score);
+
+  // Return best candidate with quality score
+  const best = scored[0].candidate;
+  best.qualityScore = scored[0].score;
+
+  return best;
 }
 
 // ===========================================================================
@@ -237,15 +417,23 @@ async function tryFuzzyMatch(text, sourceLang, targetLang) {
   return null;
 }
 
-async function tryGenerated(text, generator) {
+async function tryGenerated(text, generator, grammarPattern = null) {
   try {
-    const generated = generator.generate(text);
-    if (generated && !generated.translation.includes('[')) {
+    // Pass grammar pattern to generator for better SOV construction
+    const options = {};
+    if (grammarPattern) {
+      options.pattern = grammarPattern;
+      options.usePatternHints = true;
+    }
+
+    const generated = generator.generate ? generator.generate(text, options) : null;
+    if (generated && generated.translation && !generated.translation.includes('[')) {
       return {
         translation: generated.translation,
         confidence: generated.confidence,
         source: 'grammar_generator',
-        analysis: generated.analysis
+        analysis: generated.analysis,
+        grammarPatternUsed: !!grammarPattern
       };
     }
   } catch (e) { /* continue */ }
@@ -474,16 +662,33 @@ function getStats() {
 
   return {
     ...baseStats,
-    engine: 'Guinius v2',
-    version: '2.0-alpha',
+    engine: 'Guinius v2 FULL',
+    version: '2.1.0',
     capabilities: {
+      // Core translation
       exactCorpusMatch: true,
       fuzzyCorpusMatch: true,
       grammarGeneration: !!getSentenceGenerator(),
       googleTranslate: !!CONFIG.googleApiKey,
       frenchBridge: !!getFallbackSystem(),
       conversationTracking: !!getConversationModule(),
-      gapTracking: CONFIG.trackGaps
+      gapTracking: CONFIG.trackGaps,
+      // NEW: Full integration modules
+      translationTransformer: !!getTranslationTransformer(),
+      qualityScorer: !!getQualityScorer(),
+      grammarExtractor: !!getGrammarExtractor(),
+      morphologyAnalyzer: !!getMorphologyAnalyzer(),
+      phoneticMapper: !!getPhoneticMapper()
+    },
+    modules: {
+      sentenceGenerator: !!getSentenceGenerator(),
+      translationTransformer: !!getTranslationTransformer(),
+      qualityScorer: !!getQualityScorer(),
+      grammarExtractor: !!getGrammarExtractor(),
+      morphologyAnalyzer: !!getMorphologyAnalyzer(),
+      phoneticMapper: !!getPhoneticMapper(),
+      fallbackSystem: !!getFallbackSystem(),
+      conversationModule: !!getConversationModule()
     },
     config: {
       minConfidenceExact: CONFIG.minConfidenceExact,
