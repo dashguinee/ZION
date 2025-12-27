@@ -18,22 +18,27 @@ try {
 // Gemini API - Using 2.0 Flash for SPEED + quality balance
 let genAI, gemini;
 let geminiError = null;
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyC0GIOyUh3FHlb3gRW7boj8YMPmz1cOIBM';
-try {
-  const { GoogleGenerativeAI } = require('@google/generative-ai');
-  genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-  gemini = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
-    generationConfig: {
-      temperature: 0.7,
-      topP: 0.9,
-      maxOutputTokens: 500
-    }
-  });
-  console.log('Gemini 2.0 Flash initialized - FAST + SMART');
-} catch (e) {
-  geminiError = e.message;
-  console.error('Gemini init error:', e.message);
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+if (GEMINI_API_KEY) {
+  try {
+    const { GoogleGenerativeAI } = require('@google/generative-ai');
+    genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+    gemini = genAI.getGenerativeModel({
+      model: 'gemini-2.0-flash',
+      generationConfig: {
+        temperature: 0.7,
+        topP: 0.9,
+        maxOutputTokens: 500
+      }
+    });
+    console.log('Gemini 2.0 Flash initialized - FAST + SMART');
+  } catch (e) {
+    geminiError = e.message;
+    console.error('Gemini init error:', e.message);
+  }
+} else {
+  geminiError = 'GEMINI_API_KEY not configured';
+  console.warn('GEMINI_API_KEY not set - LLM features disabled');
 }
 
 // Guinius System Prompt - Teaches Gemini about the architecture
