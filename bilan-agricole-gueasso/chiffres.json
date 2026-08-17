@@ -1,0 +1,216 @@
+{
+ "2024": {
+  "prod_nette_totale": 242.33,
+  "ca_riz": 327477150.0,
+  "ca_mais": 153468000.0,
+  "ca_manioc": 258066000.0,
+  "ca_arachide": 80797500.0,
+  "produits": 833808650.0,
+  "achats": 254100000.0,
+  "services": 162577300.0,
+  "impots_taxes": 14000000.0,
+  "salaires": 153600000.0,
+  "cnss": 27648000.0,
+  "journaliers": 84000000,
+  "personnel": 265248000.0,
+  "financier": 29166666.67,
+  "dotations": 43041666.67,
+  "charges_expl": 738966966.67,
+  "charges_totales": 768133633.33,
+  "va": 417131350.0,
+  "ebe": 137883350.0,
+  "resultat_exploitation": 94841683.33,
+  "rai": 65675016.67,
+  "impot": 16418754.17,
+  "resultat_net": 49256262.5,
+  "caf": 92297929.17,
+  "charges_fixes": 303456333.33,
+  "charges_variables": 464677300.0,
+  "taux_mcv": 0.44,
+  "seuil": 685459296.89,
+  "amort_cumule": 43041666.67,
+  "immo_nettes": 404958333.33,
+  "bfr": 75581245.83,
+  "var_bfr": 75581245.83,
+  "tresorerie": 96716683.33,
+  "actif": 647675016.67,
+  "capitaux_propres": 249256262.5,
+  "cp_elargis": 369256262.5,
+  "dettes_financieres": 208000000,
+  "passif_circulant": 70418754.17,
+  "passif": 647675016.67,
+  "ecart_bilan": -0.0,
+  "fr": 172297929.17,
+  "surface": 55,
+  "detail_production": {
+   "riz_pluvial": {
+    "surface": 22,
+    "rdt": 2.6,
+    "brut": 57.2,
+    "net": 51.48
+   },
+   "riz_basfond": {
+    "surface": 0,
+    "rdt": 0.0,
+    "brut": 0.0,
+    "net": 0.0
+   },
+   "mais": {
+    "surface": 14,
+    "rdt": 2.9,
+    "brut": 40.6,
+    "net": 36.54
+   },
+   "manioc": {
+    "surface": 12,
+    "rdt": 13.5,
+    "brut": 162.0,
+    "net": 145.8
+   },
+   "arachide": {
+    "surface": 7,
+    "rdt": 1.35,
+    "brut": 9.45,
+    "net": 8.505
+   }
+  },
+  "detail_riz": {
+   "paddy": 51.48,
+   "paddy_usine": 28.314,
+   "riz_blanc": 18.4041,
+   "paddy_vendu": 23.166,
+   "ca": 327477150.0
+  },
+  "detail_manioc": {
+   "racines": 145.8,
+   "transf": 36.45,
+   "gari": 8.019,
+   "frais": 109.35,
+   "ca": 258066000.0
+  },
+  "bilan": {
+   "immo_brutes": 448000000,
+   "stock_intrants": 28000000,
+   "stock_pf": 72000000,
+   "creances": 46000000,
+   "fournisseurs": 42000000,
+   "dettes_sociales": 12000000,
+   "apports": 200000000,
+   "capital": 0,
+   "comptes_courants": 120000000,
+   "emprunt_mt": 208000000,
+   "emprunt_inv": 0,
+   "investissements": 448000000,
+   "nouveaux_emprunts": 250000000,
+   "remboursement": 42000000,
+   "apports_flux": 320000000
+  }
+ },
+ "2025": {
+  "prod_nette_totale": 325.75,
+  "ca_riz": 688328081.25,
+  "ca_mais": 226366000.0,
+  "ca_manioc": 356632375.0,
+  "ca_arachide": 101745000.0,
+  "produits": 1443071456.25,
+  "achats": 402760000.0,
+  "services": 146000000.0,
+  "impots_taxes": 22000000,
+  "salaires": 261600000.0,
+  "cnss": 47088000.0,
+  "journaliers": 102400000,
+  "personnel": 411088000.0,
+  "financier": 82745000.0,
+  "dotations": 134542559.52,
+  "charges_expl": 1116390559.52,
+  "charges_totales": 1199135559.52,
+  "va": 894311456.25,
+  "ebe": 461223456.25,
+  "resultat_exploitation": 326680896.73,
+  "rai": 243935896.73,
+  "impot": 60983974.18,
+  "resultat_net": 182951922.54,
+  "caf": 317494482.07,
+  "charges_fixes": 621975559.52,
+  "charges_variables": 577160000.0,
+  "taux_mcv": 0.6,
+  "seuil": 1036543829.0,
+  "amort_cumule": 177584226.19,
+  "immo_nettes": 1028415773.81,
+  "bfr": 92016025.82,
+  "var_bfr": 16434779.99,
+  "tresorerie": 107776385.42,
+  "actif": 1377192159.23,
+  "capitaux_propres": 242208185.04,
+  "cp_elargis": 612208185.04,
+  "dettes_financieres": 616000000,
+  "passif_circulant": 148983974.18,
+  "passif": 1377192159.23,
+  "ecart_bilan": 0.0,
+  "fr": 199792411.24,
+  "surface": 58,
+  "detail_production": {
+   "riz_pluvial": {
+    "surface": 23,
+    "rdt": 3.3,
+    "brut": 75.9,
+    "net": 72.105
+   },
+   "riz_basfond": {
+    "surface": 4,
+    "rdt": 4.5,
+    "brut": 18.0,
+    "net": 17.1
+   },
+   "mais": {
+    "surface": 14,
+    "rdt": 3.7,
+    "brut": 51.8,
+    "net": 49.21
+   },
+   "manioc": {
+    "surface": 11,
+    "rdt": 17.0,
+    "brut": 187.0,
+    "net": 177.65
+   },
+   "arachide": {
+    "surface": 6,
+    "rdt": 1.7,
+    "brut": 10.2,
+    "net": 9.69
+   }
+  },
+  "detail_riz": {
+   "paddy": 89.205,
+   "paddy_usine": 75.8242,
+   "riz_blanc": 49.2858,
+   "paddy_vendu": 13.3808,
+   "ca": 688328081.25
+  },
+  "detail_manioc": {
+   "racines": 177.65,
+   "transf": 79.9425,
+   "gari": 17.5874,
+   "frais": 97.7075,
+   "ca": 356632375.0
+  },
+  "bilan": {
+   "immo_brutes": 1206000000,
+   "stock_intrants": 45000000,
+   "stock_pf": 118000000,
+   "creances": 78000000,
+   "fournisseurs": 68000000,
+   "dettes_sociales": 20000000,
+   "apports": 0,
+   "capital": 10000000,
+   "comptes_courants": 370000000,
+   "emprunt_mt": 166000000,
+   "emprunt_inv": 450000000,
+   "investissements": 758000000,
+   "nouveaux_emprunts": 450000000,
+   "remboursement": 42000000,
+   "apports_flux": 60000000
+  }
+ }
+}
